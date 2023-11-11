@@ -5,7 +5,7 @@ def submit():
     no_weeks_aid = int(no_weeks_aid_entry.get())
     total_food_supplied = int(total_food_supplied_entry.get())
     total_medicine_supplied = int(total_medicine_supplied_entry.get())
-    no_refugees = int(no_refugees_entry.get())
+    no_refugees = int(no_refugees_entry.get()) # Will need to come from the volunteer.
     week_food_per_refugee = int(week_food_per_refugee_entry.get())
     week_medicine_per_refugee = int(week_medicine_per_refugee_entry.get())
     delivery_time_weeks = int(delivery_time_weeks_entry.get())
