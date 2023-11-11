@@ -1,16 +1,25 @@
-from tkinter import *
-import numpy as np
-import pandas as pd
-import pickle as pk
+import pickle
 
-# It should be noted that all of these
-no_weeks_aid = 30
-total_food_supplied = 500
-total_medicine_supplied = 100
-no_refugees = 50
-week_food_per_refugee = 21
-week_medicine_per_refugee = 2
-delivery_time_weeks = 2
+def submit():
+    camp_id = str(camp_id_entry.get())
+    no_weeks_aid = int(no_weeks_aid_entry.get())
+    total_food_supplied = int(total_food_supplied_entry.get())
+    total_medicine_supplied = int(total_medicine_supplied_entry.get())
+    no_refugees = int(no_refugees_entry.get())
+    week_food_per_refugee = int(week_food_per_refugee_entry.get())
+    week_medicine_per_refugee = int(week_medicine_per_refugee_entry.get())
+    delivery_time_weeks = int(delivery_time_weeks_entry.get())
+
+    resource_allocation_variables = {
+
+    }
+
+
+    with open('camp_resources.pkl', 'wb') as file:
+        pickle.dump(data, file)
+
+    print("Values Submitted and Saved")
+
 def resource_allocation(camp_id, no_weeks_aid, total_food_supplied, total_medicine_supplied, no_refugees, week_food_per_refugee, week_medicine_per_refugee):
     '''
     This function enables the administrator to allocate resources to a camp and will notify the administrator
@@ -32,13 +41,15 @@ def resource_allocation(camp_id, no_weeks_aid, total_food_supplied, total_medici
     weeks_of_food_supply = total_food_supplied / week_food_per_refugee / no_refugees
     weeks_of_medicine_supply = total_medicine_supplied / week_medicine_per_refugee / no_refugees
 
-
-    if no_weeks_aid < (total_food_supplied / week_food_per_refugee / no_refugees):
+'''
+    if no_weeks_aid < weeks_of_food_supply:
         #some code that makes it suggest it allocate more resources - are you sure you want to allocate this amount of food given?
         #some code that then reminds admin in x number of weeks to allocate more resources to this camp - probably a separate function.
 
-    elif no_weeks_aid < (total_medicine_supplied / week_medicine_per_refugee / no_refugees):
+    elif no_weeks_aid < weeks_of_medicine_supply:
         # some code that makes it suggest it allocate more resources - are you sure you want to allocate this amount of medicine given?
         # some code that then reminds admin in x number of weeks to allocate more resources to this camp - probably a separate function
 
 def notify_admin_resources(camp_id, current_food, current_medicine, delivery_time_weeks):
+
+'''
