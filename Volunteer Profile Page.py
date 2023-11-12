@@ -22,7 +22,7 @@ class t_deactivated_account(Exception):
 class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sensitive, t_no_text, t_incorrect_details):
 
     def __init__(self) -> None:
-        self.t_volunteer_dict = {'volunteer1': 'password1', 'volunteer2':'password2'}
+        self.t_volunteer_dict = {'volunteer1': '111', 'volunteer2':'111'}
         self.window = tkinter.Tk()
         self.window.title('Whatever')
         self.t_volunteer_login()
