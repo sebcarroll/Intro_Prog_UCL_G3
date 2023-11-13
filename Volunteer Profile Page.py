@@ -192,7 +192,8 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         t_personal_name.grid(row=4, column=3)
 
         # Name entry box
-        self.t_personal_nameEntry = tkinter.Entry(t_personal_labelframe, text='name').grid(row=5, column=3)
+        self.t_personal_nameEntry = tkinter.Entry(t_personal_labelframe, text='name')
+        self.t_personal_nameEntry.grid(row=5, column=3)
 
         # Email header/label
         t_personal_email = tkinter.Label(t_personal_labelframe, text='Email address')
@@ -247,8 +248,6 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         self.y_personal_info[self.username]["Work Type"] = work
         print(self.y_personal_info)
 
-        
-        
         
     # Edit camp information page
     def t_edit_camp(self):
