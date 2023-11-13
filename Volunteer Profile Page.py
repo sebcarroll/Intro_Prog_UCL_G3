@@ -131,6 +131,38 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         t_personal_frame.pack()
         t_personal_labelframe = tkinter.LabelFrame(t_personal_frame)
         t_personal_labelframe.grid(row=3, column=3)
+        t_personal_title = tkinter.Label(t_personal_frame, text= 'Volunteer Details', font=('Arial Bold', 30)).grid(row=0, column=3, pady=30)
+        t_personal_name = tkinter.Label(t_personal_labelframe, text='Full name')
+        t_personal_name.grid(row=4, column=3)
+
+                # Email label
+        t_personal_email = tkinter.Label(t_personal_labelframe, text= self.y_personal_info[self.username]['Email Address'])
+        t_personal_email.grid(row=6, column=3)
+
+        #mail entry
+        t_phonenumber = tkinter.Label(t_personal_labelframe, text= self.y_personal_info[self.username]['Phone Number'])
+
+        t_phonenumber.grid(row=8, column=3)
+        t_commitment = tkinter.Label(t_personal_labelframe, text=self.y_personal_info[self.username]['Commitment'])
+        t_commitment.grid(row=10, column=3)
+
+        t_work_type_label = tkinter.Label(t_personal_labelframe, text= self.y_personal_info[self.username]['Work Type'])
+        t_work_type_label.grid(row=12, column= 3)
+
+        # Work type entry
+        self.t_worktypeEntry.grid(row=13, column=3)
+        
+        t_store_details = tkinter.Button(t_personal_frame, text='Store details', command= self.t_personal_info_dict, height=1, width=20)
+        t_store_details.grid(row=14, column=3) 
+        t_back_to_summary = tkinter.Button(t_personal_frame, text='Back', command= self.t_volunteer_summary)
+        t_back_to_summary.grid(row=5, column= 1)
+
+        # If you want to change an of your personal information which should then update the personal info dict.
+    def t_personal_info_edit(self):
+        t_personal_frame = tkinter.Frame(self.window)
+        t_personal_frame.pack()
+        t_personal_labelframe = tkinter.LabelFrame(t_personal_frame)
+        t_personal_labelframe.grid(row=3, column=3)
         t_personal_title = tkinter.Label(t_personal_frame, text= 'Edit details', font=('Arial Bold', 30)).grid(row=0, column=3, pady=30)
         t_personal_name = tkinter.Label(t_personal_labelframe, text='Full name')
         t_personal_name.grid(row=4, column=3)
@@ -168,9 +200,6 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         t_back_to_summary = tkinter.Button(t_personal_frame, text='Back', command= self.t_volunteer_summary)
         t_back_to_summary.grid(row=5, column= 1)
 
-        # If you want to change an of your personal information which should then update the personal info dict.
-    def t_personal_info_edit(self):
-        pass
 
     def t_personal_info_dict(self):
         self.y_personal_info[self.username]['name'] = self.t_personal_nameEntry.get()
@@ -194,6 +223,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         t_camp_ID_label.grid(row=3, column=3)
         self.t_camp_ID_box = ttk.Combobox(t_camp_labelframe, values= self.y_camp_info['Syria']['ID'])
         self.t_camp_ID_box.grid(row=4, column=3)
+
 
         # Capacity for new refugees box and label
         t_camp_capacity = tkinter.Label
