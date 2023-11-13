@@ -149,7 +149,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         t_personal_labelframe = tkinter.LabelFrame(t_personal_frame)
         t_personal_labelframe.grid(row=3, column=3, padx=10, pady=10)
         t_personal_title = tkinter.Label(t_personal_frame, text= 'Volunteer Details', font=('Arial Bold', 30)).grid(row=0, column=3, pady=30)
-        t_personal_namelabel = tkinter.Label(t_personal_labelframe, text= 'Name', font=('TkDefaultFont', 15)).grid(row=4, column=2, pady=5)
+        t_personal_namelabel = tkinter.Label(t_personal_labelframe, text= 'Name: ', font=('TkDefaultFont', 15)).grid(row=4, column=2, pady=5)
         t_personal_name = tkinter.Label(t_personal_labelframe, text= self.y_personal_info[self.username]['name'], font=('TkDefaultFont', 15))
         t_personal_name.grid(row=4, column=3, pady=5)
 
@@ -174,8 +174,8 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         # Work type entry
         self.t_worktypeEntry.grid(row=13, column=3)
         
-        t_store_details = tkinter.Button(t_personal_frame, text='Store details', command= self.t_personal_info_dict, height=1, width=20)
-        t_store_details.grid(row=14, column=3) 
+        t_edit_profile = tkinter.Button(t_personal_labelframe, text='Edit profile', command= self.t_personal_info_edit)
+        t_edit_profile.grid(row=3, column=0)
         t_back_to_summary = tkinter.Button(t_personal_frame, text='Back', command= self.t_volunteer_summary)
         t_back_to_summary.grid(row=5, column= 1)
 
@@ -192,7 +192,8 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         t_personal_name.grid(row=4, column=3)
 
         # Name entry box
-        self.t_personal_nameEntry = tkinter.Entry(t_personal_labelframe, text='name').grid(row=5, column=3)
+        self.t_personal_nameEntry = tkinter.Entry(t_personal_labelframe, text='name')
+        self.t_personal_nameEntry.grid(row=5, column=3)
 
         # Email header/label
         t_personal_email = tkinter.Label(t_personal_labelframe, text='Email address')
@@ -232,8 +233,6 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         t_back_to_summary.grid(row=5, column= 1)
 
         # If you want to change an of your personal information which should then update the personal info dict.
-    def t_personal_info_edit(self):
-        pass
 
 
     def t_personal_info_dict(self):
