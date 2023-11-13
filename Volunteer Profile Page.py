@@ -73,16 +73,16 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
 
 
     def t_details_confirmation(self):
-        username = self.t_name_entry.get()
+        self.username = self.t_name_entry.get()
         password = self.t_password_entry.get()
         try:
-            if username not in self.y_personal_info.keys():
+            if self.username not in self.y_personal_info.keys():
                 raise t_deleted_account
             else:
-                if password == self.y_personal_info[username]['password']:
+                if password == self.y_personal_info[self.username]['password']:
                     print(self.y_personal_info)
                     self.t_volunteer_summary()
-                elif password != self.y_personal_info[username]['password']:
+                elif password != self.y_personal_info[self.username]['password']:
                     raise t_incorrect_details
 
             #if (username.lower() or password.lower()) in self.volunteer_dict:
@@ -142,28 +142,29 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         t_phonenumber = tkinter.Label(t_personal_labelframe, text='Phone number')
 
         # Phone number Entry
-        self.t_phonenumber_box = tkinter.Entry(t_personal_labelframe)
+        self.t_phonenumberEntry = tkinter.Entry(t_personal_labelframe)
         t_phonenumber.grid(row=8, column=3)
-        self.t_phonenumber_box.grid(row=9, column=3)
+        self.t_phonenumberEntry.grid(row=9, column=3)
         t_commitment = tkinter.Label(t_personal_labelframe, text='Commitment')
 
         # Commitment type entry
-        self.t_commitment_box =ttk.Combobox(t_personal_labelframe, values=['Full time', 'Part time', 'Occasional'], state='readonly')
+        self.t_commitmentEntry =ttk.Combobox(t_personal_labelframe, values=['Full time', 'Part time', 'Occasional'], state='readonly')
         t_commitment.grid(row=10, column=3)
-        self.t_commitment_box.grid(row=11, column=3)
+        self.t_commitmentEntry.grid(row=11, column=3)
 
         t_work_type_label = tkinter.Label(t_personal_labelframe, text='Work type')
         t_work_type_label.grid(row=12, column= 3)
 
         # Work type entry
-        self.t_work_type = ttk.Combobox(t_personal_labelframe, values=['Medical Aid', 'Food counselling'])
-        self.t_work_type.grid(row=13, column=3)
+        self.t_worktypeEntry = ttk.Combobox(t_personal_labelframe, values=['Medical Aid', 'Food counselling'])
+        self.t_worktypeEntry.grid(row=13, column=3)
         
         t_store_details = tkinter.Button(t_personal_frame, text='Store details', command= self.t_personal_info_dict, height=1, width=20)
         t_store_details.grid(row=14, column=3) 
         t_back_to_summary = tkinter.Button(t_personal_frame, text='Back', command= self.t_volunteer_summary)
         t_back_to_summary.grid(row=5, column= 1)
 
+        # If you want to change an of your personal information which should then update the personal info dict.
     def t_personal_info_edit(self):
         pass
 
@@ -174,6 +175,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         commitment = self.t_commitment_box.get()
         pass
     
+        # Edit camp information page
     def t_edit_camp(self):
         for i in self.window.winfo_children():
             i.destroy()
@@ -183,9 +185,18 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         t_edit_camp_title.grid(row=0, column=3)
         t_camp_labelframe = tkinter.LabelFrame(t_edit_campframe)
         t_camp_labelframe.grid(row=1, column=1)
+
+        # Camp ID box and label
         t_camp_ID_label = tkinter.Label(t_camp_labelframe, text= 'Camp ID')
         t_camp_ID_label.grid(row=3, column=3)
-        t_camp_ID_box = ttk.Combobox(t_camp_labelframe)
+        self.t_camp_ID_box = ttk.Combobox(t_camp_labelframe, values= self.y_camp_info['Syria']['ID'])
+        self.t_camp_ID_box.grid(row=4, column=3)
+
+        # Capacity for new refugees box and label
+        t_camp_capacity = tkinter.Label
+        
+
+        # Back button
         t_back_button = tkinter.Button(t_edit_campframe, text='Back', command= self.t_volunteer_summary)
         t_back_button.grid(row=5, column=1)
 
