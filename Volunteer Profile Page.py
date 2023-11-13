@@ -23,7 +23,10 @@ class t_deactivated_account(Exception):
 class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sensitive, t_no_text, t_incorrect_details):
 
     def __init__(self) -> None:
-        self.t_volunteer_dict = {'volunteer1': '111', 'volunteer2':'111'}
+        self.y_personal_info = {"volunteer1" : {"password": "111", "name": "", "Email Address": "", "Phone Number": "", "Committment": "", "Work Type": ""}, "volunteer2" : {"password": "111", "name": "", "Email Address": "", "Phone Number": "", "Committment": "", "Work Type": ""}
+}
+
+        self.y_camp_info = {"Syria" : {"ID": "123098", "Max Capacity": ""}}
         self.window = tkinter.Tk()
         self.window.title('Whatever')
         self.t_volunteer_login()
@@ -73,13 +76,13 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         username = self.t_name_entry.get()
         password = self.t_password_entry.get()
         try:
-            if username not in self.t_volunteer_dict.keys():
+            if username not in self.y_personal_info.keys():
                 raise t_deleted_account
             else:
-                if password == self.t_volunteer_dict[username]:
-                    print(self.t_volunteer_dict)
+                if password == self.y_personal_info[username]['password']:
+                    print(self.y_personal_info)
                     self.t_volunteer_summary()
-                elif password != self.t_volunteer_dict[username]:
+                elif password != self.y_personal_info[username]['password']:
                     raise t_incorrect_details
 
             #if (username.lower() or password.lower()) in self.volunteer_dict:
@@ -105,7 +108,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         self.t_summary_frame.pack()
         self.t_summary_title = tkinter.Label(self.t_summary_frame, text='Welcome to the volunteer portal', font=('Arial Bold', 40))
         self.t_summary_title.grid(row=0, column=3, pady=30)
-        self.t_summary_editdetails = tkinter.Button(self.t_summary_frame, text= 'Edit personal information', command=self.t_personal_information, height=2, width=20)
+        self.t_summary_editdetails = tkinter.Button(self.t_summary_frame, text= 'Edit personal information', command=self.t_personal_information_base, height=2, width=20)
         self.t_summary_editdetails.grid(row=3, column=3, pady=5)
         self.t_summary_editcamp = tkinter.Button(self.t_summary_frame, text='Edit camp information', command= self.t_edit_camp, height=2, width= 20)
         self.t_summary_editcamp.grid(row=4, column=3, pady=5)
@@ -116,8 +119,8 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         
         
 
-
-    def t_personal_information(self):
+        # This is the UI for personal information, don't touch it Ying.
+    def t_personal_information_base(self):
         for i in self.window.winfo_children():
             i.destroy()
         t_personal_frame = tkinter.Frame(self.window)
@@ -127,40 +130,65 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         t_personal_title = tkinter.Label(t_personal_frame, text= 'Edit details', font=('Arial Bold', 30)).grid(row=0, column=3, pady=30)
         t_personal_name = tkinter.Label(t_personal_labelframe, text='Full name')
         t_personal_name.grid(row=4, column=3)
+
+        # Name entry
         self.t_personal_nameEntry = tkinter.Entry(t_personal_labelframe, text='name').grid(row=5, column=3)
+        # Email label
         t_personal_email = tkinter.Label(t_personal_labelframe, text='Email address')
         t_personal_email.grid(row=6, column=3)
+
+        #mail entry
         self.t_personal_emailEntry = tkinter.Entry(t_personal_labelframe).grid(row=7, column=3)
         t_phonenumber = tkinter.Label(t_personal_labelframe, text='Phone number')
+
+        # Phone number Entry
         self.t_phonenumber_box = tkinter.Entry(t_personal_labelframe)
         t_phonenumber.grid(row=8, column=3)
         self.t_phonenumber_box.grid(row=9, column=3)
         t_commitment = tkinter.Label(t_personal_labelframe, text='Commitment')
+
+        # Commitment type entry
         self.t_commitment_box =ttk.Combobox(t_personal_labelframe, values=['Full time', 'Part time', 'Occasional'], state='readonly')
         t_commitment.grid(row=10, column=3)
         self.t_commitment_box.grid(row=11, column=3)
+
+        t_work_type_label = tkinter.Label(t_personal_labelframe, text='Work type')
+        t_work_type_label.grid(row=12, column= 3)
+
+        # Work type entry
+        self.t_work_type = ttk.Combobox(t_personal_labelframe, values=['Medical Aid', 'Food counselling'])
+        self.t_work_type.grid(row=13, column=3)
+        
         t_store_details = tkinter.Button(t_personal_frame, text='Store details', command= self.t_personal_info_dict, height=1, width=20)
-        t_store_details.grid(row=12, column=3)
-        t_back_button = tkinter.Button(t_personal_frame, text='Back', command= self.t_volunteer_summary)
-        t_back_button.grid(row=5, column= 1)
+        t_store_details.grid(row=14, column=3) 
+        t_back_to_summary = tkinter.Button(t_personal_frame, text='Back', command= self.t_volunteer_summary)
+        t_back_to_summary.grid(row=5, column= 1)
+
+    def t_personal_info_edit(self):
+        pass
 
     def t_personal_info_dict(self):
         name = self.t_personal_nameEntry.get()
         email = self.t_personal_emailEntry.get()
         phone_number = self.t_phonenumber_box.get()
         commitment = self.t_commitment_box.get()
-        personal_dict = {'Name':'', 'Email':'', 'Phone number':'', 'Commitment':''}
-        personal_dict['Name'] = name
-        personal_dict['Email'] = email
-        personal_dict['Phone number'] = phone_number
-        personal_dict['Commitment'] = commitment
-        print(personal_dict)
+        pass
     
     def t_edit_camp(self):
         for i in self.window.winfo_children():
             i.destroy()
         t_edit_campframe = tkinter.Frame(self.window)
         t_edit_campframe.pack()
+        t_edit_camp_title = tkinter.Label(t_edit_campframe, text='Edit camp', font=('Arial Bold', 30), pady=30)
+        t_edit_camp_title.grid(row=0, column=3)
+        t_camp_labelframe = tkinter.LabelFrame(t_edit_campframe)
+        t_camp_labelframe.grid(row=1, column=1)
+        t_camp_ID_label = tkinter.Label(t_camp_labelframe, text= 'Camp ID')
+        t_camp_ID_label.grid(row=3, column=3)
+        t_camp_ID_box = ttk.Combobox(t_camp_labelframe)
+        t_back_button = tkinter.Button(t_edit_campframe, text='Back', command= self.t_volunteer_summary)
+        t_back_button.grid(row=5, column=1)
+
 
 
     def t_create_refugee(self):
