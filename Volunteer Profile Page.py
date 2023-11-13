@@ -147,24 +147,29 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         t_personal_frame = tkinter.Frame(self.window)
         t_personal_frame.pack()
         t_personal_labelframe = tkinter.LabelFrame(t_personal_frame)
-        t_personal_labelframe.grid(row=3, column=3)
+        t_personal_labelframe.grid(row=3, column=3, padx=10, pady=10)
         t_personal_title = tkinter.Label(t_personal_frame, text= 'Volunteer Details', font=('Arial Bold', 30)).grid(row=0, column=3, pady=30)
-        t_personal_name = tkinter.Label(t_personal_labelframe, text='Full name')
-        t_personal_name.grid(row=4, column=3)
+        t_personal_namelabel = tkinter.Label(t_personal_labelframe, text= 'Name', font=('TkDefaultFont', 15)).grid(row=4, column=2, pady=5)
+        t_personal_name = tkinter.Label(t_personal_labelframe, text= self.y_personal_info[self.username]['name'], font=('TkDefaultFont', 15))
+        t_personal_name.grid(row=4, column=3, pady=5)
 
                 # Email label
-        t_personal_email = tkinter.Label(t_personal_labelframe, text= self.y_personal_info[self.username]['Email Address'])
-        t_personal_email.grid(row=6, column=3)
+        t_personal_emailabel = tkinter.Label(t_personal_labelframe, text= 'Email Address: ', font=('TkDefaultFont', 15)).grid(row=6, column=2, pady=5)
+        t_personal_email = tkinter.Label(t_personal_labelframe, text= self.y_personal_info[self.username]['Email Address'], font=('TkDefaultFont', 15))
+        t_personal_email.grid(row=6, column=3,pady= 5)
+        
 
-        #mail entry
-        t_phonenumber = tkinter.Label(t_personal_labelframe, text= self.y_personal_info[self.username]['Phone Number'])
+        t_personal_phonenumberlabel = tkinter.Label(t_personal_labelframe, text= 'Phone number: ', font=('TkDefaultFont', 15)).grid(row=8, column=2, pady=5)
+        t_phonenumber = tkinter.Label(t_personal_labelframe, text= self.y_personal_info[self.username]['Phone Number'], font=('TkDefaultFont', 15))
+        t_phonenumber.grid(row=8, column=3, pady=5)
 
-        t_phonenumber.grid(row=8, column=3)
-        t_commitment = tkinter.Label(t_personal_labelframe, text=self.y_personal_info[self.username]['Commitment'])
-        t_commitment.grid(row=10, column=3)
+        t_personal_commitmentlabel = tkinter.Label(t_personal_labelframe, text= 'Commitment: ', font=('TkDefaultFont', 15)).grid(row=10, column=2, pady=5)
+        t_commitment = tkinter.Label(t_personal_labelframe, text=self.y_personal_info[self.username]['Commitment'], font=('TkDefaultFont', 15))
+        t_commitment.grid(row=10, column=3, pady=5)
 
-        t_work_type_label = tkinter.Label(t_personal_labelframe, text= self.y_personal_info[self.username]['Work Type'])
-        t_work_type_label.grid(row=12, column= 3)
+        t_personal_namelabel = tkinter.Label(t_personal_labelframe, text= 'Work type: ', font=('TkDefaultFont', 15)).grid(row=12, column=2, pady=5)
+        t_work_type_label = tkinter.Label(t_personal_labelframe, text= self.y_personal_info[self.username]['Work Type'], font=('TkDefaultFont', 15))
+        t_work_type_label.grid(row=12, column= 3, pady=5)
 
         # Work type entry
         self.t_worktypeEntry.grid(row=13, column=3)
@@ -242,6 +247,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         self.y_personal_info[self.username]['Phone Number'] = phone
         self.y_personal_info[self.username]['Commitment'] = commitment
         self.y_personal_info[self.username]["Work Type"] = work
+        print(self.y_personal_info)
 
         
         
