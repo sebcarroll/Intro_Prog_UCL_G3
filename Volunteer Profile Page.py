@@ -23,8 +23,12 @@ class t_deactivated_account(Exception):
 class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sensitive, t_no_text, t_incorrect_details):
 
     def __init__(self) -> None:
-        self.y_personal_info = {"volunteer1" : {"password": "111", "name": "", "Email Address": "", "Phone Number": "", "Committment": "", "Work Type": ""}, "volunteer2" : {"password": "111", "name": "", "Email Address": "", "Phone Number": "", "Committment": "", "Work Type": ""}
-}
+        self.y_personal_info = {
+            'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': False, 'Deleted': False},
+            'volunteer2': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': False, 'Deleted': False},
+            'volunteer3': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': False, 'Deleted': False},
+            'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': False, 'Deleted': False}
+        }
 
         self.y_camp_info = {"Syria" : {"ID": "123098", "Max Capacity": ""}}
         self.window = tkinter.Tk()
@@ -169,12 +173,11 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         pass
 
     def t_personal_info_dict(self):
-        name = self.t_personal_nameEntry.get()
-        email = self.t_personal_emailEntry.get()
-        phone_number = self.t_phonenumber_box.get()
-        commitment = self.t_commitment_box.get()
-        pass
-    
+        self.y_personal_info[self.username]['name'] = self.t_personal_nameEntry.get()
+        self.y_personal_info[self.username]['Email Address'] = self.t_personal_emailEntry.get()
+        self.y_personal_info[self.username]['Phone Number'] = self.t_personal_phonenumberEntry.get()
+        self.y_personal_info[self.username]['Commitment'] = self.t_personal_commitmentEntry.get()
+        self.y_personal_info[self.username]["Work Type"] = self.t_personal_worktypeEntry.get()
         # Edit camp information page
     def t_edit_camp(self):
         for i in self.window.winfo_children():
