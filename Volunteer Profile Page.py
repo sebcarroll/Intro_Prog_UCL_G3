@@ -26,7 +26,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
     def __init__(self) -> None:
         # Volunteer dictionary - Nested: Can access via self.y_personal_info[username][key]
         self.y_personal_info = {
-            'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': False, 'Deleted': False},
+            'volunteer1': {'password': '111', 'name': 'Tom', 'Email Address': 'tomwhogg@me.com', 'Phone Number': '1921249', 'Commitment': 'Part time', 'Work Type': 'Regular', 'Deactivated': False, 'Deleted': False},
             'volunteer2': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': False, 'Deleted': False},
             'volunteer3': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': False, 'Deleted': False},
             'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': False, 'Deleted': False}
@@ -185,7 +185,6 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         t_personal_frame.pack()
         t_personal_labelframe = tkinter.LabelFrame(t_personal_frame)
         t_personal_labelframe.grid(row=3, column=3)
-        # Header for the whole page
         t_personal_title = tkinter.Label(t_personal_frame, text= 'Edit details', font=('Arial Bold', 30)).grid(row=0, column=3, pady=30)
         
         # Name label
@@ -199,24 +198,21 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         t_personal_email = tkinter.Label(t_personal_labelframe, text='Email address')
         t_personal_email.grid(row=6, column=3)
 
-        # Email entry box
-        self.t_personal_emailEntry = tkinter.Entry(t_personal_labelframe)
-        self.t_personal_emailEntry.grid(row=7, column=3)
-
-        # Phone number label
+        #Email entry box
+        self.t_personal_emailEntry = tkinter.Entry(t_personal_labelframe).grid(row=7, column=3)
         t_phonenumber = tkinter.Label(t_personal_labelframe, text='Phone number')
-        t_phonenumber.grid(row=8, column=3)
 
         # Phone number Entry
         self.t_phonenumberEntry = tkinter.Entry(t_personal_labelframe)
+        t_phonenumber.grid(row=8, column=3)
         self.t_phonenumberEntry.grid(row=9, column=3)
 
         # Commitment label/header
         t_commitment = tkinter.Label(t_personal_labelframe, text='Commitment')
-        t_commitment.grid(row=10, column=3)
 
         # Commitment type entry
         self.t_commitmentEntry =ttk.Combobox(t_personal_labelframe, values=['Full time', 'Part time', 'Occasional'], state='readonly')
+        t_commitment.grid(row=10, column=3)
         self.t_commitmentEntry.grid(row=11, column=3)
 
         # Work type label
@@ -249,6 +245,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         self.y_personal_info[self.username]['Phone Number'] = phone
         self.y_personal_info[self.username]['Commitment'] = commitment
         self.y_personal_info[self.username]["Work Type"] = work
+        print(self.y_personal_info)
 
         
         
