@@ -172,13 +172,22 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
     def t_personal_info_edit(self):
         pass
 
+
     def t_personal_info_dict(self):
-        self.y_personal_info[self.username]['name'] = self.t_personal_nameEntry.get()
-        self.y_personal_info[self.username]['Email Address'] = self.t_personal_emailEntry.get()
-        self.y_personal_info[self.username]['Phone Number'] = self.t_personal_phonenumberEntry.get()
-        self.y_personal_info[self.username]['Commitment'] = self.t_personal_commitmentEntry.get()
-        self.y_personal_info[self.username]["Work Type"] = self.t_personal_worktypeEntry.get()
-        # Edit camp information page
+        name = self.t_personal_nameEntry.get()
+        email = self.t_personal_emailEntry.get()
+        phone = self.t_personal_phonenumberEntry.get()
+        commitment = self.t_personal_commitmentEntry.get()
+        work = self.t_personal_worktypeEntry.get()
+        self.y_personal_info[self.username]['name'] = name
+        self.y_personal_info[self.username]['Email Address'] = email
+        self.y_personal_info[self.username]['Phone Number'] = phone
+        self.y_personal_info[self.username]['Commitment'] = commitment
+        self.y_personal_info[self.username]["Work Type"] = work
+        
+        
+        
+    # Edit camp information page
     def t_edit_camp(self):
         for i in self.window.winfo_children():
             i.destroy()
