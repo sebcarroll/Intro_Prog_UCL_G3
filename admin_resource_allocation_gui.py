@@ -1,9 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
-from admin_resource_allocation_functions import submit
+from admin_resource_allocation_functions import admin_resource_submit
+
 
 root = tk.Tk()
-root.title("Refugee Camp Resource Management")
+root.geometry('750x600')
 
 tk.Label(root, text="Camp ID:").grid(row=0, column=0)
 camp_id_entry = tk.Entry(root)
@@ -38,7 +39,7 @@ delivery_time_weeks_entry = tk.Entry(root)
 delivery_time_weeks_entry.grid(row=6, column=1)
 
 # Submit button
-submit_button = ttk.Button(root, text="Submit", command=submit)
+submit_button = ttk.Button(root, text="Submit", command=admin_resource_submit)
 submit_button.grid(row=7, column=0, columnspan=2)
 
 # Running the application

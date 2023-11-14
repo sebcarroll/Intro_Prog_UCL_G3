@@ -1,6 +1,6 @@
 import pickle
 
-def submit():
+def admin_resource_submit():
     camp_id = str(camp_id_entry.get())
     no_weeks_aid = int(no_weeks_aid_entry.get())
     total_food_supplied = int(total_food_supplied_entry.get())
@@ -10,11 +10,9 @@ def submit():
     week_medicine_per_refugee = int(week_medicine_per_refugee_entry.get())
     delivery_time_weeks = int(delivery_time_weeks_entry.get())
 
-    resource_allocation_variables = {
+    resource_allocation_variables = { }
 
-    }
-
-
+#set box for resources
     with open('camp_resources.pkl', 'wb') as file:
         pickle.dump(data, file)
 
