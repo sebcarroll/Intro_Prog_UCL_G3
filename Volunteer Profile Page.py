@@ -40,7 +40,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                 self.y_personal_info = pickle.load(file)
         else:
             self.y_personal_info = {
-                'volunteer1': {'password': '111', 'name': 'Tom', 'Email Address': 'tomwhogg@me.com', 'Phone Number': '1921249', 'Commitment': 'Part time', 'Work Type': 'Regular', 'Deactivated': False, 'Deleted': False},
+                'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': False, 'Deleted': False},
                 'volunteer2': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': False, 'Deleted': False},
                 'volunteer3': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': True, 'Deleted': False},
                 'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': False, 'Deleted': False}
