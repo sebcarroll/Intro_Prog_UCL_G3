@@ -10,7 +10,16 @@ def admin_resource_submit():
     week_medicine_per_refugee = int(week_medicine_per_refugee_entry.get())
     delivery_time_weeks = int(delivery_time_weeks_entry.get())
 
-    resource_allocation_variables = { }
+    resource_allocation_variables = {
+        'camp_id': camp_id,
+        'no_weeks_aid': no_weeks_aid,
+        'total_food_supplied': total_food_supplied,
+        'total_medicine_supplied': total_medicine_supplied,
+        'no_refugees': no_refugees,
+        'week_food_per_refugee': week_food_per_refugee,
+        'week_medicine_per_refugee': week_medicine_per_refugee,
+        'delivery_time_weeks': delivery_time_weeks
+    }
 
 #set box for resources
     with open('camp_resources.pkl', 'wb') as file:
