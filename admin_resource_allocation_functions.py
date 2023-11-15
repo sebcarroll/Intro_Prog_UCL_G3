@@ -1,15 +1,25 @@
 import pickle
+from general_functions import get_selected_listbox_value
+
+
+
 
 def admin_resource_submit():
-    camp_id = str(camp_id_entry.get())
+    from admin_resource_allocation_gui import camp_id_listbox
+    camp_id = str(get_selected_listbox_value(camp_id_listbox))
     no_weeks_aid = int(no_weeks_aid_entry.get())
     total_food_supplied = int(total_food_supplied_entry.get())
     total_medicine_supplied = int(total_medicine_supplied_entry.get())
     no_refugees = int(no_refugees_entry.get()) # Will need to come from the volunteer.
-    week_food_per_refugee = int(week_food_per_refugee_entry.get())
-    week_medicine_per_refugee = int(week_medicine_per_refugee_entry.get())
-    delivery_time_weeks = int(delivery_time_weeks_entry.get())
+    from admin_resource_allocation_gui import food_amount_refugee_listbox
+    week_food_per_refugee = int(get_selected_listbox_value(food_amount_refugee_listbox))
+    from admin_resource_allocation_gui import medicine_amount_refugee_listbox
+    week_medicine_per_refugee = int(get_selected_listbox_value(medicine_amount_refugee_listbox))
+    from admin_resource_allocation_gui import estimated_delivery_time_listbox
+    delivery_time_weeks = int(get_selected_listbox_value(estimated_delivery_time_listbox))
 
+
+def create_resource_allocation_dict(camp_id, no_weeks_aid, total_food_supplied, total_medicine_supplied,no_refugees, week_food_per_refugee, week_medicine_per_refugee,delivery_time_weeks):
     resource_allocation_variables = {
         'camp_id': camp_id,
         'no_weeks_aid': no_weeks_aid,
@@ -20,17 +30,16 @@ def admin_resource_submit():
         'week_medicine_per_refugee': week_medicine_per_refugee,
         'delivery_time_weeks': delivery_time_weeks
     }
+    return resource_allocation_variables
+def save_to_all_camp_data(camp_id, resource_allocation_variables):
+    unique_name = f"camp_{camp_id}_data"
+    all_camp_data[unique_name] = resource_allocation_variables
 
-#set box for resources
-    with open('camp_resources.pkl', 'wb') as file:
-        pickle.dump(data, file)
-
-    print("Values Submitted and Saved")
 
 def resource_allocation(camp_id, no_weeks_aid, total_food_supplied, total_medicine_supplied, no_refugees, week_food_per_refugee, week_medicine_per_refugee):
     '''
     This function enables the administrator to allocate resources to a camp and will notify the administrator
-    what camp resources are running low and when they should allocate more resources to ensure that they do not run out.
+    if the resources provided to the camp are not adequate to cover the total period in which aid is provided.
 
     :param camp_id: The identification number of the camp to which these resources are being allocated.
     :param no_weeks_aid: Defines the estimated number of weeks the camp shall be supplying aid for.
@@ -45,18 +54,29 @@ def resource_allocation(camp_id, no_weeks_aid, total_food_supplied, total_medici
     :return:
     '''
 
-    weeks_of_food_supply = total_food_supplied / week_food_per_refugee / no_refugees
-    weeks_of_medicine_supply = total_medicine_supplied / week_medicine_per_refugee / no_refugees
+    weeks_of_food_supply = total_food_supplied / week_food_per_refugee * no_refugees
+    weeks_of_medicine_supply = total_medicine_supplied / week_medicine_per_refugee * no_refugees
+
+
+    if weeks_of_food_supply < no_weeks_aid:
+
+        additional_food_needed = (no_weeks_aid - weeks_of_food_supply) * week_food_per_refugee * no_refugees
+
+        print(f" {additional_food_needed} additional units of food needed at camp {camp_id} to cover the aid duration period.")
+
+    if weeks_of_medicine_supply < no_weeks_aid:
+
+        additional_medicine_needed = (no_weeks_aid - weeks_of_medicine_supply) * week_medicine_per_refugee * no_refugees
+
+        print(f" {additional_medicine_needed} units of medicine needed at camp {camp_id} to cover the aid duration period.")
+
+
 
 '''
-    if no_weeks_aid < weeks_of_food_supply:
-        #some code that makes it suggest it allocate more resources - are you sure you want to allocate this amount of food given?
-        #some code that then reminds admin in x number of weeks to allocate more resources to this camp - probably a separate function.
 
-    elif no_weeks_aid < weeks_of_medicine_supply:
-        # some code that makes it suggest it allocate more resources - are you sure you want to allocate this amount of medicine given?
-        # some code that then reminds admin in x number of weeks to allocate more resources to this camp - probably a separate function
+with open('camp_resources.pkl', 'wb') as file:
+        pickle.dump(data, file)
 
-def notify_admin_resources(camp_id, current_food, current_medicine, delivery_time_weeks):
+    print("Values Submitted and Saved")
 
 '''
