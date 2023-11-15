@@ -283,8 +283,8 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
 
                 try:
                     # If entered non-alpha characters, raise error
-                    if re.search(r'[A-Za-z]', name):                      
-                        self.y_personal_info[self.username]['name'] = name#
+                    if re.search(r'^[A-Za-z]', name):                      
+                        self.y_personal_info[self.username]['name'] = name.strip
                     else:
                         raise invalid_name
                 
