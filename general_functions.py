@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+
 def create_listbox_with_label(widget, text_label, row_num, column_num, list_of_options):
     '''
     Creates a labelled listbox so that only a select number of options are available for input by the user.
@@ -36,3 +36,27 @@ def get_selected_listbox_value(listbox):
     if selected_indices:
         return listbox.get(selected_indices[0])
     return None  # Return None or a default value if no item is selected
+
+
+def check_input_valid(variable, window, message_label):
+    '''
+    Checks the input field to ensure that empty inputs are rejected.
+    Reloads the Tkinter window and displays a message if the input is invalid.
+
+    :param variable: The input that is put into the input field and is being checked.
+    :param window: The window in Tkinter that the variable is being inputted into.
+    :param message_label: The label widget that will display the message requiring the entry of a non-blank input.
+    :return:
+    '''
+    if variable == None :
+        message_label.config(text="Please insert a valid input.")
+        window.update()
+        message_label.grid(row=9, column=0, columnspan=2)
+        return False
+    elif variable.strip() == '':
+        message_label.config(text="Please insert a valid input.")
+        window.update()
+        message_label.grid(row=9, column=0, columnspan=2)
+    else:
+        message_label.config(text="")
+        return True

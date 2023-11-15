@@ -1,12 +1,15 @@
 import tkinter as tk
-from tkinter import ttk
-from admin_resource_allocation_functions import admin_resource_submit
+from tkinter import ttk, Listbox
 from general_functions import create_listbox_with_label
+from general_functions import check_input_valid
+from general_functions import get_selected_listbox_value
 
 root = tk.Tk()
+window = root
 root.geometry('750x600')
 #Comes from list of IDs created by admin in camp creation
 camp_ids = ["Camp_1", "Camp_2", "Camp_3", "Camp_4"]
+camp_id_listbox: Listbox
 camp_id_listbox, camp_id_scrollbar = create_listbox_with_label(root, "Camp ID:", 0, 0, camp_ids)
 
 
@@ -36,9 +39,38 @@ medicine_amount_refugee_listbox, medicine_amount_refugee_scrollbar = create_list
 estimated_delivery_time_options = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4]
 estimated_delivery_time_listbox, estimated_delivery_time_scrollbar = create_listbox_with_label(root, "Estimated Resource Delivery Time (weeks): ", 7, 0, estimated_delivery_time_options)
 
-# Submit button
+message_label = tk.Label(window, text="")
+
+def admin_resource_submit():
+
+    camp_id = get_selected_listbox_value(camp_id_listbox)
+    check_input_valid(camp_id,window, message_label)
+
+    no_weeks_aid = no_weeks_aid_entry.get()
+    check_input_valid(no_weeks_aid, window, message_label)
+
+    total_food_supplied = total_food_supplied_entry.get()
+    check_input_valid(total_food_supplied, window, message_label)
+
+    total_medicine_supplied = total_medicine_supplied_entry.get()
+    check_input_valid(total_medicine_supplied, window, message_label)
+
+    no_refugees = no_refugees_entry.get() # Will need to come from the volunteer.
+    check_input_valid(no_refugees, window, message_label)
+
+    week_food_per_refugee = get_selected_listbox_value(food_amount_refugee_listbox)
+    check_input_valid(week_food_per_refugee, window, message_label)
+
+    week_medicine_per_refugee = get_selected_listbox_value(medicine_amount_refugee_listbox)
+    check_input_valid(week_medicine_per_refugee, window, message_label)
+
+    delivery_time_weeks = get_selected_listbox_value(estimated_delivery_time_listbox)
+    check_input_valid(delivery_time_weeks, window, message_label)
+
+
 submit_button = ttk.Button(root, text="Submit", command=admin_resource_submit)
+
 submit_button.grid(row=8, column=0, columnspan=2)
 
-# Running the application
+
 root.mainloop()
