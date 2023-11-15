@@ -38,7 +38,7 @@ def get_selected_listbox_value(listbox):
     return None  # Return None or a default value if no item is selected
 
 
-def check_input_valid(variable, window, message_label):
+def check_input_valid(variable, window, message_label, submit_button_row_num, submit_button_column_num):
     '''
     Checks the input field to ensure that empty inputs are rejected.
     Reloads the Tkinter window and displays a message if the input is invalid.
@@ -51,12 +51,13 @@ def check_input_valid(variable, window, message_label):
     if variable == None :
         message_label.config(text="Please insert a valid input.")
         window.update()
-        message_label.grid(row=9, column=0, columnspan=2)
+        message_label.grid(row=submit_button_row_num + 1, column=submit_button_column_num, columnspan=2)
         return False
     elif variable.strip() == '':
         message_label.config(text="Please insert a valid input.")
         window.update()
-        message_label.grid(row=9, column=0, columnspan=2)
+        message_label.grid(row=submit_button_row_num + 1, column=submit_button_column_num, columnspan=2)
     else:
         message_label.config(text="")
+        message_label.grid(row=submit_button_row_num + 1, column=submit_button_column_num, columnspan=2)
         return True
