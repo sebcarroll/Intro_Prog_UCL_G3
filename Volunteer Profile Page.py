@@ -28,7 +28,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         self.y_personal_info = {
             'volunteer1': {'password': '111', 'name': 'Tom', 'Email Address': 'tomwhogg@me.com', 'Phone Number': '1921249', 'Commitment': 'Part time', 'Work Type': 'Regular', 'Deactivated': False, 'Deleted': False},
             'volunteer2': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': False, 'Deleted': False},
-            'volunteer3': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': False, 'Deleted': False},
+            'volunteer3': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': True, 'Deleted': False},
             'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': False, 'Deleted': False}
         }
 
@@ -97,9 +97,10 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         try:
             if self.username not in self.y_personal_info.keys():
                 raise t_deleted_account
+            elif self.y_personal_info[self.username]['Deactivated'] == True:
+                raise t_deactivated_account
             else:
                 if password == self.y_personal_info[self.username]['password']:
-                    print(self.y_personal_info)
                     self.t_volunteer_summary()
                 elif password != self.y_personal_info[self.username]['password']:
                     raise t_incorrect_details
@@ -112,7 +113,8 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
             #tkinter.messagebox.showinfo(title='Incorrect capitals', message='Check to make sure you didn\'t accidentally use caps lock')
         except(t_deleted_account):
             tkinter.messagebox.showinfo(title='Username non-existent', message='That is not a valid volunteer username')
-
+        except(t_deactivated_account):
+            tkinter.messagebox.showinfo(title='Deactivated account', message='Your account has been deactivated, \nPlease contact admin for more details')
     # For caps lock on/off
     def caps_lock_on(self, event):
         if event.keysym == 'Caps_Lock':
@@ -191,6 +193,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         #  Currently set name and current title
         current_title = tkinter.Label(t_personal_labelframe, text='Current details', font=('TkinterDefault', 20))
         current_title.grid(row=4, column=2)
+
         preset_name = tkinter.Label(t_personal_labelframe, text= self.y_personal_info[self.username]['name'], font=('TkinterDefault', 15))
         preset_name.grid(row=5, column=2, padx=5)
 
@@ -242,7 +245,8 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         # Back to details page
         t_back_to_details = tkinter.Button(t_personal_frame, text='Back to view details', command= self.t_personal_information_base)
         t_back_to_details.grid(row=17, column=1)
-
+        
+        
         # Back to summary page
         back_to_summary = tkinter.Button(t_personal_frame, text='Back to summary page', command=self.t_volunteer_summary)
         back_to_summary.grid(row=17, column= 5)
@@ -261,7 +265,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         self.y_personal_info[self.username]['Phone Number'] = phone
         self.y_personal_info[self.username]['Commitment'] = commitment
         self.y_personal_info[self.username]["Work Type"] = work
-        print(self.y_personal_info)
+        self.t_personal_information_base()
 
         
     # Edit camp information page
