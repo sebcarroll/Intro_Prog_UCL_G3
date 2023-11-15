@@ -1,5 +1,7 @@
 import tkinter
 import pickle
+import re
+import os
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
@@ -19,18 +21,32 @@ class t_deleted_account(Exception):
 class t_deactivated_account(Exception):
     pass
 
+class invalid_email(Exception):
+    pass
 
+class invalid_phone_number(Exception):
+    pass
+
+class invalid_name(Exception):
+    pass
 
 class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sensitive, t_no_text, t_incorrect_details):
 
     def __init__(self) -> None:
         # Volunteer dictionary - Nested: Can access via self.y_personal_info[username][key]
-        self.y_personal_info = {
-            'volunteer1': {'password': '111', 'name': 'Tom', 'Email Address': 'tomwhogg@me.com', 'Phone Number': '1921249', 'Commitment': 'Part time', 'Work Type': 'Regular', 'Deactivated': False, 'Deleted': False},
-            'volunteer2': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': False, 'Deleted': False},
-            'volunteer3': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': True, 'Deleted': False},
-            'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': False, 'Deleted': False}
-        }
+    
+        if os.path.getsize('data.pickle') > 0:
+            with open('data.pickle', 'rb') as file:
+                self.y_personal_info = pickle.load(file)
+        else:
+            self.y_personal_info = {
+                'volunteer1': {'password': '111', 'name': 'Tom', 'Email Address': 'tomwhogg@me.com', 'Phone Number': '1921249', 'Commitment': 'Part time', 'Work Type': 'Regular', 'Deactivated': False, 'Deleted': False},
+                'volunteer2': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': False, 'Deleted': False},
+                'volunteer3': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': True, 'Deleted': False},
+                'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '', 'Work Type': '', 'Deactivated': False, 'Deleted': False}
+            }
+
+
 
         self.y_camp_info = {"Syria" : {"ID": "123098", "Max Capacity": ""}}
         self.window = tkinter.Tk()
@@ -255,17 +271,47 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
 
 
     def t_personal_info_dict(self):
-        name = self.t_personal_nameEntry.get()
-        email = self.t_personal_emailEntry.get()
-        phone = self.t_phonenumberEntry.get()  
-        commitment = self.t_commitmentEntry.get()
-        work = self.t_worktypeEntry.get()
-        self.y_personal_info[self.username]['name'] = name
-        self.y_personal_info[self.username]['Email Address'] = email
-        self.y_personal_info[self.username]['Phone Number'] = phone
-        self.y_personal_info[self.username]['Commitment'] = commitment
-        self.y_personal_info[self.username]["Work Type"] = work
-        self.t_personal_information_base()
+        try:
+            # Update self.y_personal_info dictionary
+
+            with open('data.pickle', 'wb') as file:
+                name = self.t_personal_nameEntry.get()
+                email = self.t_personal_emailEntry.get()
+                phone = self.t_phonenumberEntry.get()  
+                commitment = self.t_commitmentEntry.get()
+                work = self.t_worktypeEntry.get()
+
+                try:
+                    # If entered non-alpha characters, raise error
+                    if re.search(r'[A-Za-z]', name):                      
+                        self.y_personal_info[self.username]['name'] = name#
+                    else:
+                        raise invalid_name
+                
+
+                    # If entered non-number characters, raise error
+                    if re.search(r'^[0-9]+', phone):
+                        self.y_personal_info[self.username]['Phone Number'] = phone
+                    else:
+                        raise invalid_phone_number
+                    # Make sure they include correct email format
+                    if re.search(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', email):
+                        self.y_personal_info[self.username]['Email Address'] = email
+                    else:
+                        raise invalid_email
+                except(invalid_email):
+                    tkinter.messagebox.showinfo(title='Invalid Email', message='Please enter a valid email address')
+                except(invalid_phone_number):
+                    tkinter.messagebox.showinfo(title='Invalid Phone Number', message='Please enter a valid phone number')
+                except(invalid_name):
+                    tkinter.messagebox.showinfo(title='Invalid Name', message='Please enter a valid name')
+
+                pickle.dump(self.y_personal_info, file)
+            # Go back to the details page
+            self.t_personal_information_base()
+        except FileNotFoundError:
+            pass
+
 
         
     # Edit camp information page
