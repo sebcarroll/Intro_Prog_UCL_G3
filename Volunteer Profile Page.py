@@ -339,18 +339,15 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
 
                     self.y_personal_info[self.username]['Work Type'] = work
                     self.y_personal_info[self.username]['Commitment'] = commitment
-
+                    self.t_personal_information_base()
                 except(invalid_email):
                     tkinter.messagebox.showinfo(title='Invalid Email', message='Please enter a valid email address')
                 except(invalid_phone_number):
-                    tkinter.messagebox.showinfo(title='Invalid Phone Number',
-                                                message='Please enter a valid phone number')
+                    tkinter.messagebox.showinfo(title='Invalid Phone Number', message='Please enter a valid phone number')
                 except(invalid_name):
                     tkinter.messagebox.showinfo(title='Invalid Name', message='Please enter a valid name')
 
                 pickle.dump(self.y_personal_info, file)
-            # Go back to the details page
-            self.t_personal_information_base()
         except FileNotFoundError:
             pass
 
