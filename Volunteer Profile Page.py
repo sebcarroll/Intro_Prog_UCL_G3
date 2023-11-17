@@ -405,11 +405,10 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         self.t_camp_IDbox.grid(row=3, column=4, padx=5)
 
         # Medical conditions, we need to add dictionaries and everything for this
-        medical_conditionslabel = tkinter.Label(refugee_labelframe, text='Medical conditions',
-                                                font=('TkinterDefault', 15))
-        medical_conditionslabel.grid(row=5, column=3, padx=5)
-        medical_conditonsbox = ttk.Combobox(refugee_labelframe, values='We haven\'nt come up with this dictionary yet')
-        medical_conditonsbox.grid(row=5, column=4)
+        medical_condition = tkinter.Label(refugee_labelframe, text='Enter any medical condition(s)', font=("TkinterDefault", 15))
+        medical_condition.grid(row=5, column=3, padx=5)
+        self.t_create_refugeeEntry = tkinter.Entry(refugee_labelframe)
+        self.t_create_refugeeEntry.grid(row=5, column=4)
         # I'm going to add another box for other that pops up if their medical conditions isn't in the list
         # Just haven't decided how I want to hide it and then have it appear just yet.
 
