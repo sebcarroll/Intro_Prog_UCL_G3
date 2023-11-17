@@ -3,6 +3,8 @@ from tkinter import ttk, Listbox
 from general_functions import create_listbox_with_label
 from general_functions import check_input_valid
 from general_functions import get_selected_listbox_value
+from general_functions import check_is_numeric
+from admin_resource_allocation_functions import resource_allocation
 
 root = tk.Tk()
 window = root
@@ -11,7 +13,6 @@ root.geometry('750x600')
 camp_ids = ["Camp_1", "Camp_2", "Camp_3", "Camp_4"]
 camp_id_listbox: Listbox
 camp_id_listbox, camp_id_scrollbar = create_listbox_with_label(root, "Camp ID:", 0, 0, camp_ids)
-
 
 tk.Label(root, text="Number of Weeks of Aid:").grid(row=1, column=0)
 no_weeks_aid_entry = tk.Entry(root)
@@ -45,29 +46,37 @@ submit_button_column = 0
 submit_column_span = 2
 def admin_resource_submit():
 
-    camp_id = get_selected_listbox_value(camp_id_listbox)
+    camp_id = get_selected_listbox_value(camp_id_listbox,camp_ids)
     check_input_valid(camp_id,window, message_label, submit_button_row,submit_button_column,submit_column_span)
 
     no_weeks_aid = no_weeks_aid_entry.get()
     check_input_valid(no_weeks_aid, window, message_label, submit_button_row, submit_button_column,submit_column_span)
+    check_is_numeric(no_weeks_aid, window, message_label, submit_button_row, submit_button_column, submit_column_span)
 
     total_food_supplied = total_food_supplied_entry.get()
     check_input_valid(total_food_supplied, window, message_label, submit_button_row, submit_button_column, submit_column_span)
+    check_is_numeric(total_food_supplied, window, message_label, submit_button_row, submit_button_column, submit_column_span)
 
     total_medicine_supplied = total_medicine_supplied_entry.get()
-    check_input_valid(total_medicine_supplied, window, message_label, submit_button_row, submit_button_column,submit_column_span )
+    check_input_valid(total_medicine_supplied, window, message_label, submit_button_row, submit_button_column,submit_column_span)
+    check_is_numeric(total_medicine_supplied, window, message_label, submit_button_row, submit_button_column, submit_column_span)
 
     no_refugees = no_refugees_entry.get() # Will need to come from the volunteer.
     check_input_valid(no_refugees, window, message_label, submit_button_row, submit_button_column, submit_column_span)
+    check_is_numeric(no_refugees, window, message_label, submit_button_row, submit_button_column, submit_column_span)
 
-    week_food_per_refugee = get_selected_listbox_value(food_amount_refugee_listbox)
+    week_food_per_refugee = get_selected_listbox_value(food_amount_refugee_listbox, food_amount_refugee)
     check_input_valid(week_food_per_refugee, window, message_label, submit_button_row, submit_button_column, submit_column_span)
+    check_is_numeric(week_food_per_refugee, window, message_label, submit_button_row, submit_button_column, submit_column_span)
 
-    week_medicine_per_refugee = get_selected_listbox_value(medicine_amount_refugee_listbox)
+    week_medicine_per_refugee = get_selected_listbox_value(medicine_amount_refugee_listbox, medicine_amount_refugee)
     check_input_valid(week_medicine_per_refugee, window, message_label, submit_button_row, submit_button_column, submit_column_span)
+    check_is_numeric(week_medicine_per_refugee, window, message_label, submit_button_row, submit_button_column, submit_column_span)
 
-    delivery_time_weeks = get_selected_listbox_value(estimated_delivery_time_listbox)
+    delivery_time_weeks = get_selected_listbox_value(estimated_delivery_time_listbox, estimated_delivery_time_options)
     check_input_valid(delivery_time_weeks, window, message_label, submit_button_row, submit_button_column, submit_column_span)
+    check_is_numeric(delivery_time_weeks, window, message_label, submit_button_row, submit_button_column, submit_column_span)
+
 
 
 submit_button = ttk.Button(root, text="Submit", command=admin_resource_submit)
