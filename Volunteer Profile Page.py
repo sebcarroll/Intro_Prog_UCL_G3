@@ -44,9 +44,20 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
     def __init__(self) -> None:
         # Volunteer dictionary - Nested: Can access via self.y_personal_info[username][key]
         try:
+            if os.path.getsize('refugee.pickle') > 0:
+                with open('refugee.pickle', 'rb') as file:
+                    self.na_refugee_info = pickle.load(file)
+            
+            else:
+                self.na_refugee_info = {
+                    'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
+                                 'Second Language': ''}
+                }
+            
             if os.path.getsize('data.pickle') > 0:
                 with open('data.pickle', 'rb') as file:
                     self.y_personal_info = pickle.load(file)
+            
             else:
                 self.y_personal_info = {
                     'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
@@ -58,6 +69,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                     'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                    'Work Type': '', 'Deactivated': False, 'Deleted': False}
                 }
+            
         except(FileNotFoundError):
             self.y_personal_info = {
                 'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
@@ -69,20 +81,19 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                 'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                'Work Type': '', 'Deactivated': False, 'Deleted': False}
             }
-
+        
+        except(FileNotFoundError):
+            self.na_refugee_info = {
+                    'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
+                                 'Second Language': ''}}
+        
         self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}
         self.window = tkinter.Tk()
         self.window.title('Whatever')
         self.t_volunteer_login()
         self.t_details_confirmation()
-        try:
-            if os.path.getsize('refugee.pickle') > 0:
-                with open('refugee.pickle', 'rb') as file:
-                    self.na_refugee_info = pickle.load(file)
-            else:
-                self.na_refugee_info = {}
-        except(FileNotFoundError):
-            self.na_refugee_info = {}        
+    
+        
 
     def t_volunteer_login(self):
         # Anything on window before is removed and populates with the following code
@@ -373,8 +384,8 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         # Camp ID box and label
         t_camp_ID_label = tkinter.Label(t_camp_labelframe, text='Camp ID')
         t_camp_ID_label.grid(row=3, column=3)
-        self.t_camp_ID_box = ttk.Combobox(t_camp_labelframe, values=self.y_camp_info['Syria']['ID'])
-        self.t_camp_ID_box.grid(row=3, column=4, padx=5)
+        self.t_camp_IDbox = ttk.Combobox(t_camp_labelframe, values=self.y_camp_info['Syria']['ID'])
+        self.t_camp_IDbox.grid(row=3, column=4, padx=5)
 
         # Capacity for new refugees box and label
         t_camp_capacity = tkinter.Label(t_camp_labelframe,
@@ -395,17 +406,17 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         try:
             # Update self.t_create_refugee dictionary
             with open('refugee.pickle', 'wb') as file:
-                camp_ID = self.t_camp_ID_box.get()
+                camp_ID = self.t_camp_IDbox.get()
                 family_members = self.family_labelbox.get()
                 medical_conditions = self.t_medical_conditionsEntry.get()
                 languages_spoken = self.t_languages_spokenEntry.get()
                 second_language = self.t_second_languageEntry.get()
-                self.na_refugee_info['refugee1'] = {
-                    'Camp ID': camp_ID,
-                    'Family Members': family_members,
-                    'Medical Conditions': medical_conditions,
-                    'Languages Spoken': languages_spoken,
-                    'Second Language': second_language}
+                self.na_refugee_info['refugee1']['Camp ID'] = camp_ID
+                self.na_refugee_info['refugee1']['Medical Conditions'] = medical_conditions
+                self.na_refugee_info['refugee1']['Languages Spoken'] = languages_spoken
+                self.na_refugee_info['refugee1']['Second Language'] = second_language
+                self.na_refugee_info['refugee1']['Family Members'] = family_members
+    
                 pickle.dump(self.na_refugee_info, file)
 
         except FileNotFoundError:
