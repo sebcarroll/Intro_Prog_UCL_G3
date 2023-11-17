@@ -75,6 +75,14 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         self.window.title('Whatever')
         self.t_volunteer_login()
         self.t_details_confirmation()
+        try:
+            if os.path.getsize('refugee.pickle') > 0:
+                with open('refugee.pickle', 'rb') as file:
+                    self.na_refugee_info = pickle.load(file)
+            else:
+                self.na_refugee_info = {}
+        except(FileNotFoundError):
+            self.na_refugee_info = {}        
 
     def t_volunteer_login(self):
         # Anything on window before is removed and populates with the following code
@@ -383,9 +391,29 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         t_back_button = tkinter.Button(t_edit_campframe, text='Back', command=self.t_volunteer_summary)
         t_back_button.grid(row=7, column=0, padx=5, pady=10)
 
+    def na_refugee_info_dict(self):
+        try:
+            # Update self.t_create_refugee dictionary
+            with open('refugee.pickle', 'wb') as file:
+                camp_ID = self.t_camp_ID_box.get()
+                family_members = self.family_labelbox.get()
+                medical_conditions = self.t_medical_conditionsEntry.get()
+                languages_spoken = self.t_languages_spokenEntry.get()
+                second_language = self.t_second_languageEntry.get()
+                self.na_refugee_info['refugee1'] = {
+                    'Camp ID': camp_ID,
+                    'Family Members': family_members,
+                    'Medical Conditions': medical_conditions,
+                    'Languages Spoken': languages_spoken,
+                    'Second Language': second_language}
+                pickle.dump(self.na_refugee_info, file)
+
+        except FileNotFoundError:
+            pass
     def t_create_refugee(self):
         for i in self.window.winfo_children():
             i.destroy()
+
         # Main frame for this whole page
         refugeeframe = tkinter.Frame(self.window)
         refugeeframe.pack()
@@ -404,25 +432,57 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         self.t_camp_IDbox = ttk.Combobox(refugee_labelframe, values=self.y_camp_info['Syria']['ID'])
         self.t_camp_IDbox.grid(row=3, column=4, padx=5)
 
+        # Family members
+        family_label = tkinter.Label(refugee_labelframe, text='Enter total number members in this family', font=('TkinterDefault', 15))
+        family_label.grid(row=5, column=3, padx=5)
+        self.family_labelbox = ttk.Spinbox(refugee_labelframe, from_=0, to=20, style='info.TSpinbox')
+        self.family_labelbox.grid(row=5, column=4, padx=5)
+
         # Medical conditions, we need to add dictionaries and everything for this
-        medical_condition = tkinter.Label(refugee_labelframe, text='Enter any medical condition(s)', font=("TkinterDefault", 15))
-        medical_condition.grid(row=5, column=3, padx=5)
-        self.t_create_refugeeEntry = tkinter.Entry(refugee_labelframe)
-        self.t_create_refugeeEntry.grid(row=5, column=4)
+        medical_conditionslabel = tkinter.Label(refugee_labelframe, text='Enter any medical condition(s) for each family member. If none, please enter \"none\"', font=("TkinterDefault", 15))
+        medical_conditionslabel.grid(row=7, column=3, padx=5)
+        self.t_medical_conditionsEntry = tkinter.Entry(refugee_labelframe)
+        self.t_medical_conditionsEntry.grid(row=7, column=4, padx=5)
+
+        #Languages spoken by refugees
+        languages_spokenlabel = tkinter.Label(refugee_labelframe, text='Please select main language spoken in the family', font=('TkinterDefault', 15))
+        languages_spokenlabel.grid(row=9, column=3, padx=5)
+        self.t_languages_spokenEntry = ttk.Combobox(refugee_labelframe, values='English Chinese Hindi Spanish French Arabic Bengali Portuguese Russian Urdu Indonesian German Swahili Marathi Tamil Telugu Turkish Vietnamese Korean Italian Thai Gujarati Persian Polish Pashto Kannada Ukrainian Somali Kurdish')
+        self.t_languages_spokenEntry.grid(row=9, column=4, padx=5)
+
+        #secondlanguage entry box
+        second_languagelabel = tkinter.Label(refugee_labelframe, text='Please enter any other languages spoken by each family member. If none, please enter \'none\'', font=('TkinterDefault', 15))
+        second_languagelabel.grid(row=11, column=3, padx=5)
+        self.t_second_languageEntry = tkinter.Entry(refugee_labelframe)
+        self.t_second_languageEntry.grid(row=11, column=4, padx=5)
+
+        na_store_details = tkinter.Button(refugee_labelframe, text="Store refugee info", command=self.na_refugee_info_dict, height=1, width=20)
+        na_store_details.grid(row=17, column=3)
+
+        na_save_changes = tkinter.Button(refugee_labelframe, text='Save changes', command='Store in dictionary')
+        na_save_changes.grid(row=13, column=1, padx=5, pady=10)
+
+        # Back button
+        na_back_button = tkinter.Button(refugee_labelframe, text='Back', command=self.t_volunteer_summary)
+        na_back_button.grid(row=13, column=3, padx=5, pady=10)
+
+
+
+
+        #except(t_no_text):
+            #tkinter.messagebox.showinfo(title='No text entered', message='Please enter text')
+
+
+
+
+
         # I'm going to add another box for other that pops up if their medical conditions isn't in the list
         # Just haven't decided how I want to hide it and then have it appear just yet.
 
-        # Family members
-        family_label = tkinter.Label(refugee_labelframe, text='Family members', font=('TkinterDefault', 15))
-        family_label.grid(row=7, column=3, padx=5)
-        family_box = ttk.Combobox(refugee_labelframe, values='We haven\'t done this yet')
-        family_box.grid(row=7, column=4)
+
         # Also thinking of adding a similar thing to this where if they already have members in the camp its fine but if not
         # A separate box comes down that allows them to type the name into it, shouldn't be complicated I just cbf rn
 
-        # Back button
-        t_back_button = tkinter.Button(refugeeframe, text='Back', command=self.t_volunteer_summary)
-        t_back_button.grid(row=9, column=0, padx=5, pady=10)
 
     def t_display_resources(self):
         for i in self.window.winfo_children():
