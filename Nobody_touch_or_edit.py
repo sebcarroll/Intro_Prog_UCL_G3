@@ -441,9 +441,19 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         self.n_resource_quantbox = ttk.Spinbox(t_camp_labelframe, from_=0, to=1000)
         self.n_resource_quantbox.grid(row=6, column=5, padx=5)
 
+        n_to_personal_info = tkinter.Button(t_edit_campframe, text='Personal information',
+                                            command=self.t_personal_information_base, height=2, width=20)
+        n_to_personal_info.grid(row=1, column=0, padx=10)
+
+        n_to_refugee = tkinter.Button(t_edit_campframe, text='Create a refugee profile', command=self.t_create_refugee,height=2, width=20)
+        n_to_refugee.grid(row=2, column=0, padx=10)
+
+
         # Save changes button, need to add this to a dictionary.
         t_save_changes = tkinter.Button(t_edit_campframe, text='Save changes', command=self.na_refugee_info_dict)
         t_save_changes.grid(row=7, column=1, padx=5, pady=10)
+
+
 
     def na_refugee_info_dict(self):
         try:
@@ -477,11 +487,6 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         refugee_labelframe = tkinter.LabelFrame(refugeeframe)
         refugee_labelframe.grid(row=1, column=1)
 
-        # Camp ID
-        t_camp_ID_label = tkinter.Label(refugee_labelframe, text='Camp ID', font=('TkinterDefault', 15))
-        t_camp_ID_label.grid(row=3, column=3)
-        self.t_camp_IDbox = ttk.Combobox(refugee_labelframe, values=self.y_camp_info['Syria']['ID'])
-        self.t_camp_IDbox.grid(row=3, column=4, padx=5)
 
         # Family members
         family_label = tkinter.Label(refugee_labelframe, text='Enter total number members in this family',
@@ -536,14 +541,6 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                                        width=20)
         n_to_editcamp.grid(row=2, column=0)
 
-        # except(t_no_text):
-        # tkinter.messagebox.showinfo(title='No text entered', message='Please enter text')
-
-        # I'm going to add another box for other that pops up if their medical conditions isn't in the list
-        # Just haven't decided how I want to hide it and then have it appear just yet.
-
-        # Also thinking of adding a similar thing to this where if they already have members in the camp its fine but if not
-        # A separate box comes down that allows them to type the name into it, shouldn't be complicated I just cbf rn
 
     def t_display_resources(self):
         for i in self.window.winfo_children():
