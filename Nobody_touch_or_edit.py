@@ -62,6 +62,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
             if os.path.getsize('data.pickle') > 0:
                 with open('data.pickle', 'rb') as file1:
                     self.y_personal_info = pickle.load(file1)
+                    print("Data is loaded")
 
             else:
                 self.y_personal_info = {
@@ -78,6 +79,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                                    'Commitment': '',
                                    'Work Type': '', 'Deactivated': False, 'Deleted': False}
                 }
+                print('Data could not be found')
 
         except(FileNotFoundError):
             self.y_personal_info = {
@@ -90,6 +92,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                 'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                'Work Type': '', 'Deactivated': False, 'Deleted': False}
             }
+            print('File Not Found Error ')
 
         except(FileNotFoundError):
             self.na_refugee_info = {
@@ -390,6 +393,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
 
             with open('data.pickle', 'wb') as file1:
                 pickle.dump(self.y_personal_info, file1)
+                print('saved')
 
             self.t_personal_information_base()
             
