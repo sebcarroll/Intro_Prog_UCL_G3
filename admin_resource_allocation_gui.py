@@ -4,6 +4,7 @@ from general_functions import create_listbox_with_label
 from general_functions import check_input_valid
 from general_functions import get_selected_listbox_value
 from general_functions import check_is_numeric
+
 from admin_resource_allocation_functions import resource_allocation
 
 root = tk.Tk()
@@ -44,6 +45,7 @@ message_label = tk.Label(window, text="")
 submit_button_row = 8
 submit_button_column = 0
 submit_column_span = 2
+
 def admin_resource_submit():
 
     camp_id = get_selected_listbox_value(camp_id_listbox,camp_ids)

@@ -54,8 +54,8 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                                  'Second Language': ''}
                 }
             
-            if os.path.getsize('data.pickle') > 0:
-                with open('data.pickle', 'rb') as file:
+            if os.path.getsize('LearningResourceAndOldFiles/data.pickle') > 0:
+                with open('LearningResourceAndOldFiles/data.pickle', 'rb') as file:
                     self.y_personal_info = pickle.load(file)
             
             else:
@@ -88,6 +88,10 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                                  'Second Language': ''}}
         
         self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}
+
+
+
+
         self.window = tkinter.Tk()
         self.window.title('Whatever')
         self.t_volunteer_login()
@@ -331,7 +335,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         try:
             # Update self.y_personal_info dictionary
 
-            with open('data.pickle', 'wb') as file:
+            with open('LearningResourceAndOldFiles/data.pickle', 'wb') as file:
                 name = self.t_personal_nameEntry.get()
                 email = self.t_personal_emailEntry.get()
                 phone = self.t_phonenumberEntry.get()
@@ -421,6 +425,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
 
         except FileNotFoundError:
             pass
+
     def t_create_refugee(self):
         for i in self.window.winfo_children():
             i.destroy()
