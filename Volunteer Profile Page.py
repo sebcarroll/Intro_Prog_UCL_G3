@@ -39,46 +39,26 @@ class invalid_name(Exception):
     pass
 
 
-class file_not_found(Exception):
-    pass
-
-
-class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sensitive, t_no_text, t_incorrect_details,
-                           file_not_found):
+class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sensitive, t_no_text, t_incorrect_details):
 
     def __init__(self) -> None:
         # Volunteer dictionary - Nested: Can access via self.y_personal_info[username][key]
         try:
-            if os.path.getsize('refugee.pickle') > 0:
-                with open('refugee.pickle', 'rb') as file:
-                    self.na_refugee_info = pickle.load(file)
-
-            else:
-                self.na_refugee_info = {
-                    'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
-                                 'Second Language': ''}
-                }
-
             if os.path.getsize('data.pickle') > 0:
                 with open('data.pickle', 'rb') as file:
                     self.y_personal_info = pickle.load(file)
-
+                    
             else:
                 self.y_personal_info = {
-                    'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '',
-                                   'Commitment': '',
+                    'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                    'Work Type': '', 'Deactivated': False, 'Deleted': False},
-                    'volunteer2': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '',
-                                   'Commitment': '',
+                    'volunteer2': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                    'Work Type': '', 'Deactivated': False, 'Deleted': False},
-                    'volunteer3': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '',
-                                   'Commitment': '',
+                    'volunteer3': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                    'Work Type': '', 'Deactivated': True, 'Deleted': False},
-                    'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '',
-                                   'Commitment': '',
+                    'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                    'Work Type': '', 'Deactivated': False, 'Deleted': False}
                 }
-
         except(FileNotFoundError):
             self.y_personal_info = {
                 'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
@@ -91,29 +71,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                                'Work Type': '', 'Deactivated': False, 'Deleted': False}
             }
 
-        except(FileNotFoundError):
-            self.na_refugee_info = {
-                'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
-                             'Second Language': ''}}
-
-        self.y_camp_info = {"Country": "America", "Max Capacity": ""}
-        self.y_camp_info['ID'] = {"Country": "America 132", "Max Capacity": 1000, 'Food packets': 0,
-                                  'Medical supplies': 0, 'Water and sanitation': 0, 'Clothing': 0,
-                                  'Shelter materials': 0}
-        try:
-            if os.path.getsize('Camp.pickle') > 0:
-                with open('Camp.pickle', 'rb') as f:
-                    self.y_camp_info = pickle.load(f)
-            else:
-                self.y_camp_info['ID'] = {"Country": "America 132", "Max Capacity": 1000, 'Food packets': 0,
-                                          'Medical supplies': 0, 'Water and sanitation': 0, 'Clothing': 0,
-                                          'Shelter materials': 0}
-        except(FileNotFoundError):
-            self.y_camp_info['ID'] = {"Country": "America 132", "Max Capacity": 1000, 'Food packets': 0,
-                                      'Medical supplies': 0, 'Water and sanitation': 0, 'Clothing': 0,
-                                      'Shelter materials': 0}
-        print(self.y_camp_info)
-
+        self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}
         self.window = tkinter.Tk()
         self.window.title('Whatever')
         self.t_volunteer_login()
@@ -216,6 +174,9 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         self.t_summary_refugee = tkinter.Button(self.t_summary_frame, text='Create a refugee profile',
                                                 command=self.t_create_refugee, height=2, width=20)
         self.t_summary_refugee.grid(row=5, column=3)
+        self.t_summary_resources = tkinter.Button(self.t_summary_frame, text='Display resources available',
+                                                  command=self.t_display_resources, height=2, width=20)
+        self.t_summary_resources.grid(row=6, column=3)
 
     # UI for personal info - very similar to the t_volunteer_login function:
     def t_personal_information_base(self):
@@ -266,15 +227,6 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         t_edit_details.grid(row=14, column=3)
         t_back_to_summary = tkinter.Button(t_personal_frame, text='Back', command=self.t_volunteer_summary)
         t_back_to_summary.grid(row=14, column=1)
-
-        # Button to go straight to edit camp
-        n_to_editcamp = tkinter.Button(t_personal_frame, text='Edit camp information', command=self.t_edit_camp,
-                                       height=2, width=20)
-        n_to_editcamp.grid(row=2, column=1)
-
-        n_to_editcamp = tkinter.Button(t_personal_frame, text='Create a refugee profile', command=self.t_create_refugee,
-                                       height=2, width=20)
-        n_to_editcamp.grid(row=3, column=1)
 
         # If you want to change an of your personal information which should then update the personal info dict.
 
@@ -360,7 +312,6 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
     def t_personal_info_dict(self):
         try:
             # Update self.y_personal_info dictionary
-
             with open('data.pickle', 'wb') as file:
                 name = self.t_personal_nameEntry.get()
                 email = self.t_personal_emailEntry.get()
@@ -380,6 +331,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                         self.y_personal_info[self.username]['Phone Number'] = phone
                     else:
                         raise invalid_phone_number
+                    
                     # Make sure they include correct email format
                     if re.search(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', email):
                         self.y_personal_info[self.username]['Email Address'] = email
@@ -389,11 +341,11 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                     self.y_personal_info[self.username]['Work Type'] = work
                     self.y_personal_info[self.username]['Commitment'] = commitment
                     self.t_personal_information_base()
+
                 except(invalid_email):
                     tkinter.messagebox.showinfo(title='Invalid Email', message='Please enter a valid email address')
                 except(invalid_phone_number):
-                    tkinter.messagebox.showinfo(title='Invalid Phone Number',
-                                                message='Please enter a valid phone number')
+                    tkinter.messagebox.showinfo(title='Invalid Phone Number', message='Please enter a valid phone number')
                 except(invalid_name):
                     tkinter.messagebox.showinfo(title='Invalid Name', message='Please enter a valid name')
 
@@ -407,64 +359,35 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
             i.destroy()
         t_edit_campframe = tkinter.Frame(self.window)
         t_edit_campframe.pack()
-        t_edit_camp_title = tkinter.Label(t_edit_campframe, text='Edit camp', font=('TkDefaultFont', 30), pady=30)
+        t_edit_camp_title = tkinter.Label(t_edit_campframe, text='Edit camp', font=('Arial Bold', 30), pady=30)
         t_edit_camp_title.grid(row=0, column=1)
-        t_camp_labelframe = tkinter.LabelFrame(t_edit_campframe, text=self.y_camp_info['ID']['Country'],
-                                               font=('TkDefaultFont', 20))
+        t_camp_labelframe = tkinter.LabelFrame(t_edit_campframe)
         t_camp_labelframe.grid(row=1, column=1)
 
-        # Current amount you can add
-        t_current_capacity = tkinter.Label(t_camp_labelframe, text='Current Capacity: ', font=('TkDefaultFont', 15))
-        t_current_capacity.grid(row=2, column=3)
-        t_capacity_label = tkinter.Label(t_camp_labelframe, text=self.y_camp_info['ID']['Max Capacity'],
-                                         font=('TkDefaultFont', 15))
-        t_capacity_label.grid(row=2, column=5)
+        # Camp ID box and label
+        t_camp_ID_label = tkinter.Label(t_camp_labelframe, text='Camp ID')
+        t_camp_ID_label.grid(row=3, column=3)
+        self.t_camp_ID_box = ttk.Combobox(t_camp_labelframe, values=self.y_camp_info['Syria']['ID'])
+        self.t_camp_ID_box.grid(row=3, column=4, padx=5)
 
         # Capacity for new refugees box and label
         t_camp_capacity = tkinter.Label(t_camp_labelframe,
-                                        text='Add new refugees:')  # Need to add current number here next to it so Ying add that in with dictionary or however.
+                                        text='Capacity for new refugees:')  # Need to add current number here next to it so Ying add that in with dictionary or however.
         t_camp_capacity.grid(row=4, column=3, padx=5)
         self.t_camp_campacitybox = ttk.Spinbox(t_camp_labelframe, from_=0, to=1000, style='info.TSpinbox')
-        self.t_camp_campacitybox.grid(row=4, column=5, padx=5)
-
-        # Request type of resource box and label
-        n_resource_type = tkinter.Label(t_camp_labelframe, text='Select resource type you would like to request')
-        n_resource_type.grid(row=5, column=3, padx=5)
-        self.n_resource_typebox = ttk.Combobox(t_camp_labelframe,
-                                               values=['Food packets', 'Medical supplies', 'Water and sanitation',
-                                                       'Clothing', 'Shelter materials'])
-        self.n_resource_typebox.grid(row=5, column=5, padx=5)
-
-        # Request quantity of resource box and label
-        n_resource_quantity = tkinter.Label(t_camp_labelframe, text='Select quantity of resource')
-        n_resource_quantity.grid(row=6, column=3, padx=5)
-        self.n_resource_quantbox = ttk.Spinbox(t_camp_labelframe, from_=0, to=1000)
-        self.n_resource_quantbox.grid(row=6, column=5, padx=5)
+        self.t_camp_campacitybox.grid(row=4, column=4, padx=5)
 
         # Save changes button, need to add this to a dictionary.
-        t_save_changes = tkinter.Button(t_edit_campframe, text='Save changes', command=self.na_refugee_info_dict)
+        t_save_changes = tkinter.Button(t_edit_campframe, text='Save changes', command='Store in dictionary')
         t_save_changes.grid(row=7, column=1, padx=5, pady=10)
 
-    def na_refugee_info_dict(self):
-        try:
-            with open('Camp.pickle', 'wb') as f:
-                refugee_change = self.t_camp_campacitybox.get()
-                refugee_capacity = self.y_camp_info['ID']['Max Capacity']
-                refugee_capacity -= int(refugee_change)
-                request_resources_type = self.n_resource_typebox.get()
-                request_resources_quant = self.n_resource_quantbox.get()
-                current_resources = self.y_camp_info['ID'][request_resources_type]
-                current_resources += int(request_resources_quant)
-                self.y_camp_info['ID']['Max Capacity'] = refugee_capacity
-                self.y_camp_info['ID'][request_resources_type] = current_resources
-                pickle.dump(self.y_camp_info, f)
-        except:
-            raise file_not_found
+        # Back button
+        t_back_button = tkinter.Button(t_edit_campframe, text='Back', command=self.t_volunteer_summary)
+        t_back_button.grid(row=7, column=0, padx=5, pady=10)
 
     def t_create_refugee(self):
         for i in self.window.winfo_children():
             i.destroy()
-
         # Main frame for this whole page
         refugeeframe = tkinter.Frame(self.window)
         refugeeframe.pack()
@@ -483,67 +406,26 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         self.t_camp_IDbox = ttk.Combobox(refugee_labelframe, values=self.y_camp_info['Syria']['ID'])
         self.t_camp_IDbox.grid(row=3, column=4, padx=5)
 
-        # Family members
-        family_label = tkinter.Label(refugee_labelframe, text='Enter total number members in this family',
-                                     font=('TkinterDefault', 15))
-        family_label.grid(row=5, column=3, padx=5)
-        self.family_labelbox = ttk.Spinbox(refugee_labelframe, from_=0, to=20, style='info.TSpinbox')
-        self.family_labelbox.grid(row=5, column=4, padx=5)
-
         # Medical conditions, we need to add dictionaries and everything for this
-        medical_conditionslabel = tkinter.Label(refugee_labelframe,
-                                                text='Enter any medical condition(s) for each family member. If none, please enter \"none\"',
-                                                font=("TkinterDefault", 15))
-        medical_conditionslabel.grid(row=7, column=3, padx=5)
-        self.t_medical_conditionsEntry = tkinter.Entry(refugee_labelframe)
-        self.t_medical_conditionsEntry.grid(row=7, column=4, padx=5)
-
-        # Languages spoken by refugees
-        languages_spokenlabel = tkinter.Label(refugee_labelframe,
-                                              text='Please select main language spoken in the family',
-                                              font=('TkinterDefault', 15))
-        languages_spokenlabel.grid(row=9, column=3, padx=5)
-        self.t_languages_spokenEntry = ttk.Combobox(refugee_labelframe,
-                                                    values='English Chinese Hindi Spanish French Arabic Bengali Portuguese Russian Urdu Indonesian German Swahili Marathi Tamil Telugu Turkish Vietnamese Korean Italian Thai Gujarati Persian Polish Pashto Kannada Ukrainian Somali Kurdish')
-        self.t_languages_spokenEntry.grid(row=9, column=4, padx=5)
-
-        # secondlanguage entry box
-        second_languagelabel = tkinter.Label(refugee_labelframe,
-                                             text='Please enter any other languages spoken by each family member. If none, please enter \'none\'',
-                                             font=('TkinterDefault', 15))
-        second_languagelabel.grid(row=11, column=3, padx=5)
-        self.t_second_languageEntry = tkinter.Entry(refugee_labelframe)
-        self.t_second_languageEntry.grid(row=11, column=4, padx=5)
-
-        na_store_details = tkinter.Button(refugee_labelframe, text="Store refugee info",
-                                          command=self.na_refugee_info_dict, height=1, width=20)
-        na_store_details.grid(row=17, column=3)
-
-        na_save_changes = tkinter.Button(refugee_labelframe, text='Save changes', command='Store in dictionary')
-        na_save_changes.grid(row=13, column=1, padx=5, pady=10)
-
-        # Back button
-        na_back_button = tkinter.Button(refugee_labelframe, text='Back', command=self.t_volunteer_summary)
-        na_back_button.grid(row=13, column=3, padx=5, pady=10)
-
-        # Button to go back to personal information
-        n_to_personal_info = tkinter.Button(refugeeframe, text='Personal information',
-                                            command=self.t_personal_information_base, height=2, width=20)
-        n_to_personal_info.grid(row=1, column=0, padx=10)
-
-        # Button to go straight to edit camp
-        n_to_editcamp = tkinter.Button(refugeeframe, text='Edit camp information', command=self.t_edit_camp, height=2,
-                                       width=20)
-        n_to_editcamp.grid(row=2, column=0)
-
-        # except(t_no_text):
-        # tkinter.messagebox.showinfo(title='No text entered', message='Please enter text')
-
+        medical_conditionslabel = tkinter.Label(refugee_labelframe, text='Medical conditions',
+                                                font=('TkinterDefault', 15))
+        medical_conditionslabel.grid(row=5, column=3, padx=5)
+        medical_conditonsbox = ttk.Combobox(refugee_labelframe, values='We haven\'nt come up with this dictionary yet')
+        medical_conditonsbox.grid(row=5, column=4)
         # I'm going to add another box for other that pops up if their medical conditions isn't in the list
         # Just haven't decided how I want to hide it and then have it appear just yet.
 
+        # Family members
+        family_label = tkinter.Label(refugee_labelframe, text='Family members', font=('TkinterDefault', 15))
+        family_label.grid(row=7, column=3, padx=5)
+        family_box = ttk.Combobox(refugee_labelframe, values='We haven\'t done this yet')
+        family_box.grid(row=7, column=4)
         # Also thinking of adding a similar thing to this where if they already have members in the camp its fine but if not
         # A separate box comes down that allows them to type the name into it, shouldn't be complicated I just cbf rn
+
+        # Back button
+        t_back_button = tkinter.Button(refugeeframe, text='Back', command=self.t_volunteer_summary)
+        t_back_button.grid(row=9, column=0, padx=5, pady=10)
 
     def t_display_resources(self):
         for i in self.window.winfo_children():
