@@ -1,13 +1,39 @@
 import tkinter as tk
-
+import pickle
+import os
+from AdminSubpages.create_plan import new_plan, na_refugee_info_dict
 
 class AdminHomepage:
     def __init__(self, root, go_to_landing_page):
         self.root = root
         self.go_to_landing_page = go_to_landing_page
+        self.new_plan_entry_widgets = None
+
         self.window = tk.Toplevel(self.root)
         self.window.title('Admin Homepage')
         self.window.geometry('1300x600')
+
+        try:
+            if os.path.getsize('refugee.pickle') > 0:
+                with open('refugee.pickle', 'rb') as file:
+                    self.na_refugee_info = pickle.load(file)
+            else:
+                self.na_refugee_info = {
+                    'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
+                                 'Second Language': ''}
+                }
+
+        except(FileNotFoundError):
+            self.na_refugee_info = {
+                'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
+                             'Second Language': ''}}
+
+
+        # Initialize na_refugee_info before trying to load from the pickled file
+        self.na_refugee_info = {
+            'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '', 'Second Language': ''}
+        }
+        self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}
 
         # MENU BAR:
         menu_bar = tk.Menu(self.window)
@@ -84,11 +110,21 @@ class AdminHomepage:
 
 
 
-    def create_event(self):
+    #def create_event(self):
         # Open the resource allocation GUI
-        print("Create event...")
+        #new_plan(self.window, self.back_button_to_admin_main)
         #new_window = tk.Toplevel()
         #apcg.create_plan_gui(new_window)
+
+    def create_event(self):
+        self.new_plan_entry_widgets = new_plan(self.window, self.na_refugee_info, self.back_button_to_admin_main, self.new_plan_details_storage_handler)
+    def new_plan_details_storage_handler(self, camp_ID, family_label, medical_conditionsEntry, languages_spokenEntry, second_languageEntry):
+        na_refugee_info_dict(self.na_refugee_info, camp_ID, family_label, medical_conditionsEntry, languages_spokenEntry, second_languageEntry)
+
+
+
+
+
 
     def end_event(self):
         # Add functionality for ending an event
@@ -107,98 +143,8 @@ class AdminHomepage:
 
     def allocate_resources(self):
         # Open the resource allocation GUI
-        for i in self.window.winfo_children():
-            i.grid_forget()
-        self.resources_frame = tk.Frame(self.window)
-        self.resources_frame.grid()
+        print("Allocating resources...")
 
-        # import modules locally to this function only
-        from tkinter import ttk, Listbox
-        from general_functions import create_listbox_with_label
-
-        # Title for the page
-        self.resources_title = tk.Label(self.resources_frame, text='Allocate Resources', font=('tkDefault', 20))
-        self.resources_title.grid(row=0, column=0, pady=10)
-
-
-
-        # Comes from list of IDs created by admin in camp creation
-        camp_ids = ["Camp_1", "Camp_2", "Camp_3", "Camp_4"]
-        camp_id_listbox: Listbox
-        camp_id_listbox, camp_id_scrollbar = create_listbox_with_label(self.resources_frame, "Camp ID:", 5, 0, camp_ids)
-
-        tk.Label(self.resources_frame, text="Number of Weeks of Aid:").grid(row=11, column=0)
-        no_weeks_aid_entry = tk.Entry(self.resources_frame)
-        no_weeks_aid_entry.grid(row=11, column=1)
-
-        tk.Label(self.resources_frame, text="Total Food Supplied to Camp:").grid(row=12, column=0)
-        total_food_supplied_entry = tk.Entry(self.resources_frame)
-        total_food_supplied_entry.grid(row=12, column=1)
-
-        tk.Label(self.resources_frame, text="Total Medicine Supplied to Camp:").grid(row=13, column=0)
-        total_medicine_supplied_entry = tk.Entry(self.resources_frame)
-        total_medicine_supplied_entry.grid(row=13, column=1)
-
-        # This will eventually come from the number of refugees stored with the camp_id
-        tk.Label(self.resources_frame, text="Number of Refugees:").grid(row=14, column=0)
-        no_refugees_entry = tk.Entry(self.resources_frame)
-        no_refugees_entry.grid(row=14, column=1)
-
-        food_amount_refugee = [7, 14, 21, 28]
-        food_amount_refugee_listbox, food_amount_refugee_scrollbar = create_listbox_with_label(self.resources_frame,"Number of Weekly Meals Provided per Refugee: ",16, 0, food_amount_refugee)
-
-        medicine_amount_refugee = [0, 1, 2, 3, 4, 5, 6, 7]
-        medicine_amount_refugee_listbox, medicine_amount_refugee_scrollbar = create_listbox_with_label(self.resources_frame,"Number of Health Supplies Provided per Refugee Weekly: ",17, 0, medicine_amount_refugee)
-
-        estimated_delivery_time_options = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4]
-        estimated_delivery_time_listbox, estimated_delivery_time_scrollbar = create_listbox_with_label(self.resources_frame,"Estimated Resource Delivery Time (weeks): ",18, 0, estimated_delivery_time_options)
-
-        """message_label = tk.Label(window, text="")
-        submit_button_row = 8
-        submit_button_column = 0
-        submit_column_span = 2"""
-        self.back_button = ttk.Button(self.resources_frame, text='Back to Home', command=self.back_button_to_admin_main)
-        self.back_button.grid(row=20, column=0, columnspan=1)
-        submit_button = ttk.Button(self.resources_frame, text="Submit", command=self.admin_resource_submit)
-        submit_button.grid(row=20, column=1, columnspan=1)
-
-    # CGH: I am yet to look at this submit function
-
-    def admin_resource_submit():"""
-        # import modules locally to this function only
-        from general_functions import check_input_valid
-        from general_functions import get_selected_listbox_value
-
-        camp_id = get_selected_listbox_value(camp_id_listbox)
-        check_input_valid(camp_id, window, message_label, submit_button_row, submit_button_column, submit_column_span)
-
-        no_weeks_aid = no_weeks_aid_entry.get()
-        check_input_valid(no_weeks_aid, window, message_label, submit_button_row, submit_button_column,
-                          submit_column_span)
-
-        total_food_supplied = total_food_supplied_entry.get()
-        check_input_valid(total_food_supplied, window, message_label, submit_button_row, submit_button_column,
-                          submit_column_span)
-
-        total_medicine_supplied = total_medicine_supplied_entry.get()
-        check_input_valid(total_medicine_supplied, window, message_label, submit_button_row, submit_button_column,
-                          submit_column_span)
-
-        no_refugees = no_refugees_entry.get()  # Will need to come from the volunteer.
-        check_input_valid(no_refugees, window, message_label, submit_button_row, submit_button_column,
-                          submit_column_span)
-
-        week_food_per_refugee = get_selected_listbox_value(food_amount_refugee_listbox)
-        check_input_valid(week_food_per_refugee, window, message_label, submit_button_row, submit_button_column,
-                          submit_column_span)
-
-        week_medicine_per_refugee = get_selected_listbox_value(medicine_amount_refugee_listbox)
-        check_input_valid(week_medicine_per_refugee, window, message_label, submit_button_row, submit_button_column,
-                          submit_column_span)
-
-        delivery_time_weeks = get_selected_listbox_value(estimated_delivery_time_listbox)
-        check_input_valid(delivery_time_weeks, window, message_label, submit_button_row, submit_button_column,
-                          submit_column_span)"""
 
 
 

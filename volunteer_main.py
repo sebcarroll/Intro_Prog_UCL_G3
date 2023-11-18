@@ -16,7 +16,6 @@ class invalid_phone_number(Exception):
 class invalid_name(Exception):
     pass
 
-
 class VolunteerHomepage(VolunteerLoginPage):
     def __init__(self, root, username, go_to_landing_page):
         #super().__init__(root)
