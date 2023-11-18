@@ -350,6 +350,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                     tkinter.messagebox.showinfo(title='Invalid Name', message='Please enter a valid name')
 
                 pickle.dump(self.y_personal_info, file)
+                
         except FileNotFoundError:
             pass
 

@@ -60,8 +60,8 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                 }
 
             if os.path.getsize('data.pickle') > 0:
-                with open('data.pickle', 'rb') as file:
-                    self.y_personal_info = pickle.load(file)
+                with open('data.pickle', 'rb') as file1:
+                    self.y_personal_info = pickle.load(file1)
 
             else:
                 self.y_personal_info = {
@@ -360,44 +360,46 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
     def t_personal_info_dict(self):
         try:
             # Update self.y_personal_info dictionary
+            
+            name = self.t_personal_nameEntry.get()
+            email = self.t_personal_emailEntry.get()
+            phone = self.t_phonenumberEntry.get()
+            commitment = self.t_commitmentEntry.get()
+            work = self.t_worktypeEntry.get()
 
-            with open('data.pickle', 'wb') as file:
-                name = self.t_personal_nameEntry.get()
-                email = self.t_personal_emailEntry.get()
-                phone = self.t_phonenumberEntry.get()
-                commitment = self.t_commitmentEntry.get()
-                work = self.t_worktypeEntry.get()
+            # If entered non-alpha characters, raise error
+            if re.search(r'^[A-Za-z]', name):
+                self.y_personal_info[self.username]['name'] = name.strip()
+            else:
+                raise invalid_name
 
-                try:
-                    # If entered non-alpha characters, raise error
-                    if re.search(r'^[A-Za-z]', name):
-                        self.y_personal_info[self.username]['name'] = name.strip()
-                    else:
-                        raise invalid_name
+            # If entered non-number characters, raise error
+            if re.search(r'^[0-9]+', phone):
+                self.y_personal_info[self.username]['Phone Number'] = phone
+            else:
+                raise invalid_phone_number
+                    
+            # Make sure they include correct email format
+            if re.search(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', email):
+                self.y_personal_info[self.username]['Email Address'] = email
+            else:
+                raise invalid_email
 
-                    # If entered non-number characters, raise error
-                    if re.search(r'^[0-9]+', phone):
-                        self.y_personal_info[self.username]['Phone Number'] = phone
-                    else:
-                        raise invalid_phone_number
-                    # Make sure they include correct email format
-                    if re.search(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', email):
-                        self.y_personal_info[self.username]['Email Address'] = email
-                    else:
-                        raise invalid_email
+            self.y_personal_info[self.username]['Work Type'] = work
+            self.y_personal_info[self.username]['Commitment'] = commitment
 
-                    self.y_personal_info[self.username]['Work Type'] = work
-                    self.y_personal_info[self.username]['Commitment'] = commitment
-                    self.t_personal_information_base()
-                except(invalid_email):
-                    tkinter.messagebox.showinfo(title='Invalid Email', message='Please enter a valid email address')
-                except(invalid_phone_number):
-                    tkinter.messagebox.showinfo(title='Invalid Phone Number',
-                                                message='Please enter a valid phone number')
-                except(invalid_name):
-                    tkinter.messagebox.showinfo(title='Invalid Name', message='Please enter a valid name')
+            with open('data.pickle', 'wb') as file1:
+                pickle.dump(self.y_personal_info, file1)
 
-                pickle.dump(self.y_personal_info, file)
+            self.t_personal_information_base()
+            
+        except(invalid_email):
+            tkinter.messagebox.showinfo(title='Invalid Email', message='Please enter a valid email address')
+        except(invalid_phone_number):
+            tkinter.messagebox.showinfo(title='Invalid Phone Number', message='Please enter a valid phone number')
+        except(invalid_name):
+            tkinter.messagebox.showinfo(title='Invalid Name', message='Please enter a valid name')
+
         except FileNotFoundError:
             pass
 
