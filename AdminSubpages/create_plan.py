@@ -3,7 +3,7 @@ from tkinter import ttk
 import pickle
 
 
-def new_plan(window, y_camp_info, back_button_to_admin_main, store_plan_details_callback):
+def new_plan(window, back_button_to_admin_main):
     for i in window.winfo_children():
         i.grid_forget()
     # Main frame for this whole page
@@ -19,69 +19,79 @@ def new_plan(window, y_camp_info, back_button_to_admin_main, store_plan_details_
     new_plan_labelframe.grid(row=1, column=1)
 
     # Camp ID
-    t_camp_ID_label = tk.Label(new_plan_labelframe, text='Camp ID', font=('TkinterDefault', 15))
-    t_camp_ID_label.grid(row=3, column=3)
-    t_camp_IDbox = ttk.Combobox(new_plan_labelframe, values=y_camp_info['Syria']['ID'])
-    t_camp_IDbox.grid(row=3, column=4, padx=5)
+    camp_ID_label = tk.Label(new_plan_labelframe, text='New Camp ID', font=('TkinterDefault', 15))
+    camp_ID_label.grid(row=3, column=3)
+    id_not_taken = ['1','2','3','4','5']
+    camp_IDbox = ttk.Combobox(new_plan_labelframe, values=id_not_taken)
+    camp_IDbox.grid(row=3, column=4, padx=5)
 
-    # Family members
-    family_label = tk.Label(new_plan_labelframe, text='Enter total number of family members', font=('TkinterDefault', 15))
-    family_label.grid(row=5, column=3, padx=5)
-    family_labelbox = ttk.Spinbox(new_plan_labelframe, from_=0, to=20, style='info.TSpinbox')
-    family_labelbox.grid(row=5, column=4, padx=5)
+    # Crisis Type
+    crisis_type_label = tk.Label(new_plan_labelframe, text='Crisis Type', font=('TkinterDefault', 15))
+    crisis_type_label.grid(row=5, column=3, padx=5)
+    crisis_type = ["War", "Environmental", "Supply Shortage", "Political unrest", "Displacement", "Other"]
+    crisis_type_labelbox = ttk.Spinbox(new_plan_labelframe, values=crisis_type, style='info.TSpinbox')
+    crisis_type_labelbox.grid(row=5, column=4, padx=5)
 
-    # Medical conditions, we need to add dictionaries and everything for this
-    medical_conditionslabel = tk.Label(new_plan_labelframe, text='Enter any medical condition(s) for each family member. If none, please enter \"none\"', font=("TkinterDefault", 15))
-    medical_conditionslabel.grid(row=7, column=3, padx=5)
-    t_medical_conditionsEntry = tk.Entry(new_plan_labelframe)
-    t_medical_conditionsEntry.grid(row=7, column=4, padx=5)
+    # Description of Crisis:
+    description_label = tk.Label(new_plan_labelframe, text='Description', font=('TkinterDefault', 15))
+    description_label.grid(row=7, column=3, padx=5)
+    description_label_Entry = tk.Text(new_plan_labelframe, height=10, width=40)
+    description_label_Entry.grid(row=7, column=4, padx=5)
 
-    # Languages spoken by refugees
-    languages_spokenlabel = tk.Label(new_plan_labelframe, text='Please select main language spoken in the family', font=('TkinterDefault', 15))
-    languages_spokenlabel.grid(row=9, column=3, padx=5)
-    t_languages_spokenEntry = ttk.Combobox(new_plan_labelframe,
-                                                values='English Chinese Hindi Spanish French Arabic Bengali Portuguese Russian Urdu Indonesian German Swahili Marathi Tamil Telugu Turkish Vietnamese Korean Italian Thai Gujarati Persian Polish Pashto Kannada Ukrainian Somali Kurdish')
-    t_languages_spokenEntry.grid(row=9, column=4, padx=5)
+    # Country of Crisis:
+    country_label = tk.Label(new_plan_labelframe, text='Country of crisis', font=('TkinterDefault', 15))
+    country_label.grid(row=9, column=3, padx=5)
+    country_Entry = ttk.Combobox(new_plan_labelframe, values=susceptible_countries)
+    country_Entry.grid(row=9, column=4, padx=5)
 
-    # secondlanguage entry box
-    second_languagelabel = tk.Label(new_plan_labelframe,
-                                         text='Please enter any other languages spoken by each family member. If none, please enter \'none\'',
-                                         font=('TkinterDefault', 15))
-    second_languagelabel.grid(row=11, column=3, padx=5)
-    t_second_languageEntry = tk.Entry(new_plan_labelframe)
-    t_second_languageEntry.grid(row=11, column=4, padx=5)
-
+    # Name of Admin Creator
+    created_by_label = tk.Label(new_plan_labelframe, text='Enter your name', font=("TkinterDefault", 15))
+    created_by_label.grid(row=11, column=3, padx=5)
+    created_by_Entry = tk.Entry(new_plan_labelframe)
+    created_by_Entry.grid(row=11, column=4, padx=5)
 
 
-    na_store_details = tk.Button(new_plan_labelframe, text="Store refugee info", command=lambda: store_plan_details_callback(t_camp_IDbox, family_labelbox, t_medical_conditionsEntry, t_languages_spokenEntry, t_second_languageEntry), height=1, width=20)
-    na_store_details.grid(row=17, column=3)
-
-    na_save_changes = tk.Button(new_plan_labelframe, text='Save changes', command='Store in dictionary')
-    na_save_changes.grid(row=13, column=1, padx=5, pady=10)
-
+    # Buttons:
+    # Save
+    save_plan_button = tk.Button(new_plan_labelframe, text="Save plan", command=store_plan_details, height=1, width=20)
+    save_plan_button.grid(row=17, column=3)
     # Back button
-    t_back_button = tk.Button(new_plan_labelframe, text='Back to Home', command=back_button_to_admin_main)
-    t_back_button.grid(row=13, column=3, padx=5, pady=10)
-
-    return t_camp_IDbox, family_labelbox, t_medical_conditionsEntry, t_languages_spokenEntry, t_second_languageEntry
+    back_button = tk.Button(new_plan_labelframe, text='Back to Home', command=back_button_to_admin_main)
+    back_button.grid(row=17, column=1, padx=5, pady=10)
 
 
-def na_refugee_info_dict(na_refugee_info, t_camp_IDbox, family_labelbox, t_medical_conditionsEntry, t_languages_spokenEntry, t_second_languageEntry):
-    try:
-        # Update self.t_create_refugee dictionary
-        with open('refugee.pickle', 'wb') as file:
-            camp_ID = t_camp_IDbox.get()
-            family_members = family_labelbox.get()
-            medical_conditions = t_medical_conditionsEntry.get()
-            languages_spoken = t_languages_spokenEntry.get()
-            second_language = t_second_languageEntry.get()
-            na_refugee_info['refugee1']['Camp ID'] = camp_ID
-            na_refugee_info['refugee1']['Medical Conditions'] = medical_conditions
-            na_refugee_info['refugee1']['Languages Spoken'] = languages_spoken
-            na_refugee_info['refugee1']['Second Language'] = second_language
-            na_refugee_info['refugee1']['Family Members'] = family_members
+def store_plan_details():
+    #write function to store pickle - use append to document
+    pass
 
-            pickle.dump(na_refugee_info, file)
-
-    except FileNotFoundError:
-        pass
+susceptible_countries = [
+    "Afghanistan",
+    "Syria",
+    "Yemen",
+    "South Sudan",
+    "Somalia",
+    "Sudan",
+    "Democratic Republic of the Congo",
+    "Venezuela",
+    "Iraq",
+    "Nigeria",
+    "Ethiopia",
+    "Myanmar",
+    "Haiti",
+    "Central African Republic",
+    "Libya",
+    "Chad",
+    "Mali",
+    "Niger",
+    "Cameroon",
+    "Ukraine",
+    "Pakistan",
+    "Bangladesh",
+    "Lebanon",
+    "Zimbabwe",
+    "Eritrea",
+    "North Korea",
+    "Eswatini",
+    "Zambia",
+    "Malawi",
+]

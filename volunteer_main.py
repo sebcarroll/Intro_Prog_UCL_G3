@@ -50,6 +50,40 @@ class VolunteerHomepage(VolunteerLoginPage):
         self.t_summary_resources = tk.Button(self.window, text='Display resources available', command=self.t_display_resources, height=2, width=20)
         self.t_summary_resources.grid(row=6, column=3)
 
+        '''try:
+            if os.path.getsize('data.pickle') > 0:
+                with open('data.pickle', 'rb') as file:
+                    print("this works")
+                    self.y_personal_info = pickle.load(file)
+
+            else:
+                self.y_personal_info = {
+                    'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '',
+                                   'Commitment': '',
+                                   'Work Type': '', 'Deactivated': False, 'Deleted': False},
+                    'volunteer2': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '',
+                                   'Commitment': '',
+                                   'Work Type': '', 'Deactivated': False, 'Deleted': False},
+                    'volunteer3': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '',
+                                   'Commitment': '',
+                                   'Work Type': '', 'Deactivated': True, 'Deleted': False},
+                    'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '',
+                                   'Commitment': '',
+                                   'Work Type': '', 'Deactivated': False, 'Deleted': False}
+                }
+        except(FileNotFoundError):
+            self.y_personal_info = {
+                'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                               'Work Type': '', 'Deactivated': False, 'Deleted': False},
+                'volunteer2': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                               'Work Type': '', 'Deactivated': False, 'Deleted': False},
+                'volunteer3': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                               'Work Type': '', 'Deactivated': True, 'Deleted': False},
+                'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                               'Work Type': '', 'Deactivated': False, 'Deleted': False}
+            }
+
+        self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}'''
         try:
             if os.path.getsize('refugee.pickle') > 0:
                 with open('refugee.pickle', 'rb') as file:
@@ -62,6 +96,7 @@ class VolunteerHomepage(VolunteerLoginPage):
 
             if os.path.getsize('data.pickle') > 0:
                 with open('data.pickle', 'rb') as file:
+                    print("this works")
                     self.y_personal_info = pickle.load(file)
             else:
                 self.y_personal_info = {
@@ -76,7 +111,7 @@ class VolunteerHomepage(VolunteerLoginPage):
                     '': {'password': '', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                    'Work Type': '', 'Deactivated': False, 'Deleted': False}
                 }
-        except(FileNotFoundError):
+        except FileNotFoundError:
             self.y_personal_info = {
                 'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                'Work Type': '', 'Deactivated': False, 'Deleted': False},
@@ -87,7 +122,7 @@ class VolunteerHomepage(VolunteerLoginPage):
                 'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                'Work Type': '', 'Deactivated': False, 'Deleted': False}
             }
-        except(FileNotFoundError):
+        except FileNotFoundError:
             self.na_refugee_info = {
                 'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
                              'Second Language': ''}}

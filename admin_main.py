@@ -1,28 +1,26 @@
 import tkinter as tk
 import pickle
 import os
-from AdminSubpages.create_plan import new_plan, na_refugee_info_dict
+from AdminSubpages.create_plan import new_plan
 
 class AdminHomepage:
     def __init__(self, root, go_to_landing_page):
         self.root = root
         self.go_to_landing_page = go_to_landing_page
-        self.new_plan_entry_widgets = None
 
         self.window = tk.Toplevel(self.root)
         self.window.title('Admin Homepage')
         self.window.geometry('1300x600')
 
         try:
-            if os.path.getsize('refugee.pickle') > 0:
-                with open('refugee.pickle', 'rb') as file:
+            if os.path.getsize('plans.pickle') > 0:
+                with open('plans.pickle', 'rb') as file:
                     self.na_refugee_info = pickle.load(file)
             else:
                 self.na_refugee_info = {
                     'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
                                  'Second Language': ''}
                 }
-
         except(FileNotFoundError):
             self.na_refugee_info = {
                 'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
@@ -30,10 +28,7 @@ class AdminHomepage:
 
 
         # Initialize na_refugee_info before trying to load from the pickled file
-        self.na_refugee_info = {
-            'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '', 'Second Language': ''}
-        }
-        self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}
+
 
         # MENU BAR:
         menu_bar = tk.Menu(self.window)
@@ -117,9 +112,8 @@ class AdminHomepage:
         #apcg.create_plan_gui(new_window)
 
     def create_event(self):
-        self.new_plan_entry_widgets = new_plan(self.window, self.na_refugee_info, self.back_button_to_admin_main, self.new_plan_details_storage_handler)
-    def new_plan_details_storage_handler(self, camp_ID, family_label, medical_conditionsEntry, languages_spokenEntry, second_languageEntry):
-        na_refugee_info_dict(self.na_refugee_info, camp_ID, family_label, medical_conditionsEntry, languages_spokenEntry, second_languageEntry)
+        new_plan(self.window, self.back_button_to_admin_main)
+
 
 
 
