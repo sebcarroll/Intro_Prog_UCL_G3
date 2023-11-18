@@ -56,8 +56,8 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                                  'Second Language': ''}
                 }
             
-            if os.path.getsize('data.pickle') > 0:
-                with open('data.pickle', 'rb') as file:
+            if os.path.getsize('LearningResourceAndOldFiles/data.pickle') > 0:
+                with open('LearningResourceAndOldFiles/data.pickle', 'rb') as file:
                     self.y_personal_info = pickle.load(file)
             
             else:
@@ -88,19 +88,8 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
             self.na_refugee_info = {
                     'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
                                  'Second Language': ''}}
-                                 
-        self.y_camp_info = {"Country": "America", "Max Capacity": ""}
-        self.y_camp_info['ID'] = {"Country": "America 132", "Max Capacity": 1000, 'Food packets': 0, 'Medical supplies': 0, 'Water and sanitation': 0, 'Clothing': 0, 'Shelter materials': 0}
-        try:
-            if os.path.getsize('Camp.pickle') > 0:
-                with open('Camp.pickle', 'rb') as f:
-                    self.y_camp_info = pickle.load(f)
-            else:
-                self.y_camp_info['ID'] = {"Country": "America 132", "Max Capacity": 1000, 'Food packets': 0, 'Medical supplies': 0, 'Water and sanitation': 0, 'Clothing': 0, 'Shelter materials': 0}
-        except(FileNotFoundError):
-            self.y_camp_info['ID'] = {"Country": "America 132", "Max Capacity": 1000, 'Food packets': 0, 'Medical supplies': 0, 'Water and sanitation': 0, 'Clothing': 0, 'Shelter materials': 0}
-        print(self.y_camp_info)
         
+        self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}
         self.window = tkinter.Tk()
         self.window.title('Whatever')
         self.t_volunteer_login()
@@ -349,7 +338,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         try:
             # Update self.y_personal_info dictionary
 
-            with open('data.pickle', 'wb') as file:
+            with open('LearningResourceAndOldFiles/data.pickle', 'wb') as file:
                 name = self.t_personal_nameEntry.get()
                 email = self.t_personal_emailEntry.get()
                 phone = self.t_phonenumberEntry.get()
@@ -430,19 +419,23 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
 
     def na_refugee_info_dict(self):
         try:
-            with open('Camp.pickle', 'wb') as f:
-                refugee_change = self.t_camp_campacitybox.get()
-                refugee_capacity = self.y_camp_info['ID']['Max Capacity']
-                refugee_capacity -= int(refugee_change)
-                request_resources_type = self.n_resource_typebox.get()
-                request_resources_quant = self.n_resource_quantbox.get()
-                current_resources = self.y_camp_info['ID'][request_resources_type]
-                current_resources += int(request_resources_quant)
-                self.y_camp_info['ID']['Max Capacity'] = refugee_capacity
-                self.y_camp_info['ID'][request_resources_type] = current_resources
-                pickle.dump(self.y_camp_info, f)
-        except:
-            raise file_not_found
+            # Update self.t_create_refugee dictionary
+            with open('refugee.pickle', 'wb') as file:
+                camp_ID = self.t_camp_IDbox.get()
+                family_members = self.family_labelbox.get()
+                medical_conditions = self.t_medical_conditionsEntry.get()
+                languages_spoken = self.t_languages_spokenEntry.get()
+                second_language = self.t_second_languageEntry.get()
+                self.na_refugee_info['refugee1']['Camp ID'] = camp_ID
+                self.na_refugee_info['refugee1']['Medical Conditions'] = medical_conditions
+                self.na_refugee_info['refugee1']['Languages Spoken'] = languages_spoken
+                self.na_refugee_info['refugee1']['Second Language'] = second_language
+                self.na_refugee_info['refugee1']['Family Members'] = family_members
+    
+                pickle.dump(self.na_refugee_info, file)
+
+        except FileNotFoundError:
+            pass
     def t_create_refugee(self):
         for i in self.window.winfo_children():
             i.destroy()

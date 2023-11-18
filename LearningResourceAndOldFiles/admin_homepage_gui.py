@@ -1,7 +1,8 @@
 # admin_gui.py
 
 import tkinter as tk
-import admin_functions as af
+from LearningResourceAndOldFiles import admin_functions as af
+
 
 class AdminHomepage:
     def __init__(self, root):
