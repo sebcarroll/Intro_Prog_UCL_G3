@@ -2,24 +2,22 @@ import tkinter as tk
 
 def create_listbox_with_label(widget, text_label, row_num, column_num, list_of_options):
     '''
-    Creates a labelled listbox with a scrollbar and binds the selection event to an action.
+    Creates a labelled listbox so that only a select number of options are available for input by the user.
 
     :param widget: The window in which the listbox is to be contained.
     :param text_label: The name of the label that you want the list box to have
     :param row_num: The relative position vertically that you want the list box and label to be displayed in.
     :param column_num: The relative position horizontally that you want the list box and label to be displayed in.
     :param list_of_options: The list containing the options available to the user to be selected.
-    :return: listbox and scrollbar widgets
+    :return:
     '''
-    label = tk.Label(widget, text=text_label)
-    label.grid(row=row_num, column=column_num)
+    tk.Label(widget, text=text_label).grid(row=row_num, column=column_num)
 
     scrollbar = tk.Scrollbar(widget)
     scrollbar.grid(row=row_num, column=column_num+2, sticky='ns')
 
-    listbox = tk.Listbox(widget, yscrollcommand=scrollbar.set, height=1, exportselection=0)
+    listbox = tk.Listbox(widget, yscrollcommand=scrollbar.set, height=1)
     listbox.grid(row=row_num, column=column_num+1)
-    listbox.bind('<<ListboxSelect>>', get_selected_listbox_value(listbox, list_of_options))
 
     scrollbar.config(command=listbox.yview)
 
@@ -27,22 +25,18 @@ def create_listbox_with_label(widget, text_label, row_num, column_num, list_of_o
         listbox.insert(tk.END, item)
 
     return listbox, scrollbar
-def get_selected_listbox_value(listbox, list):
+def get_selected_listbox_value(listbox):
     '''
-    Returns the selected value within a listbox so that the selected value can be saved as a variable for further use. If no input provided, it will use the first option given in the list of options as a default.
+    Returns the selected value within a listbox so that the selected value can be saved as a variable for further use.
+
     :param listbox: The listbox that the value to be saved is coming from
     :return:
     '''
-    print(f"Current listbox selection indices: {listbox.curselection()}")
     selected_indices = listbox.curselection()
     if selected_indices:
-        selected_value = listbox.get(selected_indices[0])
-        print(f"Selected value: {selected_value}")
-        return selected_value
-    else:
-        default_value = list[0]
-        print("No selection made. Using the default value.")
-        return default_value
+        return listbox.get(selected_indices[0])
+    return None  # Return None or a default value if no item is selected
+
 
 def check_input_valid(variable, window, message_label, submit_button_row_num, submit_button_column_num, column_span):
     '''
@@ -54,28 +48,16 @@ def check_input_valid(variable, window, message_label, submit_button_row_num, su
     :param message_label: The label widget that will display the message requiring the entry of a non-blank input.
     :return:
     '''
-    if variable == None:
+    if variable == None :
         message_label.config(text="Please insert a valid input.")
         window.update()
         message_label.grid(row=submit_button_row_num + 1, column=submit_button_column_num, columnspan= column_span)
         return False
-    elif variable == "":
+    elif variable.strip() == '':
         message_label.config(text="Please insert a valid input.")
         window.update()
         message_label.grid(row=submit_button_row_num + 1, column=submit_button_column_num, columnspan=column_span)
-        return False
     else:
         message_label.config(text="")
         message_label.grid(row=submit_button_row_num + 1, column=submit_button_column_num, columnspan= column_span)
         return True
-        return variable
-
-def check_is_numeric(variable, window, message_label, submit_button_row_num, submit_button_column_num, column_span):
-    try:
-        float(variable)
-        return True
-    except ValueError:
-        message_label.config(text="Please insert a valid numeric input.")
-        window.update()
-        message_label.grid(row=submit_button_row_num + 1, column=submit_button_column_num, columnspan=column_span)
-        return False
