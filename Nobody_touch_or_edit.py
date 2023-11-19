@@ -366,13 +366,27 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
     def t_personal_info_dict(self):
         try:
             # Update self.y_personal_info dictionary
+            if self.t_personal_nameEntry.get() == '':
+                name = self.y_personal_info[self.username]['name']
+            else:
+                name = self.t_personal_nameEntry.get()
+            if self.t_personal_emailEntry.get() == '':
+                email = self.y_personal_info[self.username]['Email Address']
+            else:
+                email = self.t_personal_emailEntry.get()
+            if self.t_phonenumberEntry.get() == '':
+                phone = self.y_personal_info[self.username]['Phone Number']
+            else:
+                phone = self.t_phonenumberEntry.get()
+            if self.t_commitmentEntry.get() == '':
+                commitment = self.y_personal_info[self.username]['Commitment']
+            else:
+                commitment = self.t_commitmentEntry.get()
+            if self.t_personal_nameEntry.get() == '':
+                work = self.y_personal_info[self.username]['Work Type']
+            else:
+                work = self.t_worktypeEntry.get()
             
-            name = self.t_personal_nameEntry.get()
-            email = self.t_personal_emailEntry.get()
-            phone = self.t_phonenumberEntry.get()
-            commitment = self.t_commitmentEntry.get()
-            work = self.t_worktypeEntry.get()
-
             # If entered non-alpha characters, raise error
             if re.search(r'^[A-Za-z]', name):
                 self.y_personal_info[self.username]['name'] = name.strip()
@@ -391,8 +405,8 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
             else:
                 raise invalid_email
 
-            self.y_personal_info[self.username]['Work Type'] = work
             self.y_personal_info[self.username]['Commitment'] = commitment
+            self.y_personal_info[self.username]['Work Type'] = work
 
             with open('data.pickle', 'wb') as file1:
                 pickle.dump(self.y_personal_info, file1)
