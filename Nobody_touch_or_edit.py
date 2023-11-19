@@ -325,6 +325,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         phone_number = tkinter.Label(t_personal_labelframe, text=self.y_personal_info[self.username]['Phone Number'],
                                      font=('TkinterDefault', 15))
         phone_number.grid(row=9, column=2, padx=5)
+
         self.t_phonenumberEntry = tkinter.Entry(t_personal_labelframe)
         self.t_phonenumberEntry.grid(row=9, column=3)
 
@@ -436,6 +437,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         self.t_camp_campacitybox = ttk.Spinbox(t_camp_labelframe, from_=0, to=1000, style='info.TSpinbox')
         self.t_camp_campacitybox.grid(row=4, column=5, padx=5)
 
+        
         # Request type of resource box and label
         n_resource_type = tkinter.Label(t_camp_labelframe, text='Select resource type you would like to request')
         n_resource_type.grid(row=5, column=3, padx=5)
@@ -463,13 +465,17 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         t_save_changes.grid(row=7, column=1, padx=5, pady=10)
 
 
-
     def na_refugee_info_dict(self):
         try:
             with open('Camp.pickle', 'wb') as f:
                 refugee_change = self.t_camp_campacitybox.get()
                 refugee_capacity = self.y_camp_info['ID']['Max Capacity']
-                refugee_capacity -= int(refugee_change)
+
+                if int(refugee_capacity) - int(refugee_change) > -1:
+                    refugee_capacity -= int(refugee_change)
+                else:
+                    raise t_incorrect_details
+                
                 request_resources_type = self.n_resource_typebox.get()
                 request_resources_quant = self.n_resource_quantbox.get()
                 current_resources = self.y_camp_info['ID'][request_resources_type]
@@ -477,8 +483,15 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                 self.y_camp_info['ID']['Max Capacity'] = refugee_capacity
                 self.y_camp_info['ID'][request_resources_type] = current_resources
                 pickle.dump(self.y_camp_info, f)
-        except:
-            raise file_not_found
+
+                changes = f"Remaining Refugee Capacity = {refugee_capacity}\n {request_resources_type}: {current_resources}"
+
+                messagebox.showinfo(title="Saved", message=f"Changes have been saved\n{changes}")
+
+                self.t_edit_camp()
+
+        except(t_incorrect_details):
+            tkinter.messagebox.showinfo(title='Current Capacity Exceeded', message='The current capacity is exceeded, if you require more refugees, please contact the administrator')
 
     def t_create_refugee(self):
         for i in self.window.winfo_children():
