@@ -59,10 +59,15 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                                  'Second Language': ''}
                 }
 
+        except(FileNotFoundError):
+            self.na_refugee_info = {
+                'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
+                             'Second Language': ''}}
+        try:
             if os.path.getsize('data.pickle') > 0:
                 with open('data.pickle', 'rb') as file1:
                     self.y_personal_info = pickle.load(file1)
-                    print("Data is loaded")
+                    print("Data has loaded from the pickle file")
 
             else:
                 self.y_personal_info = {
@@ -79,7 +84,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                                    'Commitment': '',
                                    'Work Type': '', 'Deactivated': False, 'Deleted': False}
                 }
-                print('Data could not be found')
+                print('Data could not be loaded from pickle file')
 
         except(FileNotFoundError):
             self.y_personal_info = {
@@ -92,12 +97,9 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                 'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                'Work Type': '', 'Deactivated': False, 'Deleted': False}
             }
-            print('File Not Found Error ')
 
-        except(FileNotFoundError):
-            self.na_refugee_info = {
-                'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
-                             'Second Language': ''}}
+            print('File Not Found Error has appeared')
+
 
         self.y_camp_info = {"Country": "America", "Max Capacity": ""}
         self.y_camp_info['ID'] = {"Country": "America 132", "Max Capacity": 1000, 'Food packets': 0,
@@ -394,6 +396,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
             with open('data.pickle', 'wb') as file1:
                 pickle.dump(self.y_personal_info, file1)
                 print('saved')
+                file1.close
 
             self.t_personal_information_base()
             
