@@ -21,7 +21,7 @@ def new_plan(window, back_button_to_admin_main):
     # Camp ID
     camp_ID_label = tk.Label(new_plan_labelframe, text='New Camp ID', font=('TkinterDefault', 15))
     camp_ID_label.grid(row=3, column=3)
-    id_not_taken = ['1','2','3','4','5']
+    id_not_taken = id_generator(20)
     camp_IDbox = ttk.Combobox(new_plan_labelframe, values=id_not_taken)
     camp_IDbox.grid(row=3, column=4, padx=5)
 
@@ -29,7 +29,7 @@ def new_plan(window, back_button_to_admin_main):
     crisis_type_label = tk.Label(new_plan_labelframe, text='Crisis Type', font=('TkinterDefault', 15))
     crisis_type_label.grid(row=5, column=3, padx=5)
     crisis_type = ["War", "Environmental", "Supply Shortage", "Political unrest", "Displacement", "Other"]
-    crisis_type_labelbox = ttk.Spinbox(new_plan_labelframe, values=crisis_type, style='info.TSpinbox')
+    crisis_type_labelbox = ttk.Combobox(new_plan_labelframe, values=crisis_type)
     crisis_type_labelbox.grid(row=5, column=4, padx=5)
 
     # Description of Crisis:
@@ -63,6 +63,17 @@ def new_plan(window, back_button_to_admin_main):
 def store_plan_details():
     #write function to store pickle - use append to document
     pass
+
+
+
+
+def id_generator(max):
+    id_list = []
+    n=1
+    while n<=max:
+        id_list.append(f"ID{n}")
+        n += 1
+    return id_list
 
 susceptible_countries = [
     "Afghanistan",
