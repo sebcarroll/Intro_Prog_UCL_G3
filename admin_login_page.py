@@ -67,6 +67,10 @@ class AdminLoginPage(tk.Frame):
         # Swap button from  to command=self.on_login to bypass
 
 
+        # Back to landing page
+        login_btn = tk.Button(self, text="Back", command=self.exit_and_go_back)
+        login_btn.grid(row=11, column=1, pady=5)
+
 
         # Shows caps lock on/off (OLD BINDING NOT WORKING)
         self.label_caps = tk.Label(self, text='')
@@ -100,3 +104,24 @@ class AdminLoginPage(tk.Frame):
     def on_login(self):
         # Add login logic here
         self.go_to_admin_main()
+
+    def exit_and_go_back(self):
+        pass
+        """def exit_and_go_back(self):
+            # Clear current contents
+            for widget in self.window.winfo_children():
+                widget.grid_forget()
+            from landing_page import LandingPage
+            refresh_landing = LandingPage(self)"""
+
+        # Repopulate main page
+        """self.admin_welcome_title.grid(row=0, column=3, pady=30)
+        self.btn_create_event.grid(row=3, column=3, pady=5)
+        # End an event button
+        self.btn_end_event.grid(row=5, column=3, pady=5)
+        # View summaries button
+        self.btn_view_summaries.grid(row=7, column=3, pady=5)
+        # Edit volunteer accounts button
+        self.btn_edit_accounts.grid(row=9, column=3, pady=5)
+        # Allocate resources button
+        self.btn_allocate_resources.grid(row=11, column=3, pady=5)"""

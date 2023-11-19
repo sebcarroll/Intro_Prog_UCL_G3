@@ -78,6 +78,8 @@ class AdminHomepage:
         file_menu.add_separator()
         file_menu.add_command(label="About", command=self.our_cmd)
 
+
+        # WELCOME TITLE:
         self.admin_welcome_title = tk.Label(self.window, text='Welcome to the Admin portal', font=('Arial Bold', 40))
         self.admin_welcome_title.grid(row=0, column=3, pady=30)
 
