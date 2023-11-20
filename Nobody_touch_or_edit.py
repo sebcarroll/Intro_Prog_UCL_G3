@@ -423,6 +423,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                                                font=('TkDefaultFont', 20))
         t_camp_labelframe.grid(row=1, column=1)
 
+
         # Current amount you can add
         t_current_capacity = tkinter.Label(t_camp_labelframe, text='Current Capacity: ', font=('TkDefaultFont', 15))
         t_current_capacity.grid(row=2, column=3)
@@ -432,7 +433,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
 
         # Capacity for new refugees box and label
         t_camp_capacity = tkinter.Label(t_camp_labelframe,
-                                        text='Add new refugees:')  # Need to add current number here next to it so Ying add that in with dictionary or however.
+                                        text= f'Add new refugees: ')  # Need to add current number here next to it so Ying add that in with dictionary or however.
         t_camp_capacity.grid(row=4, column=3, padx=5)
         self.t_camp_campacitybox = ttk.Spinbox(t_camp_labelframe, from_=0, to=1000, style='info.TSpinbox')
         self.t_camp_campacitybox.grid(row=4, column=5, padx=5)
@@ -462,7 +463,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
 
         # Save changes button, need to add this to a dictionary.
         t_save_changes = tkinter.Button(t_edit_campframe, text='Save changes', command=self.na_refugee_info_dict)
-        t_save_changes.grid(row=7, column=1, padx=5, pady=10)
+        t_save_changes.grid(row=14, column=1, padx=5, pady=10)
 
 
     def na_refugee_info_dict(self):
