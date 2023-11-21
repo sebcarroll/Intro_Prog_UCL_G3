@@ -163,11 +163,9 @@ class VolunteerHomepage(VolunteerLoginPage):
 
 
 
-
     # Display Resources (resource_display.py)
     def t_display_resources(self):
         resource_display(self.window, self.back_button_to_volunteer_main)
-
 
 
 

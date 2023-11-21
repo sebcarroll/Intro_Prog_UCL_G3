@@ -2,32 +2,20 @@ import tkinter as tk
 import pickle
 import os
 from AdminSubpages.create_plan import new_plan
+from AdminSubpages.admin_edit_details_CH_VERSION import AdminEditVolunteerDetails
 
 class AdminHomepage:
     def __init__(self, root, go_to_landing_page):
         self.root = root
         self.go_to_landing_page = go_to_landing_page
-
         self.window = tk.Toplevel(self.root)
         self.window.title('Admin Homepage')
         self.window.geometry('1300x600')
+        self.admin_edit_details = AdminEditVolunteerDetails(self.window)
 
-        try:
-            if os.path.getsize('plans.pickle') > 0:
-                with open('plans.pickle', 'rb') as file:
-                    self.na_refugee_info = pickle.load(file)
-            else:
-                self.na_refugee_info = {
-                    'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
-                                 'Second Language': ''}
-                }
-        except(FileNotFoundError):
-            self.na_refugee_info = {
-                'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
-                             'Second Language': ''}}
+        self.window.bind('<F11>', self.toggle_fullscreen)
+        self.window.bind('<Escape>', self.end_fullscreen)
 
-
-        # Initialize na_refugee_info before trying to load from the pickled file
 
 
         # MENU BAR:
@@ -104,9 +92,6 @@ class AdminHomepage:
         self.btn_allocate_resources = tk.Button(self.window, text="Allocate resources", command=self.allocate_resources)
         self.btn_allocate_resources.grid(row=11, column=3, pady=5)
 
-
-
-
     #def create_event(self):
         # Open the resource allocation GUI
         #new_plan(self.window, self.back_button_to_admin_main)
@@ -115,12 +100,6 @@ class AdminHomepage:
 
     def create_event(self):
         new_plan(self.window, self.back_button_to_admin_main)
-
-
-
-
-
-
 
     def end_event(self):
         # Add functionality for ending an event
@@ -134,18 +113,14 @@ class AdminHomepage:
 
     def edit_accounts(self):
         # Add functionality for editing volunteer accounts
-        print("Editing volunteer accounts...")
+
+        self.admin_edit_details.create_gui(self)
+        # print("Editing volunteer accounts...")
         # Implement the function's logic here
 
     def allocate_resources(self):
         # Open the resource allocation GUI
         print("Allocating resources...")
-
-
-
-
-
-
 
 
     def back_button_to_admin_main(self):
@@ -177,5 +152,10 @@ class AdminHomepage:
     def destroy(self):
         self.window.destroy()
 
+    def toggle_fullscreen(self, event=None):
+        self.window.attributes('-fullscreen', not self.window.attributes('-fullscreen'))
 
+    def end_fullscreen(self, event=None):
+        self.window.attributes('-fullscreen', False)
+        self.window.geometry("1200x600")
 

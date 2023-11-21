@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-import pickle
 
 
 def new_plan(window, back_button_to_admin_main):
