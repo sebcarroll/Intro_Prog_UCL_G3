@@ -86,7 +86,7 @@ class AdminPage:
 
         button_open = ttk.Button(
             new_plan_frame,
-            text="Open select date page",
+            text="Select Date",
             command=new_window)
 
         button_open.place(x=100, y=100)
