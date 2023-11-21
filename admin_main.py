@@ -15,7 +15,7 @@ class AdminHomepage:
 
         self.window.bind('<F11>', self.toggle_fullscreen)
         self.window.bind('<Escape>', self.end_fullscreen)
-
+        self.window.protocol("WM_DELETE_WINDOW", self.window_exit_button)
 
 
         # MENU BAR:
@@ -158,4 +158,7 @@ class AdminHomepage:
     def end_fullscreen(self, event=None):
         self.window.attributes('-fullscreen', False)
         self.window.geometry("1200x600")
+
+    def window_exit_button(self):
+        self.root.destroy()
 

@@ -11,6 +11,7 @@ class LandingPage:
         self.window.title('Welcome to the UCL Humanity Rescue Portal')
         self.window.geometry('1000x600')
         self.create_landing_page_widgets()
+        self.window.protocol("WM_DELETE_WINDOW", self.window_exit_button)
 
     def create_landing_page_widgets(self):
         welcome_label = tk.Label(
@@ -67,6 +68,9 @@ class LandingPage:
 
     def exit_software(self):
         self.root.quit()
+
+    def window_exit_button(self):
+        self.root.destroy()
 
     def destroy(self):
         self.window.destroy()
