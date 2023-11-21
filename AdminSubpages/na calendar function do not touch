@@ -1,0 +1,32 @@
+import tkinter
+from tkinter import *
+from tkcalendar import Calendar
+import datetime
+from tkinter import ttk
+
+today = datetime.date.today()
+
+window = Tk()
+window.geometry("400x400")
+style = ttk.Style(window)
+style.theme_use('clam')
+
+
+cal = Calendar(window,
+               font="Arial 14", selectmode='day',
+               cursor="hand1", year=today.year, month=today.month,
+               mindate=today, showweeknumbers=False) #na set mindate as today so you can't select past dates
+cal.config(background = "black")
+cal.pack(pady=20)
+
+def start_date():
+    date.config(text="Start date of event is: " + cal.get_date())
+
+
+Button(window, text='select start date',
+       command=start_date).pack(pady=20)
+
+date = Label(window, text="")
+date.pack(pady=20)
+
+window.mainloop()
