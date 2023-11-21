@@ -3,6 +3,7 @@ from landing_page import LandingPage
 from admin_main import AdminHomepage
 from volunteer_main import VolunteerHomepage
 
+
 class Main:
     def __init__(self):
         self.root = tk.Tk()
@@ -31,7 +32,6 @@ class Main:
         if self.landing_page:
             self.landing_page.destroy()
         self.volunteer_homepage = VolunteerHomepage(self.root, username, self.go_to_landing_page)
-
 
 
 if __name__ == "__main__":

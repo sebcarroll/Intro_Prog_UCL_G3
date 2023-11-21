@@ -2,7 +2,7 @@ import tkinter as tk
 import pickle
 import os
 from AdminSubpages.create_plan import new_plan
-from AdminSubpages.admin_edit_details_CH_VERSION import AdminEditVolunteerDetails
+from AdminSubpages.admin_edit_details import AdminEditVolunteerDetails
 
 class AdminHomepage:
     def __init__(self, root, go_to_landing_page):
@@ -11,7 +11,8 @@ class AdminHomepage:
         self.window = tk.Toplevel(self.root)
         self.window.title('Admin Homepage')
         self.window.geometry('1300x600')
-        self.admin_edit_details = AdminEditVolunteerDetails(self.window)
+
+        self.admin_edit_details = AdminEditVolunteerDetails(self.window, self.back_button_to_admin_main)
 
         self.window.bind('<F11>', self.toggle_fullscreen)
         self.window.bind('<Escape>', self.end_fullscreen)
@@ -113,7 +114,6 @@ class AdminHomepage:
 
     def edit_accounts(self):
         # Add functionality for editing volunteer accounts
-
         self.admin_edit_details.create_gui(self)
         # print("Editing volunteer accounts...")
         # Implement the function's logic here

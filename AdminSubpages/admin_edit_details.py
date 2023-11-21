@@ -1,9 +1,9 @@
 import tkinter as tk
 
-
 class AdminEditVolunteerDetails:
-    def __init__(self, window):
+    def __init__(self, window, back_button_to_admin_main):
         self.window = window
+        self.back_button_to_admin_main = back_button_to_admin_main
 
         # If we want to change the title but probably not necessary
         #self.window.title("Admin Edit Volunteer Details")
@@ -31,15 +31,18 @@ class AdminEditVolunteerDetails:
         tk.Label(self.window, text="Select Volunteer:").grid(row=1, column=0, padx=10, pady=5)
 
         # Listbox to display volunteer usernames
-        self.window.volunteer_listbox = tk.Listbox(self.window, selectmode=tk.SINGLE)
+        self.volunteer_listbox = tk.Listbox(self.window, selectmode=tk.SINGLE)
         for volunteer in self.y_personal_info:
             self.volunteer_listbox.insert(tk.END, volunteer)
-        self.window.volunteer_listbox.grid(row=1, column=1, padx=10, pady=5)
+        self.volunteer_listbox.grid(row=1, column=1, padx=10, pady=5)
 
         # Buttons
         tk.Button(self.window, text="Edit Account (Deactivate)", command=self.deactivate_account).grid(row=3, column=0, columnspan=2, pady=10)
         tk.Button(self.window, text="Edit Account (Reactivate)", command=self.reactivate_account).grid(row=4, column=0, columnspan=2, pady=10)
         tk.Button(self.window, text="Edit Account (Delete)", command=self.delete_account).grid(row=5, column=0, columnspan=2, pady=10)
+        # Back button
+        back_button = tk.Button(self.window, text='Back to Home', command=self.back_button_to_admin_main)
+        back_button.grid(row=17, column=1, padx=5, pady=10)
 
     # Takes the deactivated account out of the
     def reactivate_account(self):
