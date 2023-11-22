@@ -1,7 +1,7 @@
 import tkinter as tk
 import pickle
 import os
-from AdminSubpages.create_plan import new_plan
+from AdminSubpages.new_plans import new_plan
 from AdminSubpages.admin_edit_details import AdminEditVolunteerDetails
 
 class AdminHomepage:
