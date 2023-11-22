@@ -79,4 +79,3 @@ class AdminEditVolunteerDetails:
             self.volunteer_listbox.delete(selected_index)
         else:
             print("Please select a volunteer.")
-
