@@ -11,6 +11,12 @@ class AdminResourceAllocation:
         self.all_camp_data = {}
 
     def create_gui_resource_allocation(self, window):
+        # Main frame for this whole page
+        for i in self.window.winfo_children():
+            i.grid_forget()
+        # If you want some formatting in a seperate frame:
+        resource_frame = tk.Frame(self.window)
+        resource_frame.grid()
 
         #Comes from list of IDs created by admin in camp creation
         camp_ids = ["Camp_1", "Camp_2", "Camp_3", "Camp_4"]
@@ -43,9 +49,9 @@ class AdminResourceAllocation:
         estimated_delivery_time_options = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4]
         estimated_delivery_time_listbox, estimated_delivery_time_scrollbar = create_listbox_with_label(self.window, "Estimated Resource Delivery Time (weeks): ", 7, 0, estimated_delivery_time_options)
 
-        submit_button = ttk.Button(self.window, text="Submit", command=lambda: resource_allocation(camp_id_listbox, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry, no_refugees_entry, food_amount_refugee_listbox, medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options))
+        '''submit_button = ttk.Button(self.window, text="Submit", command=lambda: resource_allocation(camp_id_listbox, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry, no_refugees_entry, food_amount_refugee_listbox, medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options))
 
-        submit_button.grid(row=8, column=0, columnspan=2)
+        submit_button.grid(row=8, column=0, columnspan=2)'''
 
 
 
