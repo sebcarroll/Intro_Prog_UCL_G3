@@ -10,13 +10,16 @@ class AdminHomepage:
         self.go_to_landing_page = go_to_landing_page
         self.window = tk.Toplevel(self.root)
         self.window.title('Admin Homepage')
-        self.window.geometry('1300x600')
+        #self.window.geometry('1300x600')
+        self.window.configure(background="skyblue")
+        self.window.attributes('-fullscreen', True)
 
         self.admin_edit_details = AdminEditVolunteerDetails(self.window, self.back_button_to_admin_main)
 
         self.window.bind('<F11>', self.toggle_fullscreen)
         self.window.bind('<Escape>', self.end_fullscreen)
         self.window.protocol("WM_DELETE_WINDOW", self.window_exit_button)
+
 
 
         # MENU BAR:
@@ -68,8 +71,8 @@ class AdminHomepage:
         file_menu.add_command(label="About", command=self.our_cmd)
 
 
-        # WELCOME TITLE:
-        self.admin_welcome_title = tk.Label(self.window, text='Welcome to the Admin portal', font=('Arial Bold', 40))
+        # WELCOME TITLE
+        self.admin_welcome_title = tk.Label(self.window, text='Welcome to the admin portal', font=('Arial Bold', 40))
         self.admin_welcome_title.grid(row=0, column=3, pady=30)
 
         # MAIN BUTTONS
@@ -157,7 +160,7 @@ class AdminHomepage:
 
     def end_fullscreen(self, event=None):
         self.window.attributes('-fullscreen', False)
-        self.window.geometry("1200x600")
+        self.window.geometry("1300x600")
 
     def window_exit_button(self):
         self.root.destroy()
