@@ -345,7 +345,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         work_type_label.grid(row=13, column=2, padx=5)
 
         # Work type entry
-        self.t_worktypeEntry = ttk.Combobox(t_personal_labelframe, values=['Medical Aid', 'Food counselling'])
+        self.t_worktypeEntry = ttk.Combobox(t_personal_labelframe, values=['Medical Aid', 'Food counselling'], state='readonly')
         self.t_worktypeEntry.grid(row=13, column=3)
 
         # Store details box
@@ -382,8 +382,8 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                 commitment = self.y_personal_info[self.username]['Commitment']
             else:
                 commitment = self.t_commitmentEntry.get()
-            if self.t_personal_nameEntry.get() == '':
-                work = self.y_personal_info[self.username]['Work Type']
+            if self.t_worktypeEntry.get() == '':
+                work = self.y_personal_info[self.username]['Work Type'] 
             else:
                 work = self.t_worktypeEntry.get()
             

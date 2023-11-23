@@ -13,7 +13,8 @@ submit_button_row = 8
 submit_button_column = 0
 submit_column_span = 2
 def turn_data_into_valid_form(camp_id_listbox, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry, no_refugees_entry, food_amount_refugee_listbox, medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options):
-
+        '''
+        '''
         camp_id = get_selected_listbox_value(None, camp_id_listbox, camp_ids)
         no_weeks_aid = no_weeks_aid_entry.get()
         total_food_supplied = total_food_supplied_entry.get()
@@ -25,50 +26,50 @@ def turn_data_into_valid_form(camp_id_listbox, no_weeks_aid_entry, total_food_su
         delivery_time_weeks = get_selected_listbox_value(None, estimated_delivery_time_listbox,
                                                          estimated_delivery_time_options)
 
-        if not check_input_valid(camp_id):
+        if check_input_valid(camp_id) == False:
             message_label.config(text="Invalid camp ID.")
             message_label.grid(row=submit_button_row + 1, column=submit_button_column, columnspan=submit_column_span,
                                sticky='W')
             print(f"Not valid {camp_id}")
 
-        if not check_input_valid(no_weeks_aid) and not check_is_numeric(no_weeks_aid):
+        if check_input_valid(no_weeks_aid) == False or check_is_numeric(no_weeks_aid) == False:
             message_label.config(text="Invalid Number of Weeks given.")
             message_label.grid(row=submit_button_row + 1, column=submit_button_column, columnspan=submit_column_span,
                                sticky='W')
             print(f"Not valid {no_weeks_aid}")
 
 
-        if not check_input_valid(total_food_supplied) and not check_is_numeric(total_food_supplied):
+        if check_input_valid(total_food_supplied) == False or check_is_numeric(total_food_supplied) == False:
             message_label.config(text="Invalid Food Total given.")
             message_label.grid(row=submit_button_row + 1, column=submit_button_column, columnspan=submit_column_span,
                                sticky='W')
             print(f" Not valid {total_food_supplied}")
 
-        if not check_input_valid(total_medicine_supplied) and not check_is_numeric(total_medicine_supplied):
+        if check_input_valid(total_medicine_supplied) == False or check_is_numeric(total_medicine_supplied) == False:
             message_label.config(text="Invalid Medicine Total given.")
             message_label.grid(row=submit_button_row + 1, column=submit_button_column, columnspan=submit_column_span,
                                sticky='W')
             print(total_medicine_supplied)
 
-        if not check_input_valid(no_refugees) and not check_is_numeric(no_refugees):
+        if check_input_valid(no_refugees) == False or check_is_numeric(no_refugees) == False:
             message_label.config(text="Invalid Number of Refugees given.")
             message_label.grid(row=submit_button_row + 1, column=submit_button_column, columnspan=submit_column_span,
                                sticky='W')
             print(no_refugees)
 
-        if not check_input_valid(week_food_per_refugee) and not check_is_numeric(week_food_per_refugee):
+        if check_input_valid(week_food_per_refugee) == False or check_is_numeric(week_food_per_refugee) == False:
             message_label.config(text="Invalid refugee weekly food allocation given.")
             message_label.grid(row=submit_button_row + 1, column=submit_button_column, columnspan=submit_column_span,
                                sticky='W')
             print(week_food_per_refugee)
 
-        if not check_input_valid(week_medicine_per_refugee) and not check_is_numeric(week_medicine_per_refugee):
+        if check_input_valid(week_medicine_per_refugee) == False or check_is_numeric(week_medicine_per_refugee) == False:
             message_label.config(text="Invalid refugee weekly medicine allocation given.")
             message_label.grid(row=submit_button_row + 1, column=submit_button_column, columnspan=submit_column_span,
                                sticky='W')
             print(week_medicine_per_refugee)
 
-        if not check_input_valid(delivery_time_weeks) and not check_is_numeric(delivery_time_weeks):
+        if check_input_valid(delivery_time_weeks) == False or check_is_numeric(delivery_time_weeks) == False:
             message_label.config(text="Invalid estimated delivery time given.")
             message_label.grid(row=submit_button_row + 1, column=submit_button_column, columnspan=submit_column_span,
                                sticky='W')
@@ -122,7 +123,9 @@ def check_input_valid(variable):
 def get_selected_listbox_value(event, listbox, list):
     '''
     Returns the selected value within a listbox so that the selected value can be saved as a variable for further use. If no input provided, it will use the first option given in the list of options as a default.
-    :param listbox: The listbox that the value to be saved is coming from
+    :param event: A variable that is passed to the function when a binding event takes place.
+    :param listbox: The listbox that the value to be saved is coming from.
+    :param list: The list of options from which the option is selected. If no option selected, then the first option is selected as default
     :return:
     '''
     print(f"Current listbox selection indices: {listbox.curselection()}")
@@ -144,6 +147,17 @@ def check_is_numeric(variable):
         return False
 def on_confirm_action(camp_id, no_weeks_aid, total_food_supplied, total_medicine_supplied, no_refugees,
                       week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks):
+    '''
+    Upon confirmation of the users choices, this function turns the data into a valid form for saving, saves the values to a dictionary, then saves the data to a larger dictionary as well as to a pickle.
+    :param camp_id: The id of the camp that the data is relevant to.
+    :param no_weeks_aid: The number of weeks that the resources have been allocated to.
+    :param total_food_supplied: The total amount of food supplied to the camp.
+    :param total_medicine_supplied: The total amount of medicine supplied to the camp.
+    :param no_refugees: The total number of refugees that are housed within the camp.
+    :param week_food_per_refugee: The weekly allocation of food provided to each refugee.
+    :param week_medicine_per_refugee: The weekly allocation of medicine provided to each refugee.
+    :param delivery_time_weeks: The estimated delivery time for the supplies once ordered.
+    '''
     turn_data_into_valid_form(camp_id_listbox, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry, no_refugees_entry, food_amount_refugee_listbox, medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options)
     create_resource_allocation_dict(camp_id, no_weeks_aid, total_food_supplied, total_medicine_supplied,no_refugees, week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks)
     save_to_all_camp_data(camp_id, resource_allocation_variables)
@@ -152,6 +166,9 @@ def on_confirm_action(camp_id, no_weeks_aid, total_food_supplied, total_medicine
 
 
 def confirmation_before_submission(message_to_be_displayed, callback):
+    '''
+    Makes a new branch
+    '''
     window = tk.Toplevel()
     label = tk.Label(window, text=message_to_be_displayed)
     label.pack(padx=20, pady=10)

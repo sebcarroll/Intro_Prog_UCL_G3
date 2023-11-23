@@ -1,33 +1,27 @@
 import tkinter as tk
 import pickle
 import os
-from AdminSubpages.create_plan import new_plan
+from AdminSubpages.new_plans import new_plan
+from AdminSubpages.admin_edit_details import AdminEditVolunteerDetails
+from AdminSubpages.admin_resource_allocation import AdminResourceAllocation
 
 class AdminHomepage:
     def __init__(self, root, go_to_landing_page):
         self.root = root
         self.go_to_landing_page = go_to_landing_page
-
         self.window = tk.Toplevel(self.root)
         self.window.title('Admin Homepage')
-        self.window.geometry('1300x600')
+        #self.window.geometry('1300x600')
+        self.window.configure(background="skyblue")
+        self.window.attributes('-fullscreen', True)
 
-        try:
-            if os.path.getsize('plans.pickle') > 0:
-                with open('plans.pickle', 'rb') as file:
-                    self.na_refugee_info = pickle.load(file)
-            else:
-                self.na_refugee_info = {
-                    'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
-                                 'Second Language': ''}
-                }
-        except(FileNotFoundError):
-            self.na_refugee_info = {
-                'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
-                             'Second Language': ''}}
+        self.admin_edit_details = AdminEditVolunteerDetails(self.window, self.back_button_to_admin_main)
+        self.admin_resource_allocation = AdminResourceAllocation(self.window, self.back_button_to_admin_main)
 
+        self.window.bind('<F11>', self.toggle_fullscreen)
+        self.window.bind('<Escape>', self.end_fullscreen)
+        self.window.protocol("WM_DELETE_WINDOW", self.window_exit_button)
 
-        # Initialize na_refugee_info before trying to load from the pickled file
 
 
         # MENU BAR:
@@ -79,8 +73,8 @@ class AdminHomepage:
         file_menu.add_command(label="About", command=self.our_cmd)
 
 
-        # WELCOME TITLE:
-        self.admin_welcome_title = tk.Label(self.window, text='Welcome to the Admin portal', font=('Arial Bold', 40))
+        # WELCOME TITLE
+        self.admin_welcome_title = tk.Label(self.window, text='Welcome to the admin portal', font=('Arial Bold', 40))
         self.admin_welcome_title.grid(row=0, column=3, pady=30)
 
         # MAIN BUTTONS
@@ -104,9 +98,6 @@ class AdminHomepage:
         self.btn_allocate_resources = tk.Button(self.window, text="Allocate resources", command=self.allocate_resources)
         self.btn_allocate_resources.grid(row=11, column=3, pady=5)
 
-
-
-
     #def create_event(self):
         # Open the resource allocation GUI
         #new_plan(self.window, self.back_button_to_admin_main)
@@ -115,12 +106,6 @@ class AdminHomepage:
 
     def create_event(self):
         new_plan(self.window, self.back_button_to_admin_main)
-
-
-
-
-
-
 
     def end_event(self):
         # Add functionality for ending an event
@@ -134,18 +119,13 @@ class AdminHomepage:
 
     def edit_accounts(self):
         # Add functionality for editing volunteer accounts
-        print("Editing volunteer accounts...")
+        self.admin_edit_details.create_gui(self)
+        # print("Editing volunteer accounts...")
         # Implement the function's logic here
 
     def allocate_resources(self):
         # Open the resource allocation GUI
-        print("Allocating resources...")
-
-
-
-
-
-
+        self.admin_resource_allocation.create_gui_resource_allocation(self)
 
 
     def back_button_to_admin_main(self):
@@ -177,5 +157,13 @@ class AdminHomepage:
     def destroy(self):
         self.window.destroy()
 
+    def toggle_fullscreen(self, event=None):
+        self.window.attributes('-fullscreen', not self.window.attributes('-fullscreen'))
 
+    def end_fullscreen(self, event=None):
+        self.window.attributes('-fullscreen', False)
+        self.window.geometry("1300x600")
+
+    def window_exit_button(self):
+        self.root.destroy()
 
