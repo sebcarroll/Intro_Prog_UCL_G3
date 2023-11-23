@@ -3,6 +3,7 @@ import pickle
 import os
 from AdminSubpages.new_plans import new_plan
 from AdminSubpages.admin_edit_details import AdminEditVolunteerDetails
+from AdminSubpages.admin_resource_allocation import AdminResourceAllocation
 
 class AdminHomepage:
     def __init__(self, root, go_to_landing_page):
@@ -15,6 +16,7 @@ class AdminHomepage:
         self.window.attributes('-fullscreen', True)
 
         self.admin_edit_details = AdminEditVolunteerDetails(self.window, self.back_button_to_admin_main)
+        self.admin_resource_allocation = AdminResourceAllocation(self.window, self.back_button_to_admin_main)
 
         self.window.bind('<F11>', self.toggle_fullscreen)
         self.window.bind('<Escape>', self.end_fullscreen)
@@ -123,7 +125,7 @@ class AdminHomepage:
 
     def allocate_resources(self):
         # Open the resource allocation GUI
-        print("Allocating resources...")
+        self.admin_resource_allocation.create_gui_resource_allocation(self)
 
 
     def back_button_to_admin_main(self):
