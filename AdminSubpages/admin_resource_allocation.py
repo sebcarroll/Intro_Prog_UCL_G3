@@ -1,13 +1,15 @@
 import tkinter as tk
 from tkinter import ttk, Listbox
-import pickle
+import os
+import csv
 import general_functions as gf
+from resource_allocation_csv_creation import save_information_csv
 
 class AdminResourceAllocation:
     def __init__(self, window, back_button_to_admin_main):
         self.window = window
         self.back_button_to_admin_main = back_button_to_admin_main
-        self.resource_allocation_variables = {}
+        self.resource_allocation_variables = []
         self.all_camp_data = {}
 
     def create_gui_resource_allocation(self, window):
@@ -48,17 +50,11 @@ class AdminResourceAllocation:
 
         estimated_delivery_time_options = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4]
         gf.estimated_delivery_time_listbox, gf.estimated_delivery_time_scrollbar = create_listbox_with_label(self.window, "Estimated Resource Delivery Time (weeks): ", 7, 0, estimated_delivery_time_options)
+    '''
+        submit_button = ttk.Button(self.window, text="Submit", command=lambda: self.resource_allocation(camp_id_listbox, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry, no_refugees_entry, food_amount_refugee_listbox, medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options))
 
-        '''submit_button = ttk.Button(self.window, text="Submit", command=lambda: resource_allocation(camp_id_listbox, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry, no_refugees_entry, food_amount_refugee_listbox, medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options))
-
-        submit_button.grid(row=8, column=0, columnspan=2)'''
-
-
-
-
-
-
-
+        submit_button.grid(row=8, column=0, columnspan=2)
+    '''
     def turn_data_into_valid_form(self, camp_id_listbox, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry, no_refugees_entry, food_amount_refugee_listbox, medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options):
             '''
             '''
@@ -128,9 +124,6 @@ class AdminResourceAllocation:
                 print(delivery_time_weeks)
             return camp_id, no_weeks_aid, total_food_supplied, total_medicine_supplied, no_refugees, week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks
 
-
-
-
     def check_input_valid(self, variable):
         '''
         Checks the input field to ensure that empty inputs are rejected.
@@ -170,6 +163,7 @@ class AdminResourceAllocation:
             return float(variable) > 0
         except ValueError:
             return False
+
     def on_confirm_action(self, camp_id, no_weeks_aid, total_food_supplied, total_medicine_supplied, no_refugees,
                           week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks):
         '''
@@ -183,10 +177,10 @@ class AdminResourceAllocation:
         :param week_medicine_per_refugee: The weekly allocation of medicine provided to each refugee.
         :param delivery_time_weeks: The estimated delivery time for the supplies once ordered.
         '''
-        self.turn_data_into_valid_form(camp_id_listbox, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry, no_refugees_entry, food_amount_refugee_listbox, medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options)
-        self.create_resource_allocation_dict(camp_id, no_weeks_aid, total_food_supplied, total_medicine_supplied,no_refugees, week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks)
-        self.save_to_all_camp_data(camp_id, resource_allocation_variables)
-        print(resource_allocation_variables)
+      # self.turn_data_into_valid_form(camp_id_listbox, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry, no_refugees_entry, food_amount_refugee_listbox, medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options)
+        self.create_resource_allocation_list(camp_id, no_refugees, no_weeks_aid, total_food_supplied, total_medicine_supplied, week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks)
+        save_information_csv(self.resource_allocation_variables)
+        print(self.resource_allocation_variables)
         print("Values Submitted and Saved")
 
 
@@ -216,7 +210,7 @@ class AdminResourceAllocation:
         window.grab_set()
         window.wait_window()
 
-
+    '''
     def on_confirm_action(self, camp_id, no_weeks_aid, total_food_supplied,
                           total_medicine_supplied, no_refugees,
                           week_food_per_refugee, week_medicine_per_refugee,
@@ -226,16 +220,16 @@ class AdminResourceAllocation:
                                   medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids,
                                   food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options)
         print("Data Validated in on_confirm_action.")
-        new_resource_allocation_variables = self.create_resource_allocation_dict(camp_id, no_weeks_aid, total_food_supplied,
+        new_resource_allocation_variables = self.create_resource_allocation_list(camp_id, no_weeks_aid, total_food_supplied,
                                                                             total_medicine_supplied, no_refugees,
                                                                             week_food_per_refugee,
                                                                             week_medicine_per_refugee, delivery_time_weeks)
 
-        print("resource_allocation_dict function run.")
-        self.save_to_all_camp_data(camp_id, new_resource_allocation_variables)
-        print(all_camp_data[f"camp_{camp_id}_data"])
+        print("resource_allocation_list function run.")
+        save_information_csv(new_resource_allocation_variables)
+        print(new_resource_allocation_variables)
         print("Values Submitted and Saved")
-
+    '''
 
     def resource_allocation(self, camp_id_listbox, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry,
                             no_refugees_entry, food_amount_refugee_listbox, medicine_amount_refugee_listbox,
@@ -249,7 +243,7 @@ class AdminResourceAllocation:
         try:
             print("Resource allocation function entered into.")
 
-            (camp_id, no_weeks_aid, total_food_supplied, total_medicine_supplied, no_refugees,
+            (camp_id, no_refugees, no_weeks_aid, total_food_supplied, total_medicine_supplied,
              week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks) = self.turn_data_into_valid_form(camp_id_listbox, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry,no_refugees_entry, food_amount_refugee_listbox, medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options)
 
             print("Data Converted.")
@@ -288,29 +282,13 @@ class AdminResourceAllocation:
             print(f"An error occurred: {e}")
 
 
-    def create_resource_allocation_dict(self, camp_id, no_weeks_aid, total_food_supplied, total_medicine_supplied, no_refugees,
+    def create_resource_allocation_list(self, camp_id, no_weeks_aid, total_food_supplied, total_medicine_supplied, no_refugees,
                                         week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks):
-
-        resource_allocation_variables = {
-            'camp_id': camp_id,
-            'no_weeks_aid': no_weeks_aid,
-            'total_food_supplied': total_food_supplied,
-            'total_medicine_supplied': total_medicine_supplied,
-            'no_refugees': no_refugees,
-            'week_food_per_refugee': week_food_per_refugee,
-            'week_medicine_per_refugee': week_medicine_per_refugee,
-            'delivery_time_weeks': delivery_time_weeks
-        }
-        return resource_allocation_variables
-
-
-    def save_to_all_camp_data(self, camp_id, resource_allocation_variables):
-        unique_name = f"camp_{camp_id}_data"
-        all_camp_data[unique_name] = resource_allocation_variables
-
-        with open(f'{camp_id}_resources.pkl', 'wb') as file:
-            pickle.dump(resource_allocation_variables, file)
-        print(f"Pickle created for {camp_id} resources.")
+        self.resource_allocation_variables = [
+            'camp_id', 'no_refugees', 'no_weeks_aid', 'total_food_supplied', 'total_medicine_supplied',
+            'week_food_per_refugee', 'week_medicine_per_refugee', 'delivery_time_weeks'
+        ]
+        return self.resource_allocation_variables
 
 def create_listbox_with_label(widget, text_label, row_num, column_num, list_of_options):
     '''
