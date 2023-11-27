@@ -11,9 +11,9 @@ class AdminHomepage:
         self.go_to_landing_page = go_to_landing_page
         self.window = tk.Toplevel(self.root)
         self.window.title('Admin Homepage')
-        #self.window.geometry('1300x600')
+        self.window.geometry('1300x600')
         self.window.configure(background="skyblue")
-        self.window.attributes('-fullscreen', True)
+        #self.window.attributes('-fullscreen', True)
 
         self.admin_edit_details = AdminEditVolunteerDetails(self.window, self.back_button_to_admin_main)
         self.admin_resource_allocation = AdminResourceAllocation(self.window, self.back_button_to_admin_main)

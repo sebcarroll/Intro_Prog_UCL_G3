@@ -12,12 +12,16 @@ class AdminResourceAllocation:
         self.resource_allocation_variables = []
         self.all_camp_data = {}
         self.camp_ids_from_csv = []
-        with open('camp_information.csv', 'r') as file:
-            csv_reader = csv.reader(file)
-            next(csv_reader)
-            for row in csv_reader:
-                self.camp_ids_from_csv.append(row[0])
-        self.camp_ids = self.camp_ids_from_csv
+        try:
+            with open('camp_information.csv', 'r') as file:
+                csv_reader = csv.reader(file)
+                next(csv_reader)
+                for row in csv_reader:
+                    self.camp_ids_from_csv.append(row[0])
+            self.camp_ids = self.camp_ids_from_csv
+        except FileNotFoundError:
+            print("Error: 'camp_information.csv' file not found.")
+
     def create_gui_resource_allocation(self, window):
         # Main frame for this whole page
         for i in self.window.winfo_children():
