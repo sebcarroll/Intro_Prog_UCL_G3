@@ -12,6 +12,7 @@ class AdminResourceAllocation:
         self.resource_allocation_variables = []
         self.all_camp_data = {}
         self.camp_ids_from_csv = []
+        self.camp_ids = [] # CGH: Seb I put this in for the case when there is no file found
         try:
             with open('camp_information.csv', 'r') as file:
                 csv_reader = csv.reader(file)
@@ -63,6 +64,10 @@ class AdminResourceAllocation:
         submit_button = ttk.Button(self.window, text="Submit", command=lambda: self.resource_allocation(self.camp_id_listbox, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry, no_refugees_entry, self.food_amount_refugee_listbox, medicine_amount_refugee_listbox, self.estimated_delivery_time_listbox, self.camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options))
 
         submit_button.grid(row=8, column=0, columnspan=2)
+
+        # Back button
+        back_button = tk.Button(self.window, text='Back to Home', command=self.back_button_to_admin_main)
+        back_button.grid(row=17, column=1, padx=5, pady=10)
 
     def turn_data_into_valid_form(self, camp_id_listbox, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry, no_refugees_entry, food_amount_refugee_listbox, medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options):
             '''
