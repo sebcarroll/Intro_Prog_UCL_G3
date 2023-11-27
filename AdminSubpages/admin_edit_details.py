@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 
 class AdminEditVolunteerDetails:
     def __init__(self, window, back_button_to_admin_main):
@@ -18,7 +19,7 @@ class AdminEditVolunteerDetails:
                            'Work Type': '', 'Deactivated': False, 'Deleted': False}
         }
         self.volunteer_listbox = None  # To be initialized later
-        self.deactivated_accounts = []
+        self.deactivated_accounts = {}
 
     def create_gui(self, window):
         # Main frame for this whole page
@@ -44,19 +45,21 @@ class AdminEditVolunteerDetails:
         back_button = tk.Button(self.window, text='Back to Home', command=self.back_button_to_admin_main)
         back_button.grid(row=17, column=1, padx=5, pady=10)
 
-    # Takes the deactivated account out of the
+    
+    
+    
+    
     def reactivate_account(self):
         selected_index = self.volunteer_listbox.curselection()
         if selected_index:
             username_to_reactivate = self.volunteer_listbox.get(selected_index)
             if self.y_personal_info[username_to_reactivate]["Deactivated"]:
                 self.y_personal_info[username_to_reactivate]["Deactivated"] = False
-
-                print(f"Account for {username_to_reactivate} reactivated.")
+                messagebox.showinfo("Reactivation", f"Account for {username_to_reactivate} reactivated.")
             else:
-                print(f"Account for {username_to_reactivate} is not deactivated.")
+                messagebox.showinfo("Reactivation", f"Account for {username_to_reactivate} is not deactivated.")
         else:
-            print("Please select a volunteer.")
+            messagebox.showwarning("No Selection", "Please select a volunteer.")
 
     def deactivate_account(self):
         selected_index = self.volunteer_listbox.curselection()
@@ -64,18 +67,18 @@ class AdminEditVolunteerDetails:
             username_to_deactivate = self.volunteer_listbox.get(selected_index)
             if not self.y_personal_info[username_to_deactivate]["Deactivated"]:
                 self.y_personal_info[username_to_deactivate]["Deactivated"] = True
-                print(f"Account for {username_to_deactivate} deactivated.")
+                messagebox.showinfo("Deactivation", f"Account for {username_to_deactivate} deactivated.")
             else:
-                print(f"Account for {username_to_deactivate} is already deactivated.")
+                messagebox.showinfo("Deactivation", f"Account for {username_to_deactivate} is already deactivated.")
         else:
-            print("Please select a volunteer.")
+            messagebox.showwarning("No Selection", "Please select a volunteer.")
 
     def delete_account(self):
         selected_index = self.volunteer_listbox.curselection()
         if selected_index:
             username_to_delete = self.volunteer_listbox.get(selected_index)
-            del self.y_personal_info[username_to_delete]
-            print(f"Account for {username_to_delete} deleted.")
+            self.y_personal_info[username_to_delete]["Deleted"] = True
+            messagebox.showinfo("Deletion", f"Account for {username_to_delete} marked as deleted.")
             self.volunteer_listbox.delete(selected_index)
         else:
-            print("Please select a volunteer.")
+            messagebox.showwarning("No Selection", "Please select a volunteer.")
