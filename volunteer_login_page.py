@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import os
 import pickle
+import pandas as pd
 
 class t_case_sensitive(Exception):
     pass
@@ -21,20 +22,12 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         super().__init__(root)
         self.go_to_volunteer_main = go_to_volunteer_main
         try:
-            if os.path.getsize('data.pickle') > 0:
-                with open('data.pickle', 'rb') as file:
-                    self.y_personal_info = pickle.load(file)
-            else:
-                self.y_personal_info = {
-                    'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
-                                   'Work Type': '', 'Deactivated': False, 'Deleted': False},
-                    'volunteer2': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
-                                   'Work Type': '', 'Deactivated': False, 'Deleted': False},
-                    'volunteer3': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
-                                   'Work Type': '', 'Deactivated': True, 'Deleted': False},
-                    'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
-                                   'Work Type': '', 'Deactivated': False, 'Deleted': False}
-                }
+            self.y_personal_info = pd.read_csv('volunteer_info.csv', index_col='Username')
+            self.y_personal_info = self.y_personal_info.to_dict(orient='index')
+            print(self.y_personal_info)
+
+
+
         except(FileNotFoundError):
             self.y_personal_info = {
                 'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
@@ -46,6 +39,12 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
                 'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                'Work Type': '', 'Deactivated': False, 'Deleted': False}
             }
+
+            df = pd.DataFrame.from_dict(self.y_personal_info, orient='index')
+            df.index.name = 'Username'
+            df.to_csv('volunteer_info.csv', index='Username')
+            self.y_personal_info = pd.read_csv('volunteer_info.csv')
+
 
         self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}
 
@@ -108,7 +107,7 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
             elif self.y_personal_info[username]['Deactivated'] == True:
                 raise t_deactivated_account
             else:
-                if password == self.y_personal_info[username]['password']:
+                if password == str(self.y_personal_info[username]['password']):
                     self.go_to_volunteer_main(username)
                 elif password != self.y_personal_info[username]['password']:
                     raise t_incorrect_details

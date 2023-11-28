@@ -7,10 +7,12 @@ from tkinter import messagebox
 from tkinter import ttk
 from datetime import datetime
 import tkinter as tk
+import pandas as pd
 
 window = tkinter.Tk()
 window.title('Welcome to the UCL Humanity Rescue Portal')
 window.geometry('1000x600')
+
 
 class na_case_sensitive(Exception):
     pass
@@ -63,12 +65,11 @@ class invalid_name(Exception):
 class file_not_found(Exception):
     pass
 
+
 class LandingPage(t_deactivated_account, t_deleted_account, t_case_sensitive, t_no_text, t_incorrect_details,
-                           file_not_found):
+                  file_not_found):
     def __init__(self):
-        
-        
-    # window.protocol("WM_DELETE_WINDOW", window_exit_button)
+        # window.protocol("WM_DELETE_WINDOW", window_exit_button)
         for i in window.winfo_children():
             i.destroy()
         landing_page_frame = tkinter.Frame(window)
@@ -88,11 +89,11 @@ class LandingPage(t_deactivated_account, t_deleted_account, t_case_sensitive, t_
             text='Please select admin or volunteer sign in',
             font=('TkDefaultFont', 20)
         )
-        instruction_label.grid(row= 1, column=3, padx=30, pady=30)
+        instruction_label.grid(row=1, column=3, padx=30, pady=30)
         instruction_label.configure(background="lightgrey")
 
         # Admin login button
-        admin_login_btn = tkinter.Button(window, text="Admin Login", command= na_admin_main_page)
+        admin_login_btn = tkinter.Button(window, text="Admin Login", command=na_admin_main_page)
         admin_login_btn.pack(ipadx=100, ipady=25)
         admin_login_btn.configure(background="lightgreen")
         # Volunteer login button
@@ -100,17 +101,19 @@ class LandingPage(t_deactivated_account, t_deleted_account, t_case_sensitive, t_
         volunteer_login_btn.pack(ipadx=93, ipady=25, pady=10)
         volunteer_login_btn.configure(background="lightblue")
         # Exit program button
-        #exit_btn = tkinter.Button(self.window, text="Exit Software", foreground='white', command=self.exit_software)
+        # exit_btn = tkinter.Button(self.window, text="Exit Software", foreground='white', command=self.exit_software)
         # exit_btn.pack(ipadx=10, ipady=2, pady=70)
-        #exit_btn.configure(background="black")
+        # exit_btn.configure(background="black")
 
         window.mainloop()
+
+
 class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sensitive, t_no_text, t_incorrect_details,
                            file_not_found):
 
     def __init__(self) -> None:
         # Volunteer dictionary - Nested: Can access via self.y_personal_info[username][key]
-        
+
         try:
             if os.path.getsize('refugee.pickle') > 0:
                 with open('refugee.pickle', 'rb') as file:
@@ -126,42 +129,31 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
             self.na_refugee_info = {
                 'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
                              'Second Language': ''}}
-        try:
-            if os.path.getsize('data.pickle') > 0:
-                with open('data.pickle', 'rb') as file1:
-                    self.y_personal_info = pickle.load(file1)
-                    print("Data has loaded from the pickle file")
 
-            else:
-                self.y_personal_info = {
-                    'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '',
-                                   'Commitment': '',
-                                   'Work Type': '', 'Deactivated': False, 'Deleted': False},
-                    'volunteer2': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '',
-                                   'Commitment': '',
-                                   'Work Type': '', 'Deactivated': False, 'Deleted': False},
-                    'volunteer3': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '',
-                                   'Commitment': '',
-                                   'Work Type': '', 'Deactivated': True, 'Deleted': False},
-                    'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '',
-                                   'Commitment': '',
-                                   'Work Type': '', 'Deactivated': False, 'Deleted': False}
-                }
-                print('Data could not be loaded from pickle file')
+
+        try:
+            self.y_personal_info = pd.read_csv('volunteer_info.csv', index_col='Username')
+            self.y_personal_info = self.y_personal_info.to_dict(orient='index')
+            print(self.y_personal_info)
+
+
 
         except(FileNotFoundError):
             self.y_personal_info = {
                 'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
-                                'Work Type': '', 'Deactivated': False, 'Deleted': False},
+                               'Work Type': '', 'Deactivated': False, 'Deleted': False},
                 'volunteer2': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
-                                'Work Type': '', 'Deactivated': False, 'Deleted': False},
+                               'Work Type': '', 'Deactivated': False, 'Deleted': False},
                 'volunteer3': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
-                                'Work Type': '', 'Deactivated': True, 'Deleted': False},
+                               'Work Type': '', 'Deactivated': True, 'Deleted': False},
                 'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
-                                'Work Type': '', 'Deactivated': False, 'Deleted': False}
+                               'Work Type': '', 'Deactivated': False, 'Deleted': False}
             }
 
-            print('File Not Found Error has appeared')
+            df = pd.DataFrame.from_dict(self.y_personal_info, orient='index')
+            df.index.name = 'Username'
+            df.to_csv('volunteer_info.csv', index='Username')
+            self.y_personal_info = pd.read_csv('volunteer_info.csv')
 
 
         self.y_camp_info = {"Country": "America", "Max Capacity": ""}
@@ -180,10 +172,8 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
             self.y_camp_info['ID'] = {"Country": "America 132", "Max Capacity": 1000, 'Food packets': 0,
                                       'Medical supplies': 0, 'Water and sanitation': 0, 'Clothing': 0,
                                       'Shelter materials': 0}
-        
-        
+
         self.t_volunteer_login()
-        
 
     def t_volunteer_login(self):
         # Anything on window before is removed and populates with the following code
@@ -227,21 +217,23 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         back_button = tkinter.Button(self.t_volunteer_frame, text='Back', command=LandingPage)
         back_button.grid(row=6, column=0, padx=10, pady=10)
 
-
     # Login checker
     def t_details_confirmation(self):
-       
+
         self.username = self.t_name_entry.get()
         password = self.t_password_entry.get()
         try:
             if self.username not in self.y_personal_info.keys():
                 raise t_deleted_account
+
             elif self.y_personal_info[self.username]['Deactivated'] == True:
                 raise t_deactivated_account
+
             else:
-                if password == self.y_personal_info[self.username]['password']:
+                if password == str(self.y_personal_info[self.username]['password']):
                     self.t_volunteer_summary()
-                elif password != self.y_personal_info[self.username]['password']:
+                else:
+                    print(password, self.y_personal_info[self.username]['password'])
                     raise t_incorrect_details
 
             # if (username.lower() or password.lower()) in self.volunteer_dict:
@@ -405,7 +397,8 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         work_type_label.grid(row=13, column=2, padx=5)
 
         # Work type entry
-        self.t_worktypeEntry = ttk.Combobox(t_personal_labelframe, values=['Medical Aid', 'Food counselling'], state='readonly')
+        self.t_worktypeEntry = ttk.Combobox(t_personal_labelframe, values=['Medical Aid', 'Food counselling'],
+                                            state='readonly')
         self.t_worktypeEntry.grid(row=13, column=3)
 
         # Store details box
@@ -443,10 +436,10 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
             else:
                 commitment = self.t_commitmentEntry.get()
             if self.t_worktypeEntry.get() == '':
-                work = self.y_personal_info[self.username]['Work Type'] 
+                work = self.y_personal_info[self.username]['Work Type']
             else:
                 work = self.t_worktypeEntry.get()
-            
+
             # If entered non-alpha characters, raise error
             if re.search(r'^[A-Za-z]', name):
                 self.y_personal_info[self.username]['name'] = name.strip()
@@ -458,7 +451,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                 self.y_personal_info[self.username]['Phone Number'] = phone
             else:
                 raise invalid_phone_number
-                    
+
             # Make sure they include correct email format
             if re.search(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', email):
                 self.y_personal_info[self.username]['Email Address'] = email
@@ -468,13 +461,13 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
             self.y_personal_info[self.username]['Commitment'] = commitment
             self.y_personal_info[self.username]['Work Type'] = work
 
-            with open('data.pickle', 'wb') as file1:
-                pickle.dump(self.y_personal_info, file1)
-                print('saved')
-                file1.close
+            new_data = pd.DataFrame.from_dict(self.y_personal_info, orient='index')
+            new_data.index.name = 'Username'
+            new_data.to_csv('volunteer_info.csv')
+
 
             self.t_personal_information_base()
-            
+
         except(invalid_email):
             tkinter.messagebox.showinfo(title='Invalid Email', message='Please enter a valid email address')
         except(invalid_phone_number):
@@ -497,7 +490,6 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                                                font=('TkDefaultFont', 20))
         t_camp_labelframe.grid(row=1, column=1)
 
-
         # Current amount you can add
         t_current_capacity = tkinter.Label(t_camp_labelframe, text='Current Capacity: ', font=('TkDefaultFont', 15))
         t_current_capacity.grid(row=2, column=3)
@@ -507,12 +499,11 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
 
         # Capacity for new refugees box and label
         t_camp_capacity = tkinter.Label(t_camp_labelframe,
-                                        text= f'Add new refugees: ')  # Need to add current number here next to it so Ying add that in with dictionary or however.
+                                        text=f'Add new refugees: ')  # Need to add current number here next to it so Ying add that in with dictionary or however.
         t_camp_capacity.grid(row=4, column=3, padx=5)
         self.t_camp_campacitybox = ttk.Spinbox(t_camp_labelframe, from_=0, to=1000, style='info.TSpinbox')
         self.t_camp_campacitybox.grid(row=4, column=5, padx=5)
 
-        
         # Request type of resource box and label
         n_resource_type = tkinter.Label(t_camp_labelframe, text='Select resource type you would like to request')
         n_resource_type.grid(row=5, column=3, padx=5)
@@ -531,14 +522,13 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                                             command=self.t_personal_information_base, height=2, width=20)
         n_to_personal_info.grid(row=1, column=0, padx=10)
 
-        n_to_refugee = tkinter.Button(t_edit_campframe, text='Create a refugee profile', command=self.t_create_refugee,height=2, width=20)
+        n_to_refugee = tkinter.Button(t_edit_campframe, text='Create a refugee profile', command=self.t_create_refugee,
+                                      height=2, width=20)
         n_to_refugee.grid(row=2, column=0, padx=10)
-
 
         # Save changes button, need to add this to a dictionary.
         t_save_changes = tkinter.Button(t_edit_campframe, text='Save changes', command=self.na_refugee_info_dict)
         t_save_changes.grid(row=14, column=1, padx=5, pady=10)
-
 
     def na_refugee_info_dict(self):
         try:
@@ -550,7 +540,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                     refugee_capacity -= int(refugee_change)
                 else:
                     raise t_incorrect_details
-                
+
                 request_resources_type = self.n_resource_typebox.get()
                 request_resources_quant = self.n_resource_quantbox.get()
                 current_resources = self.y_camp_info['ID'][request_resources_type]
@@ -566,7 +556,8 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                 self.t_edit_camp()
 
         except(t_incorrect_details):
-            tkinter.messagebox.showinfo(title='Current Capacity Exceeded', message='The current capacity is exceeded, if you require more refugees, please contact the administrator')
+            tkinter.messagebox.showinfo(title='Current Capacity Exceeded',
+                                        message='The current capacity is exceeded, if you require more refugees, please contact the administrator')
 
     def t_create_refugee(self):
         for i in window.winfo_children():
@@ -583,7 +574,6 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         # Label frame for this page that then stores all of the labels and entries
         refugee_labelframe = tkinter.LabelFrame(refugeeframe)
         refugee_labelframe.grid(row=1, column=1)
-
 
         # Family members
         family_label = tkinter.Label(refugee_labelframe, text='Enter total number members in this family',
@@ -638,7 +628,6 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
                                        width=20)
         n_to_editcamp.grid(row=2, column=0)
 
-
     def t_display_resources(self):
         for i in window.winfo_children():
             i.destroy()
@@ -665,6 +654,7 @@ class na_admin_main_page(na_case_sensitive, na_no_text, na_incorrect_details, na
 
     def __init__(self) -> None:
         self.na_admin_login()
+
     def na_admin_login(self):
         for i in window.winfo_children():
             i.destroy()
@@ -695,7 +685,7 @@ class na_admin_main_page(na_case_sensitive, na_no_text, na_incorrect_details, na
 
         # Login box
         self.na_entry_button = tkinter.Button(self.na_admin_frame, text='Login', command=self.na_admin_details,
-                                             height=1, width=20)
+                                              height=1, width=20)
         self.na_entry_button.grid(row=5, column=0, pady=20)
 
         # Shows caps lock on/off
@@ -708,14 +698,11 @@ class na_admin_main_page(na_case_sensitive, na_no_text, na_incorrect_details, na
 
         # Launches tkinter
 
-
-
     def na_admin_details(self):
         user = self.na_name_entry.get()
         password = self.na_password_entry.get()
         if (user == 'admin') and (password == '111'):
             AdminHomepage()
-
 
         # try:
         #     if self.username not in self.y_personal_info.keys():
@@ -742,21 +729,22 @@ class na_admin_main_page(na_case_sensitive, na_no_text, na_incorrect_details, na
         #     tkinter.messagebox.showinfo(title='Deactivated account',
         #                                 message='Your account has been deactivated, \nPlease contact admin for more details')
 
+
 class AdminHomepage(LandingPage):
     def __init__(self):
         for i in window.winfo_children():
             i.destroy()
-        #self.window.geometry('1300x600')
-        #window.configure(background="skyblue")
-        #window.attributes('-fullscreen', True)
+        # self.window.geometry('1300x600')
+        # window.configure(background="skyblue")
+        # window.attributes('-fullscreen', True)
         self.events_dict = {}
-        self.events_dict['123123231'] = {'New Camp ID': "", "Crisis type": "", "Other crisis type": "", "Description": "", "Country": "", "Other Country": "", "Name": "", "Start date": ""}
+        self.events_dict['123123231'] = {'New Camp ID': "", "Crisis type": "", "Other crisis type": "",
+                                         "Description": "", "Country": "", "Other Country": "", "Name": "",
+                                         "Start date": ""}
 
         # window.bind('<F11>', self.toggle_fullscreen)
         # window.bind('<Escape>', self.end_fullscreen)
         # window.protocol("WM_DELETE_WINDOW", self.window_exit_button)
-
-
 
         # MENU BAR:
         menu_bar = tk.Menu(window)
@@ -806,7 +794,6 @@ class AdminHomepage(LandingPage):
         # file_menu.add_separator()
         # file_menu.add_command(label="About", command=self.our_cmd)
 
-
         # WELCOME TITLE
         self.admin_welcome_title = tk.Label(window, text='Welcome to the admin portal', font=('Arial Bold', 40))
         self.admin_welcome_title.grid(row=0, column=3, pady=30)
@@ -834,7 +821,7 @@ class AdminHomepage(LandingPage):
 
         back_button = tkinter.Button(window, text='Back to Login', command=LandingPage)
         back_button.grid(row=17, column=1, padx=5, pady=10)
-        
+
     # For caps lock on/off
     def new_plan(self):
         for i in window.winfo_children():
@@ -846,6 +833,7 @@ class AdminHomepage(LandingPage):
         def new_window():
             new_window = tkinter.Toplevel()
             new_window.title("Calendar Humanitarian Crisis")
+
             # new_window = tk.Toplevel()
             # new_window.title('start date window')
             # new_window.config(width=300, height=200)
@@ -873,8 +861,6 @@ class AdminHomepage(LandingPage):
                 else:
                     messagebox.showerror("Invalid Date", "Please select a valid date.")
 
-
-
             current_date = datetime.now()
             current_year = current_date.year
             current_month = current_date.strftime("%B")
@@ -889,8 +875,8 @@ class AdminHomepage(LandingPage):
             month_label = ttk.Label(new_window, text="Month:")
             month_label.grid(row=0, column=2)
             self.month_combobox = ttk.Combobox(new_window,
-                                          values=["January", "February", "March", "April", "May", "June", "July",
-                                                  "August", "September", "October", "November", "December"])
+                                               values=["January", "February", "March", "April", "May", "June", "July",
+                                                       "August", "September", "October", "November", "December"])
             self.month_combobox.grid(row=0, column=3)
             self.month_combobox.set(current_month)
 
@@ -902,7 +888,6 @@ class AdminHomepage(LandingPage):
 
             get_date_button = ttk.Button(new_window, text="select date", command=get_selected_date)
             get_date_button.grid(row=1, column=0, columnspan=6, pady=10)
-
 
             # Create a button to destroy this window
             button_close = ttk.Button(
@@ -932,7 +917,8 @@ class AdminHomepage(LandingPage):
         self.crisis_type_combobox = ttk.Combobox(new_plan_frame, values=crisis_type)
         self.crisis_type_combobox.grid(row=5, column=4, padx=5)
 
-        other_crisis_label = tkinter.Label(new_plan_frame, text='If crisis type not in list, please enter here', font=('TkinterDefault', 15))
+        other_crisis_label = tkinter.Label(new_plan_frame, text='If crisis type not in list, please enter here',
+                                           font=('TkinterDefault', 15))
         other_crisis_label.grid(row=7, column=3, padx=5)
         self.other_crisis_label_Entry = tkinter.Entry(new_plan_frame)
         self.other_crisis_label_Entry.grid(row=7, column=4, padx=5)
@@ -953,7 +939,8 @@ class AdminHomepage(LandingPage):
             "North Korea", "Eswatini", "Zambia", "Malawi"])
         self.country_Entry.grid(row=11, column=4, padx=5)
 
-        other_country_label = tkinter.Label(new_plan_frame, text='If country not in list, please enter here', font=('TkinterDefault', 15))
+        other_country_label = tkinter.Label(new_plan_frame, text='If country not in list, please enter here',
+                                            font=('TkinterDefault', 15))
         other_country_label.grid(row=13, column=3, padx=5)
         self.other_country_Entry = tkinter.Entry(new_plan_frame)
         self.other_country_Entry.grid(row=13, column=4, padx=5)
@@ -970,8 +957,6 @@ class AdminHomepage(LandingPage):
         back_button = tkinter.Button(new_plan_frame, text='Back to Home', command=AdminHomepage)
         back_button.grid(row=17, column=1, padx=5, pady=10)
 
-        
-
     def character_limit(self):
         from tkinter import END
         if len(self.description_label_Entry.get()) > 100:
@@ -980,14 +965,16 @@ class AdminHomepage(LandingPage):
     def plan_dict(self):
         try:
             self.camp_ID = self.camp_IDbox.get()
-            self.events_dict[self.camp_ID] = {'New Camp ID': "", "Crisis type": "", "Other crisis type": "", "Description": "", "Country": "", "Other Country": "", "Name": "", "Start date": ""}
+            self.events_dict[self.camp_ID] = {'New Camp ID': "", "Crisis type": "", "Other crisis type": "",
+                                              "Description": "", "Country": "", "Other Country": "", "Name": "",
+                                              "Start date": ""}
             crisis_type = self.crisis_type_combobox.get()
             other_crisis = self.other_crisis_label_Entry.get()
             description = self.description_label_Entry.get()
             country = self.country_Entry.get()
             other_country = self.other_country_Entry.get()
             admin_name = self.created_by_Entry.get()
-            #start_day = self.day_combobox.get()
+            # start_day = self.day_combobox.get()
             self.events_dict[self.camp_ID]['New Camp ID'] = self.camp_ID
             self.events_dict[self.camp_ID]['Crisis type'] = crisis_type
             self.events_dict[self.camp_ID]['Other crisis type'] = other_crisis
@@ -997,7 +984,8 @@ class AdminHomepage(LandingPage):
             self.events_dict[self.camp_ID]["Name"] = admin_name
             print(self.events_dict)
         except:
-            self.events_dict = {'New Camp ID': "", "Crisis type": "", "Other crisis type": "", "Description": "", "Country": "", "Other Country": "", "Name": "", "Start date": ""}
+            self.events_dict = {'New Camp ID': "", "Crisis type": "", "Other crisis type": "", "Description": "",
+                                "Country": "", "Other Country": "", "Name": "", "Start date": ""}
         print(list(self.events_dict.keys()))
 
     def caps_lock_on(self, event):
@@ -1017,74 +1005,69 @@ class AdminHomepage(LandingPage):
         # All T
 
         events_title = tkinter.Label(window, text='Events', font=('TkDefaultFont', 30))
-        events_title.grid(row=0, column =5)
+        events_title.grid(row=0, column=5)
         self.view_events_frame = tkinter.LabelFrame(window)
-        self.view_events_frame.grid(row=1, column= 3)
+        self.view_events_frame.grid(row=1, column=3)
 
         # Getting the camp ID
 
         print(list(self.events_dict.keys()))
-        self.get_camp_ID = ttk.Combobox(self.view_events_frame, values= [list(self.events_dict.keys())])
+        self.get_camp_ID = ttk.Combobox(self.view_events_frame, values=[list(self.events_dict.keys())])
         self.get_camp_ID.grid(row=2, column=3, padx=10, pady=10)
 
         # Showing the camp ID
-        show_information = tkinter.Button(self.view_events_frame, text='Show information', command= self.t_events_labels)
+        show_information = tkinter.Button(self.view_events_frame, text='Show information', command=self.t_events_labels)
         show_information.grid(row=3, column=3)
         back_button = tkinter.Button(self.view_events_frame, text='Back to Home', command=AdminHomepage)
         back_button.grid(row=17, column=1, padx=5, pady=10)
 
-
     def t_events_labels(self):
-        
+
         chosen_id = self.get_camp_ID.get()
 
         events_camp_label = tkinter.Label(self.view_events_frame, text='Camp ID: ', font=('TkDefaultFont', 15))
-        events_camp_label.grid(row=5, column= 3, padx= 10, pady=10)
+        events_camp_label.grid(row=5, column=3, padx=10, pady=10)
         if chosen_id != '':
-            events_camp_info = tkinter.Label(self.view_events_frame, text= self.events_dict[chosen_id]['New Camp ID'],
-                                            font=('TkDefaultFont', 15))
-            events_camp_info.grid(row=5, column= 4,padx=10, pady=10)
+            events_camp_info = tkinter.Label(self.view_events_frame, text=self.events_dict[chosen_id]['New Camp ID'],
+                                             font=('TkDefaultFont', 15))
+            events_camp_info.grid(row=5, column=4, padx=10, pady=10)
 
-        # Crisistype label and info
+            # Crisistype label and info
             events_crisis = tkinter.Label(self.view_events_frame, text='Crisis type: ', font=('TkDefaultFont', 15))
             events_crisis.grid(row=6, column=3, padx=10, pady=10)
-            events_crisis_info = tkinter.Label(self.view_events_frame, text= self.events_dict[chosen_id]['Crisis type'])
+            events_crisis_info = tkinter.Label(self.view_events_frame, text=self.events_dict[chosen_id]['Crisis type'])
             events_crisis_info.grid(row=6, column=4, padx=10, pady=10)
 
             # Other crisis type
             if self.events_dict[chosen_id]['Other crisis type'] != "":
-                events_other_crisis = tkinter.Label(self.view_events_frame, text= self.events_dict[chosen_id]['Other crisis type'],
-                                                font=('TkDefaultFont', 15))
+                events_other_crisis = tkinter.Label(self.view_events_frame,
+                                                    text=self.events_dict[chosen_id]['Other crisis type'],
+                                                    font=('TkDefaultFont', 15))
                 events_other_crisis.grid(row=7, column=4, padx=10, pady=10)
-            # Description 
-            events_description_label = tkinter.Label(self.view_events_frame, text='Description: ', font=('TkDefaultFont', 15))
+            # Description
+            events_description_label = tkinter.Label(self.view_events_frame, text='Description: ',
+                                                     font=('TkDefaultFont', 15))
             events_description_label.grid(row=8, column=3, padx=10, pady=10)
-            events_description_info = tkinter.Label(self.view_events_frame, text= self.events_dict[chosen_id]['Description'],
+            events_description_info = tkinter.Label(self.view_events_frame,
+                                                    text=self.events_dict[chosen_id]['Description'],
                                                     font=('TkDefaultFont', 15))
             events_description_info.grid(row=8, column=4, padx=10, pady=10)
 
             events_country_label = tkinter.Label(self.view_events_frame, text='Countries: ', font=('TkDefaultFont', 15))
             events_country_label.grid(row=9, column=3)
             events_country_info = tkinter.Label(self.view_events_frame, text=self.events_dict[chosen_id]["Country"],
-                                                 font=('TkDefaultFont', 15))
+                                                font=('TkDefaultFont', 15))
             events_country_info.grid(row=9, column=4, padx=10, pady=10)
             if self.events_dict[chosen_id]["Other Country"] != '':
-                events_other_country = tkinter.Label(self.view_events_frame, text=self.events_dict[chosen_id]['Other Country'])
+                events_other_country = tkinter.Label(self.view_events_frame,
+                                                     text=self.events_dict[chosen_id]['Other Country'])
                 events_other_country.grid(row=9, column=4)
-            
-
-
-
-
-
-
-
-    
 
     def edit_accounts(self):
         pass
 
     def allocate_resources(self):
         pass
+
 
 LandingPage()

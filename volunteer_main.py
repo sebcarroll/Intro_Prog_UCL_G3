@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from volunteer_login_page import VolunteerLoginPage
 import pickle
+import pandas as pd
 import os
 from VolunteerSubpages.personal_information import personal_information
 from VolunteerSubpages.edit_personal_information import edit_personal_info, store_personal_details
@@ -51,24 +52,13 @@ class VolunteerHomepage(VolunteerLoginPage):
         self.t_summary_resources.grid(row=6, column=3)
 
         try:
-            if os.path.getsize('data.pickle') > 0:
-                with open('data.pickle', 'rb') as file:
-                    print("this works")
-                    self.y_personal_info = pickle.load(file)
-            else:
-                self.y_personal_info = {
-                    'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
-                                   'Work Type': '', 'Deactivated': False, 'Deleted': False},
-                    'volunteer2': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
-                                   'Work Type': '', 'Deactivated': False, 'Deleted': False},
-                    'volunteer3': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
-                                   'Work Type': '', 'Deactivated': True, 'Deleted': False},
-                    'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
-                                   'Work Type': '', 'Deactivated': False, 'Deleted': False},
-                    '': {'password': '', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
-                                   'Work Type': '', 'Deactivated': False, 'Deleted': False}
-                }
-        except FileNotFoundError:
+            self.y_personal_info = pd.read_csv('volunteer_info.csv', index_col='Username')
+            self.y_personal_info = self.y_personal_info.to_dict(orient='index')
+            print(self.y_personal_info)
+
+
+
+        except(FileNotFoundError):
             self.y_personal_info = {
                 'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                'Work Type': '', 'Deactivated': False, 'Deleted': False},
@@ -79,6 +69,12 @@ class VolunteerHomepage(VolunteerLoginPage):
                 'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                'Work Type': '', 'Deactivated': False, 'Deleted': False}
             }
+
+            df = pd.DataFrame.from_dict(self.y_personal_info, orient='index')
+            df.index.name = 'Username'
+            df.to_csv('volunteer_info.csv', index='Username')
+            self.y_personal_info = pd.read_csv('volunteer_info.csv')
+
 
 
         try:

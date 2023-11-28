@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 import pickle
 import re
+import pandas as pd
 #from VolunteerSubpages.personal_information import personal_information
 
 class invalid_email(Exception):
@@ -104,44 +105,65 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
 def store_personal_details(username, y_personal_info, t_personal_nameEntry, t_personal_emailEntry, t_phonenumberEntry, t_commitmentEntry, t_worktypeEntry):
     try:
         # Update y_personal_info dictionary
-        with open('data.pickle', 'wb') as file:
-            name = t_personal_nameEntry.get()
-            email = t_personal_emailEntry.get()
-            phone = t_phonenumberEntry.get()
-            commitment = t_commitmentEntry.get()
-            work = t_worktypeEntry.get()
+        y_personal_info = pd.read_csv('volunteer_info.csv', index_col='Username')
+        y_personal_info = y_personal_info.to_dict(orient='index')
+        print(y_personal_info)
+        name = t_personal_nameEntry.get()
+        email = t_personal_emailEntry.get()
+        phone = t_phonenumberEntry.get()
+        commitment = t_commitmentEntry.get()
+        work = t_worktypeEntry.get()
 
-            try:
-                # If entered non-alpha characters, raise error
-                if re.search(r'^[A-Za-z]', name):
-                    y_personal_info[username]['name'] = name.strip()
-                else:
-                    raise invalid_name
+        try:
+            # If entered non-alpha characters, raise error
+            if re.search(r'^[A-Za-z]', name):
+                y_personal_info[username]['name'] = name.strip()
+            else:
+                raise invalid_name
 
-                # If entered non-number characters, raise error
-                if re.search(r'^[0-9]+', phone):
-                    y_personal_info[username]['Phone Number'] = phone
-                else:
-                    raise invalid_phone_number
-                # Make sure they include correct email format
-                if re.search(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', email):
-                    y_personal_info[username]['Email Address'] = email
-                else:
-                    raise invalid_email
+            # If entered non-number characters, raise error
+            if re.search(r'^[0-9]+', phone):
+                y_personal_info[username]['Phone Number'] = phone
+            else:
+                raise invalid_phone_number
+            # Make sure they include correct email format
+            if re.search(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', email):
+                y_personal_info[username]['Email Address'] = email
+            else:
+                raise invalid_email
 
-                y_personal_info[username]['Work Type'] = work
-                y_personal_info[username]['Commitment'] = commitment
+            y_personal_info[username]['Work Type'] = work
+            y_personal_info[username]['Commitment'] = commitment
+ 
+            new_data = pd.DataFrame.from_dict(y_personal_info, orient='index')
+            new_data.index.name = 'Username'
+            new_data.to_csv('volunteer_info.csv')
 
-            except(invalid_email):
-                tk.messagebox.showinfo(title='Invalid Email', message='Please enter a valid email address')
-            except(invalid_phone_number):
-                tk.messagebox.showinfo(title='Invalid Phone Number',
-                                       message='Please enter a valid phone number')
-            except(invalid_name):
-                tk.messagebox.showinfo(title='Invalid Name', message='Please enter a valid name')
 
-            pickle.dump(y_personal_info, file)
+        except(invalid_email):
+            tk.messagebox.showinfo(title='Invalid Email', message='Please enter a valid email address')
+        except(invalid_phone_number):
+            tk.messagebox.showinfo(title='Invalid Phone Number',
+                                   message='Please enter a valid phone number')
+        except(invalid_name):
+            tk.messagebox.showinfo(title='Invalid Name', message='Please enter a valid name')
+
+            
         # Go back to the details page
         #personal_information()
     except FileNotFoundError:
-        pass
+        y_personal_info = {
+            'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                           'Work Type': '', 'Deactivated': False, 'Deleted': False},
+           'volunteer2': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                           'Work Type': '', 'Deactivated': False, 'Deleted': False},
+            'volunteer3': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                           'Work Type': '', 'Deactivated': True, 'Deleted': False},
+            'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                           'Work Type': '', 'Deactivated': False, 'Deleted': False}
+            }
+
+        df = pd.DataFrame.from_dict(y_personal_info, orient='index')
+        df.index.name = 'Username'
+        df.to_csv('volunteer_info.csv', index='Username')
+        y_personal_info = pd.read_csv('volunteer_info.csv')        
