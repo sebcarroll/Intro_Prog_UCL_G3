@@ -95,34 +95,31 @@ class AdminPage(t_no_text):
             new_plan_frame,
             text="Select Date",
             command=open_calendar)
-        button_open.place(x=475, y=130)
+        button_open.place(x=475, y=243)
 
-        refugee_title = tk.Label(new_plan_frame, text='Create New Plan', font=('TkinterDefault', 30))
+        refugee_title = tk.Label(new_plan_frame, text='Log New Crisis Event', font=('TkinterDefault', 30))
         refugee_title.grid(row=0, column=3, pady=30)
 
-        camp_ID_label = tk.Label(new_plan_frame, text='New Camp ID', font=('TkinterDefault', 15))
-        camp_ID_label.grid(row=3, column=3)
+
 
         def randnum(event):
             import random
             value = random.randint(10000, 99999)
             print(value)
-            updateDisplay(value)
+            displayVariable.set(f"Generated Camp ID: {value}")
+            camp_ID_generator_button.destroy()
 
-        def updateDisplay(myString):
-            displayVariable.set(myString)
+        camp_ID_generator_button = Button(new_plan_frame, text="Generate Camp ID")
+        camp_ID_generator_button.bind("<Button-1>", randnum)
+        camp_ID_generator_button.grid(row=15, column=3, padx=5)
 
-        button_1 = Button(new_plan_frame, text="Generate Camp ID")
-        button_1.bind("<Button-1>", randnum)
-        button_1.grid(row=3, column=4,padx=5)
+
         displayVariable = StringVar()
         displayLabel = Label(new_plan_frame, textvariable=displayVariable)
-        displayLabel.grid(row=3, column=4, padx=5)
-
-
+        displayLabel.grid(row=15, column=4, padx=5)
 
         start_date_label = tk.Label(new_plan_frame, text="Please press button to select start date", font=("TkinterDefault", 15))
-        start_date_label.grid(row=5, column=3)
+        start_date_label.grid(row=13, column=3)
 
         crisis_type_label = tk.Label(new_plan_frame, text='Crisis Type', font=('TkinterDefault', 15))
         crisis_type_label.grid(row=7, column=3, padx=5)
@@ -143,18 +140,18 @@ class AdminPage(t_no_text):
         self.description_label_Entry.bind('<KeyRelease>', lambda event: self.character_limit())
 
         country_label = tk.Label(new_plan_frame, text='Country of crisis', font=('TkinterDefault', 15))
-        country_label.grid(row=13, column=3, padx=5)
+        country_label.grid(row=1, column=3, padx=5)
         self.country_Entry = ttk.Combobox(new_plan_frame, values=[
             "Afghanistan", "Syria", "Yemen", "South Sudan", "Somalia", "Sudan", "Democratic Republic of the Congo",
             "Venezuela", "Iraq", "Nigeria", "Ethiopia", "Myanmar", "Haiti", "Central African Republic", "Libya",
             "Chad", "Mali", "Niger", "Cameroon", "Ukraine", "Pakistan", "Bangladesh", "Lebanon", "Zimbabwe", "Eritrea",
             "North Korea", "Eswatini", "Zambia", "Malawi"])
-        self.country_Entry.grid(row=13, column=4, padx=5)
+        self.country_Entry.grid(row=1, column=4, padx=5)
 
         other_country_label = tk.Label(new_plan_frame, text='If country not in list, please enter here', font=('TkinterDefault', 15))
-        other_country_label.grid(row=15, column=3, padx=5)
+        other_country_label.grid(row=5, column=3, padx=5)
         self.other_country_Entry = tk.Entry(new_plan_frame)
-        self.other_country_Entry.grid(row=15, column=4, padx=5)
+        self.other_country_Entry.grid(row=5, column=4, padx=5)
         self.other_country_Entry.bind('<KeyRelease>', lambda event: self.character_limit())
 
         save_plan_button = tk.Button(new_plan_frame, text="Save plan", command=self.plan_dict, height=1, width=20)
