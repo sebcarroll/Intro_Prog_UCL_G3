@@ -95,7 +95,7 @@ class AdminPage(t_no_text):
             new_plan_frame,
             text="Select Date",
             command=open_calendar)
-        button_open.place(x=475, y=243)
+        button_open.place(x=475, y=185)
 
         refugee_title = tk.Label(new_plan_frame, text='Log New Crisis Event', font=('TkinterDefault', 30))
         refugee_title.grid(row=0, column=3, pady=30)
@@ -127,12 +127,6 @@ class AdminPage(t_no_text):
         self.crisis_type_combobox = ttk.Combobox(new_plan_frame, values=crisis_type)
         self.crisis_type_combobox.grid(row=7, column=4, padx=5)
 
-        other_crisis_label = tk.Label(new_plan_frame, text='If crisis type not in list, please enter here', font=('TkinterDefault', 15))
-        other_crisis_label.grid(row=9, column=3, padx=5)
-        self.other_crisis_label_Entry = tk.Entry(new_plan_frame)
-        self.other_crisis_label_Entry.grid(row=9, column=4, padx=5)
-        self.other_crisis_label_Entry.bind('<KeyRelease>', lambda event: self.character_limit())
-
         description_label = tk.Label(new_plan_frame, text='Description', font=('TkinterDefault', 15))
         description_label.grid(row=11, column=3, padx=5)
         self.description_label_Entry = tk.Entry(new_plan_frame)
@@ -147,12 +141,6 @@ class AdminPage(t_no_text):
             "Chad", "Mali", "Niger", "Cameroon", "Ukraine", "Pakistan", "Bangladesh", "Lebanon", "Zimbabwe", "Eritrea",
             "North Korea", "Eswatini", "Zambia", "Malawi"])
         self.country_Entry.grid(row=1, column=4, padx=5)
-
-        other_country_label = tk.Label(new_plan_frame, text='If country not in list, please enter here', font=('TkinterDefault', 15))
-        other_country_label.grid(row=5, column=3, padx=5)
-        self.other_country_Entry = tk.Entry(new_plan_frame)
-        self.other_country_Entry.grid(row=5, column=4, padx=5)
-        self.other_country_Entry.bind('<KeyRelease>', lambda event: self.character_limit())
 
         save_plan_button = tk.Button(new_plan_frame, text="Save plan", command=self.plan_dict, height=1, width=20)
         save_plan_button.grid(row=19, column=3)
@@ -172,10 +160,8 @@ class AdminPage(t_no_text):
         self.events_nested_dict = {}
         self.camp_ID = self.camp_IDbox.get()
         crisis_type = self.crisis_type_combobox.get()
-        other_crisis = self.other_crisis_label_Entry.get()
         description = self.description_label_Entry.get()
         country = self.country_Entry.get()
-        other_country = self.other_country_Entry.get()
         day = str(self.day_combobox.get())
         month = str(self.month_combobox.get())
         year = str(self.year_combobox.get())
@@ -183,10 +169,8 @@ class AdminPage(t_no_text):
         self.events_dict[self.camp_ID] = {
             'New Camp ID': self.camp_ID,
             'Crisis type': crisis_type,
-            'Other crisis type': other_crisis,
             'Description': description,
             'Country': country,
-            'Other Country': other_country,
             'Day': day,
             'Month': month,
             'Year': year
