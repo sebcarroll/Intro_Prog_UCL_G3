@@ -1,3 +1,5 @@
+from tkinter import *
+
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
@@ -100,8 +102,24 @@ class AdminPage(t_no_text):
 
         camp_ID_label = tk.Label(new_plan_frame, text='New Camp ID', font=('TkinterDefault', 15))
         camp_ID_label.grid(row=3, column=3)
-        self.camp_IDbox = tk.Entry(new_plan_frame)
-        self.camp_IDbox.grid(row=3, column=4, padx=5)
+
+        def randnum(event):
+            import random
+            value = random.randint(10000, 99999)
+            print(value)
+            updateDisplay(value)
+
+        def updateDisplay(myString):
+            displayVariable.set(myString)
+
+        button_1 = Button(new_plan_frame, text="Generate Camp ID")
+        button_1.bind("<Button-1>", randnum)
+        button_1.grid(row=3, column=4,padx=5)
+        displayVariable = StringVar()
+        displayLabel = Label(new_plan_frame, textvariable=displayVariable)
+        displayLabel.grid(row=3, column=4, padx=5)
+
+
 
         start_date_label = tk.Label(new_plan_frame, text="Please press button to select start date", font=("TkinterDefault", 15))
         start_date_label.grid(row=5, column=3)
@@ -195,3 +213,5 @@ class AdminPage(t_no_text):
         pass
 
 AdminPage()
+
+
