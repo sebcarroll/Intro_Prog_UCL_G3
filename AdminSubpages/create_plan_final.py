@@ -1,9 +1,7 @@
-from tkinter import *
-
 import tkinter as tk
-from tkinter import ttk
-from tkinter import messagebox
+from tkinter import ttk, messagebox
 from datetime import datetime
+import csv
 
 class t_no_text(Exception):
     pass
@@ -24,18 +22,20 @@ class AdminPage(t_no_text):
         new_plan_frame = tk.Frame(self.window)
         new_plan_frame.grid()
 
+        self.day_combobox = None
+        self.month_combobox = None
+        self.year_combobox = None
+
         def open_calendar():
             calendar_window = tk.Toplevel()
             calendar_window.title("Calendar Humanitarian Crisis")
 
             def is_valid_date(day, month, year):
                 try:
-                    weekday_names = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
                     date_str = f"{day} {month} {year}"
                     selected_date = datetime.strptime(date_str, "%d %B %Y").date()
                     current_date = datetime.now().date()
 
-                    # Check if the selected date is in the past
                     if selected_date > current_date:
                         raise ValueError("Selected date must be in the past.")
 
@@ -45,15 +45,16 @@ class AdminPage(t_no_text):
                     return False
 
             def get_selected_date():
-                day = day_combobox.get()
-                month = month_combobox.get()
-                year = year_combobox.get()
-                calendar_window.destroy()
+                day = self.day_combobox.get()
+                month = self.month_combobox.get()
+                year = self.year_combobox.get()
 
-                if is_valid_date(day, month, year):
-                    selected_date = f"{day} {month} {year}"
-                    messagebox.showinfo("Selected Date", f"Start date of event: {selected_date}")
-                    self.selected_date = selected_date
+                if day and month and year:
+                    if is_valid_date(day, month, year):
+                        selected_date = f"{day} {month} {year}"
+                        # calendar_window.destroy()
+                    else:
+                        messagebox.showerror("Invalid Date", "Please select a valid date.")
                 else:
                     messagebox.showerror("Invalid Date", "Please select a valid date.")
 
@@ -64,32 +65,32 @@ class AdminPage(t_no_text):
 
             day_label = ttk.Label(calendar_window, text="Day:")
             day_label.grid(row=0, column=0)
-            day_combobox = ttk.Combobox(calendar_window, values=list(range(1, 32)))
-            day_combobox.grid(row=0, column=1)
-            day_combobox.set(current_day)
+            self.day_combobox = ttk.Combobox(calendar_window, values=list(range(1, 32)))
+            self.day_combobox.grid(row=0, column=1)
+            self.day_combobox.set(current_day)
 
             month_label = ttk.Label(calendar_window, text="Month:")
             month_label.grid(row=0, column=2)
-            month_combobox = ttk.Combobox(calendar_window,
-                                          values=["January", "February", "March", "April", "May", "June", "July",
-                                                  "August", "September", "October", "November", "December"])
-            month_combobox.grid(row=0, column=3)
-            month_combobox.set(current_month)
+            self.month_combobox = ttk.Combobox(calendar_window,
+                                               values=["January", "February", "March", "April", "May", "June", "July",
+                                                       "August", "September", "October", "November", "December"])
+            self.month_combobox.grid(row=0, column=3)
+            self.month_combobox.set(current_month)
 
             year_label = ttk.Label(calendar_window, text="Year:")
             year_label.grid(row=0, column=4)
-            year_combobox = ttk.Combobox(calendar_window, values=list(range(current_year, current_year - 2, -1)))
-            year_combobox.grid(row=0, column=5)
-            year_combobox.set(current_year)
+            self.year_combobox = ttk.Combobox(calendar_window, values=list(range(current_year, current_year - 2, -1)))
+            self.year_combobox.grid(row=0, column=5)
+            self.year_combobox.set(current_year)
 
-            get_date_button = ttk.Button(calendar_window, text="Select date", command=get_selected_date)
+            get_date_button = ttk.Button(calendar_window, text="save date", command=get_selected_date)
             get_date_button.grid(row=1, column=0, columnspan=6, pady=10)
 
-            button_close = ttk.Button(
-                calendar_window,
-                text="Close window",
-                command=calendar_window.destroy)
-            button_close.place(x=75, y=75)
+            # button_close = ttk.Button(
+            #     calendar_window,
+            #     text="Close window",
+            #     command=calendar_window.destroy)
+            # button_close.place(x=75, y=75)
 
         button_open = ttk.Button(
             new_plan_frame,
@@ -100,8 +101,6 @@ class AdminPage(t_no_text):
         refugee_title = tk.Label(new_plan_frame, text='Log New Crisis Event', font=('TkinterDefault', 30))
         refugee_title.grid(row=0, column=3, pady=30)
 
-
-
         def randnum(event):
             import random
             value = random.randint(10000, 99999)
@@ -109,16 +108,15 @@ class AdminPage(t_no_text):
             displayVariable.set(f"Generated Camp ID: {value}")
             camp_ID_generator_button.destroy()
 
-        camp_ID_generator_button = Button(new_plan_frame, text="Generate Camp ID")
+        camp_ID_generator_button = tk.Button(new_plan_frame, text="Generate Camp ID")
         camp_ID_generator_button.bind("<Button-1>", randnum)
         camp_ID_generator_button.grid(row=15, column=3, padx=5)
 
-
-        displayVariable = StringVar()
-        displayLabel = Label(new_plan_frame, textvariable=displayVariable)
+        displayVariable = tk.StringVar()
+        displayLabel = tk.Label(new_plan_frame, textvariable=displayVariable)
         displayLabel.grid(row=15, column=4, padx=5)
 
-        start_date_label = tk.Label(new_plan_frame, text="Please press button to select start date", font=("TkinterDefault", 15))
+        start_date_label = tk.Label(new_plan_frame, text="Please press the button to select the start date", font=("TkinterDefault", 15))
         start_date_label.grid(row=13, column=3)
 
         crisis_type_label = tk.Label(new_plan_frame, text='Crisis Type', font=('TkinterDefault', 15))
@@ -151,48 +149,70 @@ class AdminPage(t_no_text):
         self.window.mainloop()
 
     def character_limit(self):
-        from tkinter import END
         if len(self.description_label_Entry.get()) > 100:
-            self.description_label_Entry.delete(100, END)
+            self.description_label_Entry.delete(100, tk.END)
 
     def plan_dict(self):
-        self.events_dict = {}
-        self.events_nested_dict = {}
-        self.camp_ID = self.camp_IDbox.get()
-        crisis_type = self.crisis_type_combobox.get()
-        description = self.description_label_Entry.get()
-        country = self.country_Entry.get()
-        day = str(self.day_combobox.get())
-        month = str(self.month_combobox.get())
-        year = str(self.year_combobox.get())
+        try:
+            crisis_type = self.crisis_type_combobox.get()
+            description = self.description_label_Entry.get()
+            country = self.country_Entry.get()
 
-        self.events_dict[self.camp_ID] = {
-            'New Camp ID': self.camp_ID,
-            'Crisis type': crisis_type,
-            'Description': description,
-            'Country': country,
-            'Day': day,
-            'Month': month,
-            'Year': year
-        }
+            if self.day_combobox is not None and self.month_combobox is not None and self.year_combobox is not None:
+                day = str(self.day_combobox.get())
+                month = str(self.month_combobox.get())
+                year = str(self.year_combobox.get())
+            else:
+                raise ValueError("Please select a valid date.")
 
-        if crisis_type not in ["War", "Environmental", "Supply Shortage", "Political unrest", "Displacement", "Other"]:
-            self.events_dict[self.camp_ID]['Crisis type'] = ""
+            new_camp_id = self.generate_camp_id()
 
-        if country not in ["Afghanistan", "Syria", "Yemen", "South Sudan", "Somalia", "Sudan",
-                           "Democratic Republic of the Congo",
-                           "Venezuela", "Iraq", "Nigeria", "Ethiopia", "Myanmar", "Haiti", "Central African Republic",
-                           "Libya",
-                           "Chad", "Mali", "Niger", "Cameroon", "Ukraine", "Pakistan", "Bangladesh", "Lebanon",
-                           "Zimbabwe", "Eritrea",
-                           "North Korea", "Eswatini", "Zambia", "Malawi"]:
-            self.events_dict[self.camp_ID]["Country"] = ""
+            self.events_dict = {
+                'New Camp ID': new_camp_id,
+                'Crisis type': crisis_type,
+                'Description': description,
+                'Country': country,
+                'Day': day,
+                'Month': month,
+                'Year': year
+            }
 
-        print(self.events_dict)
+            if crisis_type not in ["War", "Environmental", "Supply Shortage", "Political unrest", "Displacement", "Other"]:
+                self.events_dict['Crisis type'] = ""
+
+            if country not in ["Afghanistan", "Syria", "Yemen", "South Sudan", "Somalia", "Sudan",
+                               "Democratic Republic of the Congo",
+                               "Venezuela", "Iraq", "Nigeria", "Ethiopia", "Myanmar", "Haiti", "Central African Republic",
+                               "Libya",
+                               "Chad", "Mali", "Niger", "Cameroon", "Ukraine", "Pakistan", "Bangladesh", "Lebanon",
+                               "Zimbabwe", "Eritrea",
+                               "North Korea", "Eswatini", "Zambia", "Malawi"]:
+                self.events_dict["Country"] = ""
+
+            print(self.events_dict)
+
+            self.save_to_csv()
+
+        except Exception as e:
+            messagebox.showerror("Error", str(e))
+
+    def generate_camp_id(self):
+        import random
+        value = random.randint(10000, 99999)
+        print(value)
+        return value
+
+    def save_to_csv(self):
+        header = ["New Camp ID", "Crisis type", "Description", "Country", "Day", "Month", "Year"]
+        data = [self.events_dict]
+
+        with open("crisis_events.csv", mode='a', newline='', encoding='utf-8') as file:
+            writer = csv.DictWriter(file, fieldnames=header)
+            if file.tell() == 0:
+                writer.writeheader()
+            writer.writerows(data)
 
     def back_button_to_admin_main(self):
         pass
 
 AdminPage()
-
-
