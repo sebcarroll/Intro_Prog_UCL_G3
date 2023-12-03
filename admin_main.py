@@ -2,6 +2,7 @@ import tkinter as tk
 import pickle
 import os
 from AdminSubpages.new_plans import new_plan
+from AdminSubpages.admin_end_event import AdminEndEvent
 from AdminSubpages.admin_edit_details import AdminEditVolunteerDetails
 from AdminSubpages.admin_resource_allocation import AdminResourceAllocation
 
@@ -12,17 +13,16 @@ class AdminHomepage:
         self.window = tk.Toplevel(self.root)
         self.window.title('Admin Homepage')
         self.window.geometry('1300x600')
-        self.window.configure(background="skyblue")
+        self.window.configure(background="red")
         #self.window.attributes('-fullscreen', True)
 
+        self.admin_end_event = AdminEndEvent(self.window, self.back_button_to_admin_main)
         self.admin_edit_details = AdminEditVolunteerDetails(self.window, self.back_button_to_admin_main)
         self.admin_resource_allocation = AdminResourceAllocation(self.window, self.back_button_to_admin_main)
 
         self.window.bind('<F11>', self.toggle_fullscreen)
         self.window.bind('<Escape>', self.end_fullscreen)
         self.window.protocol("WM_DELETE_WINDOW", self.window_exit_button)
-
-
 
         # MENU BAR:
         menu_bar = tk.Menu(self.window)
@@ -72,31 +72,39 @@ class AdminHomepage:
         file_menu.add_separator()
         file_menu.add_command(label="About", command=self.our_cmd)
 
+        self.create_gui_admin_main()
 
+    def create_gui_admin_main(self):
         # WELCOME TITLE
-        self.admin_welcome_title = tk.Label(self.window, text='Welcome to the admin portal', font=('Arial Bold', 40))
-        self.admin_welcome_title.grid(row=0, column=3, pady=30)
+        self.admin_welcome_title = tk.Label(self.window, text='Welcome to the admin portal', font=('Arial', 40), bg='grey', fg='white')
+        self.admin_welcome_title.grid(row=0, column=0, columnspan=2, sticky="nsew", padx=10, pady=20)
+        self.admin_welcome_title.configure(background="grey")
 
         # MAIN BUTTONS
         # Create new event button
         self.btn_create_event = tk.Button(self.window, text="Create new event", command=self.create_event)
-        self.btn_create_event.grid(row=3, column=3, pady=5)
+        self.btn_create_event.grid(row=1, column=0, pady=(50,10), ipadx=93, ipady=25)
 
         # End an event button
         self.btn_end_event = tk.Button(self.window, text="End an event", command=self.end_event)
-        self.btn_end_event.grid(row=5, column=3, pady=5)
+        self.btn_end_event.grid(row=2, column=0, pady=10, ipadx=105, ipady=25)
 
         # View summaries button
         self.btn_view_summaries = tk.Button(self.window, text="View Summaries", command=self.view_summaries)
-        self.btn_view_summaries.grid(row=7, column=3, pady=5)
+        self.btn_view_summaries.grid(row=3, column=0, pady=10, ipadx=98, ipady=25)
 
         # Edit volunteer accounts button
         self.btn_edit_accounts = tk.Button(self.window, text="Edit volunteer accounts", command=self.edit_accounts)
-        self.btn_edit_accounts.grid(row=9, column=3, pady=5)
+        self.btn_edit_accounts.grid(row=4, column=0, pady=10, ipadx=80, ipady=25)
 
         # Allocate resources button
         self.btn_allocate_resources = tk.Button(self.window, text="Allocate resources", command=self.allocate_resources)
-        self.btn_allocate_resources.grid(row=11, column=3, pady=5)
+        self.btn_allocate_resources.grid(row=5, column=0, pady=(10,50), ipadx=93, ipady=25)
+
+
+        for i in range(6):
+            self.window.grid_rowconfigure(i, weight=1)
+        self.window.grid_columnconfigure(0, weight=1)
 
     #def create_event(self):
         # Open the resource allocation GUI
@@ -105,23 +113,20 @@ class AdminHomepage:
         #apcg.create_plan_gui(new_window)
 
     def create_event(self):
+        # This needs linking to create plan final
         new_plan(self.window, self.back_button_to_admin_main)
 
     def end_event(self):
-        # Add functionality for ending an event
-        print("Ending an event...")
-        # Implement the function's logic here
+        # Open the admin end event GUI
+        self.admin_end_event.create_gui_end_event(self)
 
     def view_summaries(self):
-        # Add functionality for viewing summaries
+        # Class not yet made
         print("Viewing summaries...")
-        # Implement the function's logic here
 
     def edit_accounts(self):
-        # Add functionality for editing volunteer accounts
+        # Open the admin edit volunteer details GUI
         self.admin_edit_details.create_gui(self)
-        # print("Editing volunteer accounts...")
-        # Implement the function's logic here
 
     def allocate_resources(self):
         # Open the resource allocation GUI
@@ -133,16 +138,7 @@ class AdminHomepage:
         for widget in self.window.winfo_children():
             widget.grid_forget()
         # Repopulate main page
-        self.admin_welcome_title.grid(row=0, column=3, pady=30)
-        self.btn_create_event.grid(row=3, column=3, pady=5)
-        # End an event button
-        self.btn_end_event.grid(row=5, column=3, pady=5)
-        # View summaries button
-        self.btn_view_summaries.grid(row=7, column=3, pady=5)
-        # Edit volunteer accounts button
-        self.btn_edit_accounts.grid(row=9, column=3, pady=5)
-        # Allocate resources button
-        self.btn_allocate_resources.grid(row=11, column=3, pady=5)
+        self.create_gui_admin_main()
 
     def our_cmd(self):
         pass
