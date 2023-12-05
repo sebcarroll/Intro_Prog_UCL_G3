@@ -85,7 +85,7 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
 
         new_refugee_info = pd.DataFrame.from_dict(refugee_info, orient='index')
         new_refugee_info.index.name = 'Name'
-        new_refugee_info.to_csv('volunteer_info.csv')
+        new_refugee_info.to_csv('refugee_info.csv')
 
 
     except FileNotFoundError:
