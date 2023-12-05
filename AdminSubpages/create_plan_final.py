@@ -1,4 +1,3 @@
-import tkinter
 import tkinter as tk
 from tkinter import ttk, messagebox
 from datetime import datetime
@@ -7,9 +6,10 @@ import csv
 class t_no_text(Exception):
     pass
 
-class AdminPage(t_no_text):
-    def __init__(self):
-        self.window = tk.Tk()
+class AdminCreatePlan:
+    def __init__(self, window, back_button_to_admin_main):
+        self.window = window
+        self.back_button_to_admin_main = back_button_to_admin_main
         self.day_combobox = None
         self.month_combobox = None
         self.year_combobox = None
@@ -17,7 +17,6 @@ class AdminPage(t_no_text):
         self.new_plan_frame = None
         self.new_plan()
         self.display_variable = tk.StringVar()
-
     def new_plan(self):
         for i in self.window.winfo_children():
             i.destroy()
@@ -221,5 +220,3 @@ class AdminPage(t_no_text):
 
     def back_button_to_admin_main(self):
         pass
-
-AdminPage()
