@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-import pickle
+import pandas as pd
 
 
 def new_refugee(window, y_camp_info, na_refugee_info, back_button_to_volunteer_main, store_details_callback):
@@ -65,22 +65,36 @@ def new_refugee(window, y_camp_info, na_refugee_info, back_button_to_volunteer_m
 
     return t_camp_IDbox, family_labelbox, t_medical_conditionsEntry, t_languages_spokenEntry, t_second_languageEntry
 
-def na_refugee_info_dict(na_refugee_info, t_camp_IDbox, family_labelbox, t_medical_conditionsEntry, t_languages_spokenEntry, t_second_languageEntry):
+
+def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_conditionsEntry, t_languages_spokenEntry, t_second_languageEntry):
     try:
         # Update self.t_create_refugee dictionary
-        with open('refugee.pickle', 'wb') as file:
-            camp_ID = t_camp_IDbox.get()
-            family_members = family_labelbox.get()
-            medical_conditions = t_medical_conditionsEntry.get()
-            languages_spoken = t_languages_spokenEntry.get()
-            second_language = t_second_languageEntry.get()
-            na_refugee_info['refugee1']['Camp ID'] = camp_ID
-            na_refugee_info['refugee1']['Medical Conditions'] = medical_conditions
-            na_refugee_info['refugee1']['Languages Spoken'] = languages_spoken
-            na_refugee_info['refugee1']['Second Language'] = second_language
-            na_refugee_info['refugee1']['Family Members'] = family_members
+        refugee_info = pd.read_csv('refugee_info.csv', index_col='Name')
+        refugee_info = refugee_info.to_dict(orient='index')
 
-            pickle.dump(na_refugee_info, file)
+        camp_ID = t_camp_IDbox.get()
+        family_members = family_labelbox.get()
+        medical_conditions = t_medical_conditionsEntry.get()
+        languages_spoken = t_languages_spokenEntry.get()
+        second_language = t_second_languageEntry.get()
+        refugee_info['refugee1']['Camp ID'] = camp_ID
+        refugee_info['refugee1']['Medical Conditions'] = medical_conditions
+        refugee_info['refugee1']['Languages Spoken'] = languages_spoken
+        refugee_info['refugee1']['Second Language'] = second_language
+        refugee_info['refugee1']['Family Members'] = family_members
+
+        new_refugee_info = pd.DataFrame.from_dict(refugee_info, orient='index')
+        new_refugee_info.index.name = 'Name'
+        new_refugee_info.to_csv('volunteer_info.csv')
+
 
     except FileNotFoundError:
-        pass
+        refugee_info = {
+            'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
+                         'Second Language': ''}
+                 }
+
+        df = pd.DataFrame.from_dict(refugee_info, orient='index')
+        df.index.name = 'Name'
+        df.to_csv('refugee_info.csv', index='Name')
+        refugee_info = pd.read_csv('refugee_info.csv')
