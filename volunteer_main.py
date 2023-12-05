@@ -92,6 +92,7 @@ class VolunteerHomepage(VolunteerLoginPage):
             df.to_csv('refugee_info.csv', index='Name')
             self.refugee_info = pd.read_csv('refugee_info.csv')
 
+
         # Initialize y_camp_info before trying to load from the pickled file
         self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}
         # Initialize na_refugee_info before trying to load from the pickled file
