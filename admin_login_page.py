@@ -56,9 +56,9 @@ class AdminLoginPage(tk.Frame):
         #self.entry_button = tk.Button(self, text='Login', command=self.details_confirmation, height=1, width=20)
         #self.entry_button.grid(row=5, column=0, pady=20)
 
-        login_btn = tk.Button(admin_log_in_frame, text="Admin Login", command=self.details_confirmation)
+        login_btn = tk.Button(admin_log_in_frame, text="Admin Login", command=self.on_login)
         login_btn.grid(row=10, column=1, pady=10)
-        # Swap button from  to command=self.on_login to bypass
+        # Swap button from command=self.details_confirmation to command=self.on_login to bypass
 
 
         # Back to landing page
