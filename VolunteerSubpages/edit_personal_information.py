@@ -107,7 +107,6 @@ def store_personal_details(username, y_personal_info, t_personal_nameEntry, t_pe
         # Update y_personal_info dictionary
         y_personal_info = pd.read_csv('volunteer_info.csv', index_col='Username')
         y_personal_info = y_personal_info.to_dict(orient='index')
-        print(y_personal_info)
         name = t_personal_nameEntry.get()
         email = t_personal_emailEntry.get()
         phone = t_phonenumberEntry.get()
@@ -123,7 +122,7 @@ def store_personal_details(username, y_personal_info, t_personal_nameEntry, t_pe
 
             # If entered non-number characters, raise error
             if re.search(r'^[0-9]+', phone):
-                y_personal_info[username]['Phone Number'] = phone
+                y_personal_info[username]['Phone Number'] = str(phone)
             else:
                 raise invalid_phone_number
             # Make sure they include correct email format

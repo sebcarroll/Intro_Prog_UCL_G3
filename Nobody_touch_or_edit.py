@@ -160,6 +160,8 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
         self.y_camp_info['ID'] = {"Country": "America 132", "Max Capacity": 1000, 'Food packets': 0,
                                   'Medical supplies': 0, 'Water and sanitation': 0, 'Clothing': 0,
                                   'Shelter materials': 0}
+        
+        
         try:
             if os.path.getsize('Camp.pickle') > 0:
                 with open('Camp.pickle', 'rb') as f:

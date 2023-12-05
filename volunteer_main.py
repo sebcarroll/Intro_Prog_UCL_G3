@@ -51,11 +51,10 @@ class VolunteerHomepage(VolunteerLoginPage):
         self.t_summary_resources = tk.Button(self.window, text='Display resources available', command=self.t_display_resources, height=2, width=20)
         self.t_summary_resources.grid(row=6, column=3)
 
+
         try:
             self.y_personal_info = pd.read_csv('volunteer_info.csv', index_col='Username')
             self.y_personal_info = self.y_personal_info.to_dict(orient='index')
-            print(self.y_personal_info)
-
 
 
         except(FileNotFoundError):
@@ -76,20 +75,22 @@ class VolunteerHomepage(VolunteerLoginPage):
             self.y_personal_info = pd.read_csv('volunteer_info.csv')
 
 
-
         try:
-            if os.path.getsize('refugee.pickle') > 0:
-                with open('refugee.pickle', 'rb') as file:
-                    self.na_refugee_info = pickle.load(file)
-            else:
-                self.na_refugee_info = {
-                    'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
-                                 'Second Language': ''}
-                }
+            # Update self.t_create_refugee dictionary
+            self.refugee_info = pd.read_csv('refugee_info.csv', index_col='Name')
+            self.refugee_info = self.refugee_info.to_dict(orient='index')
+
+
         except FileNotFoundError:
-            self.na_refugee_info = {
+            self.refugee_info = {
                 'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
-                             'Second Language': ''}}
+                            'Second Language': ''}
+                    }
+
+            df = pd.DataFrame.from_dict(self.refugee_info, orient='index')
+            df.index.name = 'Name'
+            df.to_csv('refugee_info.csv', index='Name')
+            self.refugee_info = pd.read_csv('refugee_info.csv')
 
         # Initialize y_camp_info before trying to load from the pickled file
         self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}
