@@ -1,9 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 import pandas as pd
 
 
-def new_refugee(window, y_camp_info, na_refugee_info, back_button_to_volunteer_main, store_details_callback):
+def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main, store_details_callback):
     for i in window.winfo_children():
         i.grid_forget()
     # Main frame for this whole page
@@ -53,11 +54,8 @@ def new_refugee(window, y_camp_info, na_refugee_info, back_button_to_volunteer_m
 
 
 
-    na_store_details = tk.Button(refugee_labelframe, text="Store refugee info", command=lambda: store_details_callback(t_camp_IDbox, family_labelbox, t_medical_conditionsEntry, t_languages_spokenEntry, t_second_languageEntry), height=1, width=20)
+    na_store_details = tk.Button(refugee_labelframe, text="Store refugee info", command=lambda: [store_details_callback(t_camp_IDbox, family_labelbox, t_medical_conditionsEntry, t_languages_spokenEntry, t_second_languageEntry), back_button_to_volunteer_main], height=1, width=20)
     na_store_details.grid(row=17, column=3)
-
-    na_save_changes = tk.Button(refugee_labelframe, text='Save changes', command='Store in dictionary')
-    na_save_changes.grid(row=13, column=1, padx=5, pady=10)
 
     # Back button
     t_back_button = tk.Button(refugee_labelframe, text='Back to Home', command=back_button_to_volunteer_main)
@@ -86,7 +84,8 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
         new_refugee_info = pd.DataFrame.from_dict(refugee_info, orient='index')
         new_refugee_info.index.name = 'Name'
         new_refugee_info.to_csv('refugee_info.csv')
-
+        
+        tk.messagebox.showinfo(title='Details saved', message='Details have been saved')
 
     except FileNotFoundError:
         refugee_info = {
