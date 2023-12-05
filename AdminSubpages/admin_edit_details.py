@@ -47,6 +47,10 @@ class AdminEditVolunteerDetails:
         except FileNotFoundError:
             print("Error: 'volunteer_info.csv' file not found.")
 
+    def create_account(self):
+        pass
+            
+    #sets deactivated column in the volunteer_info.csv from true to false
     def reactivate_account(self):
         selected_index = self.volunteer_listbox.curselection()
         if selected_index:
@@ -54,7 +58,7 @@ class AdminEditVolunteerDetails:
             self.update_account_status(username_to_reactivate, deactivated=False)
         else:
             messagebox.showwarning("No Selection", "Please select a volunteer.")
-
+    #sets deactivated column in the volunteer_info.csv from false to true
     def deactivate_account(self):
         selected_index = self.volunteer_listbox.curselection()
         if selected_index:
@@ -62,7 +66,8 @@ class AdminEditVolunteerDetails:
             self.update_account_status(username_to_deactivate, deactivated=True)
         else:
             messagebox.showwarning("No Selection", "Please select a volunteer.")
-
+    #for now the delete account function will set a variable from true to false like deactivated does 
+    #however, i think this should be a permanent removal from the csv
     def delete_account(self):
         selected_index = self.volunteer_listbox.curselection()
         if selected_index:
@@ -72,6 +77,8 @@ class AdminEditVolunteerDetails:
         else:
             messagebox.showwarning("No Selection", "Please select a volunteer.")
 
+
+
     def update_account_status(self, username, deactivated):
         try:
             with open('volunteer_info.csv', 'r', newline='') as csvfile:
@@ -79,6 +86,8 @@ class AdminEditVolunteerDetails:
                 rows = list(reader)
                 for row in rows:
                     if row['Username'] == username:
+                        if row['Deactivated'] == 'True' and deactivated:
+                            messagebox.showinfo("Deactivation", f"Account for {username} is already deactivated.")
                         row['Deactivated'] = str(deactivated).lower()
 
             with open('volunteer_info.csv', 'w', newline='') as csvfile:
