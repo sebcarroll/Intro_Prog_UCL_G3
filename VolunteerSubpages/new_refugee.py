@@ -54,7 +54,7 @@ def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main
 
 
 
-    na_store_details = tk.Button(refugee_labelframe, text="Store refugee info", command=lambda: [tk.messagebox.showinfo(title='Details saved', message='Details have been saved'), store_details_callback(t_camp_IDbox, family_labelbox, t_medical_conditionsEntry, t_languages_spokenEntry, t_second_languageEntry)], height=1, width=20)
+    na_store_details = tk.Button(refugee_labelframe, text="Store refugee info", command=lambda: [store_details_callback(t_camp_IDbox, family_labelbox, t_medical_conditionsEntry, t_languages_spokenEntry, t_second_languageEntry), back_button_to_volunteer_main], height=1, width=20)
     na_store_details.grid(row=17, column=3)
 
     # Back button
