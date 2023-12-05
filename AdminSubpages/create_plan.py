@@ -14,7 +14,8 @@ class AdminCreatePlan:
         self.month_combobox = None
         self.year_combobox = None
         self.selected_date = None
-        self.new_plan_frame = None
+        #self.new_plan_frame = None
+
     def create_plan_gui(self,window):
         for i in self.window.winfo_children():
             i.grid_forget()
@@ -64,9 +65,6 @@ class AdminCreatePlan:
         current_year = current_date.year
         current_month = current_date.strftime("%B")
         current_day = current_date.day
-
-
-
 
 
         day_label = ttk.Label(new_plan_frame, text="Day:")
@@ -205,7 +203,6 @@ class AdminCreatePlan:
         return value
 
 
-
     def save_to_csv(self):
         header = ["New Camp ID", "Crisis type", "Description", "Country", "Day", "Month", "Year"]
         data = [self.events_dict]
@@ -216,5 +213,3 @@ class AdminCreatePlan:
                 writer.writeheader()
             writer.writerows(data)
 
-    def back_button_to_admin_main(self):
-        pass

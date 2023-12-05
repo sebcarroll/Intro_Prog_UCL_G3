@@ -17,10 +17,10 @@ class invalid_phone_number(Exception):
 class invalid_name(Exception):
     pass
 
-class VolunteerHomepage(VolunteerLoginPage):
+class VolunteerHomepage():
     def __init__(self, root, username, go_to_landing_page):
         #super().__init__(root)
-        VolunteerLoginPage.__init__(self, root, go_to_landing_page)
+        #VolunteerLoginPage.__init__(self, root, go_to_landing_page)
         self.root = root
         self.username = username
         self.personal_entry_widgets = None
