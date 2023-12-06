@@ -1,5 +1,4 @@
 import tkinter as tk
-from Tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 import pickle
