@@ -55,6 +55,8 @@ class VolunteerHomepage():
         try:
             self.y_personal_info = pd.read_csv('volunteer_info.csv', index_col='Username')
             self.y_personal_info = self.y_personal_info.to_dict(orient='index')
+            self.y_personal_info[username]['Phone Number'] = self.y_personal_info[username]['Phone Number'].astype(str)
+
 
 
         except(FileNotFoundError):
