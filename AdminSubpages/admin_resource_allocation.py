@@ -14,14 +14,14 @@ class AdminResourceAllocation:
         self.camp_ids_from_csv = []
         self.camp_ids = [] # CGH: Seb I put this in for the case when there is no file found
         try:
-            with open('camp_information.csv', 'r') as file:
+            with open('crisis_events.csv', 'r') as file:
                 csv_reader = csv.reader(file)
                 next(csv_reader)
                 for row in csv_reader:
                     self.camp_ids_from_csv.append(row[0])
             self.camp_ids = self.camp_ids_from_csv
         except FileNotFoundError:
-            print("Error: 'camp_information.csv' file not found.")
+            print("Error: 'crisis_events.csv' file not found.")
 
     def create_gui_resource_allocation(self, window):
         # Main frame for this whole page
@@ -46,24 +46,34 @@ class AdminResourceAllocation:
         total_medicine_supplied_entry.grid(row=3, column=1)
 
         #This will eventually come from the number of refugees stored with the camp_id
-        tk.Label(self.window, text="Number of Refugees:").grid(row=4, column=0)
+        tk.Label(self.window, text="Estimated Number of Refugees at camp:").grid(row=4, column=0)
+        number_of_refugees_actual = 0
+        with open('refugee_info.csv', 'r') as file:
+            csv_reader = csv.reader(file)
+            next(csv_reader)
+            for row in csv_reader:
+                if self.camp_id_listbox == row[1]:
+                    number_of_refugees_actual = number_of_refugees_actual + 1
+                else:
+                    pass
+        tk.Label(self.window, text = f"Camp currently has {number_of_refugees_actual} registered refugees.").grid(row=5, column=0)
         no_refugees_entry = tk.Entry(self.window)
         no_refugees_entry.grid(row=4, column=1)
 
         food_amount_refugee = [7, 14, 21, 28]
         #gf.food_amount_refugee_listbox, gf.food_amount_refugee_scrollbar = create_listbox_with_label(self.window, "Number of Weekly Meals Provided per Refugee: ", 5, 0, food_amount_refugee)
-        self.food_amount_refugee_listbox, self.food_amount_refugee_scrollbar = create_listbox_with_label(self.window,"Number of Weekly Meals Provided per Refugee: ",5, 0,food_amount_refugee)
+        self.food_amount_refugee_listbox, self.food_amount_refugee_scrollbar = create_listbox_with_label(self.window,"Number of Weekly Meals Provided per Refugee: ",6, 0,food_amount_refugee)
         medicine_amount_refugee = [1, 2, 3, 4, 5, 6, 7]
-        medicine_amount_refugee_listbox, medicine_amount_refugee_scrollbar = create_listbox_with_label(self.window, "Number of Health Supplies Provided per Refugee Weekly: ", 6, 0, medicine_amount_refugee)
+        medicine_amount_refugee_listbox, medicine_amount_refugee_scrollbar = create_listbox_with_label(self.window, "Number of Health Supplies Provided per Refugee Weekly: ", 7, 0, medicine_amount_refugee)
 
         estimated_delivery_time_options = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4]
         #estimated_delivery_time_listbox, estimated_delivery_time_scrollbar = create_listbox_with_label(self.window,"Estimated Resource Delivery Time (weeks): ",7, 0, estimated_delivery_time_options)
 
-        self.estimated_delivery_time_listbox, self.estimated_delivery_time_scrollbar = create_listbox_with_label(self.window, "Estimated Resource Delivery Time (weeks): ", 7, 0, estimated_delivery_time_options)
+        self.estimated_delivery_time_listbox, self.estimated_delivery_time_scrollbar = create_listbox_with_label(self.window, "Estimated Resource Delivery Time (weeks): ", 8, 0, estimated_delivery_time_options)
 
         submit_button = ttk.Button(self.window, text="Submit", command=lambda: self.resource_allocation(self.camp_id_listbox, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry, no_refugees_entry, self.food_amount_refugee_listbox, medicine_amount_refugee_listbox, self.estimated_delivery_time_listbox, self.camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options))
 
-        submit_button.grid(row=8, column=0, columnspan=2)
+        submit_button.grid(row=9, column=0, columnspan=2)
 
         # Back button
         back_button = tk.Button(self.window, text='Back to Home', command=self.back_button_to_admin_main)
@@ -303,7 +313,7 @@ def create_listbox_with_label(widget, text_label, row_num, column_num, list_of_o
 
     listbox = tk.Listbox(widget, yscrollcommand=scrollbar.set, height=1, exportselection=0)
     listbox.grid(row=row_num, column=column_num+1)
-    #listbox.bind('<<ListboxSelect>>', lambda event: get_selected_listbox_value(event, listbox, list_of_options))
+    listbox.bind('<<ListboxSelect>>', lambda event: gf.get_selected_listbox_value(event, listbox, list_of_options))
 
     scrollbar.config(command=listbox.yview)
 

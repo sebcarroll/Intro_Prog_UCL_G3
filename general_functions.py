@@ -31,10 +31,14 @@ def create_listbox_with_label(widget, text_label, row_num, column_num, list_of_o
         listbox.insert(tk.END, item)
 
     return listbox, scrollbar
-def get_selected_listbox_value(listbox, list):
+
+
+def get_selected_listbox_value(event, listbox, list):
     '''
     Returns the selected value within a listbox so that the selected value can be saved as a variable for further use. If no input provided, it will use the first option given in the list of options as a default.
-    :param listbox: The listbox that the value to be saved is coming from
+    :param event: A variable that is passed to the function when a binding event takes place.
+    :param listbox: The listbox that the value to be saved is coming from.
+    :param list: The list of options from which the option is selected. If no option selected, then the first option is selected as default
     :return:
     '''
     print(f"Current listbox selection indices: {listbox.curselection()}")
