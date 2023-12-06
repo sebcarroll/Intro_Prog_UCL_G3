@@ -1,2 +1,7 @@
-New Camp ID, Crisis type, Description, Country, Day, Month, Year
-40457,Environmental,oil spillage in gulf,Venezuela,5,December,2022
+New Camp ID,Crisis type,Description,Country,Day,Month,Year,Status
+40457,Environmental,oil spillage in gulf,Venezuela,5,December,2022,Active
+57784,War,test,Afghanistan,2,December,2023,Active
+78455,War,test,Afghanistan,2,December,2023,Deactive
+16786,Political unrest,bad president,South Sudan,11,December,2023,Active
+61492,Political unrest,bad president,South Sudan,11,December,2023,Deactive
+27001,Political unrest,bad president,South Sudan,11,December,2023,Deactive

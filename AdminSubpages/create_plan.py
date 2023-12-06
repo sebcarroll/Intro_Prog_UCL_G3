@@ -174,7 +174,8 @@ class AdminCreatePlan:
                 'Country': country,
                 'Day': day,
                 'Month': month,
-                'Year': year
+                'Year': year,
+                'Status': "Active"
             }
 
             if crisis_type not in ["War", "Environmental", "Supply Shortage", "Political unrest", "Displacement", "Other"]:
@@ -204,7 +205,7 @@ class AdminCreatePlan:
 
 
     def save_to_csv(self):
-        header = ["New Camp ID", "Crisis type", "Description", "Country", "Day", "Month", "Year"]
+        header = ["New Camp ID", "Crisis type", "Description", "Country", "Day", "Month", "Year", "Status"]
         data = [self.events_dict]
 
         with open("crisis_events.csv", mode='a', newline='', encoding='utf-8') as file:

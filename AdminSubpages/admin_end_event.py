@@ -42,13 +42,17 @@ class AdminEndEvent:
 
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename)
+        selected_attributes = ['New Camp ID', 'Crisis type', 'Description', 'Country', 'Day', 'Month', 'Year', 'Status']
+        data = data[selected_attributes]
+        # Only want to see 'Active' plans:
+        data = data[data['Status'] != 'Deactive']
 
         tree.delete(*tree.get_children())
-        tree['columns'] = list(data.columns)
+        tree['columns'] = selected_attributes
         tree.column("#0", width=0, stretch=tk.NO)
         tree.heading("#0", text="", anchor=tk.W)
 
-        for col in data.columns:
+        for col in selected_attributes:
             tree.column(col, anchor=tk.CENTER, width=80)
             tree.heading(col, text=col, anchor=tk.CENTER)
 
@@ -62,11 +66,18 @@ class AdminEndEvent:
             # Get index of the selected row
             index = int(selected_item[0])
 
-            # Load current CSV data, remove selected row, and save back to CSV
             data = pd.read_csv(filename)
-            data = data.drop(index)
-            data.to_csv(filename, index=False)
+
+            # Load current CSV data, remove selected row, and save back to CSV
+            if index < len(data):
+                data.at[index, 'Status'] = 'Deactive'  # update status to Deactive
+
+                # Save the updated data back to the CSV file
+                data.to_csv(filename, index=False)
+
+                # Remove the selected row from the Treeview
+                tree.delete(selected_item)
 
             # Refresh the Treeview display
-            self.upload_csv_data(tree, filename)
+            #self.upload_csv_data(tree, filename)
 
