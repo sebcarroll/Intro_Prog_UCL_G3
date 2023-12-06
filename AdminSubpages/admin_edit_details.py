@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import csv
 
+
 class AdminEditVolunteerDetails:
     def __init__(self, window, back_button_to_admin_main):
         self.window = window
@@ -15,24 +16,42 @@ class AdminEditVolunteerDetails:
         new_plan_frame = tk.Frame(self.window)
         new_plan_frame.grid()
         # Labels
-        tk.Label(self.window, text="Admin Edit Volunteer Details", font=('Helvetica', 16)).grid(row=0, column=0,
-                                                                                                pady=10)
-        tk.Label(self.window, text="Select Volunteer:").grid(row=1, column=0, padx=10, pady=5)
+        tk.Label(self.window, text="Admin Edit Volunteer Details", font=('Arial', 40)).grid(row=0, column=0,
+                                                                                            columnspan=2,
+                                                                                            padx=10, pady=20)
+        tk.Label(self.window, text="Select Volunteer:", font=('Arial', 10)).grid(row=1, column=0, columnspan=2,
+                                                                                 padx=10, pady=20)
 
         # Listbox to display volunteer usernames
         self.volunteer_listbox = tk.Listbox(self.window, selectmode=tk.SINGLE)
         self.populate_volunteer_listbox()
-        self.volunteer_listbox.grid(row=1, column=1, padx=10, pady=5)
+        self.volunteer_listbox.grid(row=1, column=1, padx=10, pady=20)
 
         # Buttons
-        tk.Button(self.window, text="Edit Account (Deactivate)", command=self.deactivate_account).grid(row=3, column=0,
+        tk.Button(self.window, text="Edit Account (Create Account)", command=self.deactivate_account).grid(row=2,
+                                                                                                           column=0,
+                                                                                                           columnspan=2,
+                                                                                                           pady=10,
+                                                                                                           ipadx=80,
+                                                                                                           ipady=25)
+
+        tk.Button(self.window, text="Edit Account (Deactivate Account)", command=self.deactivate_account).grid(row=3,
+                                                                                                               column=0,
+                                                                                                               columnspan=2,
+                                                                                                               pady=10,
+                                                                                                               ipadx=80,
+                                                                                                               ipady=25)
+        tk.Button(self.window, text="Edit Account (Reactivate Account)", command=self.reactivate_account).grid(row=4,
+                                                                                                               column=0,
+                                                                                                               columnspan=2,
+                                                                                                               pady=10,
+                                                                                                               ipadx=80,
+                                                                                                               ipady=25)
+        tk.Button(self.window, text="Edit Account (Delete Account)", command=self.delete_account).grid(row=5, column=0,
                                                                                                        columnspan=2,
-                                                                                                       pady=10)
-        tk.Button(self.window, text="Edit Account (Reactivate)", command=self.reactivate_account).grid(row=4, column=0,
-                                                                                                       columnspan=2,
-                                                                                                       pady=10)
-        tk.Button(self.window, text="Edit Account (Delete)", command=self.delete_account).grid(row=5, column=0,
-                                                                                               columnspan=2, pady=10)
+                                                                                                       pady=10,
+                                                                                                       ipadx=80,
+                                                                                                       ipady=25)
         # Back button
         back_button = tk.Button(self.window, text='Back to Home', command=self.back_button_to_admin_main)
         back_button.grid(row=17, column=1, padx=5, pady=10)
@@ -49,8 +68,8 @@ class AdminEditVolunteerDetails:
 
     def create_account(self):
         pass
-            
-    #sets deactivated column in the volunteer_info.csv from true to false
+
+    # sets deactivated column in the volunteer_info.csv from true to false
     def reactivate_account(self):
         selected_index = self.volunteer_listbox.curselection()
         if selected_index:
@@ -58,7 +77,8 @@ class AdminEditVolunteerDetails:
             self.update_account_status(username_to_reactivate, deactivated=False)
         else:
             messagebox.showwarning("No Selection", "Please select a volunteer.")
-    #sets deactivated column in the volunteer_info.csv from false to true
+
+    # sets deactivated column in the volunteer_info.csv from false to true
     def deactivate_account(self):
         selected_index = self.volunteer_listbox.curselection()
         if selected_index:
@@ -66,8 +86,9 @@ class AdminEditVolunteerDetails:
             self.update_account_status(username_to_deactivate, deactivated=True)
         else:
             messagebox.showwarning("No Selection", "Please select a volunteer.")
-    #for now the delete account function will set a variable from true to false like deactivated does 
-    #however, i think this should be a permanent removal from the csv
+
+    # for now the delete account function will set a variable from true to false like deactivated does
+    # however, i think this should be a permanent removal from the csv
     def delete_account(self):
         selected_index = self.volunteer_listbox.curselection()
         if selected_index:
@@ -76,8 +97,6 @@ class AdminEditVolunteerDetails:
             self.volunteer_listbox.delete(selected_index)
         else:
             messagebox.showwarning("No Selection", "Please select a volunteer.")
-
-
 
     def update_account_status(self, username, deactivated):
         try:

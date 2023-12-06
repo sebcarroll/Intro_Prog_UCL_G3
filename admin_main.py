@@ -1,7 +1,7 @@
 import tkinter as tk
 import pickle
 import os
-from AdminSubpages.new_plans import new_plan
+from AdminSubpages.create_plan import AdminCreatePlan
 from AdminSubpages.admin_end_event import AdminEndEvent
 from AdminSubpages.admin_edit_details import AdminEditVolunteerDetails
 from AdminSubpages.admin_resource_allocation import AdminResourceAllocation
@@ -16,6 +16,7 @@ class AdminHomepage:
         self.window.configure(background="red")
         #self.window.attributes('-fullscreen', True)
 
+        self.create_plan = AdminCreatePlan(self.window, self.back_button_to_admin_main)
         self.admin_end_event = AdminEndEvent(self.window, self.back_button_to_admin_main)
         self.admin_edit_details = AdminEditVolunteerDetails(self.window, self.back_button_to_admin_main)
         self.admin_resource_allocation = AdminResourceAllocation(self.window, self.back_button_to_admin_main)
@@ -114,7 +115,7 @@ class AdminHomepage:
 
     def create_event(self):
         # This needs linking to create plan final
-        new_plan(self.window, self.back_button_to_admin_main)
+        self.create_plan.create_plan_gui(self)
 
     def end_event(self):
         # Open the admin end event GUI

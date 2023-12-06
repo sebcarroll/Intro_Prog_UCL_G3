@@ -6,7 +6,7 @@
 from tkinter import *
 import tkinter as tk
 from tkinter.scrolledtext import ScrolledText
-import requests
+#import requests
 from tkinter import messagebox
 import random
 from datetime import datetime

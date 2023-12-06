@@ -224,26 +224,6 @@ class AdminResourceAllocation:
         window.grab_set()
         window.wait_window()
 
-    '''
-    def on_confirm_action(self, camp_id, no_weeks_aid, total_food_supplied,
-                          total_medicine_supplied, no_refugees,
-                          week_food_per_refugee, week_medicine_per_refugee,
-                          delivery_time_weeks):
-        self.turn_data_into_valid_form(camp_id_listbox, no_weeks_aid_entry, total_food_supplied_entry,
-                                  total_medicine_supplied_entry, no_refugees_entry, food_amount_refugee_listbox,
-                                  medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids,
-                                  food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options)
-        print("Data Validated in on_confirm_action.")
-        new_resource_allocation_variables = self.create_resource_allocation_list(camp_id, no_weeks_aid, total_food_supplied,
-                                                                            total_medicine_supplied, no_refugees,
-                                                                            week_food_per_refugee,
-                                                                            week_medicine_per_refugee, delivery_time_weeks)
-
-        print("resource_allocation_list function run.")
-        save_information_csv(new_resource_allocation_variables)
-        print(new_resource_allocation_variables)
-        print("Values Submitted and Saved")
-    '''
 
     def resource_allocation(self, camp_id_listbox, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry,
                             no_refugees_entry, food_amount_refugee_listbox, medicine_amount_refugee_listbox,
@@ -272,12 +252,12 @@ class AdminResourceAllocation:
             weeks_of_food_supply = total_food_supplied_float / (no_refugees_int * week_food_per_refugee_float)
             additional_resources_message = ""
             if weeks_of_food_supply < no_weeks_aid_float:
-                additional_food_needed = (no_weeks_aid_float - weeks_of_food_supply) * week_food_per_refugee_float * no_refugees_int
+                additional_food_needed = (no_weeks_aid_float - weeks_of_food_supply) * (week_food_per_refugee_float * no_refugees_int)
                 additional_resources_message += f"{additional_food_needed} additional units of food needed at camp {camp_id} to cover the aid duration period.\n"
 
             weeks_of_medicine_supply = float(total_medicine_supplied_float) / (no_refugees_int * week_medicine_per_refugee_float)
             if weeks_of_medicine_supply < no_weeks_aid_float:
-                additional_medicine_needed = (no_weeks_aid_float - weeks_of_medicine_supply) * week_medicine_per_refugee_float * no_refugees_int
+                additional_medicine_needed = (no_weeks_aid_float - weeks_of_medicine_supply) * (week_medicine_per_refugee_float * no_refugees_int)
                 additional_resources_message += f"{additional_medicine_needed} additional units of medicine needed at camp {camp_id} to cover the aid duration period.\n"
 
             if additional_resources_message:

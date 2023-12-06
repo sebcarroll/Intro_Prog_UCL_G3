@@ -33,10 +33,6 @@ class AdminLoginPage(tk.Frame):
         admin_log_in_frame = tk.LabelFrame(admin_entries_frame)
         admin_log_in_frame.grid(row=3, column=1, pady=30)
 
-        # Volunteer frame white boarder
-        # self.t_info_frame = tk.LabelFrame(self.t_volunteer_frame, text='Volunteer login', font=25)
-        # self.t_info_frame.grid(row=0, column=0, padx=20, pady=10)
-
         # Username entry box
         self.name_label = tk.Label(admin_log_in_frame, text='Username')
         self.name_label.grid(row=6, column=0, pady=10, padx=10)
@@ -52,14 +48,17 @@ class AdminLoginPage(tk.Frame):
         self.password_entry.bind("<KeyPress>", self.caps_lock_on)
         self.password_entry.bind("<KeyRelease>", self.caps_lock_off)
 
+
+
+
+
         # Login button
         #self.entry_button = tk.Button(self, text='Login', command=self.details_confirmation, height=1, width=20)
         #self.entry_button.grid(row=5, column=0, pady=20)
 
-        login_btn = tk.Button(admin_log_in_frame, text="Admin Login", command=self.details_confirmation)
+        login_btn = tk.Button(admin_log_in_frame, text="Admin Login", command=self.on_login)
         login_btn.grid(row=10, column=1, pady=10)
-        # Swap button from  to command=self.on_login to bypass
-
+        # Swap button from command=self.details_confirmation to command=self.on_login to bypass
 
         # Back to landing page
         login_btn = tk.Button(admin_log_in_frame, text="Back", command=self.exit_and_go_back)

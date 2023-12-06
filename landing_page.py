@@ -67,7 +67,11 @@ class LandingPage:
                 widget.destroy()
         self.volunteer_login_frame = VolunteerLoginPage(
             self.window,
-            self.go_to_volunteer_main
+            self.window,
+            self.go_to_volunteer_main,
+            self.open_admin_login,
+            self.open_volunteer_login,
+            self.exit_software
         )
         self.volunteer_login_frame.pack(fill='both', expand=True)
 
