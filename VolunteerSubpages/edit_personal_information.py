@@ -4,7 +4,7 @@ from tkinter import messagebox
 import pickle
 import re
 import pandas as pd
-#from VolunteerSubpages.personal_information import personal_information
+
 
 class invalid_email(Exception):
     pass
@@ -86,7 +86,7 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
     t_worktypeEntry.grid(row=13, column=3)
 
     # Store details box
-    t_store_details = tk.Button(t_personal_frame, text='Store details', command=lambda: store_details_callback(t_personal_nameEntry, t_personal_emailEntry, t_phonenumberEntry, t_commitmentEntry, t_worktypeEntry),
+    t_store_details = tk.Button(t_personal_frame, text='Store details', command=lambda: [store_details_callback(t_personal_nameEntry, t_personal_emailEntry, t_phonenumberEntry, t_commitmentEntry, t_worktypeEntry)],
                                      height=1, width=20)
     t_store_details.grid(row=17, column=3)
 
@@ -104,48 +104,61 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
 
 def store_personal_details(username, y_personal_info, t_personal_nameEntry, t_personal_emailEntry, t_phonenumberEntry, t_commitmentEntry, t_worktypeEntry):
     try:
-        # Update y_personal_info dictionary
-        y_personal_info = pd.read_csv('volunteer_info.csv', index_col='Username')
-        y_personal_info = y_personal_info.to_dict(orient='index')
-        name = t_personal_nameEntry.get()
-        email = t_personal_emailEntry.get()
-        phone = t_phonenumberEntry.get()
-        commitment = t_commitmentEntry.get()
-        work = t_worktypeEntry.get()
-
-        try:
-            # If entered non-alpha characters, raise error
-            if re.search(r'^[A-Za-z]', name):
+        # Update self.y_personal_info dictionary
+        if t_personal_nameEntry.get() == '':
+            name = y_personal_info[username]['name']
+        else:
+            name = t_personal_nameEntry.get()
+        if t_personal_emailEntry.get() == '':
+            email = y_personal_info[username]['Email Address']
+        else:
+            email = t_personal_emailEntry.get()
+        if t_phonenumberEntry.get() == '':
+            phone = str(y_personal_info[username]['Phone Number'])
+        else:
+            phone = t_phonenumberEntry.get()
+        if t_commitmentEntry.get() == '':
+            commitment = y_personal_info[username]['Commitment']
+        else:
+            commitment = t_commitmentEntry.get()
+        if t_worktypeEntry.get() == '':
+            work = y_personal_info[username]['Work Type']
+        else:
+            work = t_worktypeEntry.get()
+        # If entered non-alpha characters, raise error
+        if re.search(r'^[A-Za-z]', name):
                 y_personal_info[username]['name'] = name.strip()
-            else:
-                raise invalid_name
+        else:
+            raise invalid_name
+        # If entered non-number characters, raise error
+        if re.search(r'^[0-9]+', phone):
+            y_personal_info[username]['Phone Number'] = phone
+        else:
+            raise invalid_phone_number
+        # Make sure they include correct email format
+        if re.search(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', email):
+            y_personal_info[username]['Email Address'] = email
+        else:
+            raise invalid_email
 
-            # If entered non-number characters, raise error
-            if re.search(r'^[0-9]+', phone):
-                y_personal_info[username]['Phone Number'] = str(phone)
-            else:
-                raise invalid_phone_number
-            # Make sure they include correct email format
-            if re.search(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', email):
-                y_personal_info[username]['Email Address'] = email
-            else:
-                raise invalid_email
+        y_personal_info[username]['Work Type'] = work
+        y_personal_info[username]['Commitment'] = commitment
+        new_data = pd.DataFrame.from_dict(y_personal_info, orient='index')
+        new_data.index.name = 'Username'
+        new_data.to_csv('volunteer_info.csv')
 
-            y_personal_info[username]['Work Type'] = work
-            y_personal_info[username]['Commitment'] = commitment
- 
-            new_data = pd.DataFrame.from_dict(y_personal_info, orient='index')
-            new_data.index.name = 'Username'
-            new_data.to_csv('volunteer_info.csv')
+        tk.messagebox.showinfo(title='Saved', message='Details have been saved')
 
 
-        except(invalid_email):
-            tk.messagebox.showinfo(title='Invalid Email', message='Please enter a valid email address')
-        except(invalid_phone_number):
-            tk.messagebox.showinfo(title='Invalid Phone Number',
-                                   message='Please enter a valid phone number')
-        except(invalid_name):
-            tk.messagebox.showinfo(title='Invalid Name', message='Please enter a valid name')
+
+
+    except(invalid_email):
+        tk.messagebox.showinfo(title='Invalid Email', message='Please enter a valid email address')
+    except(invalid_phone_number):
+        tk.messagebox.showinfo(title='Invalid Phone Number',
+                                       message='Please enter a valid phone number')
+    except(invalid_name):
+         tk.messagebox.showinfo(title='Invalid Name', message='Please enter a valid name')
 
             
         # Go back to the details page
@@ -165,4 +178,7 @@ def store_personal_details(username, y_personal_info, t_personal_nameEntry, t_pe
         df = pd.DataFrame.from_dict(y_personal_info, orient='index')
         df.index.name = 'Username'
         df.to_csv('volunteer_info.csv', index='Username')
-        y_personal_info = pd.read_csv('volunteer_info.csv')        
+        y_personal_info = pd.read_csv('volunteer_info.csv')
+
+
+

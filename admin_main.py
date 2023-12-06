@@ -3,6 +3,7 @@ import pickle
 import os
 from AdminSubpages.create_plan import AdminCreatePlan
 from AdminSubpages.admin_end_event import AdminEndEvent
+from AdminSubpages.view_summaries import AdminViewSummaries
 from AdminSubpages.admin_edit_details import AdminEditVolunteerDetails
 from AdminSubpages.admin_resource_allocation import AdminResourceAllocation
 
@@ -13,11 +14,12 @@ class AdminHomepage:
         self.window = tk.Toplevel(self.root)
         self.window.title('Admin Homepage')
         self.window.geometry('1300x600')
-        self.window.configure(background="red")
+        #self.window.configure(background="red")
         #self.window.attributes('-fullscreen', True)
 
         self.create_plan = AdminCreatePlan(self.window, self.back_button_to_admin_main)
         self.admin_end_event = AdminEndEvent(self.window, self.back_button_to_admin_main)
+        self.admin_view_summaries = AdminViewSummaries(self.window, self.back_button_to_admin_main)
         self.admin_edit_details = AdminEditVolunteerDetails(self.window, self.back_button_to_admin_main)
         self.admin_resource_allocation = AdminResourceAllocation(self.window, self.back_button_to_admin_main)
 
@@ -122,8 +124,8 @@ class AdminHomepage:
         self.admin_end_event.create_gui_end_event(self)
 
     def view_summaries(self):
-        # Class not yet made
-        print("Viewing summaries...")
+        # Open the admin end event GUI
+        self.admin_view_summaries.create_gui_view_summaries(self)
 
     def edit_accounts(self):
         # Open the admin edit volunteer details GUI

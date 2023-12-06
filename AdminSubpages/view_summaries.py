@@ -3,12 +3,12 @@ from tkinter import ttk
 import pandas as pd
 
 
-class AdminEndEvent:
+class AdminViewSummaries:
     def __init__(self, window, back_button_to_admin_main):
         self.window = window
         self.back_button_to_admin_main = back_button_to_admin_main
 
-    def create_gui_end_event(self, window):
+    def create_gui_view_summaries(self, window):
         # Main frame for this whole page
         for i in self.window.winfo_children():
             i.grid_forget()
@@ -69,4 +69,3 @@ class AdminEndEvent:
 
             # Refresh the Treeview display
             self.upload_csv_data(tree, filename)
-
