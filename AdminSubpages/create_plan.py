@@ -16,7 +16,7 @@ class AdminCreatePlan:
         self.selected_date = None
         #self.new_plan_frame = None
 
-    def create_plan_gui(self,window):
+    def create_plan_gui(self, window):
         for i in self.window.winfo_children():
             i.grid_forget()
 

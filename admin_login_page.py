@@ -15,7 +15,7 @@ class AdminLoginPage(tk.Frame):
             self,
             text='Welcome to the UCL Humanity Rescue Admin Portal',
             font=('TkDefaultFont', 25, 'bold'),
-            foreground='orange'
+            foreground='red'
         )
         welcome_label.grid(row=1, column=0, padx=30, pady=30)
 
