@@ -204,7 +204,16 @@ class AdminCreatePlan:
 
 
     def save_to_csv(self):
-        header = ["New Camp ID", "Crisis type", "Description", "Country", "Day", "Month", "Year"]
+        header = ["New Camp ID", "Crisis type", "Description", "Country", "Day", "Month", "Year",
+                  "Estimated Number of refugees", "Estimated Length of Crisis (weeks)",
+                  "Total Number of Meals Supplied", "Total Amount of Medicine Supplied",
+                  "Number of Meals Supplied to a Refugee per Week",
+                  "Refugee Weekly Medicine Allocation", "Expected Supply Delivery Time"]
+
+        for key in header:
+            if key not in self.events_dict:
+                self.events_dict[key] = ""
+
         data = [self.events_dict]
 
         with open("crisis_events.csv", mode='a', newline='', encoding='utf-8') as file:
@@ -212,4 +221,3 @@ class AdminCreatePlan:
             if file.tell() == 0:
                 writer.writeheader()
             writer.writerows(data)
-
