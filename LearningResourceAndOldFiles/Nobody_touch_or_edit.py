@@ -132,7 +132,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
 
 
         try:
-            self.y_personal_info = pd.read_csv('volunteer_info.csv', index_col='Username')
+            self.y_personal_info = pd.read_csv('../volunteer_info.csv', index_col='Username')
             self.y_personal_info = self.y_personal_info.to_dict(orient='index')
             print(self.y_personal_info)
 
@@ -153,7 +153,7 @@ class tvolunteer_main_page(t_deactivated_account, t_deleted_account, t_case_sens
             df = pd.DataFrame.from_dict(self.y_personal_info, orient='index')
             df.index.name = 'Username'
             df.to_csv('volunteer_info.csv', index='Username')
-            self.y_personal_info = pd.read_csv('volunteer_info.csv')
+            self.y_personal_info = pd.read_csv('../volunteer_info.csv')
 
 
         self.y_camp_info = {"Country": "America", "Max Capacity": ""}

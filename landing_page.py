@@ -22,7 +22,7 @@ class LandingPage:
             foreground='white'
         )
         welcome_label.pack(padx=50, pady=50)
-        welcome_label.configure(background="red")
+        welcome_label.configure(background="orange")
 
         instruction_label = tk.Label(
             self.window,

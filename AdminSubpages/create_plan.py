@@ -30,7 +30,7 @@ class AdminCreatePlan:
 
         #self.new_plan_frame = None
 
-    def create_plan_gui(self,window):
+    def create_plan_gui(self, window):
         for i in self.window.winfo_children():
             i.grid_forget()
 
@@ -192,6 +192,9 @@ class AdminCreatePlan:
             if not datetime(year=selected_year,month = self.months.index(selected_month)+1,day=selected_day):
                 raise invalid_date
 
+
+            status = "Active"
+
             self.events_dict = {
                 'New Camp ID': new_camp_id,
                 'Crisis type': crisis_type,
@@ -199,8 +202,10 @@ class AdminCreatePlan:
                 'Country': country,
                 'Day': day,
                 'Month': month,
-                'Year': year
+                'Year': year,
+                'Status': status
             }
+
 
             if crisis_type not in ["War", "Environmental", "Supply Shortage", "Political unrest", "Displacement", "Other"]:
                 raise option_no_exist
@@ -232,7 +237,17 @@ class AdminCreatePlan:
 
 
     def save_to_csv(self):
-        header = ["New Camp ID", "Crisis type", "Description", "Country", "Day", "Month", "Year"]
+
+        header = ["New Camp ID", "Crisis type", "Description", "Country", "Day", "Month", "Year", "Status",
+                  "Estimated Number of refugees", "Estimated Length of Crisis (weeks)",
+                  "Total Number of Meals Supplied", "Total Amount of Medicine Supplied",
+                  "Number of Meals Supplied to a Refugee per Week",
+                  "Refugee Weekly Medicine Allocation", "Expected Supply Delivery Time"]
+
+        for key in header:
+            if key not in self.events_dict:
+                self.events_dict[key] = ""
+
         data = [self.events_dict]
 
         with open("crisis_events.csv", mode='a', newline='', encoding='utf-8') as file:

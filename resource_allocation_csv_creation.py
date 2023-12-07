@@ -3,7 +3,7 @@ import os
 
 def save_information_csv(data_to_add):
     file_name = 'camp_information.csv'
-    columns = ['camp_id', 'no_refugees', 'no_weeks_aid', 'total_food_supplied', 'total_medicine_supplied', 'week_food_per_refugee', 'week_medicine_per_refugee', 'delivery_time_weeks']
+    columns = ['camp_id', 'no_refugees', 'no_weeks_aid', 'total_food_supplied', 'total_medicine_supplied','week_food_per_refugee', 'week_medicine_per_refugee', 'delivery_time_weeks']
 
     dataframe_containing_new_data = pd.DataFrame([data_to_add], columns=columns)
 

@@ -3,12 +3,12 @@ from tkinter import ttk
 import pandas as pd
 
 
-class AdminEndEvent:
+class AdminViewSummaries:
     def __init__(self, window, back_button_to_admin_main):
         self.window = window
         self.back_button_to_admin_main = back_button_to_admin_main
 
-    def create_gui_end_event(self, window):
+    def create_gui_view_summaries(self, window):
         # Main frame for this whole page
         for i in self.window.winfo_children():
             i.grid_forget()
@@ -42,17 +42,13 @@ class AdminEndEvent:
 
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename)
-        selected_attributes = ['New Camp ID', 'Crisis type', 'Description', 'Country', 'Day', 'Month', 'Year', 'Status']
-        data = data[selected_attributes]
-        # Only want to see 'Active' plans:
-        data = data[data['Status'] != 'Deactive']
 
         tree.delete(*tree.get_children())
-        tree['columns'] = selected_attributes
+        tree['columns'] = list(data.columns)
         tree.column("#0", width=0, stretch=tk.NO)
         tree.heading("#0", text="", anchor=tk.W)
 
-        for col in selected_attributes:
+        for col in data.columns:
             tree.column(col, anchor=tk.CENTER, width=80)
             tree.heading(col, text=col, anchor=tk.CENTER)
 
@@ -66,18 +62,10 @@ class AdminEndEvent:
             # Get index of the selected row
             index = int(selected_item[0])
 
-            data = pd.read_csv(filename)
-
             # Load current CSV data, remove selected row, and save back to CSV
-            if index < len(data):
-                data.at[index, 'Status'] = 'Deactive'  # update status to Deactive
-
-                # Save the updated data back to the CSV file
-                data.to_csv(filename, index=False)
-
-                # Remove the selected row from the Treeview
-                tree.delete(selected_item)
+            data = pd.read_csv(filename)
+            data = data.drop(index)
+            data.to_csv(filename, index=False)
 
             # Refresh the Treeview display
-            #self.upload_csv_data(tree, filename)
-
+            self.upload_csv_data(tree, filename)
