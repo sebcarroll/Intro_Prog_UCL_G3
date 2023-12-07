@@ -1,9 +1,9 @@
 import tkinter as tk
 from tkinter import ttk, Listbox
-import os
+
 import csv
 import general_functions as gf
-from resource_allocation_csv_creation import save_information_csv
+from resource_allocation_csv_creation import update_crisis_events
 
 class AdminResourceAllocation:
     def __init__(self, window, back_button_to_admin_main):
@@ -204,7 +204,8 @@ class AdminResourceAllocation:
       # self.turn_data_into_valid_form(camp_id_listbox, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry, no_refugees_entry, food_amount_refugee_listbox, medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options)
         self.create_resource_allocation_list(camp_id, no_refugees, no_weeks_aid, total_food_supplied, total_medicine_supplied,
              week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks)
-        save_information_csv(self.resource_allocation_variables)
+        update_crisis_events(camp_id, no_refugees, no_weeks_aid, total_food_supplied, total_medicine_supplied,
+             week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks)
         print(self.resource_allocation_variables)
         print("Values Submitted and Saved")
         message_label = tk.Label(self.window, text="")
