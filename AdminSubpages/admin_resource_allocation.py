@@ -79,7 +79,7 @@ class AdminResourceAllocation:
         back_button = tk.Button(self.window, text='Back to Home', command=self.back_button_to_admin_main)
         back_button.grid(row=17, column=1, padx=5, pady=10)
 
-    def turn_data_into_valid_form(self, camp_id_listbox, no_weeks_aid_entry,no_refugees_entry, total_food_supplied_entry, total_medicine_supplied_entry,  food_amount_refugee_listbox, medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options):
+    def turn_data_into_valid_form(self, camp_id_listbox, no_refugees_entry,no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry,  food_amount_refugee_listbox, medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options):
             '''
             '''
             message_label = tk.Label(self.window, text="")
