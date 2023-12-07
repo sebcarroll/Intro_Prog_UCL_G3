@@ -17,7 +17,8 @@ class AdminResourceAllocation:
                 csv_reader = csv.reader(file)
                 next(csv_reader)
                 for row in csv_reader:
-                    self.camp_ids_from_csv.append(row[0])
+                    if row:
+                        self.camp_ids_from_csv.append(row[0])
             self.camp_ids = self.camp_ids_from_csv
         except FileNotFoundError:
             print("Error: 'crisis_events.csv' file not found.")
@@ -69,7 +70,7 @@ class AdminResourceAllocation:
 
         self.estimated_delivery_time_listbox, self.estimated_delivery_time_scrollbar = create_listbox_with_label(self.window, "Estimated Resource Delivery Time (weeks): ", 8, 0, estimated_delivery_time_options)
 
-        submit_button = ttk.Button(self.window, text="Submit", command=lambda: self.resource_allocation(self.camp_id_listbox, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry, no_refugees_entry, self.food_amount_refugee_listbox, medicine_amount_refugee_listbox, self.estimated_delivery_time_listbox, self.camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options))
+        submit_button = ttk.Button(self.window, text="Submit", command=lambda: self.resource_allocation(self.camp_id_listbox, no_refugees_entry,no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry, self.food_amount_refugee_listbox, medicine_amount_refugee_listbox, self.estimated_delivery_time_listbox, self.camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options))
 
         submit_button.grid(row=9, column=0, columnspan=2)
 
@@ -301,7 +302,8 @@ class AdminResourceAllocation:
              week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks)
         except Exception as e:
             print(f"An error occurred: {e}")
-
+        except Exception as e:
+            print(f"An error occurred: {e}")
 
     def create_resource_allocation_list(self, camp_id, no_refugees, no_weeks_aid, total_food_supplied, total_medicine_supplied,
              week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks):
