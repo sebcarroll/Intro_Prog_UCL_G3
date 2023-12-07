@@ -83,7 +83,7 @@ class AdminResourceAllocation:
             '''
             '''
             message_label = tk.Label(self.window, text="")
-            submit_button_row = 8
+            submit_button_row = 9
             submit_button_column = 0
             submit_column_span = 2
 
@@ -207,7 +207,13 @@ class AdminResourceAllocation:
         save_information_csv(self.resource_allocation_variables)
         print(self.resource_allocation_variables)
         print("Values Submitted and Saved")
-
+        message_label = tk.Label(self.window, text="")
+        submit_button_row = 9
+        submit_button_column = 0
+        submit_column_span = 2
+        message_label.config(text="Values Submitted and Saved. Please return to the home page.")
+        message_label.grid(row=submit_button_row + 1, column=submit_button_column, columnspan=submit_column_span,
+                           sticky='W')
 
     def confirmation_before_submission(self, message_to_be_displayed, callback):
         '''
