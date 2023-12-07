@@ -1,9 +1,18 @@
+import tkinter
 import tkinter as tk
 from tkinter import ttk, messagebox
 from datetime import datetime
 import csv
 
+
+
 class t_no_text(Exception):
+    pass
+
+class invalid_date(Exception):
+    pass
+
+class option_no_exist(Exception):
     pass
 
 class AdminCreatePlan:
@@ -14,6 +23,11 @@ class AdminCreatePlan:
         self.month_combobox = None
         self.year_combobox = None
         self.selected_date = None
+
+        self.days = list(range(1, 32))
+        self.months = ["January", "February", "March", "April", "May", "June", "July",
+                       "August", "September", "October", "November", "December"]
+
         #self.new_plan_frame = None
 
     def create_plan_gui(self,window):
@@ -39,8 +53,8 @@ class AdminCreatePlan:
 
                 if selected_date > current_date:
                     raise ValueError("Selected date must be in the past.")
-
                 return True
+
             except ValueError as e:
                 messagebox.showerror("Invalid Date", str(e))
                 return False
@@ -62,30 +76,29 @@ class AdminCreatePlan:
 
 
         current_date = datetime.now()
-        current_year = current_date.year
+        self.current_year = current_date.year
         current_month = current_date.strftime("%B")
         current_day = current_date.day
 
 
         day_label = ttk.Label(new_plan_frame, text="Day:")
         day_label.grid(row=14, column=3)
-        self.day_combobox = ttk.Combobox(new_plan_frame, values=list(range(1, 32)))
+        self.day_combobox = ttk.Combobox(new_plan_frame, values=self.days)
         self.day_combobox.grid(row=14, column=4)
         self.day_combobox.set(current_day)
 
         month_label = ttk.Label(new_plan_frame, text="Month:")
         month_label.grid(row=15, column=3)
         self.month_combobox = ttk.Combobox(new_plan_frame,
-                                           values=["January", "February", "March", "April", "May", "June", "July",
-                                                   "August", "September", "October", "November", "December"])
+                                           values=self.months)
         self.month_combobox.grid(row=15, column=4)
         self.month_combobox.set(current_month)
 
         year_label = ttk.Label(new_plan_frame, text="Year:")
         year_label.grid(row=16, column=3)
-        self.year_combobox = ttk.Combobox(new_plan_frame, values=list(range(current_year, current_year - 2, -1)))
+        self.year_combobox = ttk.Combobox(new_plan_frame, values=list(range(self.current_year, self.current_year - 2, -1)))
         self.year_combobox.grid(row=16, column=4)
-        self.year_combobox.set(current_year)
+        self.year_combobox.set(self.current_year)
 
 
 
@@ -138,7 +151,8 @@ class AdminCreatePlan:
                                     font=("TkinterDefault", 15))
         camp_id_number_label.grid(row=18, column=3)
 
-        save_plan_button = tk.Button(new_plan_frame, text="Save plan", command=self.plan_dict, height=1, width=20)
+        save_plan_button = tk.Button(new_plan_frame, text="Save plan", command=self.plan_dict
+                                     , height=1, width=20)
         save_plan_button.grid(row=19, column=3)
 
         back_button = tk.Button(new_plan_frame, text='Back to Home', command=self.back_button_to_admin_main)
@@ -156,16 +170,27 @@ class AdminCreatePlan:
             description = self.description_label_Entry.get()
             country = self.country_Entry.get()
 
-            if self.day_combobox is not None and self.month_combobox is not None and self.year_combobox is not None:
-                day = str(self.day_combobox.get())
-                month = str(self.month_combobox.get())
-                year = str(self.year_combobox.get())
+            selected_day = int(self.day_combobox.get())
+            selected_month = self.month_combobox.get()
+            selected_year = int(self.year_combobox.get())
 
+            if (
+                    selected_day in self.days
+                    and selected_month in self.months
+                    and selected_year in range(self.current_year, self.current_year - 2, -1)
+            ):
+
+                day = str(selected_day)
+                month = str(selected_month)
+                year = str(selected_year)
 
                 new_camp_id = self.generate_camp_id()
 
             else:
-                raise ValueError("Please select a valid date.")
+                raise invalid_date
+
+            if not datetime(year=selected_year,month = self.months.index(selected_month)+1,day=selected_day):
+                raise invalid_date
 
             self.events_dict = {
                 'New Camp ID': new_camp_id,
@@ -178,7 +203,7 @@ class AdminCreatePlan:
             }
 
             if crisis_type not in ["War", "Environmental", "Supply Shortage", "Political unrest", "Displacement", "Other"]:
-                self.events_dict['Crisis type'] = ""
+                raise option_no_exist
 
             if country not in ["Afghanistan", "Syria", "Yemen", "South Sudan", "Somalia", "Sudan",
                                "Democratic Republic of the Congo",
@@ -187,14 +212,17 @@ class AdminCreatePlan:
                                "Chad", "Mali", "Niger", "Cameroon", "Ukraine", "Pakistan", "Bangladesh", "Lebanon",
                                "Zimbabwe", "Eritrea",
                                "North Korea", "Eswatini", "Zambia", "Malawi"]:
-                self.events_dict["Country"] = ""
+
+                raise option_no_exist
 
             print(self.events_dict)
-
+            tkinter.messagebox.showinfo(title="Plan created", message="Plan successfully created")
             self.save_to_csv()
 
-        except Exception as e:
-            messagebox.showerror("Error", str(e))
+        except option_no_exist:
+            tk.messagebox.showinfo(title="Option does not exist", message="Please make sure you've selected valid options")
+        except (invalid_date, ValueError):
+            tk.messagebox.showinfo(title="Invalid valid date", message="Please enter a valid date")
 
     def generate_camp_id(self):
         import random
