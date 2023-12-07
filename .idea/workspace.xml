@@ -5,8 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2d2d9b7a-d894-423d-863c-1c217e2dca02" name="Changes" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crisis_events.csv" beforeDir="false" afterPath="$PROJECT_DIR$/crisis_events.csv" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/AdminSubpages/admin_resource_allocation.py" beforeDir="false" afterPath="$PROJECT_DIR$/AdminSubpages/admin_resource_allocation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AdminSubpages/create_plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/AdminSubpages/create_plan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crisis_events.csv" beforeDir="false" afterPath="$PROJECT_DIR$/crisis_events.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resource_allocation_csv_creation.py" beforeDir="false" afterPath="$PROJECT_DIR$/resource_allocation_csv_creation.py" afterDir="false" />
+>>>>>>> parent of 73632e4 (Revert "Merge branch 'main' of https://github.com/sebcarroll/Intro_Prog_UCL_G3")
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
