@@ -57,7 +57,7 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
 
     # Phone number Entry and label
     phone_number = tk.Label(t_personal_labelframe,
-                                 text=str(y_personal_info[username]['Phone Number']),
+                                 text=y_personal_info[username]['Phone Number'],
                                  font=('tkDefault', 15))
     phone_number.grid(row=9, column=2, padx=5)
     t_phonenumberEntry = tk.Entry(t_personal_labelframe)
@@ -114,7 +114,7 @@ def store_personal_details(username, y_personal_info, t_personal_nameEntry, t_pe
         else:
             email = t_personal_emailEntry.get()
         if t_phonenumberEntry.get() == '':
-            phone = y_personal_info[username]['Phone Number']
+            phone = str(y_personal_info[username]['Phone Number'])
         else:
             phone = t_phonenumberEntry.get()
         if t_commitmentEntry.get() == '':
@@ -147,7 +147,8 @@ def store_personal_details(username, y_personal_info, t_personal_nameEntry, t_pe
         new_data.index.name = 'Username'
         new_data.to_csv('volunteer_info.csv')
 
-        tk.messagebox.showinfo(title='Saved', message='Details have been saved')
+        tk.messagebox.showinfo(title='Saved', message='Details have been saved\n '
+                                                      'Please click "Back to Volunteer Details" to view updated details')
 
 
 
