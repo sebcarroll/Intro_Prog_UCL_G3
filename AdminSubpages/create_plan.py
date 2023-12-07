@@ -166,7 +166,7 @@ class AdminCreatePlan:
 
             else:
                 raise ValueError("Please select a valid date.")
-
+            status = "Active"
             self.events_dict = {
                 'New Camp ID': new_camp_id,
                 'Crisis type': crisis_type,
@@ -175,8 +175,9 @@ class AdminCreatePlan:
                 'Day': day,
                 'Month': month,
                 'Year': year,
-                'Status': "Active"
+                'Status': status
             }
+
 
             if crisis_type not in ["War", "Environmental", "Supply Shortage", "Political unrest", "Displacement", "Other"]:
                 self.events_dict['Crisis type'] = ""
@@ -205,7 +206,17 @@ class AdminCreatePlan:
 
 
     def save_to_csv(self):
-        header = ["New Camp ID", "Crisis type", "Description", "Country", "Day", "Month", "Year", "Status"]
+
+        header = ["New Camp ID", "Crisis type", "Description", "Country", "Day", "Month", "Year", "Status",
+                  "Estimated Number of refugees", "Estimated Length of Crisis (weeks)",
+                  "Total Number of Meals Supplied", "Total Amount of Medicine Supplied",
+                  "Number of Meals Supplied to a Refugee per Week",
+                  "Refugee Weekly Medicine Allocation", "Expected Supply Delivery Time"]
+
+        for key in header:
+            if key not in self.events_dict:
+                self.events_dict[key] = ""
+
         data = [self.events_dict]
 
         with open("crisis_events.csv", mode='a', newline='', encoding='utf-8') as file:

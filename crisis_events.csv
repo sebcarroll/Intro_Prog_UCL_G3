@@ -1,7 +1,3 @@
-New Camp ID,Crisis type,Description,Country,Day,Month,Year,Status
-40457,Environmental,oil spillage in gulf,Venezuela,5,December,2022,Active
-57784,War,test,Afghanistan,2,December,2023,Active
-78455,War,test,Afghanistan,2,December,2023,Deactive
-16786,Political unrest,bad president,South Sudan,11,December,2023,Active
-61492,Political unrest,bad president,South Sudan,11,December,2023,Deactive
-27001,Political unrest,bad president,South Sudan,11,December,2023,Deactive
+New Camp ID,Crisis type,Description,Country,Day,Month,Year,Estimated Number of refugees,Estimated Length of Crisis (weeks),Total Number of Meals Supplied,Total Amount of Medicine Supplied,Number of Meals Supplied to a Refugee per Week,Refugee Weekly Medicine Allocation,Expected Supply Delivery Time
+21836,Displacement,Voldemort's obsession with Harry Potter reached new heights.,Nigeria,6,December,2023,Active,,,,,,,
+
