@@ -115,8 +115,8 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         # Swap button from command=self.t_details_confirmation to command=self.on_login to bypass
 
         # Back to landing page
-        login_btn = tk.Button(volunteer_log_in_frame, text="Back", command=self.exit_and_go_back)
-        login_btn.grid(row=10, column=0, pady=10)
+        back_button = tk.Button(volunteer_log_in_frame, text="Back", command=self.exit_and_go_back)
+        back_button.grid(row=10, column=0, pady=10)
 
 
         # Shows caps lock on/off (OLD BINDING NOT WORKING)

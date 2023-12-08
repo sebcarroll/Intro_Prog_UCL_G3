@@ -10,6 +10,10 @@ def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main
     # Main frame for this whole page
     refugeeframe = tk.Frame(window)
     refugeeframe.grid()
+    crisis_df = pd.read_csv('crisis_events.csv')
+    camp_IDs = list(crisis_df['New Camp ID'])
+    print(camp_IDs)
+
 
     # Title for the page
     refugee_title = tk.Label(refugeeframe, text='Create Refugee Profile', font=('TkinterDefault', 30))
@@ -22,7 +26,7 @@ def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main
     # Camp ID
     t_camp_ID_label = tk.Label(refugee_labelframe, text='Camp ID', font=('TkinterDefault', 15))
     t_camp_ID_label.grid(row=3, column=3)
-    t_camp_IDbox = ttk.Combobox(refugee_labelframe, values=y_camp_info['Syria']['ID'])
+    t_camp_IDbox = ttk.Combobox(refugee_labelframe, values= camp_IDs)
     t_camp_IDbox.grid(row=3, column=4, padx=5)
 
     # Family members
