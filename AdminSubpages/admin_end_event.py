@@ -42,7 +42,7 @@ class AdminEndEvent:
 
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename)
-        selected_attributes = ['New Camp ID', 'Crisis type', 'Description', 'Country', 'Day', 'Month', 'Year', 'Status']
+        selected_attributes = ['New Camp ID', 'Crisis Type', 'Description', 'Country', 'Day', 'Month', 'Year', 'Status']
         data = data[selected_attributes]
         # Only want to see 'Active' plans:
         data = data[data['Status'] != 'Deactive']
