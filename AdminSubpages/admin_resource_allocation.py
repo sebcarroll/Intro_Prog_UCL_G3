@@ -18,7 +18,10 @@ class AdminResourceAllocation:
                 csv_reader = csv.reader(file)
                 next(csv_reader)
                 for row in csv_reader:
-                    self.camp_ids_from_csv.append(row[0])
+                    if row[7] == "Active":
+                        self.camp_ids_from_csv.append(row[0])
+                    else:
+                        pass
             self.camp_ids = self.camp_ids_from_csv
         except FileNotFoundError:
             print("Error: 'crisis_events.csv' file not found.")
