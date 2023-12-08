@@ -1,7 +1,14 @@
 New Camp ID,Crisis Type,Description,Country,Day,Month,Year,Status,Number of Refugees,Crisis Length,Total Meals,Total Medicine,Meals /week,Medicine /week, Delivery Time (weeks)
-21836,Displacement,Voldemort's obsession with Harry Potter reached new heights.,Nigeria,6,December,2023,Active,8.0,0.0,0.0,0.0,0.0,0.0,0.0
-21837,War, Voldemort has found Harry Potter, Nigeria,6,December,2023,Active,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-40308,Environmental,0,Yemen,29,June,2023,Active,16.0,1.0,1000.0,10.0,7.0,1.0,0.5
-14873,Environmental,0,Yemen,8,December,2023,Active,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-81811,Supply Shortage,0,Sudan,8,December,2023,Active,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-11124,Environmental,0,Yemen,8,December,2023,Active,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+50055,War, Voldemort has found Harry Potter, Nigeria,6,December,2023,Active,5,1000,5000,1230,7,1,0.5
+55098,Supply Shortage,0,Sudan,8,December,2023,Active,140.0,0.0,0.0,0.0,0.0,0.0,0.0
+68691,Environmental,,South Sudan,8,December,2023,Active,,,,,,,
+32586,Displacement,,South Sudan,8,December,2023,Active,,,,,,,
+23950,Political unrest,,Somalia,8,December,2023,Active,,,,,,,
+47972,Supply Shortage,,Somalia,8,December,2023,Active,,,,,,,
+78679,Displacement,,Yemen,8,December,2023,Active,,,,,,,
+40707,Environmental,,Syria,8,December,2023,Active,,,,,,,
+92556,Supply Shortage,,Yemen,8,December,2023,Active,,,,,,,
+51681,Environmental,,Yemen,8,December,2023,Active,,,,,,,
+44243,Other,,South Sudan,8,December,2023,Active,,,,,,,
+11597,Other,,South Sudan,8,December,2023,Active,,,,,,,
+88303,Other,,South Sudan,8,December,2023,Active,,,,,,,
