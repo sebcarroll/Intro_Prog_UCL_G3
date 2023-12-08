@@ -13,7 +13,9 @@ def edit_camp_details(window, y_camp_info, back_button_to_volunteer_main):
         # Access the Camp_ID's
         crisis_df = pd.read_csv("crisis_events.csv", header=0)
         crisis_df.set_index('New Camp ID')
+        crisis_df = crisis_df.fillna(0)
         camp_ID_choices = crisis_df.iloc[:, 0]
+        print(crisis_df)
 
         t_select_camp_title = tk.Label(t_edit_campframe, text='Select camp ID', font=('Arial Bold', 30), pady=30)
         t_select_camp_title.grid(row=0, column=15)
@@ -37,15 +39,20 @@ def edit_camp_details(window, y_camp_info, back_button_to_volunteer_main):
 
 def edit_refugee_no(df, selected_camp_id):
     if selected_camp_id:
-        current_capacity = df.loc[df["New Camp ID"] == selected_camp_id, 'Estimated Number of refugees'].values[0]
+        current_capacity = df.loc[df["New Camp ID"] == selected_camp_id, 'Number of Refugees'].values[0]
         new_capacity = simpledialog.askinteger("Add/Remove refugees", f"Current total Capacity for Camp ID {selected_camp_id}: {current_capacity}"
-                                                                      f"\nHow many refugees would you like to add/remove?",
-                                              initialvalue=1)
+                                                                      f"\nHow many refugees would you like to add/remove?", initialvalue=1)
+
 
         if new_capacity is not None:
             # Update the DataFrame with the new value
-            df.loc[df["New Camp ID"] == selected_camp_id, 'Estimated Number of refugees'] += new_capacity
+            df.loc[df["New Camp ID"] == selected_camp_id, 'Number of Refugees'] += new_capacity
+            df.set_index('New Camp ID')
+            df.to_csv('crisis_events.csv', index=False)
 
-            # Print the updated value for verification
-            updated_value = df.loc[df["New Camp ID"] == selected_camp_id, 'Estimated Number of refugees'].values[0]
+
+        else:
+            raise ValueError
+    else:
+        raise ValueError
 

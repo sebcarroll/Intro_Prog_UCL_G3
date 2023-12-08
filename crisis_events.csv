@@ -1,4 +1,7 @@
-New Camp ID,Crisis type,Description,Country,Day,Month,Year,Status, Estimated Number of refugees,Estimated Length of Crisis (weeks),Total Number of Meals Supplied,Total Amount of Medicine Supplied,Number of Meals Supplied to a Refugee per Week,Refugee Weekly Medicine Allocation,Expected Supply Delivery Time
-21836,Displacement,Voldemort's obsession with Harry Potter reached new heights.,Nigeria,6,December,2023,Active,,,,,,,
-21837,War, Voldemort has found Harry Potter, Nigeria,6,December,2023,Active,,,,,,
-40308,Environmental,,Yemen,29,June,2023,Active,1,1,1000,10,7,1,0.5
+New Camp ID,Crisis Type,Description,Country,Day,Month,Year,Status,Number of Refugees,Crisis Length,Total Meals,Total Medicine,Meals /week,Medicine /week, Delivery Time (weeks)
+21836,Displacement,Voldemort's obsession with Harry Potter reached new heights.,Nigeria,6,December,2023,Active,8.0,0.0,0.0,0.0,0.0,0.0,0.0
+21837,War, Voldemort has found Harry Potter, Nigeria,6,December,2023,Active,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+40308,Environmental,0,Yemen,29,June,2023,Active,16.0,1.0,1000.0,10.0,7.0,1.0,0.5
+14873,Environmental,0,Yemen,8,December,2023,Active,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+81811,Supply Shortage,0,Sudan,8,December,2023,Active,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+11124,Environmental,0,Yemen,8,December,2023,Active,0.0,0.0,0.0,0.0,0.0,0.0,0.0
