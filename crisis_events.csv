@@ -3,12 +3,12 @@ Camp ID,Crisis Type,Description,Country,Day,Month,Year,Status,End Date,Number of
 55098,Supply Shortage,0,Sudan,8,December,2023,Active,0000-00-00 00:00:00,140.0,0.0,0.0,0.0,0.0,0.0,0.0
 68691,Environmental,,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,,,,,,,
 32586,Displacement,,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,,,,,,,
-23950,Political unrest,,Somalia,8,December,2023,Active,0000-00-00 00:00:00,,,,,,,
+23950,Political unrest,,Somalia,8,December,2023,Active,0000-00-00 00:00:00,15,30,10000,10000,14,2,0.5
 47972,Supply Shortage,,Somalia,8,December,2023,Active,0000-00-00 00:00:00,,,,,,,
 78679,Displacement,,Yemen,8,December,2023,Active,0000-00-00 00:00:00,,,,,,,
 40707,Environmental,,Syria,8,December,2023,Active,0000-00-00 00:00:00,,,,,,,
 92556,Supply Shortage,,Yemen,8,December,2023,Active,0000-00-00 00:00:00,,,,,,,
 51681,Environmental,,Yemen,8,December,2023,Active,0000-00-00 00:00:00,,,,,,,
-44243,Other,,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,,,,,,,
+44243,Other,,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,15,30,10000,10001,14,2,0.5
 11597,Other,,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,,,,,,,
 88303,Other,,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,,,,,,,
