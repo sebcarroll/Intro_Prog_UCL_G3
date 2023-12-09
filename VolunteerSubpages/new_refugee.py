@@ -11,7 +11,7 @@ def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main
     refugeeframe = tk.Frame(window)
     refugeeframe.grid()
     crisis_df = pd.read_csv('crisis_events.csv')
-    camp_IDs = list(crisis_df['New Camp ID'])
+    camp_IDs = list(crisis_df['Camp ID'])
 
     # Title for the page
     refugee_title = tk.Label(refugeeframe, text='Create Refugee Profile', font=('TkinterDefault', 30))
@@ -76,8 +76,8 @@ def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main
     return t_camp_IDbox, name_entry, t_medical_conditionsEntry, t_languages_spokenEntry, t_second_languageEntry
 
 
-def na_refugee_info_dict(refugee_info, t_camp_IDbox, name_entry, family_labelbox, t_medical_conditionsEntry,
-                         t_languages_spokenEntry, t_second_languageEntry):
+def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_conditionsEntry, t_languages_spokenEntry,
+                               t_second_languageEntry, name_entry):
     try:
         # Update self.t_create_refugee dictionary
         refugee_info = pd.read_csv('refugee_info.csv', index_col='Name')
