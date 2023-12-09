@@ -10,9 +10,24 @@ def resource_display(window, back_button_to_volunteer_main):
 
     crisis_df = pd.read_csv('crisis_events.csv')
 
-    resources_df = crisis_df.loc[:, ['New Camp ID', 'Total Meals', 'Total Medicine']]
+    crisis_df['weeks_food_supply'] = crisis_df['Total Meals'] / (crisis_df['Number of Refugees'] * crisis_df['Meals /week'])
+    crisis_df['weeks_med_supply'] = crisis_df['Total Medicine'] / (crisis_df['Number of Refugees'] * crisis_df['Medicine /week'])
+
+    crisis_df['Meals req'] = ((crisis_df['Crisis Length'] - crisis_df['weeks_food_supply']) *
+                              crisis_df['Meals /week'] * crisis_df['Number of Refugees'])
+
+    crisis_df['Medicine req'] = ((crisis_df['Crisis Length'] - crisis_df['weeks_med_supply'])
+                                 * crisis_df['Medicine /week'] * crisis_df['Number of Refugees'])
+
+    print(crisis_df)
+
+
+
+    resources_df = crisis_df.loc[:, ['Camp ID', 'Total Meals', 'Total Medicine', 'Crisis Length', 'Number of Refugees',
+                                     'Meals /week', 'Medicine /week']]
     resources_df = resources_df.fillna(0)
-    columns = ['New Camp ID', 'Total Meals', 'Total Medicine']
+    columns = ['Camp ID', 'Number of Refugees', 'Total Meals', 'Total Medicine', 'Meals req', 'Meds req']
+
     total_meals = 100000
     total_medicine = 1000000
     meals_used = resources_df['Total Meals'].sum()
@@ -33,8 +48,8 @@ def resource_display(window, back_button_to_volunteer_main):
     available_meds = tk.Label(availability_frame, text=f"Medicine Left", font=('Helvetica', 12))
     available_meds.grid(row=5, column=0)
 
-    available_meals_number = tk.Label(availability_frame, text=f"{leftover_medicine}", font=('Helvetica', 12))
-    available_meals_number.grid(row=5, column=20)
+    available_meds_number = tk.Label(availability_frame, text=f"{leftover_medicine}", font=('Helvetica', 12))
+    available_meds_number.grid(row=5, column=20)
 
     # GIVES THE RIGHT FRAME
     resources_df_frame = tk.Frame(resources_frame, width=150, height=400)
@@ -42,9 +57,19 @@ def resource_display(window, back_button_to_volunteer_main):
 
     tree = ttk.Treeview(resources_df_frame, columns=columns, show='headings')
 
-    tree.heading('New Camp ID', text='Camp ID')
+    tree.heading('Camp ID', text='Camp ID')
+    tree.heading('Number of Refugees', text='Refugee no.')
     tree.heading('Total Meals', text='Meals')
     tree.heading('Total Medicine', text='Medicine')
+    tree.heading('Meals req', text='Meals required')
+
+    tree.heading('Meds req', text='Meds required')
+    tree.column('Camp ID', width=80)
+    tree.column('Number of Refugees', width=100)
+    tree.column('Total Meals', width=80)
+    tree.column('Total Medicine', width=100)
+    tree.column('Meals req', width=100)
+    tree.column('Meds req', width=100)
 
     for _, row in resources_df.iterrows():
         tree.insert('', tk.END, values=row.tolist())

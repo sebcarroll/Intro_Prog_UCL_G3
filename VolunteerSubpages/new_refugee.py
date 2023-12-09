@@ -11,7 +11,7 @@ def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main
     refugeeframe = tk.Frame(window)
     refugeeframe.grid()
     crisis_df = pd.read_csv('crisis_events.csv')
-    camp_IDs = list(crisis_df['New Camp ID'])
+    camp_IDs = list(crisis_df['Camp ID'])
 
     # Title for the page
     refugee_title = tk.Label(refugeeframe, text='Create Refugee Profile', font=('TkinterDefault', 30))
