@@ -69,10 +69,10 @@ class AdminResourceAllocation:
         medicine_amount_refugee = [1, 2, 3, 4, 5, 6, 7]
         medicine_amount_refugee_listbox, medicine_amount_refugee_scrollbar = create_listbox_with_label(self.window, "Number of Health Supplies Provided per Refugee Weekly: ", 7, 0, medicine_amount_refugee)
 
-        estimated_delivery_time_options = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4]
+        estimated_delivery_time_options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
         #estimated_delivery_time_listbox, estimated_delivery_time_scrollbar = create_listbox_with_label(self.window,"Estimated Resource Delivery Time (weeks): ",7, 0, estimated_delivery_time_options)
 
-        self.estimated_delivery_time_listbox, self.estimated_delivery_time_scrollbar = create_listbox_with_label(self.window, "Estimated Resource Delivery Time (weeks): ", 8, 0, estimated_delivery_time_options)
+        self.estimated_delivery_time_listbox, self.estimated_delivery_time_scrollbar = create_listbox_with_label(self.window, "Estimated Resource Delivery Time (days): ", 8, 0, estimated_delivery_time_options)
 
         submit_button = ttk.Button(self.window, text="Submit", command=lambda: self.resource_allocation(self.camp_id_listbox,no_refugees_entry, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry,  self.food_amount_refugee_listbox, medicine_amount_refugee_listbox, self.estimated_delivery_time_listbox, self.camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options))
 
