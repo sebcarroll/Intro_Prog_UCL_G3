@@ -44,6 +44,15 @@ class AdminViewSummaries:
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename)
 
+        # columns with floating-point numbers
+        float_columns = data.select_dtypes(include=['float']).columns
+
+        # Convert float to integer
+        for col in float_columns:
+            # Replace NaN values with 0 and convert to integer
+            data[col] = data[col].fillna(0).astype(int)
+
+
         tree.delete(*tree.get_children())
         tree['columns'] = list(data.columns)
         tree.column("#0", width=0, stretch=tk.NO)
