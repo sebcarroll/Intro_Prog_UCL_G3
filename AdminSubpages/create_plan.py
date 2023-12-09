@@ -167,7 +167,11 @@ class AdminCreatePlan:
     def plan_dict(self):
         try:
             crisis_type = self.crisis_type_combobox.get()
+
             description = self.description_label_Entry.get()
+            if description == "":
+                description = "No description"
+
             country = self.country_Entry.get()
 
             selected_day = int(self.day_combobox.get())
@@ -194,16 +198,18 @@ class AdminCreatePlan:
 
 
             status = "Active"
+            end_date = "0000-00-00 00:00:00"
 
             self.events_dict = {
-                'New Camp ID': new_camp_id,
+                'Camp ID': new_camp_id,
                 'Crisis type': crisis_type,
                 'Description': description,
                 'Country': country,
                 'Day': day,
                 'Month': month,
                 'Year': year,
-                'Status': status
+                'Status': status,
+                'End Date': end_date
             }
 
 
@@ -238,7 +244,7 @@ class AdminCreatePlan:
 
     def save_to_csv(self):
 
-        header = ["New Camp ID", "Crisis type", "Description", "Country", "Day", "Month", "Year", "Status",
+        header = ["Camp ID", "Crisis type", "Description", "Country", "Day", "Month", "Year", "Status", "End Date",
                   "Estimated Number of refugees", "Estimated Length of Crisis (weeks)",
                   "Total Number of Meals Supplied", "Total Amount of Medicine Supplied",
                   "Number of Meals Supplied to a Refugee per Week",

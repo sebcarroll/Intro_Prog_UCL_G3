@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import pandas as pd
+import datetime as dt
 
 
 class AdminEndEvent:
@@ -42,10 +43,10 @@ class AdminEndEvent:
 
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename)
-        selected_attributes = ['New Camp ID', 'Crisis Type', 'Description', 'Country', 'Day', 'Month', 'Year', 'Status']
+        selected_attributes = ['Camp ID', 'Crisis Type', 'Description', 'Country', 'Day', 'Month', 'Year', 'Status', 'End Date']
         data = data[selected_attributes]
         # Only want to see 'Active' plans:
-        data = data[data['Status'] != 'Deactive']
+        data = data[data['Status'] != 'Inactive']
 
         tree.delete(*tree.get_children())
         tree['columns'] = selected_attributes
@@ -68,9 +69,13 @@ class AdminEndEvent:
 
             data = pd.read_csv(filename)
 
+            current_datetime = dt.datetime.now()
+            formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+
             # Load current CSV data, remove selected row, and save back to CSV
             if index < len(data):
-                data.at[index, 'Status'] = 'Deactive'  # update status to Deactive
+                data.at[index, 'Status'] = 'Inactive'  # update status to Inactive
+                data.at[index, 'End Date'] = formatted_datetime  # update status to datetime now
 
                 # Save the updated data back to the CSV file
                 data.to_csv(filename, index=False)
