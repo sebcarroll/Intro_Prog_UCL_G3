@@ -47,14 +47,14 @@ def edit_camp_details(window, y_camp_info, back_button_to_volunteer_main):
 def edit_refugee_no(df, selected_camp_id):
     try:
         if selected_camp_id:
-            current_capacity = df.loc[df["New Camp ID"] == selected_camp_id, 'Number of Refugees'].values[0]
+            current_capacity = df.loc[df["Camp ID"] == selected_camp_id, 'Number of Refugees'].values[0]
             new_capacity = simpledialog.askinteger("Add/Remove refugees", f"Current total Capacity for Camp ID {selected_camp_id}: {current_capacity}"
                                                                           f"\nHow many refugees would you like to add/remove?", initialvalue=1)
 
 
             if type(new_capacity) == int:
                 # Update the DataFrame with the new value
-                df.loc[df["New Camp ID"] == selected_camp_id, 'Number of Refugees'] += new_capacity
+                df.loc[df["Camp ID"] == selected_camp_id, 'Number of Refugees'] += new_capacity
                 df.to_csv('crisis_events.csv', index=False)
 
 
@@ -75,12 +75,12 @@ def edit_camp_id(df, selected_camp_id, listbox):
             # Check if the new ID is not empty and is different from the current ID
             if new_id.isnumeric() and len(new_id) < 7:
                 # Check if the new ID already exists in the DataFrame
-                if new_id not in df['New Camp ID'].values:
+                if new_id not in df['Camp ID'].values:
                     # Update the camp ID in the DataFrame
-                    df.loc[df['New Camp ID'] == selected_camp_id, 'New Camp ID'] = new_id
+                    df.loc[df['Camp ID'] == selected_camp_id, 'Camp ID'] = new_id
 
                     # Convert the 'New Camp ID' column to a list
-                    new_camp_ids = df['New Camp ID'].tolist()
+                    new_camp_ids = df['Camp ID'].tolist()
 
                     # Clear the listbox and insert the updated camp IDs
                     listbox.delete(0, tk.END)
