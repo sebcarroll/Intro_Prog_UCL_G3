@@ -10,9 +10,9 @@ def resource_display(window, back_button_to_volunteer_main):
 
     crisis_df = pd.read_csv('crisis_events.csv')
 
-    resources_df = crisis_df.loc[:, ['New Camp ID', 'Total Meals', 'Total Medicine']]
+    resources_df = crisis_df.loc[:, ['Camp ID', 'Total Meals', 'Total Medicine']]
     resources_df = resources_df.fillna(0)
-    columns = ['New Camp ID', 'Total Meals', 'Total Medicine']
+    columns = ['Camp ID', 'Total Meals', 'Total Medicine']
     total_meals = 100000
     total_medicine = 1000000
     meals_used = resources_df['Total Meals'].sum()
@@ -42,7 +42,7 @@ def resource_display(window, back_button_to_volunteer_main):
 
     tree = ttk.Treeview(resources_df_frame, columns=columns, show='headings')
 
-    tree.heading('New Camp ID', text='Camp ID')
+    tree.heading('Camp ID', text='Camp ID')
     tree.heading('Total Meals', text='Meals')
     tree.heading('Total Medicine', text='Medicine')
 
