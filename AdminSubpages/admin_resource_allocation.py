@@ -11,8 +11,10 @@ class AdminResourceAllocation:
         self.back_button_to_admin_main = back_button_to_admin_main
         self.resource_allocation_variables = []
         self.all_camp_data = {}
-        self.camp_ids_from_csv = []
         self.camp_ids = [] # CGH: Seb I put this in for the case when there is no file found
+
+    def read_crisis_events_csv(self):
+        self.camp_ids_from_csv = []
         try:
             with open('crisis_events.csv', 'r') as file:
                 csv_reader = csv.reader(file)
@@ -20,13 +22,11 @@ class AdminResourceAllocation:
                 for row in csv_reader:
                     if row[7] == "Active":
                         self.camp_ids_from_csv.append(row[0])
-                    else:
-                        pass
-            self.camp_ids = self.camp_ids_from_csv
         except FileNotFoundError:
             print("Error: 'crisis_events.csv' file not found.")
-
+        self.camp_ids = self.camp_ids_from_csv
     def create_gui_resource_allocation(self, window):
+        self.read_crisis_events_csv()
         # Main frame for this whole page
         for i in self.window.winfo_children():
             i.grid_forget()
