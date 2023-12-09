@@ -33,7 +33,7 @@ class AdminEndEvent:
         self.upload_csv_data(end_plan_tree, csv_file)
 
         # Buttons
-        end_event_btn = tk.Button(self.window, text="End Event", command=lambda: self.delete_csv_data_entry(end_plan_tree, csv_file))
+        end_event_btn = tk.Button(self.window, text="End Event", command=lambda: self.deactivate_csv_data_entry(end_plan_tree, csv_file))
         end_event_btn.grid(row=6, column=0, padx=5, pady=10)
 
         # Back button
@@ -53,15 +53,21 @@ class AdminEndEvent:
         tree.column("#0", width=0, stretch=tk.NO)
         tree.heading("#0", text="", anchor=tk.W)
 
+        # set size of column for date
+        tree.column("Day", width=2, anchor=tk.CENTER)
+        tree.column("Month", width=3, anchor=tk.CENTER)
+        tree.column("Year", width=2, anchor=tk.CENTER)
+
         for col in selected_attributes:
-            tree.column(col, anchor=tk.CENTER, width=80)
+            if col != "Day" and col != "Month" and col != "Year": #added condition based on attribute
+                tree.column(col, anchor=tk.CENTER, width=80)
             tree.heading(col, text=col, anchor=tk.CENTER)
 
         for index, row in data.iterrows():
             tree.insert("", tk.END, values=list(row), iid=str(index))
 
 
-    def delete_csv_data_entry(self, tree, filename):
+    def deactivate_csv_data_entry(self, tree, filename):
         selected_item = tree.selection()
         if selected_item:
             # Get index of the selected row

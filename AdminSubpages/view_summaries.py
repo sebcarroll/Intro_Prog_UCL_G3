@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import pandas as pd
+from tkinter import messagebox
 
 
 class AdminViewSummaries:
@@ -32,7 +33,7 @@ class AdminViewSummaries:
         self.upload_csv_data(end_plan_tree, csv_file)
 
         # Buttons
-        end_event_btn = tk.Button(self.window, text="End Event", command=lambda: self.delete_csv_data_entry(end_plan_tree, csv_file))
+        end_event_btn = tk.Button(self.window, text="Delete Event", command=lambda: self.delete_csv_data_entry(end_plan_tree, csv_file))
         end_event_btn.grid(row=6, column=0, padx=5, pady=10)
 
         # Back button
@@ -57,15 +58,16 @@ class AdminViewSummaries:
 
 
     def delete_csv_data_entry(self, tree, filename):
-        selected_item = tree.selection()
-        if selected_item:
-            # Get index of the selected row
-            index = int(selected_item[0])
+        if messagebox.askokcancel("Delete Entry?", "Are you sure you want to delete this plan?"):
+            selected_item = tree.selection()
+            if selected_item:
+                # Get index of the selected row
+                index = int(selected_item[0])
 
-            # Load current CSV data, remove selected row, and save back to CSV
-            data = pd.read_csv(filename)
-            data = data.drop(index)
-            data.to_csv(filename, index=False)
+                # Load current CSV data, remove selected row, and save back to CSV
+                data = pd.read_csv(filename)
+                data = data.drop(index)
+                data.to_csv(filename, index=False)
 
-            # Refresh the Treeview display
-            self.upload_csv_data(tree, filename)
+                # Refresh the Treeview display
+                self.upload_csv_data(tree, filename)
