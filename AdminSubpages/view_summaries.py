@@ -109,7 +109,7 @@ class AdminViewSummaries:
         # Store entry widgets to retrieve their contents later
         self.entry_widgets = {}
 
-        #Create a label and entry for each plan attribute using column headers
+        # Create a label and entry for each plan attribute using column headers
         for i in range(treeview_width):
             header = column_headers[i]
             value = plan_details[i]
