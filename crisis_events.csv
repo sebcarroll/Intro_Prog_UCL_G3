@@ -1,15 +1,15 @@
 Camp ID,Crisis Type,Description,Country,Day,Month,Year,Status,End Date,Number of Refugees,Crisis Length,Total Meals,Total Medicine,Meals /week,Medicine /week, Delivery Time (weeks)
 50055,War, Voldemort has found Harry Potter, Nigeria,6,December,2023,Active,0000-00-00 00:00:00,200.0,10.0,500.0,500.0,7.0,1.0,0.5
 55098,Supply Shortage,0,Sudan,8,December,2023,Active,0000-00-00 00:00:00,140.0,0.0,0.0,0.0,0.0,0.0,0.0
-68691,Environmental,,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,5.0,12.0,1000.0,1000.0,7.0,2.0,0.5
-32586,Displacement,,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,,,,,,,
-23950,Political unrest,,Somalia,8,December,2023,Active,0000-00-00 00:00:00,15.0,30.0,10000.0,10000.0,14.0,2.0,0.5
-47972,Supply Shortage,,Somalia,8,December,2023,Active,0000-00-00 00:00:00,,,,,,,
-78679,Displacement,,Yemen,8,December,2023,Active,0000-00-00 00:00:00,,,,,,,
-40707,Environmental,,Syria,8,December,2023,Active,0000-00-00 00:00:00,,,,,,,
-92556,Supply Shortage,nan,Yemen,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-51681,Environmental,,Yemen,8,December,2023,Active,0000-00-00 00:00:00,,,,,,,
-44243,Other,,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,15.0,30.0,10000.0,10001.0,14.0,2.0,0.5
-11597,Other,,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,,,,,,,
-88303,Other,,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,,,,,,,
+68691,Environmental,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,5.0,12.0,1000.0,1000.0,7.0,2.0,0.5
+32586,Displacement,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+23950,Political unrest,0,Somalia,8,December,2023,Active,0000-00-00 00:00:00,15.0,30.0,10000.0,10000.0,14.0,2.0,0.5
+47972,Supply Shortage,0,Somalia,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+78679,Displacement,0,Yemen,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+40707,Environmental,0,Syria,8,December,2023,Active,0000-00-00 00:00:00,50.0,0.0,0.0,0.0,0.0,0.0,0.0
+92556,Supply Shortage,0,Yemen,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+51681,Environmental,0,Yemen,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+44243,Other,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,15.0,30.0,10000.0,10001.0,14.0,2.0,0.5
+11597,Other,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+88303,Other,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0
 56645,Political unrest,Dark Lord Harry Potter,Sudan,9,December,2023,Inactive,2023-12-10 15:00:33,30.0,15.0,100000.0,100000.0,14.0,2.0,1.0
