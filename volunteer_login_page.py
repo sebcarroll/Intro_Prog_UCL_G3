@@ -47,7 +47,7 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
             df.to_csv('volunteer_info.csv', index='Username')
             self.y_personal_info = pd.read_csv('volunteer_info.csv')
 
-        self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}
+        #self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}
 
         welcome_label = tk.Label(
             self,
@@ -55,21 +55,21 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
             font=('TkDefaultFont', 25, 'bold'),
             foreground='blue'
         )
-        welcome_label.grid(row=1, column=0, padx=30, pady=30)
+        welcome_label.grid(row=0, column=0, padx=30, pady=30)
 
         instruction_label = tk.Label(
             self,
             text='Volunteer login',
             font=('TkDefaultFont', 20)
         )
-        instruction_label.grid(row=2, column=0, pady=30)
+        instruction_label.grid(row=1, column=0, pady=30)
 
         volunteer_entries_frame = tk.Frame(self)
         volunteer_entries_frame.grid()
 
         # Label frame for this page that then stores all of the labels and entries
         volunteer_log_in_frame = tk.LabelFrame(volunteer_entries_frame)
-        volunteer_log_in_frame.grid(row=3, column=1, pady=30)
+        volunteer_log_in_frame.grid(row=2, column=0, pady=30)
 
         # Volunteer title
         #self.t_volunteer_title = tk.Label(self, text='Volunteer login', font=('Arial bold', 50))
@@ -124,6 +124,9 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         self.label_caps.grid(row=4, column=1)
         #self.bind("<KeyPress>", self.caps_lock_on)
         #self.bind("<KeyRelease>", self.caps_lock_off)
+        for i in range(3):
+            self.window.grid_rowconfigure(i, weight=1)
+        self.window.grid_columnconfigure(0, weight=1)
 
     # For caps lock on/off
     def caps_lock_on(self, event):
