@@ -20,12 +20,12 @@ def edit_camp_details(window, y_camp_info, back_button_to_volunteer_main):
         camp_ID_choices = crisis_df.iloc[:, 0]
 
         t_select_camp_title = tk.Label(t_edit_campframe, text='Select camp ID', font=('Arial Bold', 30), pady=30)
-        t_select_camp_title.grid(row=0, column=15)
+        t_select_camp_title.grid(row=0, column=1)
 
         camp_ID_listbox = tk.Listbox(t_edit_campframe, selectmode=tk.SINGLE)
         for camp_id in camp_ID_choices:
             camp_ID_listbox.insert(tk.END, camp_id)
-        camp_ID_listbox.grid(row=1, column=15, padx=5, pady=5)
+        camp_ID_listbox.grid(row=1, column=1, padx=5, pady=5)
 
         # BUTTONS:
         # Save changes button, need to add this to a dictionary.

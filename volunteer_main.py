@@ -148,11 +148,14 @@ class VolunteerHomepage():
         for widget in self.window.winfo_children():
             widget.grid_forget()
         # Repopulate main page
-        self.t_summary_title.grid(row=0, column=3, pady=30)
-        self.t_summary_editdetails.grid(row=3, column=3, pady=5)
-        self.t_summary_editcamp.grid(row=4, column=3, pady=5)
-        self.t_summary_refugee.grid(row=5, column=3)
-        self.t_summary_resources.grid(row=6, column=3)
+        self.t_summary_title.grid(row=0, column=0, columnspan=2, sticky='news', padx=10, pady=20)
+        self.t_summary_editdetails.grid(row=1, column=0, pady=(50,10), ipadx= 98, ipady= 25)
+        self.t_summary_editcamp.grid(row=2, column=0, pady=10, ipadx= 98, ipady= 25)
+        self.t_summary_refugee.grid(row=3, column=0, pady=10, ipadx=90, ipady= 25)
+        self.t_summary_resources.grid(row=4, column=0, pady=10, ipadx=85, ipady= 25)
+        for i in range(5):
+            self.window.grid_rowconfigure(i, weight=1)
+        self.window.grid_columnconfigure(0, weight=1)
 
     def exit_and_go_back(self):
         self.window.destroy()

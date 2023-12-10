@@ -27,24 +27,30 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
     personal_title.grid(row=0, column=3, pady=30)
 
     #  Currently set name and current title
+
     current_title = tk.Label(t_personal_labelframe, text='Current details', font=('tkDefault', 20))
     current_title.grid(row=4, column=2)
 
-    preset_name = tk.Label(t_personal_labelframe, text=y_personal_info[username]['name'],
-                                font=('tkDefault', 15))
-    preset_name.grid(row=5, column=2, padx=5)
+
 
     # Edit column title
     edit_title = tk.Label(t_personal_labelframe, text='Edit', font=('tkDefault', 20))
     edit_title.grid(row=4, column=3, padx=5)
 
     # Name entry box
-    t_personal_nameEntry = tk.Entry(t_personal_labelframe, text='name')
+    name_label = tk.Label(t_personal_labelframe, text='Name: ', font=('tkDefault', 15))
+    name_label.grid(row=5, column=1)
+    preset_name = tk.Label(t_personal_labelframe, text=y_personal_info[username]['name'],
+                           font=('tkDefault', 15))
+    preset_name.grid(row=5, column=2, padx=5)
+    t_personal_nameEntry = tk.Entry(t_personal_labelframe,)
     t_personal_nameEntry.grid(row=5, column=3)
 
     # Email header/label
     # t_personal_email = tk.Label(t_personal_labelframe, text=' Edit Email address')
     # Current email
+    email_label = tk.Label(t_personal_labelframe, text='Email address: ', font=('tkDefault', 15))
+    email_label.grid(row=7, column= 1, padx= 5)
     personal_email = tk.Label(t_personal_labelframe,
                                    text=y_personal_info[username]['Email Address'],
                                    font=('tkDefault', 15))
@@ -56,6 +62,8 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
     # t_phonenumber = tk.Label(t_personal_labelframe, text='Edit Phone number')
 
     # Phone number Entry and label
+    phone_label = tk.Label(t_personal_labelframe, text='Phone number: ', font=('tkDefault', 15))
+    phone_label.grid(row=9, column=1, padx=5)
     phone_number = tk.Label(t_personal_labelframe,
                                  text=y_personal_info[username]['Phone Number'],
                                  font=('tkDefault', 15))
@@ -64,6 +72,8 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
     t_phonenumberEntry.grid(row=9, column=3)
 
     # Commitment label
+    commitment_type = tk.Label(t_personal_labelframe, text='Commitment type: ', font=('tkDefault', 15))
+    commitment_type.grid(row=11, column=1, padx= 5)
     commitment_label = tk.Label(t_personal_labelframe,
                                      text=y_personal_info[username]['Commitment'],
                                      font=('tkDefault', 15))
@@ -76,6 +86,8 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
     t_commitmentEntry.grid(row=11, column=3)
 
     # Work type label
+    work_type = tk.Label(t_personal_labelframe, text='Work type: ', font=('tkDefault', 15))
+    work_type.grid(row=13, column=1, padx=5)
     work_type_label = tk.Label(t_personal_labelframe,
                                     text=y_personal_info[username]['Work Type'],
                                     font=('tkDefault', 15))
