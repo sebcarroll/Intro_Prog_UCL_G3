@@ -23,7 +23,7 @@ def create_listbox_with_label(widget, text_label, row_num, column_num, list_of_o
 
     listbox = tk.Listbox(widget, yscrollcommand=scrollbar.set, height=1, exportselection=0)
     listbox.grid(row=row_num, column=column_num+1)
-    listbox.bind('<<ListboxSelect>>', get_selected_listbox_value(listbox, list_of_options))
+    listbox.bind('<<ListboxSelect>>', lambda event: get_selected_listbox_value(event, listbox, list_of_options))
 
     scrollbar.config(command=listbox.yview)
 
@@ -31,7 +31,6 @@ def create_listbox_with_label(widget, text_label, row_num, column_num, list_of_o
         listbox.insert(tk.END, item)
 
     return listbox, scrollbar
-
 
 def get_selected_listbox_value(event, listbox, list):
     '''

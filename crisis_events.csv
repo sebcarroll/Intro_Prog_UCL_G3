@@ -1,7 +1,7 @@
 Camp ID,Crisis Type,Description,Country,Day,Month,Year,Status,End Date,Number of Refugees,Crisis Length,Total Meals,Total Medicine,Meals /week,Medicine /week, Delivery Time (weeks)
 50055,War, Voldemort has found Harry Potter, Nigeria,6,December,2023,Active,0000-00-00 00:00:00,200.0,10.0,500.0,500.0,7.0,1.0,0.5
 55098,Supply Shortage,0,Sudan,8,December,2023,Active,0000-00-00 00:00:00,140.0,0.0,0.0,0.0,0.0,0.0,0.0
-68691,Environmental,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,5.0,12.0,1000.0,1000.0,7.0,2.0,0.5
+68691,Environmental,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,30,15,10000,10001,14,2,1
 32586,Displacement,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0
 23950,Political unrest,0,Somalia,8,December,2023,Active,0000-00-00 00:00:00,15.0,30.0,10000.0,10000.0,14.0,2.0,0.5
 47972,Supply Shortage,0,Somalia,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0
