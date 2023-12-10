@@ -41,7 +41,7 @@ class LandingPage:
         volunteer_login_btn.pack(ipadx=93, ipady=25, pady=10)
         volunteer_login_btn.configure(background="lightblue")
         # Exit program button
-        exit_btn = tk.Button(self.window, text="Exit Software", foreground='white', command=self.exit_software)
+        exit_btn = tk.Button(self.window, text="Exit Software", foreground='black', command=self.exit_software)
         exit_btn.pack(ipadx=10, ipady=2, pady=70)
         exit_btn.configure(background="black")
 
