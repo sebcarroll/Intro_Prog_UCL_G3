@@ -57,7 +57,7 @@ class AdminHomepage:
         # create a menu item 4
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Accounts", menu=file_menu)
-        file_menu.add_command(label="Create", command=self.our_cmd)
+        file_menu.add_command(label="Create", command=self.create_volunteer_account)
         file_menu.add_separator()
         file_menu.add_command(label="Volunteers", command=self.our_cmd)
         file_menu.add_separator()
@@ -115,6 +115,7 @@ class AdminHomepage:
         #new_window = tk.Toplevel()
         #apcg.create_plan_gui(new_window)
 
+    # Main Buttons Homepage Commands
     def create_event(self):
         # This needs linking to create plan final
         self.create_plan.create_plan_gui(self)
@@ -135,13 +136,23 @@ class AdminHomepage:
         # Open the resource allocation GUI
         self.admin_resource_allocation.create_gui_resource_allocation(self)
 
-
     def back_button_to_admin_main(self):
         # Clear current contents
         for widget in self.window.winfo_children():
             widget.grid_forget()
         # Repopulate main page
         self.create_gui_admin_main()
+
+
+
+    # Menu Commands
+
+    def create_volunteer_account(self):
+        self.admin_edit_details.create_account_gui()
+
+
+
+
 
     def our_cmd(self):
         pass
