@@ -26,6 +26,7 @@ class VolunteerHomepage():
         self.personal_entry_widgets = None
         self.refugee_entry_widgets = None
         self.go_to_landing_page = go_to_landing_page
+
         self.window = tk.Toplevel(self.root)
         self.window.title('Volunteer Homepage')
         self.window.geometry('1300x600')
@@ -36,20 +37,25 @@ class VolunteerHomepage():
         menu_bar.add_cascade(label="File", menu=file_menu)
         file_menu.add_command(label="Log Out", command=self.exit_and_go_back)
 
-        self.t_summary_title = tk.Label(self.window, text='Welcome to the volunteer portal', font=('Arial Bold', 40))
-        self.t_summary_title.grid(row=0, column=3, pady=30)
+        self.t_summary_title = tk.Label(self.window, text='Welcome to the volunteer portal', font=('Arial Bold', 40), bg='grey', fg='white')
+        self.t_summary_title.grid(row=0, column=0, columnspan=2, sticky='news', padx=10, pady=20)
+        self.t_summary_title.configure(background='grey')
 
-        self.t_summary_editdetails = tk.Button(self.window, text='Personal information', command=self.t_personal_information_base, height=2, width=20)
-        self.t_summary_editdetails.grid(row=3, column=3, pady=5)
+        self.t_summary_editdetails = tk.Button(self.window, text='Personal information', command=self.t_personal_information_base)
+        self.t_summary_editdetails.grid(row=1, column=0, pady=(50,10), ipadx= 98, ipady= 25)
 
-        self.t_summary_editcamp = tk.Button(self.window, text='Edit camp information', command=self.t_edit_camp, height=2, width=20)
-        self.t_summary_editcamp.grid(row=4, column=3, pady=5)
+        self.t_summary_editcamp = tk.Button(self.window, text='Edit camp information', command=self.t_edit_camp)
+        self.t_summary_editcamp.grid(row=2, column=0, pady=10, ipadx= 98, ipady= 25)
 
-        self.t_summary_refugee = tk.Button(self.window, text='Create a refugee profile', command=self.t_create_refugee, height=2, width=20)
-        self.t_summary_refugee.grid(row=5, column=3)
+        self.t_summary_refugee = tk.Button(self.window, text='Create a refugee profile', command=self.t_create_refugee)
+        self.t_summary_refugee.grid(row=3, column=0, pady=10, ipadx=90, ipady= 25)
 
-        self.t_summary_resources = tk.Button(self.window, text='Display resources available', command=self.t_display_resources, height=2, width=20)
-        self.t_summary_resources.grid(row=6, column=3)
+        self.t_summary_resources = tk.Button(self.window, text='Display resources available', command=self.t_display_resources)
+        self.t_summary_resources.grid(row=4, column=0, pady=10, ipadx=85, ipady= 25)
+
+        for i in range(5):
+            self.window.grid_rowconfigure(i, weight=1)
+        self.window.grid_columnconfigure(0, weight=1)
 
 
         try:
@@ -101,7 +107,6 @@ class VolunteerHomepage():
             'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
                          'Second Language': ''}
         }
-
 
     # SUBPAGES WITHIN VOLUNTEER HOMEPAGE - PYTHON PACKAGE VOLUNTEER SUBPAGES:
 

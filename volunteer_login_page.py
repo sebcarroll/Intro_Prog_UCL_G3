@@ -59,7 +59,7 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
 
         instruction_label = tk.Label(
             self,
-            text='Please sign in',
+            text='Volunteer login',
             font=('TkDefaultFont', 20)
         )
         instruction_label.grid(row=2, column=0, pady=30)

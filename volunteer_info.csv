@@ -1,7 +1,7 @@
 Username,password,name,Email Address,Phone Number,Commitment,Work Type,Deactivated,Deleted
-volunteer1,111,No,Checking@check.com,13460708.0,Part time,Medical Aid,false,False
+volunteer1,111,Tom,email@email.com,07391823,Part time,Food counselling,False,False
 volunteer2,111,Username,,,,,False,False
 volunteer3,111,Username,,,,,True,False
 volunteer4,111,Username,,,,,False,False
-volunteer5,111,Kayza,kayzawarsame@gmail.com,07421886290,Full time,Food counselling,False,
-volunteer6,111,,,,Full time,Medical Aid,true,
+volunteer5,111,Kayza,kayzawarsame@gmail.com,7421886290.0,Full time,Food counselling,False,
+volunteer6,111,,,,Full time,Medical Aid,True,
