@@ -15,16 +15,9 @@ class AdminLoginPage(tk.Frame):
             self,
             text='Welcome to the UCL Humanity Rescue Admin Portal',
             font=('TkDefaultFont', 25, 'bold'),
-            foreground='red'
+            foreground='orange red'
         )
         welcome_label.grid(row=1, column=0, padx=30, pady=30)
-
-        instruction_label = tk.Label(
-            self,
-            text='Please sign in',
-            font=('TkDefaultFont', 20)
-        )
-        instruction_label.grid(row=2, column=0, pady=30)
 
         admin_entries_frame = tk.Frame(self)
         admin_entries_frame.grid()
@@ -34,13 +27,13 @@ class AdminLoginPage(tk.Frame):
         admin_log_in_frame.grid(row=3, column=1, pady=30)
 
         # Username entry box
-        self.name_label = tk.Label(admin_log_in_frame, text='Username')
+        self.name_label = tk.Label(admin_log_in_frame, text='Username', font=('TkDefault', 17))
         self.name_label.grid(row=6, column=0, pady=10, padx=10)
         self.name_entry = tk.Entry(admin_log_in_frame)
         self.name_entry.grid(row=6, column=1, pady=10, padx=10)
 
         # Password entry box
-        self.password_label2 = tk.Label(admin_log_in_frame, text='Password')
+        self.password_label2 = tk.Label(admin_log_in_frame, text='Password', font=('TkDefault', 17))
         self.password_label2.grid(row=8, column=0, pady=10)
         self.password_entry = tk.Entry(admin_log_in_frame, show='*')
         self.password_entry.grid(row=8, column=1, pady=10)
@@ -70,7 +63,9 @@ class AdminLoginPage(tk.Frame):
         self.label_caps.grid(row=4, column=1)
         # self.bind("<KeyPress>", self.caps_lock_on)
         # self.bind("<KeyRelease>", self.caps_lock_off)
-
+        for i in range(11):
+            self.grid_rowconfigure(i, weight=1)
+        self.grid_columnconfigure(0, weight=1)
         # For caps lock on/off
     def caps_lock_on(self, event):
         if event.keysym == 'Caps_Lock':
