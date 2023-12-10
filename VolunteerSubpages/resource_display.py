@@ -2,6 +2,14 @@ import tkinter as tk
 from tkinter import ttk
 import pandas as pd
 
+def label_sufficient(value):
+    if value == 0:
+        return 'Sufficient'
+    elif value < 0:
+        return 'Excess'
+    else:
+        return value
+
 def resource_display(window, back_button_to_volunteer_main):
     for i in window.winfo_children():
         i.grid_forget()
@@ -16,20 +24,27 @@ def resource_display(window, back_button_to_volunteer_main):
     crisis_df['Meals req'] = ((crisis_df['Crisis Length'] - crisis_df['weeks_food_supply']) *
                               crisis_df['Meals /week'] * crisis_df['Number of Refugees'])
 
+
     crisis_df['Medicine req'] = ((crisis_df['Crisis Length'] - crisis_df['weeks_med_supply'])
                                  * crisis_df['Medicine /week'] * crisis_df['Number of Refugees'])
+
+    crisis_df['Medicine req'] = crisis_df['Medicine req'].apply(label_sufficient)
+    crisis_df['Meals req'] = crisis_df['Meals req'].apply(label_sufficient)
+
+
+    print(crisis_df)
 
     print(crisis_df)
 
 
 
     resources_df = crisis_df.loc[:, ['Camp ID', 'Total Meals', 'Total Medicine', 'Crisis Length', 'Number of Refugees',
-                                     'Meals /week', 'Medicine /week']]
+                                     'Meals req', 'Medicine req']]
     resources_df = resources_df.fillna(0)
     columns = ['Camp ID', 'Number of Refugees', 'Total Meals', 'Total Medicine', 'Meals req', 'Meds req']
 
-    total_meals = 100000
-    total_medicine = 1000000
+    total_meals = 100000000
+    total_medicine = 100000000
     meals_used = resources_df['Total Meals'].sum()
     medicine_used = resources_df['Total Medicine'].sum()
     leftover_meals = total_meals - meals_used
@@ -62,8 +77,8 @@ def resource_display(window, back_button_to_volunteer_main):
     tree.heading('Total Meals', text='Meals')
     tree.heading('Total Medicine', text='Medicine')
     tree.heading('Meals req', text='Meals required')
-
     tree.heading('Meds req', text='Meds required')
+
     tree.column('Camp ID', width=80)
     tree.column('Number of Refugees', width=100)
     tree.column('Total Meals', width=80)
