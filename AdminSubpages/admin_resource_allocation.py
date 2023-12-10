@@ -287,7 +287,6 @@ class AdminResourceAllocation:
                 additional_resources_message += f"{additional_food_needed} additional units of food needed at camp {camp_id} to cover the aid duration period.\n"
 
             weeks_of_medicine_supply = float(total_medicine_supplied_float) / (no_refugees_int * week_medicine_per_refugee_float)
-
             if weeks_of_medicine_supply < no_weeks_aid_float:
                 additional_medicine_needed = (no_weeks_aid_float - weeks_of_medicine_supply) * (week_medicine_per_refugee_float * no_refugees_int)
                 additional_resources_message += f"{additional_medicine_needed} additional units of medicine needed at camp {camp_id} to cover the aid duration period.\n"
