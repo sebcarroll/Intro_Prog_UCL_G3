@@ -17,52 +17,37 @@ class AdminEditVolunteerDetails:
         new_plan_frame.grid()
 
         # Labels
-        tk.Label(self.window, text="Admin Edit Volunteer Details", font=('Arial', 40)).grid(row=0, column=0,
+        tk.Label(self.window, text="Edit Volunteer Details", font=('TKDefault', 25)).grid(row=0, column=0,
                                                                                             columnspan=2,
                                                                                             padx=10, pady=20)
-        tk.Label(self.window, text="Select Volunteer:", font=('Arial', 10)).grid(row=1, column=0, columnspan=2,
-                                                                                 padx=10, pady=20)
 
         # Listbox to display volunteer usernames
+        # edit_details_labelFrame = tk.LabelFrame(self.window)
+        # edit_details_labelFrame.grid(row=1, column=0)
         self.volunteer_listbox = tk.Listbox(self.window, selectmode=tk.SINGLE)
         self.populate_volunteer_listbox()
-        self.volunteer_listbox.grid(row=1, column=1, padx=10, pady=20)
+        self.volunteer_listbox.grid(row=1, column=0, pady=5)
 
         # Buttons
-        tk.Button(self.window, text="Edit Account", command=self.edit_details).grid(row=2,
-                                                                                          column=0,
-                                                                                          columnspan=2,
-                                                                                          pady=10,
-                                                                                          ipadx=80,
-                                                                                          ipady=25)
+        tk.Button(self.window, text="Edit Account", command=self.edit_details, width=20).grid(row=3,
+                                                                                          column=0, padx=10)
 
-        tk.Button(self.window, text="Create Account", command=self.create_account_gui).grid(row=3,
-                                                                                            column=0,
-                                                                                            columnspan=2,
-                                                                                            pady=10,
-                                                                                            ipadx=80,
-                                                                                            ipady=25)
+        tk.Button(self.window, text="Create Account", command=self.create_account_gui, width=20).grid(row=4,
+                                                                                            column=0, padx=10)
 
-        tk.Button(self.window, text="Deactivate Account", command=self.deactivate_account).grid(row=4,
-                                                                                                column=0,
-                                                                                                columnspan=2,
-                                                                                                pady=10,
-                                                                                                ipadx=80,
-                                                                                                ipady=25)
-        tk.Button(self.window, text="Reactivate Account", command=self.reactivate_account).grid(row=5,
-                                                                                                column=0,
-                                                                                                columnspan=2,
-                                                                                                pady=10,
-                                                                                                ipadx=80,
-                                                                                                ipady=25)
-        tk.Button(self.window, text="Delete Account", command=self.delete_account).grid(row=6, column=0,
-                                                                                        columnspan=2,
-                                                                                        pady=10,
-                                                                                        ipadx=80,
-                                                                                        ipady=25)
+        tk.Button(self.window, text="Deactivate Account", command=self.deactivate_account, width=20).grid(row=5,
+                                                                                                column=0, padx=10)
+        tk.Button(self.window, text="Reactivate Account", command=self.reactivate_account, width=20).grid(row=6,
+                                                                                                column=0, padx=10)
+        tk.Button(self.window, text="Delete Account", command=self.delete_account, width=20).grid(row=7, column=0,
+                                                                                        padx= 10)
         # Back button
         back_button = tk.Button(self.window, text='Back to Home', command=self.back_button_to_admin_main)
-        back_button.grid(row=17, column=1, padx=5, pady=10)
+        back_button.grid(row=8, column=0, padx=5, pady=10)
+
+        for i in range(9):
+            self.window.grid_rowconfigure(i, weight=1)
+        self.window.grid_columnconfigure(0, weight=1)
 
     def populate_volunteer_listbox(self):
         try:

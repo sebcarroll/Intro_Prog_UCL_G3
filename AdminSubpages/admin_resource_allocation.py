@@ -31,56 +31,64 @@ class AdminResourceAllocation:
         for i in self.window.winfo_children():
             i.grid_forget()
         # If you want some formatting in a separate frame:
-        resource_frame = tk.Frame(self.window)
-        resource_frame.grid()
-        camp_id_listbox: Listbox
-        self.camp_id_listbox, self.camp_id_scrollbar = create_listbox_with_label(self.window, "Camp ID:", 0, 0, self.camp_ids)
+        title = tk.Label(self.window, text='Resource Allocation', font=('TkDefault', 35))
+        title.grid(row=0, column=0, pady=30)
+        resource_frame = tk.LabelFrame(self.window)
+        resource_frame.grid(row=1, column=0)
+
+        # Creating list of CAMP IDs
+        camp_id_label = tk.Label(resource_frame, text= 'Camp ID:')
+        camp_id_label.grid(row=1, column=0, padx=5, pady=5)
+        camp_ID_box = ttk.Combobox(resource_frame, values= self.camp_ids)
+        camp_ID_box.grid(row=1, column=1, padx=5, pady=5)
 
         #This will eventually come from the number of refugees stored with the camp_id
-        tk.Label(self.window, text="Estimated Number of Refugees at camp:").grid(row=4, column=0)
+        tk.Label(resource_frame, text="Estimated Number of Refugees at camp:").grid(row=2, column=0, padx=5, pady=5)
         number_of_refugees_actual = 0
         with open('refugee_info.csv', 'r') as file:
             csv_reader = csv.reader(file)
             next(csv_reader)
             for row in csv_reader:
-                if self.camp_id_listbox == row[1]:
+                if self.camp_ids == row[1]:
                     number_of_refugees_actual = number_of_refugees_actual + 1
                 else:
                     pass
-        tk.Label(self.window, text = f"Camp currently has {number_of_refugees_actual} registered refugees.").grid(row=5, column=0)
-        no_refugees_entry = tk.Entry(self.window)
-        no_refugees_entry.grid(row=4, column=1)
+        tk.Label(resource_frame, text = number_of_refugees_actual).grid(row=2, column=1, padx=5, pady=5)
 
-        tk.Label(self.window, text="Number of Weeks of Aid:").grid(row=1, column=0)
-        no_weeks_aid_entry = tk.Entry(self.window)
-        no_weeks_aid_entry.grid(row=1, column=1)
+        tk.Label(resource_frame, text= 'Number of refugees to add:').grid(row=3, column=0, padx=5, pady=5)
+        no_refugees_entry = tk.Entry(resource_frame)
+        no_refugees_entry.grid(row=3, column=1)
 
-        tk.Label(self.window, text="Total Food Supplied to Camp:").grid(row=2, column=0)
-        total_food_supplied_entry = tk.Entry(self.window)
-        total_food_supplied_entry.grid(row=2, column=1)
+        tk.Label(resource_frame, text="Number of Weeks of Aid:").grid(row=4, column=0, padx=5, pady=5)
+        no_weeks_aid_entry = tk.Entry(resource_frame)
+        no_weeks_aid_entry.grid(row=4, column=1, padx=5, pady=5)
 
-        tk.Label(self.window, text="Total Medicine Supplied to Camp:").grid(row=3, column=0)
-        total_medicine_supplied_entry = tk.Entry(self.window)
-        total_medicine_supplied_entry.grid(row=3, column=1)
+        tk.Label(resource_frame, text="Total Food Supplied to Camp:").grid(row=5, column=0, padx=5, pady=5)
+        total_food_supplied_entry = tk.Entry(resource_frame)
+        total_food_supplied_entry.grid(row=5, column=1, padx=5, pady=5)
+
+        tk.Label(resource_frame, text="Total Medicine Supplied to Camp:").grid(row=6, column=0, padx=5, pady=5)
+        total_medicine_supplied_entry = tk.Entry(resource_frame)
+        total_medicine_supplied_entry.grid(row=6, column=1, padx=5, pady=5)
 
         food_amount_refugee = [7, 14, 21, 28]
         #gf.food_amount_refugee_listbox, gf.food_amount_refugee_scrollbar = create_listbox_with_label(self.window, "Number of Weekly Meals Provided per Refugee: ", 5, 0, food_amount_refugee)
-        self.food_amount_refugee_listbox, self.food_amount_refugee_scrollbar = create_listbox_with_label(self.window,"Number of Weekly Meals Provided per Refugee: ",6, 0,food_amount_refugee)
+        self.food_amount_refugee_listbox, self.food_amount_refugee_scrollbar = create_listbox_with_label(resource_frame,"Number of Weekly Meals Provided per Refugee: ",7, 0,food_amount_refugee)
         medicine_amount_refugee = [1, 2, 3, 4, 5, 6, 7]
-        medicine_amount_refugee_listbox, medicine_amount_refugee_scrollbar = create_listbox_with_label(self.window, "Number of Health Supplies Provided per Refugee Weekly: ", 7, 0, medicine_amount_refugee)
+        medicine_amount_refugee_listbox, medicine_amount_refugee_scrollbar = create_listbox_with_label(resource_frame, "Number of Health Supplies Provided per Refugee Weekly: ", 8, 0, medicine_amount_refugee)
 
         estimated_delivery_time_options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
         #estimated_delivery_time_listbox, estimated_delivery_time_scrollbar = create_listbox_with_label(self.window,"Estimated Resource Delivery Time (weeks): ",7, 0, estimated_delivery_time_options)
 
-        self.estimated_delivery_time_listbox, self.estimated_delivery_time_scrollbar = create_listbox_with_label(self.window, "Estimated Resource Delivery Time (days): ", 8, 0, estimated_delivery_time_options)
+        self.estimated_delivery_time_listbox, self.estimated_delivery_time_scrollbar = create_listbox_with_label(resource_frame, "Estimated Resource Delivery Time (days): ", 9, 0, estimated_delivery_time_options)
 
-        submit_button = ttk.Button(self.window, text="Submit", command=lambda: self.resource_allocation(self.camp_id_listbox,no_refugees_entry, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry,  self.food_amount_refugee_listbox, medicine_amount_refugee_listbox, self.estimated_delivery_time_listbox, self.camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options))
+        submit_button = ttk.Button(resource_frame, text="Submit", command=lambda: self.resource_allocation(self.camp_id_listbox,no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry,  self.food_amount_refugee_listbox, medicine_amount_refugee_listbox, self.estimated_delivery_time_listbox, self.camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options))
 
-        submit_button.grid(row=9, column=0, columnspan=2)
+        submit_button.grid(row=10, column=0, columnspan=2, padx=10, pady=10)
 
         # Back button
         back_button = tk.Button(self.window, text='Back to Home', command=self.back_button_to_admin_main)
-        back_button.grid(row=17, column=1, padx=5, pady=10)
+        back_button.grid(row=11, column=0, padx=5, pady=10)
 
     def turn_data_into_valid_form(self, camp_id_listbox, no_refugees_entry, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry,  food_amount_refugee_listbox, medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options):
             '''
@@ -323,13 +331,13 @@ def create_listbox_with_label(widget, text_label, row_num, column_num, list_of_o
     :return: listbox and scrollbar widgets
     '''
     label = tk.Label(widget, text=text_label)
-    label.grid(row=row_num, column=column_num)
+    label.grid(row=row_num, column=column_num, padx=5, pady=5)
 
     scrollbar = tk.Scrollbar(widget)
-    scrollbar.grid(row=row_num, column=column_num+2, sticky='ns')
+    scrollbar.grid(row=row_num, column=column_num+2, sticky='ns', padx=5, pady=5)
 
     listbox = tk.Listbox(widget, yscrollcommand=scrollbar.set, height=1, exportselection=0)
-    listbox.grid(row=row_num, column=column_num+1)
+    listbox.grid(row=row_num, column=column_num+1, padx=5, pady=5)
     listbox.bind('<<ListboxSelect>>', lambda event: gf.get_selected_listbox_value(event, listbox, list_of_options))
 
     scrollbar.config(command=listbox.yview)
