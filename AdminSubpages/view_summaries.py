@@ -52,9 +52,8 @@ class AdminViewSummaries:
         # columns with floating-point numbers
         float_columns = data.select_dtypes(include=['float']).columns
 
-        # Convert float to integer
+        # Convert floats to integers
         for col in float_columns:
-            # Replace NaN values with 0 and convert to integer
             data[col] = data[col].fillna(0).astype(int)
 
 
@@ -127,31 +126,34 @@ class AdminViewSummaries:
 
 
     def save_plan(self, edit_plan_window, selected_item):
-        updated_values = [entry.get() for entry in self.entry_widgets.values()]
-        data = pd.read_csv("crisis_events.csv")
+        try:
+            updated_values = [entry.get() for entry in self.entry_widgets.values()]
+            data = pd.read_csv("crisis_events.csv")
 
-        selected_id = int(self.end_plan_tree.item(selected_item, 'values')[0])
+            selected_id = int(self.end_plan_tree.item(selected_item, 'values')[0])
 
-        if selected_id in data[data.columns[0]].values:
-            row_index = data[data[data.columns[0]] == selected_id].index[0]
+            if selected_id in data[data.columns[0]].values:
+                row_index = data[data[data.columns[0]] == selected_id].index[0]
 
-            # Iterate over each column and convert updated values to the correct type
-            for i, col_name in enumerate(data.columns):
-                col_type = data[col_name].dtype
+                # Iterate over each column and convert updated values to the correct type
+                for i, col_name in enumerate(data.columns):
+                    col_type = data[col_name].dtype
 
-                # Convert the value to the column's type
-                if pd.api.types.is_numeric_dtype(col_type):
-                    if updated_values[i] != '':
-                        updated_values[i] = col_type.type(updated_values[i])
-                    else:
-                        updated_values[i] = pd.NA  # or appropriate default value like 0
+                    # Convert the value to the column's type
+                    if pd.api.types.is_numeric_dtype(col_type):
+                        if updated_values[i] != '':
+                            updated_values[i] = col_type.type(updated_values[i])
+                        else:
+                            updated_values[i] = pd.NA
 
-            data.loc[row_index] = updated_values
-            data.to_csv("crisis_events.csv", index=False)
-            self.end_plan_tree.item(selected_item, values=updated_values)
+                data.loc[row_index] = updated_values
+                data.to_csv("crisis_events.csv", index=False)
+                self.end_plan_tree.item(selected_item, values=updated_values)
 
-        edit_plan_window.destroy()
-        # CSV data
-        csv_file = "crisis_events.csv"
-        # csv_data = self.load_csv_data(csv_file)
-        self.upload_csv_data(self.end_plan_tree, csv_file)
+            edit_plan_window.destroy()
+            # CSV data
+            csv_file = "crisis_events.csv"
+            # csv_data = self.load_csv_data(csv_file)
+            self.upload_csv_data(self.end_plan_tree, csv_file)
+        except:
+            messagebox.showinfo("Data Types", "Please select valid data types to save your edit")
