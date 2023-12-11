@@ -35,35 +35,30 @@ class VolunteerHomepage():
         self.window.config(menu=menu_bar)
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="File", menu=file_menu)
+        file_menu.add_command(label="New Refugee", command=self.do_nothing)
+        file_menu.add_separator()
+        file_menu.add_command(label="Settings", command=self.do_nothing)
+        file_menu.add_separator()
         file_menu.add_command(label="Log Out", command=self.exit_and_go_back)
-
-        self.t_summary_title = tk.Label(self.window, text='Welcome to the volunteer portal', font=('Arial Bold', 40), bg='grey', fg='white')
-        self.t_summary_title.grid(row=0, column=0, columnspan=2, sticky='news', padx=10, pady=20)
-        self.t_summary_title.configure(background='grey')
-
-        self.t_summary_editdetails = tk.Button(self.window, text='Personal information', command=self.t_personal_information_base)
-        self.t_summary_editdetails.grid(row=1, column=0, pady=(50,10), ipadx= 98, ipady= 25)
-
-        self.t_summary_editcamp = tk.Button(self.window, text='Edit camp information', command=self.t_edit_camp)
-        self.t_summary_editcamp.grid(row=2, column=0, pady=10, ipadx= 98, ipady= 25)
-
-        self.t_summary_refugee = tk.Button(self.window, text='Create a refugee profile', command=self.t_create_refugee)
-        self.t_summary_refugee.grid(row=3, column=0, pady=10, ipadx=90, ipady= 25)
-
-        self.t_summary_resources = tk.Button(self.window, text='Display resources available', command=self.t_display_resources)
-        self.t_summary_resources.grid(row=4, column=0, pady=10, ipadx=85, ipady= 25)
-
-        for i in range(5):
-            self.window.grid_rowconfigure(i, weight=1)
-        self.window.grid_columnconfigure(0, weight=1)
+        file_menu.add_separator()
+        file_menu.add_command(label="Exit", command=self.exit_software)
+        # create a menu item 2
+        file_menu = tk.Menu(menu_bar, tearoff=0)
+        menu_bar.add_cascade(label="Edit", menu=file_menu)
+        file_menu.add_command(label="Edit Camp", command=self.do_nothing)
+        file_menu.add_separator()
+        file_menu.add_command(label="Resources", command=self.do_nothing)
+        # create a menu item 3
+        file_menu = tk.Menu(menu_bar, tearoff=0)
+        menu_bar.add_cascade(label="View", menu=file_menu)
+        file_menu.add_command(label="View Refugees", command=self.do_nothing)
+        file_menu.add_separator()
+        file_menu.add_command(label="View Resources", command=self.do_nothing)
 
 
         try:
             self.y_personal_info = pd.read_csv('volunteer_info.csv', index_col='Username')
             self.y_personal_info = self.y_personal_info.to_dict(orient='index')
-
-
-
         except(FileNotFoundError):
             self.y_personal_info = {
                 'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
@@ -81,13 +76,10 @@ class VolunteerHomepage():
             df.to_csv('volunteer_info.csv', index='Username')
             self.y_personal_info = pd.read_csv('volunteer_info.csv')
 
-
         try:
             # Update self.t_create_refugee dictionary
             self.refugee_info = pd.read_csv('refugee_info.csv', index_col='Name')
             self.refugee_info = self.refugee_info.to_dict(orient='index')
-
-
         except FileNotFoundError:
             self.refugee_info = {
                 'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
@@ -107,6 +99,35 @@ class VolunteerHomepage():
             'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
                          'Second Language': ''}
         }
+
+        self.create_gui_volunteer_main()
+    def create_gui_volunteer_main(self):
+        self.t_summary_title = tk.Label(self.window, text='Welcome to the volunteer portal', font=('Arial Bold', 40),
+                                        bg='grey', fg='white')
+        self.t_summary_title.grid(row=0, column=0, columnspan=2, sticky='news', padx=10, pady=20)
+        self.t_summary_title.configure(background='grey')
+
+        self.t_summary_editdetails = tk.Button(self.window, text='Personal information',
+                                               command=self.t_personal_information_base)
+        self.t_summary_editdetails.grid(row=1, column=0, pady=(50, 10), ipadx=98, ipady=25)
+
+        self.t_summary_editcamp = tk.Button(self.window, text='Edit camp information', command=self.t_edit_camp)
+        self.t_summary_editcamp.grid(row=2, column=0, pady=10, ipadx=98, ipady=25)
+
+        self.t_summary_refugee = tk.Button(self.window, text='Create a refugee profile', command=self.t_create_refugee)
+        self.t_summary_refugee.grid(row=3, column=0, pady=10, ipadx=90, ipady=25)
+
+        self.t_summary_resources = tk.Button(self.window, text='Display resources available',
+                                             command=self.t_display_resources)
+        self.t_summary_resources.grid(row=4, column=0, pady=10, ipadx=85, ipady=25)
+
+        for i in range(5):
+            self.window.grid_rowconfigure(i, weight=1)
+        self.window.grid_columnconfigure(0, weight=1)
+
+
+
+
 
     # SUBPAGES WITHIN VOLUNTEER HOMEPAGE - PYTHON PACKAGE VOLUNTEER SUBPAGES:
 
@@ -148,14 +169,10 @@ class VolunteerHomepage():
         for widget in self.window.winfo_children():
             widget.grid_forget()
         # Repopulate main page
-        self.t_summary_title.grid(row=0, column=0, columnspan=2, sticky='news', padx=10, pady=20)
-        self.t_summary_editdetails.grid(row=1, column=0, pady=(50,10), ipadx= 98, ipady= 25)
-        self.t_summary_editcamp.grid(row=2, column=0, pady=10, ipadx= 98, ipady= 25)
-        self.t_summary_refugee.grid(row=3, column=0, pady=10, ipadx=90, ipady= 25)
-        self.t_summary_resources.grid(row=4, column=0, pady=10, ipadx=85, ipady= 25)
-        for i in range(5):
-            self.window.grid_rowconfigure(i, weight=1)
-        self.window.grid_columnconfigure(0, weight=1)
+        self.create_gui_volunteer_main()
+
+    def do_nothing(self):
+        pass
 
     def exit_and_go_back(self):
         self.window.destroy()
@@ -164,3 +181,15 @@ class VolunteerHomepage():
     def destroy(self):
         self.window.destroy()
 
+    def exit_software(self):
+        self.root.quit()
+
+    def toggle_fullscreen(self, event=None):
+        self.window.attributes('-fullscreen', not self.window.attributes('-fullscreen'))
+
+    def end_fullscreen(self, event=None):
+        self.window.attributes('-fullscreen', False)
+        self.window.geometry("1300x600")
+
+    def window_exit_button(self):
+        self.root.destroy()
