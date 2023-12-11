@@ -21,7 +21,7 @@ class AdminEndEvent:
         end_plan_frame.grid_rowconfigure(3, weight=1)
 
         # Labels
-        end_plan_title = tk.Label(end_plan_frame, text="Admin End Plan", font=('Helvetica', 16))
+        end_plan_title = tk.Label(end_plan_frame, text="End Plan", font=('Helvetica', 16))
         end_plan_title.grid(row=0, column=0, columnspan=2, rowspan=2, sticky="nsew", pady=5, padx=5)
 
         end_plan_tree = ttk.Treeview(end_plan_frame)
