@@ -112,11 +112,13 @@ class AdminEditVolunteerDetails:
             selected_value = listbox.get(selected_indices[0])
             print(f"Selected value: {selected_value}")
             return selected_value
-        else:
+        elif list:
             default_value = list[0]
             print("No selection made. Using the default value.")
             return default_value
-
+        else:
+            print("The list is empty. No default value can be used.")
+            return None
     def create_account_gui(self):
         self.read_crisis_events_csv()
         # Create a new window for creating a new account
@@ -261,7 +263,7 @@ class AdminEditVolunteerDetails:
                                 self.edit_details_window,
                                 "Volunteer Camp Assignation:", 1, 0,
                                 self.camp_ids)
-                            camp_id = self.get_selected_listbox_value(None, self.camp_id_listbox, self.camp_ids)
+                            self.camp_id = self.get_selected_listbox_value(None, self.camp_id_listbox, self.camp_ids)
 
                             # Button to confirm and create the account
                             confirm_button = tk.Button(self.edit_details_window, text="Save Changes",
@@ -269,8 +271,7 @@ class AdminEditVolunteerDetails:
                                                            old_username=username_to_edit,
                                                            updated_details={
                                                                'Username': username_entry.get(),
-                                                               'Camp ID': self.camp_id_listbox.get(
-                                                                   self.camp_id_listbox.curselection()),
+                                                               'Camp ID': self.camp_id,
                                                                'Password': password_entry.get(),
                                                                'Name': name_entry.get(),
                                                                'Email Address': email_entry.get(),
