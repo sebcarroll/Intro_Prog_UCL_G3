@@ -106,47 +106,47 @@ class RefugeeDisplay:
             messagebox.showinfo("No selection", "Please select a refugee profile to view")
             return
 
-        plan_details = self.display_refugee_tree.item(selected_item, 'values')
+        refugee_details = self.display_refugee_tree.item(selected_item, 'values')
 
         # Attributes from the treeview
         column_attributes = self.display_refugee_tree['columns']
         treeview_width = len(column_attributes)
 
         # Open pop up edit window
-        view_plan_window = tk.Toplevel(self.window)
-        view_plan_window.title("Edit Plan")
+        refugee_profile_window = tk.Toplevel(self.window)
+        refugee_profile_window.title("View Refugee Details")
 
         # Create a label and entry for each plan attribute using column attributes
         for i in range(treeview_width):
             att = column_attributes[i]
-            value = plan_details[i]
+            value = refugee_details[i]
 
-            label = tk.Label(view_plan_window, text=f"{att}:")
+            label = tk.Label(refugee_profile_window, text=f"{att}:")
             label.grid(row=i, column=0)
 
-            current_camp_info = tk.Label(view_plan_window, textvariable=tk.StringVar(view_plan_window, value=value))
+            current_camp_info = tk.Label(refugee_profile_window, textvariable=tk.StringVar(refugee_profile_window, value=value))
             current_camp_info.grid(row=i, column=1)
 
         # Close button
-        save_button = tk.Button(view_plan_window, text="Close",command=lambda: self.cancel_btn(view_plan_window, selected_item))
-        save_button.grid(row=len(plan_details) + 1, column=1)
+        save_button = tk.Button(refugee_profile_window, text="Close",command=lambda: self.cancel_btn(refugee_profile_window, selected_item))
+        save_button.grid(row=len(refugee_details) + 1, column=1)
 
 
     def edit_csv_data_entry(self):
         selected_item = self.display_refugee_tree.focus()
         if not selected_item:
-            messagebox.showinfo("No selection", "Please select a plan to edit")
+            messagebox.showinfo("No selection", "Please select a refugee profile to edit")
             return
 
-        plan_details = self.display_refugee_tree.item(selected_item, 'values')
+        refugee_details = self.display_refugee_tree.item(selected_item, 'values')
 
         # Attributes from the treeview
         column_attributes = self.display_refugee_tree['columns']
         treeview_width = len(column_attributes)
 
         # Open pop up edit window
-        edit_plan_window = tk.Toplevel(self.window)
-        edit_plan_window.title("Edit Plan")
+        refugee_profile_window = tk.Toplevel(self.window)
+        refugee_profile_window.title("Edit Refugee Details")
 
         # Create empty dictionary to store new edited info with key as attribute, value as new edited entry
         self.edited_entry_dictionary = {}
@@ -155,25 +155,25 @@ class RefugeeDisplay:
         for i in range(treeview_width):
 
             att = column_attributes[i]
-            value = plan_details[i]
+            value = refugee_details[i]
 
-            label = tk.Label(edit_plan_window, text=f"{att}:")
+            label = tk.Label(refugee_profile_window, text=f"{att}:")
             label.grid(row=i, column=0)
 
-            edit_entry = tk.Entry(edit_plan_window, textvariable=tk.StringVar(edit_plan_window, value=value))
+            edit_entry = tk.Entry(refugee_profile_window, textvariable=tk.StringVar(refugee_profile_window, value=value))
             edit_entry.grid(row=i, column=1)
             self.edited_entry_dictionary[att] = edit_entry
 
         # Save button
-        save_button = tk.Button(edit_plan_window, text="Save", command=lambda: self.save_plan(edit_plan_window, selected_item))
-        save_button.grid(row=len(plan_details), column=1)
+        save_button = tk.Button(refugee_profile_window, text="Save", command=lambda: self.save_details(refugee_profile_window, selected_item))
+        save_button.grid(row=len(refugee_details), column=1)
 
         # Cancel button
-        save_button = tk.Button(edit_plan_window, text="Cancel", command=lambda: self.cancel_btn(edit_plan_window, selected_item))
-        save_button.grid(row=len(plan_details)+1, column=1)
+        cancel_button = tk.Button(refugee_profile_window, text="Cancel", command=lambda: self.cancel_btn(refugee_profile_window, selected_item))
+        cancel_button.grid(row=len(refugee_details)+1, column=1)
 
 
-    def save_plan(self, edit_plan_window, selected_item):
+    def save_details(self, edit_plan_window, selected_item):
 
         try:
             # list comprehension for new edited values
