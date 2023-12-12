@@ -4,12 +4,12 @@ import pandas as pd
 from tkinter import messagebox
 
 
-class AdminViewSummaries:
-    def __init__(self, window, back_button_to_admin_main):
+class RefugeeDisplay:
+    def __init__(self, window, back_button_to_volunteer_main):
         self.window = window
-        self.back_button_to_admin_main = back_button_to_admin_main
+        self.back_button_to_volunteer_main = back_button_to_volunteer_main
 
-    def create_gui_view_summaries(self, window):
+    def create_gui_refugee_display(self, window):
         # Main frame for this whole page
         for i in self.window.winfo_children():
             i.grid_forget()
@@ -48,7 +48,7 @@ class AdminViewSummaries:
         delete_btn.grid(row=0, column=2, padx=20, pady=(50,10))
 
         # Back button
-        back_button = tk.Button(btn_frame, text='Back to Home', command=self.back_button_to_admin_main)
+        back_button = tk.Button(btn_frame, text='Back to Home', command=self.back_button_to_volunteer_main)
         back_button.grid(row=2, column=1, padx=5, pady=40)
 
 

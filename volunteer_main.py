@@ -9,6 +9,7 @@ from VolunteerSubpages.edit_personal_information import edit_personal_info, stor
 from VolunteerSubpages.edit_camp_details import edit_camp_details
 from VolunteerSubpages.new_refugee import new_refugee, na_refugee_info_dict
 from VolunteerSubpages.resource_display import resource_display
+from VolunteerSubpages.refugee_display import RefugeeDisplay
 
 class invalid_email(Exception):
     pass
@@ -30,6 +31,8 @@ class VolunteerHomepage():
         self.window = tk.Toplevel(self.root)
         self.window.title('Volunteer Homepage')
         self.window.geometry('1300x600')
+
+        self.refugee_display_instance = RefugeeDisplay(self.window, self.back_button_to_volunteer_main)
 
         menu_bar = tk.Menu(self.window)
         self.window.config(menu=menu_bar)
@@ -121,6 +124,10 @@ class VolunteerHomepage():
                                              command=self.t_display_resources)
         self.t_summary_resources.grid(row=4, column=0, pady=10, ipadx=85, ipady=25)
 
+        self.summary_refugees = tk.Button(self.window, text='Display Refugees',
+                                             command=self.display_refugees)
+        self.summary_refugees.grid(row=5, column=0, pady=(10,50), ipadx=85, ipady=25)
+
         for i in range(5):
             self.window.grid_rowconfigure(i, weight=1)
         self.window.grid_columnconfigure(0, weight=1)
@@ -159,6 +166,11 @@ class VolunteerHomepage():
     # Display Resources (resource_display.py)
     def t_display_resources(self):
         resource_display(self.window, self.back_button_to_volunteer_main)
+
+
+    def display_refugees(self):
+        # Open the resource allocation GUI
+        self.refugee_display_instance.create_gui_refugee_display(self)
 
 
 

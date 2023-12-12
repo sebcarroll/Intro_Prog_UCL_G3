@@ -43,29 +43,29 @@ class AdminEndEvent:
 
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename)
-        selected_attributes = ['Camp ID', 'Crisis Type', 'Description', 'Country', 'Day', 'Month', 'Year', 'Status', 'End Date']
+        selected_attributes = ['Camp ID', 'Crisis Type', 'Description', 'Country', 'Day', 'Month', 'Year', 'Status', 'End Date', 'Current Number of Refugees']
         data = data[selected_attributes]
         # Only want to see 'Active' plans:
         data = data[data['Status'] != 'Inactive']
 
         tree.delete(*tree.get_children())
-        tree['columns'] = selected_attributes[0:7]
+        tree['columns'] = selected_attributes[0:7] + ['Current Number of Refugees']
         tree.column("#0", width=0, stretch=tk.NO)
         tree.heading("#0", text="", anchor=tk.W)
 
         # set size of column for date
-        tree.column("Day", width=2, anchor=tk.CENTER)
-        tree.column("Month", width=3, anchor=tk.CENTER)
+        tree.column("Day", width=1, anchor=tk.CENTER)
+        tree.column("Month", width=2, anchor=tk.CENTER)
         tree.column("Year", width=2, anchor=tk.CENTER)
 
-        for col in selected_attributes[0:7]:
+        for col in selected_attributes[0:7] + ['Current Number of Refugees']:
             if col != "Day" and col != "Month" and col != "Year": # added condition based on date attributes
                 tree.column(col, anchor=tk.CENTER, width=80)
             tree.heading(col, text=col, anchor=tk.CENTER)
 
         for index, row in data.iterrows():
             #row_vals = row[selected_attributes[0:7]]
-            tree.insert("", tk.END, values=list(row[selected_attributes[0:7]]), iid=str(index))
+            tree.insert("", tk.END, values=list(row[selected_attributes[0:7] + ['Current Number of Refugees']]), iid=str(index))
 
 
     def deactivate_csv_data_entry(self, tree, filename):
