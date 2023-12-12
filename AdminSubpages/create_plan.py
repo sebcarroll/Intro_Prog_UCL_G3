@@ -136,7 +136,7 @@ class AdminCreatePlan:
         self.crisis_type_combobox = ttk.Combobox(new_plan_frame, values=crisis_type)
         self.crisis_type_combobox.grid(row=7, column=4, padx=5)
 
-        description_label = tk.Label(new_plan_frame, text='Description', font=('TkinterDefault', 15))
+        description_label = tk.Label(new_plan_frame, text='Description (max 100 characters)', font=('TkinterDefault', 15))
         description_label.grid(row=11, column=3, padx=5)
         self.description_label_Entry = tk.Entry(new_plan_frame)
         self.description_label_Entry.grid(row=11, column=4, padx=5)
