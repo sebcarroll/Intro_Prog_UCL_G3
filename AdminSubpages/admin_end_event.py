@@ -22,10 +22,10 @@ class AdminEndEvent:
 
         # Labels
         end_plan_title = tk.Label(end_plan_frame, text="End Plan", font=('Helvetica', 16))
-        end_plan_title.grid(row=0, column=0, columnspan=2, rowspan=2, sticky="nsew", pady=5, padx=5)
+        end_plan_title.grid(row=0, column=0, columnspan=2, rowspan=2, sticky="nsew", pady=10, padx=5)
 
         self.end_plan_tree = ttk.Treeview(end_plan_frame)
-        self.end_plan_tree.grid(row=3, column=0, sticky="nsew", padx=10, pady=5)
+        self.end_plan_tree.grid(row=3, column=0, sticky="nsew", padx=40, pady=5)
 
         # CSV data
         csv_file = "crisis_events.csv"
@@ -59,7 +59,7 @@ class AdminEndEvent:
         tree.column("Year", width=2, anchor=tk.CENTER)
 
         for col in selected_attributes[0:7]:
-            if col != "Day" and col != "Month" and col != "Year": #added condition based on attribute
+            if col != "Day" and col != "Month" and col != "Year": # added condition based on date attributes
                 tree.column(col, anchor=tk.CENTER, width=80)
             tree.heading(col, text=col, anchor=tk.CENTER)
 
@@ -73,7 +73,10 @@ class AdminEndEvent:
         if not selected_item:
             messagebox.showinfo("No selection", "Please select to end a plan")
             return
-        if messagebox.askokcancel("End plan?", "Are you sure you want to deactivate this plan?\nYour plan will be shown as 'Inactive'"):
+        if messagebox.askokcancel("End plan?", "Are you sure you want to deactivate this plan?"
+                                               "\n\nAccess to this plan will be restricted to 'View Summaries'"
+                                               "\nYour plan will have a status of 'Inactive'"
+                                  ):
             selected_item = tree.selection()
             if selected_item:
                 # Get index of the selected row
@@ -84,17 +87,17 @@ class AdminEndEvent:
                 current_datetime = dt.datetime.now()
                 formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
 
-                # Load current CSV data, remove selected row, and save back to CSV
+                # Load current csv data, remove selected row, then save back to csv as an inactive plan
                 if index < len(data):
                     data.at[index, 'Status'] = 'Inactive'  # update status to Inactive
-                    data.at[index, 'End Date'] = formatted_datetime  # update status to datetime now
+                    data.at[index, 'End Date'] = formatted_datetime  # update end date attribute to datetime now
 
-                    # Save the updated data back to the CSV file
+                    # Save updated data back to the csv file
                     data.to_csv(filename, index=False)
 
-                    # Remove the selected row from the Treeview
+                    # Remove selected row from treeview
                     tree.delete(selected_item)
 
-                # Refresh the Treeview display
+                # Refresh treeview
                 #self.upload_csv_data(tree, filename)
 

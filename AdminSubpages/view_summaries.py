@@ -49,13 +49,12 @@ class AdminViewSummaries:
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename)
 
-        # columns with floating-point numbers
+        # The following block will convert floats to integers for the GUI to remove the ".0"
+        # columns with float numbers
         float_columns = data.select_dtypes(include=['float']).columns
-
-        # Convert floats to integers
+        # Convert floats to integers for display in treeview
         for col in float_columns:
             data[col] = data[col].fillna(0).astype(int)
-
 
         tree.delete(*tree.get_children())
         tree['columns'] = list(data.columns)
@@ -78,15 +77,15 @@ class AdminViewSummaries:
         if messagebox.askokcancel("Delete Entry?", "Are you sure you want to delete this plan?\nYou will not be able to recover this plan"):
             selected_item = tree.selection()
             if selected_item:
-                # Get index of the selected row
+                # Get the row index of the selected row
                 index = int(selected_item[0])
 
-                # Load current CSV data, remove selected row, and save back to CSV
+                # Load current CSV data, delete the entry, save the deletion to the csv file
                 data = pd.read_csv(filename)
                 data = data.drop(index)
                 data.to_csv(filename, index=False)
 
-                # Refresh the Treeview display
+                # Refresh treeview to reflect change
                 self.upload_csv_data(tree, filename)
 
     def edit_csv_data_entry(self):
@@ -95,39 +94,53 @@ class AdminViewSummaries:
             messagebox.showinfo("No selection", "Please select a plan to edit")
             return
 
-        plan_details = self.end_plan_tree.item(selected_item, 'values')
+        selected_row = self.end_plan_tree.selection()
+        if selected_row:
+            row_content = self.end_plan_tree.item(selected_row[0], 'values')
+            if row_content and row_content[7] == 'Inactive':
+                messagebox.showwarning("Past Event", "You selected a deactivated plan\n\nYou cannot edit an inactive plan")
+            else:
+                plan_details = self.end_plan_tree.item(selected_item, 'values')
 
-        # Attributes from the treeview
-        column_headers = self.end_plan_tree['columns']
-        treeview_width = len(column_headers)
+                # Attributes from the treeview
+                column_attributes = self.end_plan_tree['columns']
+                treeview_width = len(column_attributes)
 
-        # Open pop up edit window
-        edit_plan_window = tk.Toplevel(self.window)
-        edit_plan_window.title("Edit Plan")
+                # Open pop up edit window
+                edit_plan_window = tk.Toplevel(self.window)
+                edit_plan_window.title("Edit Plan")
 
-        # Store entry widgets to retrieve their contents later
-        self.entry_widgets = {}
+                # Create empty dictionary to store new edited info with key as attribute, value as new edited entry
+                self.edited_entry_dictionary = {}
 
-        # Create a label and entry for each plan attribute using column headers
-        for i in range(treeview_width):
-            header = column_headers[i]
-            value = plan_details[i]
+                # Create a label and entry for each plan attribute using column attributes
+                for i in range(treeview_width):
 
-            label = tk.Label(edit_plan_window, text=f"{header}:")
-            label.grid(row=i, column=0)
+                    att = column_attributes[i]
+                    value = plan_details[i]
 
-            entry = tk.Entry(edit_plan_window, textvariable=tk.StringVar(edit_plan_window, value=value))
-            entry.grid(row=i, column=1)
-            self.entry_widgets[header] = entry
+                    label = tk.Label(edit_plan_window, text=f"{att}:")
+                    label.grid(row=i, column=0)
 
-        # Save button
-        save_button = tk.Button(edit_plan_window, text="Save", command=lambda: self.save_plan(edit_plan_window, selected_item))
-        save_button.grid(row=len(plan_details), column=1)
+                    edit_entry = tk.Entry(edit_plan_window, textvariable=tk.StringVar(edit_plan_window, value=value))
+                    edit_entry.grid(row=i, column=1)
+                    self.edited_entry_dictionary[att] = edit_entry
+
+                # Save button
+                save_button = tk.Button(edit_plan_window, text="Save", command=lambda: self.save_plan(edit_plan_window, selected_item))
+                save_button.grid(row=len(plan_details), column=1)
+
+                # Cancel button
+                save_button = tk.Button(edit_plan_window, text="Cancel", command=lambda: self.cancel_btn(edit_plan_window, selected_item))
+                save_button.grid(row=len(plan_details)+1, column=1)
 
 
     def save_plan(self, edit_plan_window, selected_item):
+
         try:
-            updated_values = [entry.get() for entry in self.entry_widgets.values()]
+            # list comprehension for new edited values
+            updated_values = [entry.get() for entry in self.edited_entry_dictionary.values()]
+
             data = pd.read_csv("crisis_events.csv")
 
             selected_id = int(self.end_plan_tree.item(selected_item, 'values')[0])
@@ -155,5 +168,10 @@ class AdminViewSummaries:
             csv_file = "crisis_events.csv"
             # csv_data = self.load_csv_data(csv_file)
             self.upload_csv_data(self.end_plan_tree, csv_file)
+
         except:
+
             messagebox.showinfo("Data Types", "Please select valid data types to save your edit")
+
+    def cancel_btn(self, edit_plan_window, selected_item):
+        edit_plan_window.destroy()
