@@ -33,13 +33,17 @@ class AdminViewSummaries:
         self.upload_csv_data(self.end_plan_tree, csv_file)
 
         # Buttons
+        # View event
+        edit_event_btn = tk.Button(self.window, text="View Event", command=lambda: self.view_csv_data_entry())
+        edit_event_btn.grid(row=4, column=0, padx=5, pady=10)
+
         # Edit event
         edit_event_btn = tk.Button(self.window, text="Edit Event", command=lambda: self.edit_csv_data_entry())
-        edit_event_btn.grid(row=4, column=0, padx=5, pady=10)
+        edit_event_btn.grid(row=5, column=0, padx=5, pady=10)
 
         # Delete button
         delete_btn = tk.Button(self.window, text="Delete Event", command=lambda: self.delete_csv_data_entry(self.end_plan_tree, csv_file))
-        delete_btn.grid(row=5, column=0, padx=5, pady=10)
+        delete_btn.grid(row=6, column=0, padx=5, pady=10)
 
         # Back button
         back_button = tk.Button(self.window, text='Back to Home', command=self.back_button_to_admin_main)
@@ -87,6 +91,38 @@ class AdminViewSummaries:
 
                 # Refresh treeview to reflect change
                 self.upload_csv_data(tree, filename)
+
+    def view_csv_data_entry(self):
+        selected_item = self.end_plan_tree.focus()
+        if not selected_item:
+            messagebox.showinfo("No selection", "Please select a plan to view")
+            return
+
+        plan_details = self.end_plan_tree.item(selected_item, 'values')
+
+        # Attributes from the treeview
+        column_attributes = self.end_plan_tree['columns']
+        treeview_width = len(column_attributes)
+
+        # Open pop up edit window
+        view_plan_window = tk.Toplevel(self.window)
+        view_plan_window.title("Edit Plan")
+
+        # Create a label and entry for each plan attribute using column attributes
+        for i in range(treeview_width):
+            att = column_attributes[i]
+            value = plan_details[i]
+
+            label = tk.Label(view_plan_window, text=f"{att}:")
+            label.grid(row=i, column=0)
+
+            current_camp_info = tk.Label(view_plan_window, textvariable=tk.StringVar(view_plan_window, value=value))
+            current_camp_info.grid(row=i, column=1)
+
+        # Close button
+        save_button = tk.Button(view_plan_window, text="Close",command=lambda: self.cancel_btn(view_plan_window, selected_item))
+        save_button.grid(row=len(plan_details) + 1, column=1)
+
 
     def edit_csv_data_entry(self):
         selected_item = self.end_plan_tree.focus()
