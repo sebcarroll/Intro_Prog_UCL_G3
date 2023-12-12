@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 import pandas as pd
-
+import csv
 
 def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main, store_details_callback):
     for i in window.winfo_children():
@@ -87,22 +87,22 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
         refugee_info = pd.read_csv('refugee_info.csv', index_col='Name')
 
 
-        camp_ID = t_camp_IDbox.get()
+        camp_ID = int(t_camp_IDbox.get())
         name = name_entry.get()
         family_members = family_labelbox.get()
         medical_conditions = t_medical_conditionsEntry.get()
         languages_spoken = t_languages_spokenEntry.get()
         second_language = t_second_languageEntry.get()
         refugee_info.loc[name,'Camp ID'] = camp_ID
+        camp_ID = int(camp_ID)
         refugee_info.loc[name,'Medical Conditions'] = medical_conditions
         refugee_info.loc[name, 'Languages Spoken'] = languages_spoken
         refugee_info.loc[name, 'Second Language'] = second_language
         refugee_info.loc[name, 'Family Members'] = family_members
 
-
         # new_refugee_info.index.name = 'Name'
         refugee_info.to_csv('refugee_info.csv')
-
+        update_number_of_refugees(camp_ID)
         tk.messagebox.showinfo(title='Details saved', message='Details have been saved')
 
     except FileNotFoundError:
@@ -115,3 +115,28 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
         refugee_info.set_index('Name', inplace=True)
         refugee_info.to_csv('refugee_info.csv')
 
+def update_number_of_refugees(camp_ID):
+    number_of_refugees_actual = 0
+    with open('refugee_info.csv', 'r') as file:
+        csv_reader = csv.reader(file)
+        next(csv_reader)
+        for row in csv_reader:
+            if camp_ID == int(float(row[1])):
+                number_of_refugees_actual += 1
+    print(f"Total refugees counted: {number_of_refugees_actual}")
+
+    header = []
+    data = []
+    with open('crisis_events.csv', 'r') as file:
+        csv_reader = csv.reader(file)
+        header = next(csv_reader)
+        data = list(csv_reader)
+
+    for row in data:
+        if int(float(row[0])) == int(camp_ID):
+            row[16] = str(number_of_refugees_actual)
+
+    with open('crisis_events.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(header)
+        writer.writerows(data)
