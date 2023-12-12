@@ -15,6 +15,10 @@ class invalid_date(Exception):
 class option_no_exist(Exception):
     pass
 
+class date_not_in_past(Exception):
+    pass
+
+
 class AdminCreatePlan:
     def __init__(self, window, back_button_to_admin_main):
         self.window = window
@@ -45,19 +49,19 @@ class AdminCreatePlan:
         #     calendar_window = tk.Toplevel()
         #     calendar_window.title("Calendar Humanitarian Crisis")
 
-        def is_valid_date(day, month, year):
-            try:
-                date_str = f"{day} {month} {year}"
-                selected_date = datetime.strptime(date_str, "%d %B %Y").date()
-                current_date = datetime.now().date()
-
-                if selected_date > current_date:
-                    raise ValueError("Selected date must be in the past.")
-                return True
-
-            except ValueError as e:
-                messagebox.showerror("Invalid Date", str(e))
-                return False
+        # def is_valid_date(day, month, year):
+        #     try:
+        #         date_str = f"{day} {month} {year}"
+        #         selected_date = datetime.strptime(date_str, "%d %B %Y").date()
+        #         current_date = datetime.now().date()
+        #
+        #         if selected_date > current_date:
+        #             raise ValueError("Selected date must be in the past.")
+        #         return True
+        #
+        #     except ValueError as e:
+        #         messagebox.showerror("Invalid Date", str(e))
+        #         return False
 
 
             #     else:
@@ -189,6 +193,12 @@ class AdminCreatePlan:
                 year = str(selected_year)
 
                 new_camp_id = self.generate_camp_id()
+                date_str = f"{selected_day} {selected_month} {selected_year}"
+                selected_date = datetime.strptime(date_str, "%d %B %Y").date()
+                current_date = datetime.now().date()
+                if selected_date > current_date:
+                    raise date_not_in_past
+            # return True
 
             else:
                 raise invalid_date
@@ -234,6 +244,8 @@ class AdminCreatePlan:
             tk.messagebox.showinfo(title="Option does not exist", message="Please make sure you've selected valid options")
         except (invalid_date, ValueError):
             tk.messagebox.showinfo(title="Invalid valid date", message="Please enter a valid date")
+        except(date_not_in_past):
+            tk.messagebox.showinfo(title='Date not in past', message='Please select a date in the past')
 
     def generate_camp_id(self):
         import random
