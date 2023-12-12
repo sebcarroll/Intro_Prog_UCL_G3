@@ -124,9 +124,9 @@ class VolunteerHomepage():
                                              command=self.t_display_resources)
         self.t_summary_resources.grid(row=4, column=0, pady=10, ipadx=85, ipady=25)
 
-        self.summary_refugees = tk.Button(self.window, text='Display Refugees',
+        self.summary_refugees = tk.Button(self.window, text='Display Refugees Created',
                                              command=self.display_refugees)
-        self.summary_refugees.grid(row=5, column=0, pady=(10,50), ipadx=85, ipady=25)
+        self.summary_refugees.grid(row=5, column=0, pady=(10, 50), ipadx=85, ipady=25)
 
         for i in range(5):
             self.window.grid_rowconfigure(i, weight=1)

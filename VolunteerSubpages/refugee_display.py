@@ -15,36 +15,36 @@ class RefugeeDisplay:
             i.grid_forget()
         self.window.grid_columnconfigure(0, weight=1)
         self.window.grid_rowconfigure(0, weight=1)
-        end_plan_frame = tk.Frame(self.window)
-        end_plan_frame.grid(sticky="nsew", padx=5, pady=5)
-        end_plan_frame.grid_columnconfigure(0, weight=1)
-        end_plan_frame.grid_rowconfigure(1, weight=3)
-        end_plan_frame.grid_rowconfigure(2, weight=1)
+        display_refugee_frame = tk.Frame(self.window)
+        display_refugee_frame.grid(sticky="nsew", padx=5, pady=5)
+        display_refugee_frame.grid_columnconfigure(0, weight=1)
+        display_refugee_frame.grid_rowconfigure(1, weight=3)
+        display_refugee_frame.grid_rowconfigure(2, weight=1)
 
         # Labels
-        end_plan_title = tk.Label(end_plan_frame, text="View Plan Summaries", font=('Helvetica', 16))
-        end_plan_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5)
+        display_refugee_title = tk.Label(display_refugee_frame, text="Display Refugees", font=('Helvetica', 16))
+        display_refugee_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5)
 
-        self.end_plan_tree = ttk.Treeview(end_plan_frame, height=20)
-        self.end_plan_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
+        self.display_refugee_tree = ttk.Treeview(display_refugee_frame, height=20)
+        self.display_refugee_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
 
         # Button Frame:
-        btn_frame = tk.Frame(end_plan_frame)
+        btn_frame = tk.Frame(display_refugee_frame)
         btn_frame.grid(row=2, column=0, pady=10)
         btn_frame.grid_columnconfigure(0, weight=1)
         btn_frame.grid_columnconfigure(2, weight=1)
 
         # Buttons
         # View event
-        edit_event_btn = tk.Button(btn_frame, text="View Event", command=lambda: self.view_csv_data_entry())
-        edit_event_btn.grid(row=0, column=0, padx=20, pady=(50,10))
+        view_btn = tk.Button(btn_frame, text="View Refugee Profile", command=lambda: self.view_csv_data_entry())
+        view_btn.grid(row=0, column=0, padx=20, pady=(50,10))
 
         # Edit event
-        edit_event_btn = tk.Button(btn_frame, text="Edit Event", command=lambda: self.edit_csv_data_entry())
-        edit_event_btn.grid(row=0, column=1, padx=20, pady=(50,10))
+        edit_btn = tk.Button(btn_frame, text="Edit Refugee Profile", command=lambda: self.edit_csv_data_entry())
+        edit_btn.grid(row=0, column=1, padx=20, pady=(50,10))
 
         # Delete button
-        delete_btn = tk.Button(btn_frame, text="Delete Event", command=lambda: self.delete_csv_data_entry(self.end_plan_tree, csv_file))
+        delete_btn = tk.Button(btn_frame, text="Delete Refugee Profile", command=lambda: self.delete_csv_data_entry(self.display_refugee_tree, csv_file))
         delete_btn.grid(row=0, column=2, padx=20, pady=(50,10))
 
         # Back button
@@ -54,9 +54,9 @@ class RefugeeDisplay:
 
 
         # CSV data
-        csv_file = "crisis_events.csv"
+        csv_file = "refugee_info.csv"
         # csv_data = self.load_csv_data(csv_file)
-        self.upload_csv_data(self.end_plan_tree, csv_file)
+        self.upload_csv_data(self.display_refugee_tree, csv_file)
 
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename)
@@ -82,11 +82,11 @@ class RefugeeDisplay:
 
 
     def delete_csv_data_entry(self, tree, filename):
-        selected_item = self.end_plan_tree.focus()
+        selected_item = self.display_refugee_tree.focus()
         if not selected_item:
-            messagebox.showinfo("No selection", "Please select a plan to delete")
+            messagebox.showinfo("No selection", "Please select a refugee profile to delete")
             return
-        if messagebox.askokcancel("Delete Entry?", "Are you sure you want to delete this plan?\nYou will not be able to recover this plan"):
+        if messagebox.askokcancel("Delete Refugee Profile?", "Are you sure you want to delete this refugee profile?\nYou will not be able to recover this refugee profile"):
             selected_item = tree.selection()
             if selected_item:
                 # Get the row index of the selected row
@@ -101,15 +101,15 @@ class RefugeeDisplay:
                 self.upload_csv_data(tree, filename)
 
     def view_csv_data_entry(self):
-        selected_item = self.end_plan_tree.focus()
+        selected_item = self.display_refugee_tree.focus()
         if not selected_item:
-            messagebox.showinfo("No selection", "Please select a plan to view")
+            messagebox.showinfo("No selection", "Please select a refugee profile to view")
             return
 
-        plan_details = self.end_plan_tree.item(selected_item, 'values')
+        plan_details = self.display_refugee_tree.item(selected_item, 'values')
 
         # Attributes from the treeview
-        column_attributes = self.end_plan_tree['columns']
+        column_attributes = self.display_refugee_tree['columns']
         treeview_width = len(column_attributes)
 
         # Open pop up edit window
@@ -133,50 +133,44 @@ class RefugeeDisplay:
 
 
     def edit_csv_data_entry(self):
-        selected_item = self.end_plan_tree.focus()
+        selected_item = self.display_refugee_tree.focus()
         if not selected_item:
             messagebox.showinfo("No selection", "Please select a plan to edit")
             return
 
-        selected_row = self.end_plan_tree.selection()
-        if selected_row:
-            row_content = self.end_plan_tree.item(selected_row[0], 'values')
-            if row_content and row_content[7] == 'Inactive':
-                messagebox.showwarning("Past Event", "You selected a deactivated plan\n\nYou cannot edit an inactive plan")
-            else:
-                plan_details = self.end_plan_tree.item(selected_item, 'values')
+        plan_details = self.display_refugee_tree.item(selected_item, 'values')
 
-                # Attributes from the treeview
-                column_attributes = self.end_plan_tree['columns']
-                treeview_width = len(column_attributes)
+        # Attributes from the treeview
+        column_attributes = self.display_refugee_tree['columns']
+        treeview_width = len(column_attributes)
 
-                # Open pop up edit window
-                edit_plan_window = tk.Toplevel(self.window)
-                edit_plan_window.title("Edit Plan")
+        # Open pop up edit window
+        edit_plan_window = tk.Toplevel(self.window)
+        edit_plan_window.title("Edit Plan")
 
-                # Create empty dictionary to store new edited info with key as attribute, value as new edited entry
-                self.edited_entry_dictionary = {}
+        # Create empty dictionary to store new edited info with key as attribute, value as new edited entry
+        self.edited_entry_dictionary = {}
 
-                # Create a label and entry for each plan attribute using column attributes
-                for i in range(treeview_width):
+        # Create a label and entry for each plan attribute using column attributes
+        for i in range(treeview_width):
 
-                    att = column_attributes[i]
-                    value = plan_details[i]
+            att = column_attributes[i]
+            value = plan_details[i]
 
-                    label = tk.Label(edit_plan_window, text=f"{att}:")
-                    label.grid(row=i, column=0)
+            label = tk.Label(edit_plan_window, text=f"{att}:")
+            label.grid(row=i, column=0)
 
-                    edit_entry = tk.Entry(edit_plan_window, textvariable=tk.StringVar(edit_plan_window, value=value))
-                    edit_entry.grid(row=i, column=1)
-                    self.edited_entry_dictionary[att] = edit_entry
+            edit_entry = tk.Entry(edit_plan_window, textvariable=tk.StringVar(edit_plan_window, value=value))
+            edit_entry.grid(row=i, column=1)
+            self.edited_entry_dictionary[att] = edit_entry
 
-                # Save button
-                save_button = tk.Button(edit_plan_window, text="Save", command=lambda: self.save_plan(edit_plan_window, selected_item))
-                save_button.grid(row=len(plan_details), column=1)
+        # Save button
+        save_button = tk.Button(edit_plan_window, text="Save", command=lambda: self.save_plan(edit_plan_window, selected_item))
+        save_button.grid(row=len(plan_details), column=1)
 
-                # Cancel button
-                save_button = tk.Button(edit_plan_window, text="Cancel", command=lambda: self.cancel_btn(edit_plan_window, selected_item))
-                save_button.grid(row=len(plan_details)+1, column=1)
+        # Cancel button
+        save_button = tk.Button(edit_plan_window, text="Cancel", command=lambda: self.cancel_btn(edit_plan_window, selected_item))
+        save_button.grid(row=len(plan_details)+1, column=1)
 
 
     def save_plan(self, edit_plan_window, selected_item):
@@ -185,9 +179,9 @@ class RefugeeDisplay:
             # list comprehension for new edited values
             updated_values = [entry.get() for entry in self.edited_entry_dictionary.values()]
 
-            data = pd.read_csv("crisis_events.csv")
+            data = pd.read_csv("refugee_info.csv")
 
-            selected_id = int(self.end_plan_tree.item(selected_item, 'values')[0])
+            selected_id = int(self.display_refugee_tree.item(selected_item, 'values')[0])
 
             if selected_id in data[data.columns[0]].values:
                 row_index = data[data[data.columns[0]] == selected_id].index[0]
@@ -204,14 +198,14 @@ class RefugeeDisplay:
                             updated_values[i] = pd.NA
 
                 data.loc[row_index] = updated_values
-                data.to_csv("crisis_events.csv", index=False)
-                self.end_plan_tree.item(selected_item, values=updated_values)
+                data.to_csv("refugee_info.csv", index=False)
+                self.display_refugee_tree.item(selected_item, values=updated_values)
 
             edit_plan_window.destroy()
             # CSV data
-            csv_file = "crisis_events.csv"
+            csv_file = "refugee_info.csv"
             # csv_data = self.load_csv_data(csv_file)
-            self.upload_csv_data(self.end_plan_tree, csv_file)
+            self.upload_csv_data(self.display_refugee_tree, csv_file)
 
         except:
 
