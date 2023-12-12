@@ -1,22 +1,26 @@
-import pandas as pd
-import os
+import csv
 
-def save_information_csv(data_to_add):
-    file_name = 'camp_information.csv'
-    columns = ['camp_id', 'no_refugees', 'no_weeks_aid', 'total_food_supplied', 'total_medicine_supplied', 'week_food_per_refugee', 'week_medicine_per_refugee', 'delivery_time_weeks']
+def update_crisis_events(camp_id, no_refugees, no_weeks_aid, total_food_supplied, total_medicine_supplied,
+             week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks):
+    try:
+        with open('crisis_events.csv', 'r') as file:
+            csv_reader = csv.reader(file)
+            data = list(csv_reader)
 
-    dataframe_containing_new_data = pd.DataFrame([data_to_add], columns=columns)
+        for row in data:
+            if row[0] == camp_id:
+                row[9] = no_refugees
+                row[10] = no_weeks_aid
+                row[11] = total_food_supplied
+                row[12] = total_medicine_supplied
+                row[13] = week_food_per_refugee
+                row[14] = week_medicine_per_refugee
+                row[15] = delivery_time_weeks
+                break
 
-    if os.path.isfile(file_name):
-        dataframe_of_existing_data = pd.read_csv(file_name)
+        with open('crisis_events.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerows(data)
 
-        dataframe_containing_new_data['camp_id'] = dataframe_containing_new_data['camp_id'].astype(int)
-        dataframe_of_existing_data['camp_id'] = dataframe_of_existing_data['camp_id'].astype(int)
-
-        merged_dataframe = pd.concat([dataframe_of_existing_data, dataframe_containing_new_data]).drop_duplicates(subset=['camp_id'], keep='last')
-
-        merged_dataframe.to_csv(file_name, index=False)
-    else:
-        dataframe_containing_new_data.to_csv(file_name, index=False)
-
-    print("save_information_csv successfully run.")
+    except FileNotFoundError:
+        print("Error: 'crisis_events.csv' file not found.")

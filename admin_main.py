@@ -33,9 +33,9 @@ class AdminHomepage:
         # create a menu item 1
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="File", menu=file_menu)
-        file_menu.add_command(label="New Plan", command=self.our_cmd)
+        file_menu.add_command(label="New Plan", command=self.do_nothing)
         file_menu.add_separator()
-        file_menu.add_command(label="Settings", command=self.our_cmd)
+        file_menu.add_command(label="Settings", command=self.do_nothing)
         file_menu.add_separator()
         file_menu.add_command(label="Log Out", command=self.exit_and_go_back)
         file_menu.add_separator()
@@ -43,37 +43,37 @@ class AdminHomepage:
         # create a menu item 2
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Edit", menu=file_menu)
-        file_menu.add_command(label="Edit Event", command=self.our_cmd)
+        file_menu.add_command(label="Edit Event", command=self.do_nothing)
         file_menu.add_separator()
-        file_menu.add_command(label="Resources", command=self.our_cmd)
+        file_menu.add_command(label="Resources", command=self.do_nothing)
         # create a menu item 3
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="View", menu=file_menu)
-        file_menu.add_command(label="View Events", command=self.our_cmd)
+        file_menu.add_command(label="View Events", command=self.do_nothing)
         file_menu.add_separator()
-        file_menu.add_command(label="View Summaries", command=self.our_cmd)
+        file_menu.add_command(label="View Summaries", command=self.do_nothing)
         file_menu.add_separator()
-        file_menu.add_command(label="Allocate Resources", command=self.our_cmd)
+        file_menu.add_command(label="Allocate Resources", command=self.do_nothing)
         # create a menu item 4
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Accounts", menu=file_menu)
-        file_menu.add_command(label="Create", command=self.our_cmd)
+        file_menu.add_command(label="Create", command=self.create_volunteer_account)
         file_menu.add_separator()
-        file_menu.add_command(label="Volunteers", command=self.our_cmd)
+        file_menu.add_command(label="Volunteers", command=self.do_nothing)
         file_menu.add_separator()
-        file_menu.add_command(label="Admins", command=self.our_cmd)
+        file_menu.add_command(label="Admins", command=self.do_nothing)
         # create a menu item 5
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Settings", menu=file_menu)
-        file_menu.add_command(label="Display", command=self.our_cmd)
+        file_menu.add_command(label="Display", command=self.do_nothing)
         file_menu.add_separator()
-        file_menu.add_command(label="Audio", command=self.our_cmd)
+        file_menu.add_command(label="Audio", command=self.do_nothing)
         # create a menu item 6
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Help", menu=file_menu)
-        file_menu.add_command(label="Contact Support", command=self.our_cmd)
+        file_menu.add_command(label="Contact Support", command=self.do_nothing)
         file_menu.add_separator()
-        file_menu.add_command(label="About", command=self.our_cmd)
+        file_menu.add_command(label="About", command=self.do_nothing)
 
         self.create_gui_admin_main()
 
@@ -115,6 +115,7 @@ class AdminHomepage:
         #new_window = tk.Toplevel()
         #apcg.create_plan_gui(new_window)
 
+    # Main Buttons Homepage Commands
     def create_event(self):
         # This needs linking to create plan final
         self.create_plan.create_plan_gui(self)
@@ -135,7 +136,6 @@ class AdminHomepage:
         # Open the resource allocation GUI
         self.admin_resource_allocation.create_gui_resource_allocation(self)
 
-
     def back_button_to_admin_main(self):
         # Clear current contents
         for widget in self.window.winfo_children():
@@ -143,7 +143,18 @@ class AdminHomepage:
         # Repopulate main page
         self.create_gui_admin_main()
 
-    def our_cmd(self):
+
+
+    # Menu Commands
+
+    def create_volunteer_account(self):
+        self.admin_edit_details.create_account_gui()
+
+
+
+
+
+    def do_nothing(self):
         pass
 
     def exit_and_go_back(self):

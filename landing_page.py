@@ -1,7 +1,7 @@
 import tkinter as tk
 from admin_login_page import AdminLoginPage
 from volunteer_login_page import VolunteerLoginPage
-
+from tkinter import messagebox
 class LandingPage:
     def __init__(self, root, go_to_admin_main, go_to_volunteer_main):
         self.root = root
@@ -41,7 +41,7 @@ class LandingPage:
         volunteer_login_btn.pack(ipadx=93, ipady=25, pady=10)
         volunteer_login_btn.configure(background="lightblue")
         # Exit program button
-        exit_btn = tk.Button(self.window, text="Exit Software", foreground='white', command=self.exit_software)
+        exit_btn = tk.Button(self.window, text="Exit Software", foreground='black', command=self.exit_software)
         exit_btn.pack(ipadx=10, ipady=2, pady=70)
         exit_btn.configure(background="black")
 
@@ -79,6 +79,8 @@ class LandingPage:
         self.root.quit()
 
     def window_exit_button(self):
+        #if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
+            #self.root.destroy()
         self.root.destroy()
 
     def destroy(self):

@@ -47,42 +47,42 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
             df.to_csv('volunteer_info.csv', index='Username')
             self.y_personal_info = pd.read_csv('volunteer_info.csv')
 
-        self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}
+        #self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}
 
         welcome_label = tk.Label(
             self,
             text='Welcome to the UCL Humanity Rescue Volunteer Portal',
             font=('TkDefaultFont', 25, 'bold'),
-            foreground='blue'
+            foreground='light blue'
         )
-        welcome_label.grid(row=1, column=0, padx=30, pady=30)
+        welcome_label.grid(row=0, column=0, padx=30, pady=30)
 
-        instruction_label = tk.Label(
-            self,
-            text='Please sign in',
-            font=('TkDefaultFont', 20)
-        )
-        instruction_label.grid(row=2, column=0, pady=30)
+        # instruction_label = tk.Label(
+        #     self,
+        #     text='Volunteer login',
+        #     font=('TkDefaultFont', 20)
+        # )
+        # instruction_label.grid(row=1, column=0, pady=30)
 
         volunteer_entries_frame = tk.Frame(self)
         volunteer_entries_frame.grid()
 
         # Label frame for this page that then stores all of the labels and entries
         volunteer_log_in_frame = tk.LabelFrame(volunteer_entries_frame)
-        volunteer_log_in_frame.grid(row=3, column=1, pady=30)
+        volunteer_log_in_frame.grid(row=1, column=0, pady=30)
 
         # Volunteer title
         #self.t_volunteer_title = tk.Label(self, text='Volunteer login', font=('Arial bold', 50))
         #self.t_volunteer_title.grid(row=0, column=0, pady=30)
 
         # Username entry box
-        self.name_label = tk.Label(volunteer_log_in_frame, text='Username')
+        self.name_label = tk.Label(volunteer_log_in_frame, text='Username', font=('TkDefault', 17))
         self.name_label.grid(row=6, column=0, pady=10, padx=10)
         self.name_entry = tk.Entry(volunteer_log_in_frame)
         self.name_entry.grid(row=6, column=1, pady=10, padx=10)
 
         # Password entry box
-        self.password_label2 = tk.Label(volunteer_log_in_frame, text='Password')
+        self.password_label2 = tk.Label(volunteer_log_in_frame, text='Password', font=('TkDefault', 17))
         self.password_label2.grid(row=8, column=0, pady=10)
         self.password_entry = tk.Entry(volunteer_log_in_frame, show='*')
         self.password_entry.grid(row=8, column=1, pady=10)
@@ -115,8 +115,8 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         # Swap button from command=self.t_details_confirmation to command=self.on_login to bypass
 
         # Back to landing page
-        login_btn = tk.Button(volunteer_log_in_frame, text="Back", command=self.exit_and_go_back)
-        login_btn.grid(row=10, column=0, pady=10)
+        back_button = tk.Button(volunteer_log_in_frame, text="Back", command=self.exit_and_go_back)
+        back_button.grid(row=10, column=0, pady=10)
 
 
         # Shows caps lock on/off (OLD BINDING NOT WORKING)
@@ -124,6 +124,9 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         self.label_caps.grid(row=4, column=1)
         #self.bind("<KeyPress>", self.caps_lock_on)
         #self.bind("<KeyRelease>", self.caps_lock_off)
+        for i in range(11):
+            self.grid_rowconfigure(i, weight=1)
+        self.grid_columnconfigure(0, weight=1)
 
     # For caps lock on/off
     def caps_lock_on(self, event):
