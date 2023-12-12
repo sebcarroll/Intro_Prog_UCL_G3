@@ -155,9 +155,9 @@ class AdminCreatePlan:
                                     font=("TkinterDefault", 15))
         camp_id_number_label.grid(row=18, column=3)
 
-        save_plan_button = tk.Button(new_plan_frame, text="Save plan", command=self.plan_dict
+        self.save_plan_button = tk.Button(new_plan_frame, text="Save plan", command=self.plan_dict
                                      , height=1, width=20)
-        save_plan_button.grid(row=19, column=3)
+        self.save_plan_button.grid(row=19, column=3)
 
         back_button = tk.Button(new_plan_frame, text='Back to Home', command=self.back_button_to_admin_main)
         back_button.grid(row=19, column=1, padx=5, pady=10)
@@ -239,6 +239,8 @@ class AdminCreatePlan:
             print(self.events_dict)
             tkinter.messagebox.showinfo(title="Plan created", message="Plan successfully created")
             self.save_to_csv()
+            self.save_plan_button.config(state=tk.DISABLED)
+            self.save_plan_button.destroy()
 
         except option_no_exist:
             tk.messagebox.showinfo(title="Option does not exist", message="Please make sure you've selected valid options")
