@@ -13,7 +13,6 @@ Camp ID,Crisis Type,Description,Country,Day,Month,Year,Status,End Date,Number of
 11597,Other,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
 12345,CRISIS,THIS IS MY Description,England,8,January,2025,Active,0000-00-00 00:00:00,3.0,1.0,1.0,45.7,1.0,1.0,1.0,1.0
 56645,Political unrest,Dark Lord Harry Potter,Sudan,9,December,2023,Inactive,2023-12-10 15:00:33,30.0,15.0,100000.0,100000.0,14.0,2.0,1.0,
-46753,Supply Shortage,Death,Afghanistan,10,December,2023,Active,0000-00-00 00:00:00,,,,,,,
+46753,Supply Shortage,Death,Afghanistan,10,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
 90049,Supply Shortage,No description,Syria,13,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
 45211,Supply Shortage,No description,Syria,13,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-19755,Supply Shortage,This is just a random text,Syria,13,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
