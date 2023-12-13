@@ -56,7 +56,7 @@ class AdminEndEvent:
 
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename)
-        selected_attributes = ['Camp ID', 'Crisis Type', 'Description', 'Country', 'Day', 'Month', 'Year', 'Status', 'End Date', 'Current No. of Refugees']
+        selected_attributes = ['Camp ID', 'Crisis Type', 'Description', 'Country', 'Day', 'Month', 'Year', 'Status', 'End Date', 'Refugee Count']
         data = data[selected_attributes]
         # Only want to see 'Active' plans:
         data = data[data['Status'] != 'Inactive']
@@ -69,7 +69,7 @@ class AdminEndEvent:
             data[col] = data[col].fillna(0).astype(int)
 
         tree.delete(*tree.get_children())
-        tree['columns'] = selected_attributes[0:7] + ['Current No. of Refugees']
+        tree['columns'] = selected_attributes[0:7] + ['Refugee Count']
         tree.column("#0", width=0, stretch=tk.NO)
         tree.heading("#0", text="", anchor=tk.W)
 
@@ -81,9 +81,9 @@ class AdminEndEvent:
         tree.column("Day", width=1, anchor=tk.CENTER)
         tree.column("Month", width=4, anchor=tk.CENTER)
         tree.column("Year", width=1, anchor=tk.CENTER)
-        tree.column("Current No. of Refugees", width=50, anchor=tk.CENTER)
+        tree.column("Refugee Count", width=50, anchor=tk.CENTER)
 
-        for col in selected_attributes[0:7] + ['Current No. of Refugees']:
+        for col in selected_attributes[0:7] + ['Refugee Count']:
             # added condition based on date attributes
             '''if col != "Day" and col != "Month" and col != "Year" and col != "Camp ID":
                 tree.column(col, anchor=tk.CENTER, width=80)'''
@@ -91,7 +91,7 @@ class AdminEndEvent:
 
         for index, row in data.iterrows():
             #row_vals = row[selected_attributes[0:7]]
-            tree.insert("", tk.END, values=list(row[selected_attributes[0:7] + ['Current No. of Refugees']]), iid=str(index))
+            tree.insert("", tk.END, values=list(row[selected_attributes[0:7] + ['Refugee Count']]), iid=str(index))
 
 
     def deactivate_csv_data_entry(self, tree, filename):
