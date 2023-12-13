@@ -8,6 +8,18 @@ class AdminEditVolunteerDetails:
         self.window = window
         self.back_button_to_admin_main = back_button_to_admin_main
         self.volunteer_listbox = None  # To be initialized later
+    def read_crisis_events_csv(self):
+        self.camp_ids_from_csv = []
+        try:
+            with open('crisis_events.csv', 'r') as file:
+                csv_reader = csv.reader(file)
+                next(csv_reader)
+                for row in csv_reader:
+                    if row[7] == "Active":
+                        self.camp_ids_from_csv.append(row[0])
+        except FileNotFoundError:
+            print("Error: 'crisis_events.csv' file not found.")
+        self.camp_ids = list(self.camp_ids_from_csv)
 
     def create_gui(self, window):
         # Main frame for this whole page
@@ -71,54 +83,54 @@ class AdminEditVolunteerDetails:
             print("Error: 'crisis_events.csv' file not found.")
         self.camp_ids = self.camp_ids_from_csv
 
-    def create_listbox_with_label(self, widget, text_label, row_num, column_num, list_of_options):
-        '''
-        Creates a labelled listbox with a scrollbar and binds the selection event to an action.
+    # def create_listbox_with_label(self, widget, text_label, row_num, column_num, list_of_options):
+    #     '''
+    #     Creates a labelled listbox with a scrollbar and binds the selection event to an action.
+    #
+    #     :param widget: The window in which the listbox is to be contained.
+    #     :param text_label: The name of the label that you want the list box to have
+    #     :param row_num: The relative position vertically that you want the list box and label to be displayed in.
+    #     :param column_num: The relative position horizontally that you want the list box and label to be displayed in.
+    #     :param list_of_options: The list containing the options available to the user to be selected.
+    #     :return: listbox and scrollbar widgets
+    #     '''
+    #     label = tk.Label(widget, text=text_label)
+    #     label.grid(row=row_num, column=column_num)
+    #
+    #     scrollbar = tk.Scrollbar(widget)
+    #     scrollbar.grid(row=row_num, column=column_num + 2, sticky='ns')
+    #
+    #     listbox = tk.Listbox(widget, yscrollcommand=scrollbar.set, height=1, exportselection=0)
+    #     listbox.grid(row=row_num, column=column_num + 1)
+    #
+    #     scrollbar.config(command=listbox.yview)
+    #
+    #     for item in list_of_options:
+    #         listbox.insert(tk.END, item)
+    #
+    #     return listbox, scrollbar
 
-        :param widget: The window in which the listbox is to be contained.
-        :param text_label: The name of the label that you want the list box to have
-        :param row_num: The relative position vertically that you want the list box and label to be displayed in.
-        :param column_num: The relative position horizontally that you want the list box and label to be displayed in.
-        :param list_of_options: The list containing the options available to the user to be selected.
-        :return: listbox and scrollbar widgets
-        '''
-        label = tk.Label(widget, text=text_label)
-        label.grid(row=row_num, column=column_num)
-
-        scrollbar = tk.Scrollbar(widget)
-        scrollbar.grid(row=row_num, column=column_num + 2, sticky='ns')
-
-        listbox = tk.Listbox(widget, yscrollcommand=scrollbar.set, height=1, exportselection=0)
-        listbox.grid(row=row_num, column=column_num + 1)
-
-        scrollbar.config(command=listbox.yview)
-
-        for item in list_of_options:
-            listbox.insert(tk.END, item)
-
-        return listbox, scrollbar
-
-    def get_selected_listbox_value(self, event, listbox, list):
-        '''
-        Returns the selected value within a listbox so that the selected value can be saved as a variable for further use. If no input provided, it will use the first option given in the list of options as a default.
-        :param event: A variable that is passed to the function when a binding event takes place.
-        :param listbox: The listbox that the value to be saved is coming from.
-        :param list: The list of options from which the option is selected. If no option selected, then the first option is selected as default
-        :return:
-        '''
-        print(f"Current listbox selection indices: {listbox.curselection()}")
-        selected_indices = listbox.curselection()
-        if selected_indices:
-            selected_value = listbox.get(selected_indices[0])
-            print(f"Selected value: {selected_value}")
-            return selected_value
-        elif list:
-            default_value = list[0]
-            print("No selection made. Using the default value.")
-            return default_value
-        else:
-            print("The list is empty. No default value can be used.")
-            return None
+    # def get_selected_listbox_value(self, event, listbox, list):
+    #     '''
+    #     Returns the selected value within a listbox so that the selected value can be saved as a variable for further use. If no input provided, it will use the first option given in the list of options as a default.
+    #     :param event: A variable that is passed to the function when a binding event takes place.
+    #     :param listbox: The listbox that the value to be saved is coming from.
+    #     :param list: The list of options from which the option is selected. If no option selected, then the first option is selected as default
+    #     :return:
+    #     '''
+    #     print(f"Current listbox selection indices: {listbox.curselection()}")
+    #     selected_indices = listbox.curselection()
+    #     if selected_indices:
+    #         selected_value = listbox.get(selected_indices[0])
+    #         print(f"Selected value: {selected_value}")
+    #         return selected_value
+    #     elif list:
+    #         default_value = list[0]
+    #         print("No selection made. Using the default value.")
+    #         return default_value
+    #     else:
+    #         print("The list is empty. No default value can be used.")
+    #         return None
     def create_account_gui(self):
         self.read_crisis_events_csv()
         # Create a new window for creating a new account
@@ -127,13 +139,13 @@ class AdminEditVolunteerDetails:
         self.create_account_window.geometry('800x600')
 
         # Labels and Entry widgets for user input
-        tk.Label(self.create_account_window, text="Username:").grid(row=0, column=0, padx=10, pady=10)
+        tk.Label(self.create_account_window, text="Username:").grid(row=1, column=0, padx=10, pady=10)
         username_entry = tk.Entry(self.create_account_window)
-        username_entry.grid(row=0, column=1, padx=10, pady=10)
+        username_entry.grid(row=1, column=1, padx=10, pady=10)
 
-        tk.Label(self.create_account_window, text="Password:").grid(row=3, column=0, padx=10, pady=10)
+        tk.Label(self.create_account_window, text="Password:").grid(row=2, column=0, padx=10, pady=10)
         password_entry = tk.Entry(self.create_account_window, show="*")
-        password_entry.grid(row=3, column=1, padx=10, pady=10)
+        password_entry.grid(row=2, column=1, padx=10, pady=10)
 
         tk.Label(self.create_account_window, text="Name:").grid(row=4, column=0, padx=10, pady=10)
         name_entry = tk.Entry(self.create_account_window)
@@ -157,18 +169,17 @@ class AdminEditVolunteerDetails:
         work_type_entry = ttk.Combobox(self.create_account_window, values=['Medical Aid', 'Food counselling'])
         work_type_entry.grid(row=8, column=1, padx=10, pady=10)
 
-        camp_id_listbox: Listbox
-        self.camp_id_listbox, self.camp_id_scrollbar = self.create_listbox_with_label(self.create_account_window,
-                                                                                "Volunteer Camp Assignation:", 1, 0,
-                                                                                 self.camp_ids)
-        camp_id = self.get_selected_listbox_value(None, self.camp_id_listbox, self.camp_ids)
+        camp_ID_label = tk.Label(self.create_account_window, text='Camp ID: ' )
+        camp_ID_label.grid(row=3, column= 0, padx=10, pady=10)
+        camp_ID_box = ttk.Combobox(self.create_account_window, values= self.camp_ids)
+        camp_ID_box.grid(row=3, column=1, padx=10, pady=10)
 
 
         # Button to confirm and create the account
         confirm_button = tk.Button(self.create_account_window, text="Create Account",
                                    command=lambda: self.create_account({
                                        'Username': username_entry.get(),
-                                       'Camp ID': self.camp_id_listbox.get(self.camp_id_listbox.curselection()),
+                                       'Camp ID': camp_ID_box.get(),
                                        'Password': password_entry.get(),
                                        'Name': name_entry.get(),
                                        'Email Address': email_entry.get(),
@@ -220,15 +231,15 @@ class AdminEditVolunteerDetails:
                             self.edit_details_window.title("Edit Volunteer Details")
 
                             # Labels and Entry widgets for user input
-                            tk.Label(self.edit_details_window, text="Username:").grid(row=0, column=0, padx=10, pady=10)
+                            tk.Label(self.edit_details_window, text="Username:").grid(row=1, column=0, padx=10, pady=10)
                             username_entry = tk.Entry(self.edit_details_window)
                             username_entry.insert(0, row['Username'])
-                            username_entry.grid(row=0, column=1, padx=10, pady=10)
+                            username_entry.grid(row=1, column=1, padx=10, pady=10)
 
-                            tk.Label(self.edit_details_window, text="Password:").grid(row=3, column=0, padx=10, pady=10)
+                            tk.Label(self.edit_details_window, text="Password:").grid(row=2, column=0, padx=10, pady=10)
                             password_entry = tk.Entry(self.edit_details_window, show="*")
                             password_entry.insert(0, row['password'])
-                            password_entry.grid(row=3, column=1, padx=10, pady=10)
+                            password_entry.grid(row=2, column=1, padx=10, pady=10)
 
                             tk.Label(self.edit_details_window, text="Name:").grid(row=4, column=0, padx=10, pady=10)
                             name_entry = tk.Entry(self.edit_details_window)
@@ -258,12 +269,17 @@ class AdminEditVolunteerDetails:
                             work_type_entry.set(row['Work Type'])
                             work_type_entry.grid(row=8, column=1, padx=10, pady=10)
 
-                            camp_id_listbox: Listbox
-                            self.camp_id_listbox, self.camp_id_scrollbar = self.create_listbox_with_label(
-                                self.edit_details_window,
-                                "Volunteer Camp Assignation:", 1, 0,
-                                self.camp_ids)
-                            self.camp_id = self.get_selected_listbox_value(None, self.camp_id_listbox, self.camp_ids)
+                            # camp_id_listbox: Listbox
+                            # self.camp_id_listbox, self.camp_id_scrollbar = self.create_listbox_with_label(
+                            #     self.edit_details_window,
+                            #     "Volunteer Camp Assignation:", 1, 0,
+                            #     self.camp_ids)
+                            # self.camp_id = self.get_selected_listbox_value(None, self.camp_id_listbox, self.camp_ids)
+                            camp_ID_label = tk.Label(self.edit_details_window, text="Camp ID:")
+                            camp_ID_label.grid(row=3, column=0, padx=10, pady=10)
+                            Camp_ID_box = ttk.Combobox(self.edit_details_window, values=self.camp_ids)
+                            Camp_ID_box.set(row['Camp ID'])
+                            Camp_ID_box.grid(row=3, column=1, padx=10, pady=10)
 
                             # Button to confirm and create the account
                             confirm_button = tk.Button(self.edit_details_window, text="Save Changes",
@@ -271,7 +287,7 @@ class AdminEditVolunteerDetails:
                                                            old_username=username_to_edit,
                                                            updated_details={
                                                                'Username': username_entry.get(),
-                                                               'Camp ID': self.camp_id,
+                                                               'Camp ID': Camp_ID_box.get(),
                                                                'Password': password_entry.get(),
                                                                'Name': name_entry.get(),
                                                                'Email Address': email_entry.get(),
