@@ -150,11 +150,7 @@ class AdminCreatePlan:
             "Chad", "Mali", "Niger", "Cameroon", "Ukraine", "Pakistan", "Bangladesh", "Lebanon", "Zimbabwe", "Eritrea",
             "North Korea", "Eswatini", "Zambia", "Malawi"])
         self.country_Entry.grid(row=1, column=4, padx=5)
-
-        camp_id_number_label = tk.Label(new_plan_frame, text=f"Camp ID number: {self.generate_camp_id()}",
-                                    font=("TkinterDefault", 15))
-        camp_id_number_label.grid(row=18, column=3)
-
+    
         self.save_plan_button = tk.Button(new_plan_frame, text="Save plan", command=self.plan_dict
                                      , height=1, width=20)
         self.save_plan_button.grid(row=19, column=3)
@@ -237,7 +233,7 @@ class AdminCreatePlan:
                 raise option_no_exist
 
             print(self.events_dict)
-            tkinter.messagebox.showinfo(title="Plan created", message="Plan successfully created")
+            tkinter.messagebox.showinfo(title="Plan created", message=f"Plan successfully created - Camp ID is {self.generate_camp_id()}")
             self.save_to_csv()
             self.save_plan_button.config(state=tk.DISABLED)
             self.save_plan_button.destroy()

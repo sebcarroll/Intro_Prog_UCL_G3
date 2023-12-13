@@ -1,16 +1,16 @@
-Camp ID,Crisis Type,Description,Country,Day,Month,Year,Status,End Date,Refugee Capacity,Duration,Meals(Total),Medicine(Total),Meals/w,Medicine/w,Delivery Time(d),Refugee Count
+Camp ID,Crisis Type,Description,Country,Day,Month,Year,Status,End Date,Number of Refugees,Crisis Length,Total Meals,Total Medicine,Meals/week,Medicine/week, Delivery Time (days), Current No. of Refugees
 50055,War, Voldemort has found Harry Potter, Nigeria,6,December,2023,Active,0000-00-00 00:00:00,3.0,1.0,42.0,3.0,14.0,1.0,2.0,14.0
 55098,Supply Shortage,0,Sudan,8,December,2023,Active,0000-00-00 00:00:00,140.0,0.0,0.0,0.0,0.0,0.0,0.0,
 68691,Environmental,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,100.0,15.0,100000.0,100000.0,14.0,2.0,2.0,
 32586,Displacement,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
-23950,Political unrest,0,Somalia,8,December,2023,Active,0000-00-00 00:00:00,15.0,30.0,10000.0,10000.0,14.0,2.0,0.0,0.0
-47972,Supply Shortage,0,Somalia,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+23950,Political unrest,0,Somalia,8,December,2023,Active,0000-00-00 00:00:00,15.0,30.0,10000.0,10000.0,14.0,2.0,0.5,
+47972,Supply Shortage,0,Somalia,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
 78679,Displacement,0,Yemen,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
 40707,Environmental,0,Syria,8,December,2023,Active,0000-00-00 00:00:00,50.0,0.0,0.0,0.0,0.0,0.0,0.0,
 92556,Supply Shortage,0,Yemen,8,December,2023,Active,0000-00-00 00:00:00,100.0,15.0,200000.0,200000.0,28.0,2.0,2.0,
 51681,Environmental,0,Yemen,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
 44243,Other,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,15.0,30.0,10000.0,10001.0,14.0,2.0,0.5,
-11599,Other,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,6.0,0.0,0.0
+11597,Other,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
 12345,CRISIS,THIS IS MY Description,England,8,January,2025,Active,0000-00-00 00:00:00,3.0,1.0,1.0,45.7,1.0,1.0,1.0,1.0
 56645,Political unrest,Dark Lord Harry Potter,Sudan,9,December,2023,Inactive,2023-12-10 15:00:33,30.0,15.0,100000.0,100000.0,14.0,2.0,1.0,
-46753,Supply Shortage,Death,Afghanistan,10,December,2023,Inactive,2023-12-13 13:57:57,,,,,,,,
+46753,Supply Shortage,Death,Afghanistan,10,December,2023,Active,0000-00-00 00:00:00,,,,,,,
