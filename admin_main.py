@@ -1,12 +1,14 @@
 import tkinter as tk
 import pickle
 import os
+# Imports for the main button commands
 from AdminSubpages.create_plan import AdminCreatePlan
 from AdminSubpages.admin_end_event import AdminEndEvent
 from AdminSubpages.view_summaries import AdminViewSummaries
 from AdminSubpages.admin_edit_details import AdminEditVolunteerDetails
 from AdminSubpages.admin_resource_allocation import AdminResourceAllocation
-# hello
+# Imports for the menu commands
+from AdminSubpages.view_summaries_with_pie_chart import AdminViewSummaries
 
 class AdminHomepage:
     def __init__(self, root, go_to_landing_page):
@@ -18,11 +20,17 @@ class AdminHomepage:
         #self.window.configure(background="red")
         #self.window.attributes('-fullscreen', True)
 
+        # Instances for button commands
         self.create_plan = AdminCreatePlan(self.window, self.back_button_to_admin_main)
         self.admin_end_event = AdminEndEvent(self.window, self.back_button_to_admin_main)
         self.admin_view_summaries = AdminViewSummaries(self.window, self.back_button_to_admin_main)
         self.admin_edit_details = AdminEditVolunteerDetails(self.window, self.back_button_to_admin_main)
         self.admin_resource_allocation = AdminResourceAllocation(self.window, self.back_button_to_admin_main)
+        # Instances for menu commands
+        self.view_summaries_with_pie_chart = AdminViewSummaries(self.window, self.back_button_to_admin_main)
+
+
+
 
         self.window.bind('<F11>', self.toggle_fullscreen)
         self.window.bind('<Escape>', self.end_fullscreen)
@@ -53,6 +61,7 @@ class AdminHomepage:
         file_menu.add_command(label="View Events", command=self.do_nothing)
         file_menu.add_separator()
         file_menu.add_command(label="View Summaries", command=self.do_nothing)
+        file_menu.add_command(label="View Charts", command=self.view_charts)
         file_menu.add_separator()
         file_menu.add_command(label="Allocate Resources", command=self.do_nothing)
         # create a menu item 4
@@ -150,7 +159,8 @@ class AdminHomepage:
     def create_volunteer_account(self):
         self.admin_edit_details.create_account_gui()
 
-
+    def view_charts(self):
+        self.view_summaries_with_pie_chart.create_gui_view_summaries(self)
 
 
 
