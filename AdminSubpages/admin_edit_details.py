@@ -180,7 +180,7 @@ class AdminEditVolunteerDetails:
 
         self.create_account_window.rowconfigure(9, weight=1)
         print("Placing the button on the grid")
-        confirm_button.grid(row=9, column=0, columnspan=2, pady=10, ipadx=80, ipady=25, sticky='ew')
+        confirm_button.grid(row=9, column=0, columnspan=2, pady=10, ipadx=20, ipady=15, sticky='ew')
         print("Button should be placed now")
 
     def create_account(self, new_volunteer):
@@ -283,7 +283,7 @@ class AdminEditVolunteerDetails:
                                                            edit_details_window=self.edit_details_window
                                                        ))
 
-                            confirm_button.grid(row=9, column=0, columnspan=2, pady=10, ipadx=80, ipady=25)
+                            confirm_button.grid(row=9, column=0, columnspan=2, pady=10, ipadx=20, ipady=15)
 
             except FileNotFoundError:
                 messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
@@ -315,7 +315,10 @@ class AdminEditVolunteerDetails:
         selected_index = self.volunteer_listbox.curselection()
         if selected_index:
             username_to_reactivate = self.volunteer_listbox.get(selected_index)
-            self.update_account_status(username_to_reactivate, deactivated=False)
+            confirm_reactivate = messagebox.askokcancel('Confirmation', f"Are you sure you want to reactivate account for '{username_to_reactivate}'?")
+            if confirm_reactivate:
+                self.update_account_status(username_to_reactivate, deactivated=False)
+                messagebox.showinfo(f"Account for f'{username_to_reactivate}' reactivated successfully")
         else:
             messagebox.showwarning("No Selection", "Please select a volunteer.")
 
@@ -323,7 +326,11 @@ class AdminEditVolunteerDetails:
         selected_index = self.volunteer_listbox.curselection()
         if selected_index:
             username_to_deactivate = self.volunteer_listbox.get(selected_index)
-            self.update_account_status(username_to_deactivate, deactivated=True)
+            confirm_deactivate = messagebox.askokcancel("Confirmation", f"Are you sure you want to deactivate the account for '{username_to_deactivate}'?")
+
+            if confirm_deactivate:
+                self.update_account_status(username_to_deactivate, deactivated=True)
+                messagebox.showinfo("Success" f"The account for '{username_to_deactivate}' has been deactivated successfully")
         else:
             messagebox.showwarning("No Selection", "Please select a volunteer.")
 
@@ -331,6 +338,11 @@ class AdminEditVolunteerDetails:
         selected_index = self.volunteer_listbox.curselection()
         if selected_index:
             username_to_delete = self.volunteer_listbox.get(selected_index)
+            confirm_delete = messagebox.askokcancel("Confirmation",
+                                                    f"Are you sure you want to delete the account '{username_to_delete}'?")
+            if confirm_delete:
+                self.remove_account(username_to_delete)
+                messagebox.showinfo("Success", f"The account '{username_to_delete}' has been deleted successfully.")
             self.remove_account(username_to_delete)
         else:
             messagebox.showwarning("No Selection", "Please select a volunteer.")
@@ -350,7 +362,7 @@ class AdminEditVolunteerDetails:
                 writer.writeheader()
                 writer.writerows(rows)
 
-            messagebox.showinfo("Deletion", f"Account for {username} deleted successfully.")
+
         except FileNotFoundError:
             messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
 
