@@ -114,7 +114,7 @@ class AdminViewSummaries:
 
         # Open pop up edit window
         view_plan_window = tk.Toplevel(self.window)
-        view_plan_window.title("Edit Plan")
+        view_plan_window.title("View Plan")
 
         # Create a label and entry for each plan attribute using column attributes
         for i in range(treeview_width):
@@ -163,7 +163,7 @@ class AdminViewSummaries:
                     att = column_attributes[i]
                     value = plan_details[i]
 
-                    label = tk.Label(edit_plan_window, text=f"{att}:")
+                    label = tk.Label(edit_plan_window, text=f"{att}:    ")
                     label.grid(row=i, column=0)
 
                     edit_entry = tk.Entry(edit_plan_window, textvariable=tk.StringVar(edit_plan_window, value=value))
@@ -172,11 +172,11 @@ class AdminViewSummaries:
 
                 # Save button
                 save_button = tk.Button(edit_plan_window, text="Save", command=lambda: self.save_plan(edit_plan_window, selected_item))
-                save_button.grid(row=len(plan_details), column=1)
+                save_button.grid(row=len(plan_details), column=1, pady=3)
 
                 # Cancel button
                 save_button = tk.Button(edit_plan_window, text="Cancel", command=lambda: self.cancel_btn(edit_plan_window, selected_item))
-                save_button.grid(row=len(plan_details)+1, column=1)
+                save_button.grid(row=len(plan_details)+1, column=1, pady=3)
 
 
     def save_plan(self, edit_plan_window, selected_item):
