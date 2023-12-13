@@ -105,7 +105,6 @@ class AdminCreatePlan:
         self.year_combobox.set(self.current_year)
 
 
-
         refugee_title = tk.Label(new_plan_frame, text='Log New Crisis Event', font=('TkinterDefault', 30))
         refugee_title.grid(row=0, column=3, pady=30)
 
@@ -138,7 +137,7 @@ class AdminCreatePlan:
 
         description_label = tk.Label(new_plan_frame, text='Description (max 100 characters)', font=('TkinterDefault', 15))
         description_label.grid(row=11, column=3, padx=5)
-        self.description_label_Entry = tk.Entry(new_plan_frame)
+        self.description_label_Entry = tk.Text(new_plan_frame, height=7, width=20, font=("TkinterDefault", 10))
         self.description_label_Entry.grid(row=11, column=4, padx=5)
         self.description_label_Entry.bind('<KeyRelease>', lambda event: self.character_limit())
 
@@ -150,7 +149,7 @@ class AdminCreatePlan:
             "Chad", "Mali", "Niger", "Cameroon", "Ukraine", "Pakistan", "Bangladesh", "Lebanon", "Zimbabwe", "Eritrea",
             "North Korea", "Eswatini", "Zambia", "Malawi"])
         self.country_Entry.grid(row=1, column=4, padx=5)
-    
+
         self.save_plan_button = tk.Button(new_plan_frame, text="Save plan", command=self.plan_dict
                                      , height=1, width=20)
         self.save_plan_button.grid(row=19, column=3)
@@ -167,8 +166,8 @@ class AdminCreatePlan:
     def plan_dict(self):
         try:
             crisis_type = self.crisis_type_combobox.get()
+            description = self.description_label_Entry.get("1.0", "end-1c").strip()
 
-            description = self.description_label_Entry.get()
             if description == "":
                 description = "No description"
 
@@ -235,8 +234,8 @@ class AdminCreatePlan:
             print(self.events_dict)
             tkinter.messagebox.showinfo(title="Plan created", message=f"Plan successfully created - Camp ID is {self.generate_camp_id()}")
             self.save_to_csv()
-            self.save_plan_button.config(state=tk.DISABLED)
-            self.save_plan_button.destroy()
+            #self.save_plan_button.config(state=tk.DISABLED)
+            #self.save_plan_button.destroy()
 
         except option_no_exist:
             tk.messagebox.showinfo(title="Option does not exist", message="Please make sure you've selected valid options")
