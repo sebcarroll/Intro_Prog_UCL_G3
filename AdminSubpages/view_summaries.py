@@ -9,6 +9,7 @@ class AdminViewSummaries:
     def __init__(self, window, back_button_to_admin_main):
         self.window = window
         self.back_button_to_admin_main = back_button_to_admin_main
+        self.volunteer_number = self.volunteer_number()
 
     def create_gui_view_summaries(self, window):
         # Main frame for this whole page
@@ -26,7 +27,7 @@ class AdminViewSummaries:
         end_plan_title = tk.Label(end_plan_frame, text="View Plan Summaries", font=('Helvetica', 16))
         end_plan_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5)
 
-        self.end_plan_tree = ttk.Treeview(end_plan_frame, height=20)
+        self.end_plan_tree = ttk.Treeview(end_plan_frame, height=15)
         self.end_plan_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
 
         # Button Frame:
@@ -34,6 +35,11 @@ class AdminViewSummaries:
         btn_frame.grid(row=2, column=0, pady=10)
         btn_frame.grid_columnconfigure(0, weight=1)
         btn_frame.grid_columnconfigure(2, weight=1)
+
+        # Horizontal scrollbar
+        xscrollbar = ttk.Scrollbar(end_plan_frame, orient='horizontal', command=self.end_plan_tree.xview)
+        xscrollbar.grid(row=2, column=0, sticky='ew', columnspan=2)
+        self.end_plan_tree.configure(xscrollcommand=xscrollbar.set)
 
         # Buttons
         # View event
@@ -65,6 +71,12 @@ class AdminViewSummaries:
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename)
 
+        for camp_ID, count in self.volunteer_number.items():
+            if camp_ID in data['Camp ID'].values:
+                data.loc[data['Camp ID'] == camp_ID, 'No. Volunteers'] = count
+
+        print(data)
+
         # The following block will convert floats to integers for the GUI to remove the ".0"
         # columns with float numbers
         float_columns = data.select_dtypes(include=['float']).columns
@@ -83,6 +95,7 @@ class AdminViewSummaries:
 
         for index, row in data.iterrows():
             tree.insert("", tk.END, values=list(row), iid=str(index))
+
 
 
     def delete_csv_data_entry(self, tree, filename):
@@ -222,6 +235,21 @@ class AdminViewSummaries:
 
         except:
             messagebox.showinfo("Data Types", "Please select valid data types to save your edit")
+
+    def volunteer_number(self):
+        volunteer_df = pd.read_csv("volunteer_info.csv")
+        volunteer_number = {}
+        for index, row in volunteer_df.iterrows():
+            camp_id = row['Camp ID']
+
+            if pd.notna(camp_id):
+                if camp_id not in volunteer_number:
+                    volunteer_number[camp_id] = 1
+                else:
+                    volunteer_number[camp_id] += 1
+
+        print(volunteer_number)
+        return volunteer_number
 
     def cancel_btn(self, edit_plan_window, selected_item):
         edit_plan_window.destroy()

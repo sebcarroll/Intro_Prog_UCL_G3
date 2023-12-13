@@ -4,8 +4,6 @@ from tkinter import ttk, messagebox
 from datetime import datetime
 import csv
 
-
-
 class t_no_text(Exception):
     pass
 
