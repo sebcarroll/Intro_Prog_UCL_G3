@@ -18,17 +18,17 @@ def resource_display(window, back_button_to_volunteer_main):
 
     crisis_df = pd.read_csv('crisis_events.csv')
 
-    resources_df = crisis_df.loc[:, ['Camp ID', 'Total Meals', 'Total Medicine', 'Crisis Length', 'Number of Refugees',
-                                     'Meals /week', 'Medicine /week']]
+    resources_df = crisis_df.loc[:, ['Camp ID', 'Meals(Total)', 'Medicine(Total)', 'Duration', 'Refugee Capacity',
+                                     'Meals/w', 'Medicine/w']]
 
     resources_df = resources_df.fillna(0)
 
-    columns = ['Camp ID', 'Number of Refugees', 'Total Meals', 'Total Medicine', 'Meals /week', 'Medicine /week', 'Delivery Time (weeks)']
+    columns = ['Camp ID', 'Refugee Capacity', 'Meals(Total)', 'Medicine(Total)', 'Meals/w', 'Medicine/w', 'Delivery Time(d)']
 
     total_meals = 100000000
     total_medicine = 100000000
-    meals_used = resources_df['Total Meals'].sum()
-    medicine_used = resources_df['Total Medicine'].sum()
+    meals_used = resources_df['Meals(Total)'].sum()
+    medicine_used = resources_df['Medicine(Total)'].sum()
     leftover_meals = total_meals - meals_used
     leftover_medicine = total_medicine - medicine_used
 
@@ -55,21 +55,21 @@ def resource_display(window, back_button_to_volunteer_main):
     tree = ttk.Treeview(resources_df_frame, columns=columns, show='headings')
 
     tree.heading('Camp ID', text='Camp ID')
-    tree.heading('Number of Refugees', text='Refugee no.')
-    tree.heading('Total Meals', text='Meals')
-    tree.heading('Total Medicine', text='Medicine')
-    tree.heading('Meals /week', text='Weekly meals per refugee')
-    tree.heading('Medicine /week', text='Weekly medication per refugee')
-    tree.heading('Delivery Time (weeks)', text='Delivery Time (weeks)')
+    tree.heading('Refugee Capacity', text='Capacity')
+    tree.heading('Meals(Total)', text='Meals')
+    tree.heading('Medicine(Total)', text='Medicine')
+    tree.heading('Meals/w', text='Weekly meals per refugee')
+    tree.heading('Medicine/w', text='Weekly medication per refugee')
+    tree.heading('Delivery Time(d)', text='Delivery Time(d)')
 
 
     tree.column('Camp ID', width=80)
-    tree.column('Number of Refugees', width=105)
-    tree.column('Total Meals', width=100)
-    tree.column('Total Medicine', width=125)
-    tree.column('Meals /week', width=150)
-    tree.column('Medicine /week', width=175)
-    tree.column('Delivery Time (weeks)', width=125)
+    tree.column('Refugee Capacity', width=105)
+    tree.column('Meals(Total)', width=100)
+    tree.column('Medicine(Total)', width=125)
+    tree.column('Meals/w', width=150)
+    tree.column('Medicine/w', width=175)
+    tree.column('Delivery Time(d)', width=125)
 
     for _, row in resources_df.iterrows():
         tree.insert('', tk.END, values=row.tolist())

@@ -258,11 +258,24 @@ class AdminCreatePlan:
 
     def save_to_csv(self):
 
-        header = ["Camp ID", "Crisis type", "Description", "Country", "Day", "Month", "Year", "Status", "End Date",
-                  "Estimated Number of refugees", "Estimated Length of Crisis (weeks)",
-                  "Total Number of Meals Supplied", "Total Amount of Medicine Supplied",
-                  "Number of Meals Supplied to a Refugee per Week",
-                  "Refugee Weekly Medicine Allocation", "Expected Supply Delivery Time"]
+        header = ["Camp ID",
+                  "Crisis Type",
+                  "Description",
+                  "Country",
+                  "Day",
+                  "Month",
+                  "Year", 
+                  "Status",
+                  "End Date",
+                  "Refugee Capacity",
+                  "Duration",
+                  "Meals(Total)",
+                  "Medicine(Total)",
+                  "Meals/w",
+                  "Medicine/w",
+                  "Delivery Time(d)",
+                  "Refugee Count"
+                  ]
 
         for key in header:
             if key not in self.events_dict:
