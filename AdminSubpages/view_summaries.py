@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import pandas as pd
 from tkinter import messagebox
-from general_functions import validate_data, cast_data
+from general_functions import validate_data
 
 
 class AdminViewSummaries:
@@ -193,70 +193,23 @@ class AdminViewSummaries:
             if selected_id in data[data.columns[0]].values:
                 row_index = data[data[data.columns[0]] == selected_id].index[0]
 
-                # Validate and convert data using the validate function in general functions file
-                #validated_values = validate_and_convert_data(updated_values, data, row_index)
-
+                # VALIDATE data using the validate function in general functions file
                 validated_values = validate_data(updated_values, data, row_index)
-                casted_values = cast_data(validated_values, data)
 
-                # start of new code for saving data:
-                """for i, col_name in enumerate(data.columns):
-                    updated_value = updated_values[i]
-
-                    # Check if the input field is not empty
-                    if updated_value != '':
-                        # Determine the column data type in the DataFrame
-                        col_type = data[col_name].dtype
-
-                        # Check if the column is of integer type
-                        if col_type == 'int64':
-                            if updated_value.isdigit():
-                                # Convert to integer if input is a digit
-                                updated_values[i] = int(updated_value)
-                            else:
-                                # If input is not a digit, retain the original value
-                                updated_values[i] = data.at[row_index, col_name]
-
-                        # Check if the column is of float type
-                        elif col_type == 'float64':
-                            try:
-                                # Try converting to float
-                                updated_values[i] = float(updated_value)
-                            except ValueError:
-                                # If input is not a valid float, retain the original value
-                                updated_values[i] = data.at[row_index, col_name]
-
-                        # For string or other types, keep the new value as it is
-                        else:
-                            updated_values[i] = updated_value
-
-                    # If the input field is empty, retain the original value
-                    else:
-                        updated_values[i] = data.at[row_index, col_name]"""
-
-                # Iterate over each column and convert updated values to the correct type
-                '''for i, col_att in enumerate(data.columns):
+                # CASTING to correct data type for the column
+                for i, col_att in enumerate(data.columns):
                     col_type = data[col_att].dtype
 
                     # Convert the value to the column's type
                     if pd.api.types.is_numeric_dtype(col_type):
-                        if updated_values[i] != '':
-                            updated_values[i] = col_type.type(updated_values[i])
+                        if validated_values[i] != '':
+                            validated_values[i] = col_type.type(validated_values[i])
                         else:
-                            updated_values[i] = pd.NA'''
+                            validated_values[i] = pd.NA
 
-                '''data.loc[row_index] = updated_values
+                data.loc[row_index] = validated_values
                 data.to_csv("crisis_events.csv", index=False)
-                self.end_plan_tree.item(selected_item, values=updated_values)'''
-
-                '''data.loc[row_index] = validated_values
-                data.to_csv("crisis_events.csv", index=False)
-                self.end_plan_tree.item(selected_item, values=validated_values)'''
-
-                data.loc[row_index] = casted_values
-                data.to_csv("crisis_events.csv", index=False)
-                self.end_plan_tree.item(selected_item, values=casted_values)
-
+                self.end_plan_tree.item(selected_item, values=validated_values)
 
             edit_plan_window.destroy()
             # CSV data
@@ -265,7 +218,6 @@ class AdminViewSummaries:
             self.upload_csv_data(self.end_plan_tree, csv_file)
 
         except:
-
             messagebox.showinfo("Data Types", "Please select valid data types to save your edit")
 
     def cancel_btn(self, edit_plan_window, selected_item):

@@ -149,51 +149,73 @@ def check_is_numeric(variable, window, message_label, submit_button_row_num, sub
 
     return casted_values'''
 
-def validate_data(input_data, original_data, row_index):
-    valid_months = ['January', 'February', 'March', 'April', 'May', 'June',
+
+
+
+'''def validate_data(edited_data, original_data, row_index):
+
+    months = ['January', 'February', 'March', 'April', 'May', 'June',
                     'July', 'August', 'September', 'October', 'November', 'December']
 
     validated_data = []
-    for i, col_name in enumerate(original_data.columns):
-        value = input_data[i]
 
-        # Apply validation rules based on column name
-        if col_name == 'Camp ID':
-            value = value if value.isdigit() and len(value) == 5 else original_data.at[row_index, col_name]
-        elif col_name == 'Month':
-            value = value if value in valid_months else original_data.at[row_index, col_name]
-        elif col_name == 'Day':
-            value = value if value.isdigit() and 1 <= int(value) <= 31 else original_data.at[row_index, col_name]
-        elif col_name == 'Year':
-            value = value if value.isdigit() and 2023 <= int(value) <= 2030 else original_data.at[row_index, col_name]
-        elif col_name in ['Status', 'End Date']:
-            value = original_data.at[row_index, col_name]
+    for i, att in enumerate(original_data.columns):
+        value = edited_data[i]
+
+        if att == 'Camp ID':
+            value = value if value.isdigit() and len(value) == 5 else original_data.at[row_index, att]
+        elif att == 'Month':
+            value = value if value in months else original_data.at[row_index, att]
+        elif att == 'Day':
+            value = value if value.isdigit() and 1 <= int(value) <= 31 else original_data.at[row_index, att]
+        elif att == 'Year':
+            value = value if value.isdigit() and 2023 <= int(value) <= 2030 else original_data.at[row_index, att]
+        elif att in ['Status', 'End Date']:
+            value = original_data.at[row_index, att]
         else:
             value = value
 
         validated_data.append(value)
+    return validated_data'''
+
+
+def validate_data(edited_data, original_data, row_index_in_treeview):
+    months = ['January', 'February', 'March', 'April', 'May', 'June',
+              'July', 'August', 'September', 'October', 'November', 'December']
+
+    validated_data = []
+
+    for i, att in enumerate(original_data.columns):
+        value = edited_data[i]
+
+        if att == 'Camp ID':
+            if value.isdigit() and len(value) == 5:
+                validated_data.append(value)
+            else:
+                validated_data.append(original_data.at[row_index_in_treeview, att])
+
+        elif att == 'Month':
+            if value in months:
+                validated_data.append(value)
+            else:
+                validated_data.append(original_data.at[row_index_in_treeview, att])
+
+        elif att == 'Day':
+            if value.isdigit() and 1 <= int(value) <= 31:
+                validated_data.append(int(value))
+            else:
+                validated_data.append(original_data.at[row_index_in_treeview, att])
+
+        elif att == 'Year':
+            if value.isdigit() and 2023 <= int(value) <= 2030:
+                validated_data.append(int(value))
+            else:
+                validated_data.append(original_data.at[row_index_in_treeview, att])
+
+        elif att in ['Status', 'End Date']:
+            validated_data.append(original_data.at[row_index_in_treeview, att])
+
+        else:
+            validated_data.append(value)
+
     return validated_data
-
-def cast_data(validated_data, original_data):
-    casted_values = []
-    for i, col_name in enumerate(original_data.columns):
-        value = validated_data[i]
-        col_type = original_data[col_name].dtype
-
-        if pd.api.types.is_integer_dtype(col_type):
-            try:
-                # Attempt to cast to integer, if possible
-                value = int(value)
-            except (ValueError, TypeError):
-                # If casting fails, keep the validated value
-                pass
-        elif pd.api.types.is_float_dtype(col_type):
-            try:
-                # Attempt to cast to float, if possible
-                value = float(value)
-            except (ValueError, TypeError):
-                # If casting fails, keep the validated value
-                pass
-
-        casted_values.append(value)
-    return casted_values
