@@ -3,6 +3,7 @@ from tkinter import ttk
 import pandas as pd
 from tkinter import messagebox
 from general_functions import validate_data, cast_data
+import csv
 
 
 class AdminViewSummaries:
@@ -58,6 +59,12 @@ class AdminViewSummaries:
         csv_file = "crisis_events.csv"
         # csv_data = self.load_csv_data(csv_file)
         self.upload_csv_data(self.end_plan_tree, csv_file)
+
+        # pie chart
+        self.create_pie_chart()
+        self.create_pie_chart_crisis_type()
+
+
 
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename)
@@ -131,6 +138,108 @@ class AdminViewSummaries:
         # Close button
         save_button = tk.Button(view_plan_window, text="Close",command=lambda: self.cancel_btn(view_plan_window, selected_item))
         save_button.grid(row=len(plan_details) + 1, column=1)
+
+    def create_pie_chart(self):
+        # Read data from CSV file
+        active_count = 0
+        inactive_count = 0
+
+        with open('crisis_events.csv', 'r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                status = row['Status']
+                if status.lower() == 'active':
+                    active_count += 1
+                elif status.lower() == 'inactive':
+                    inactive_count += 1
+
+        # Calculate percentage
+        total = active_count + inactive_count
+        active_percentage = (active_count / total) * 360
+        inactive_percentage = (inactive_count / total) * 360
+
+        # Create a pie chart using canvas
+        canvas = tk.Canvas(self.window, width=200, height=200)
+        canvas.grid(row=15, column=10)
+
+        # Draw active slice
+        canvas.create_arc(50, 50, 150, 150, start=0, extent=active_percentage, fill='green', outline='white')
+        # Draw inactive slice
+        canvas.create_arc(50, 50, 150, 150, start=active_percentage, extent=inactive_percentage, fill='red',
+                          outline='white')
+
+        # Add legend (key)
+        legend_labels = ['Active Crisis', 'Inactive Crisis']
+        legend_colors = ['green', 'red']
+
+        for i, label in enumerate(legend_labels):
+            # Draw legend rectangle
+            canvas.create_rectangle(10, 10 + i * 20, 30, 30 + i * 20, fill=legend_colors[i], outline='white')
+            # Draw legend label
+            canvas.create_text(40, 20 + i * 20, text=label, anchor=tk.W, fill='white')
+
+    def create_pie_chart_crisis_type(self):
+        # Read data from CSV file
+        war_count = 0
+        environmental_count = 0
+        supply_shortage_count = 0
+        political_unrest_count = 0
+        displacement_count = 0
+        other_count = 0
+
+        with open('crisis_events.csv', 'r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                status = row['Crisis Type']
+                if status.lower() == 'war':
+                    war_count += 1
+                elif status.lower() == 'environmental':
+                    environmental_count += 1
+                elif status.lower() == 'political unrest':
+                    political_unrest_count += 1
+                elif status.lower() == 'displacement':
+                    displacement_count += 1
+                elif status.lower() == 'supply shortage':
+                    supply_shortage_count += 1
+                elif status.lower() == 'other':
+                    other_count += 1
+
+        # Calculate percentage
+        total = war_count + environmental_count + supply_shortage_count + political_unrest_count + displacement_count + other_count
+        war_percentage = (war_count / total) * 360
+        environmental_percentage = (environmental_count/ total) * 360
+        supply_shortage_percentage = (supply_shortage_count/ total) * 360
+        political_unrest_percentage = (political_unrest_count/ total) * 360
+        displacement_percentage = (displacement_count / total) * 360
+        other_percentage = (other_count/ total) * 360
+
+        # Create a pie chart using canvas
+        canvas = tk.Canvas(self.window, width=200, height=200)
+        canvas.grid(row=15, column=1)
+
+        # Draw slices  of pie chart
+
+        canvas.create_arc(50, 50, 150, 150, start=0, extent=war_percentage, fill='red', outline='white')
+        canvas.create_arc(50, 50, 150, 150, start=war_percentage, extent=environmental_percentage, fill='blue', outline='white')
+        canvas.create_arc(50, 50, 150, 150, start=war_percentage + environmental_percentage, extent=supply_shortage_percentage, fill='green', outline='white')
+        canvas.create_arc(50, 50, 150, 150, start=war_percentage + environmental_percentage + supply_shortage_percentage, extent=political_unrest_percentage, fill='yellow', outline='white')
+        canvas.create_arc(50, 50, 150, 150, start=war_percentage + environmental_percentage + supply_shortage_percentage + political_unrest_percentage, extent=displacement_percentage, fill='purple', outline='white')
+        canvas.create_arc(50, 50, 150, 150, start=war_percentage + environmental_percentage + supply_shortage_percentage + political_unrest_percentage + displacement_percentage, extent=other_percentage, fill='orange', outline='white')
+
+        # canvas_legend = tk.Canvas(self.window, width=100, height=150)
+        # canvas_legend.grid(row=, column=5)
+        # Add legend (key)
+        legend_labels = ['War', 'Environmental', 'Supply Shortage', 'Political Unrest', 'Displacement', 'Other']
+        legend_colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange']
+
+
+        for i, label in enumerate(legend_labels):
+            # Draw legend rectangle
+            canvas.create_rectangle(10, 10 + i * 20, 30, 30 + i * 20, fill=legend_colors[i], outline='white')
+            # Draw legend label
+            canvas.create_text(40, 20 + i * 20, text=label, anchor=tk.W, fill='white')
+
+
 
 
     def edit_csv_data_entry(self):
@@ -267,6 +376,11 @@ class AdminViewSummaries:
         except:
 
             messagebox.showinfo("Data Types", "Please select valid data types to save your edit")
+
+
+
+
+
 
     def cancel_btn(self, edit_plan_window, selected_item):
         edit_plan_window.destroy()
