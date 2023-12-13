@@ -47,7 +47,7 @@ def edit_camp_details(window, y_camp_info, back_button_to_volunteer_main):
 def edit_refugee_no(df, selected_camp_id):
     try:
         if selected_camp_id:
-            current_capacity = df.loc[df["Camp ID"] == selected_camp_id, 'Refugee Capacity'].values[0]
+            current_capacity = df.loc[df["Camp ID"] == selected_camp_id, 'Refugee Count'].values[0]
             new_capacity = simpledialog.askinteger("Add/Remove refugees", f"Current total Capacity for Camp ID {selected_camp_id}: {current_capacity}"
                                                                           f"\nHow many refugees would you like to add/remove?", initialvalue=1)
 
@@ -70,10 +70,10 @@ def edit_camp_id(df, selected_camp_id, listbox):
     try:
         if selected_camp_id:
             # Ask the user for a new camp ID
-            new_id = simpledialog.askstring("Change camp ID", prompt="Enter new camp ID - using only numbers (max 6 characters)")
+            new_id = simpledialog.askstring("Change camp ID", prompt="Enter new camp ID - using only numbers (5 characters ONLY)")
 
             # Check if the new ID is not empty and is different from the current ID
-            if new_id.isnumeric() and len(new_id) < 7:
+            if new_id.isnumeric() and len(new_id) != 5:
                 # Check if the new ID already exists in the DataFrame
                 if new_id not in df['Camp ID'].values:
                     # Update the camp ID in the DataFrame

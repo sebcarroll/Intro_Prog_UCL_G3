@@ -2,13 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 import pandas as pd
 
-def label_sufficient(value):
-    if value == 0:
-        return 'Sufficient'
-    elif value < 0:
-        return 'Excess'
-    else:
-        return value
 
 def resource_display(window, back_button_to_volunteer_main):
     for i in window.winfo_children():

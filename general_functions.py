@@ -123,6 +123,12 @@ def validate_data(edited_data, original_data, row_index_in_treeview):
         elif att in ['Status', 'End Date']:
             validated_data.append(original_data.at[row_index_in_treeview, att])
 
+        # elif att == 'extra attribute here!':
+        #     if value.isdigit() and len(value) == 5:
+        #         validated_data.append(value)
+        #     else:
+        #         validated_data.append(original_data.at[row_index_in_treeview, att])
+
         else:
             validated_data.append(value)
 
