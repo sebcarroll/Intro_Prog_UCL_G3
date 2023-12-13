@@ -18,54 +18,74 @@ class AdminEndEvent:
         end_plan_frame = tk.Frame(self.window)
         end_plan_frame.grid(sticky="nsew", padx=5, pady=5)
         end_plan_frame.grid_columnconfigure(0, weight=1)
-        end_plan_frame.grid_rowconfigure(3, weight=1)
+        end_plan_frame.grid_rowconfigure(1, weight=3)
+        end_plan_frame.grid_rowconfigure(2, weight=1)
 
         # Labels
         end_plan_title = tk.Label(end_plan_frame, text="End Plan", font=('Helvetica', 16))
-        end_plan_title.grid(row=0, column=0, columnspan=2, rowspan=2, sticky="nsew", pady=10, padx=5)
+        end_plan_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5)
 
-        self.end_plan_tree = ttk.Treeview(end_plan_frame)
-        self.end_plan_tree.grid(row=3, column=0, sticky="nsew", padx=40, pady=5)
-
+        self.end_plan_tree = ttk.Treeview(end_plan_frame, height=15)
+        self.end_plan_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
         # CSV data
         csv_file = "crisis_events.csv"
-        #csv_data = self.load_csv_data(csv_file)
+        # csv_data = self.load_csv_data(csv_file)
         self.upload_csv_data(self.end_plan_tree, csv_file)
 
+
+        # Button Frame:
+        btn_frame = tk.Frame(end_plan_frame)
+        btn_frame.grid(row=2, column=0, pady=10)
+        btn_frame.grid_columnconfigure(0, weight=1)
+        btn_frame.grid_columnconfigure(2, weight=1)
+
         # Buttons
-        end_event_btn = tk.Button(self.window, text="End Event", command=lambda: self.deactivate_csv_data_entry(self.end_plan_tree, csv_file))
-        end_event_btn.grid(row=6, column=0, padx=5, pady=10)
+        end_event_btn = tk.Button(btn_frame, text="End Event", command=lambda: self.deactivate_csv_data_entry(self.end_plan_tree, csv_file))
+        end_event_btn.grid(row=0, column=1, padx=20, pady=(50,10))
 
         # Back button
-        back_button = tk.Button(self.window, text='Back to Home', command=self.back_button_to_admin_main)
-        back_button.grid(row=8, column=0, padx=5, pady=10)
+        back_button = tk.Button(btn_frame, text='Back to Home', command=self.back_button_to_admin_main)
+        back_button.grid(row=2, column=1, padx=5, pady=40)
 
 
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename)
-        selected_attributes = ['Camp ID', 'Crisis Type', 'Description', 'Country', 'Day', 'Month', 'Year', 'Status', 'End Date', 'Current Number of Refugees']
+        selected_attributes = ['Camp ID', 'Crisis Type', 'Description', 'Country', 'Day', 'Month', 'Year', 'Status', 'End Date', 'Current No. of Refugees']
         data = data[selected_attributes]
         # Only want to see 'Active' plans:
         data = data[data['Status'] != 'Inactive']
 
+        # The following block will convert floats to integers for the GUI to remove the ".0"
+        # columns with float numbers
+        float_columns = data.select_dtypes(include=['float']).columns
+        # Convert floats to integers for display in treeview
+        for col in float_columns:
+            data[col] = data[col].fillna(0).astype(int)
+
         tree.delete(*tree.get_children())
-        tree['columns'] = selected_attributes[0:7] + ['Current Number of Refugees']
+        tree['columns'] = selected_attributes[0:7] + ['Current No. of Refugees']
         tree.column("#0", width=0, stretch=tk.NO)
         tree.heading("#0", text="", anchor=tk.W)
 
-        # set size of column for date
+        # Manual column width for all headers - used to be just the date here (see docstring below)
+        tree.column("Camp ID", width=2, anchor=tk.CENTER)
+        tree.column("Crisis Type", width=50, anchor=tk.CENTER)
+        tree.column("Description", width=400, anchor=tk.CENTER)
+        tree.column("Country", width=50, anchor=tk.CENTER)
         tree.column("Day", width=1, anchor=tk.CENTER)
-        tree.column("Month", width=2, anchor=tk.CENTER)
-        tree.column("Year", width=2, anchor=tk.CENTER)
+        tree.column("Month", width=4, anchor=tk.CENTER)
+        tree.column("Year", width=1, anchor=tk.CENTER)
+        tree.column("Current No. of Refugees", width=50, anchor=tk.CENTER)
 
-        for col in selected_attributes[0:7] + ['Current Number of Refugees']:
-            if col != "Day" and col != "Month" and col != "Year": # added condition based on date attributes
-                tree.column(col, anchor=tk.CENTER, width=80)
+        for col in selected_attributes[0:7] + ['Current No. of Refugees']:
+            # added condition based on date attributes
+            '''if col != "Day" and col != "Month" and col != "Year" and col != "Camp ID":
+                tree.column(col, anchor=tk.CENTER, width=80)'''
             tree.heading(col, text=col, anchor=tk.CENTER)
 
         for index, row in data.iterrows():
             #row_vals = row[selected_attributes[0:7]]
-            tree.insert("", tk.END, values=list(row[selected_attributes[0:7] + ['Current Number of Refugees']]), iid=str(index))
+            tree.insert("", tk.END, values=list(row[selected_attributes[0:7] + ['Current No. of Refugees']]), iid=str(index))
 
 
     def deactivate_csv_data_entry(self, tree, filename):

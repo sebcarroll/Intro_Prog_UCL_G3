@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import pandas as pd
 from tkinter import messagebox
+from general_functions import validate_data, cast_data
 
 
 class AdminViewSummaries:
@@ -114,7 +115,7 @@ class AdminViewSummaries:
 
         # Open pop up edit window
         view_plan_window = tk.Toplevel(self.window)
-        view_plan_window.title("Edit Plan")
+        view_plan_window.title("View Plan")
 
         # Create a label and entry for each plan attribute using column attributes
         for i in range(treeview_width):
@@ -163,7 +164,7 @@ class AdminViewSummaries:
                     att = column_attributes[i]
                     value = plan_details[i]
 
-                    label = tk.Label(edit_plan_window, text=f"{att}:")
+                    label = tk.Label(edit_plan_window, text=f"{att}:    ")
                     label.grid(row=i, column=0)
 
                     edit_entry = tk.Entry(edit_plan_window, textvariable=tk.StringVar(edit_plan_window, value=value))
@@ -172,11 +173,11 @@ class AdminViewSummaries:
 
                 # Save button
                 save_button = tk.Button(edit_plan_window, text="Save", command=lambda: self.save_plan(edit_plan_window, selected_item))
-                save_button.grid(row=len(plan_details), column=1)
+                save_button.grid(row=len(plan_details), column=1, pady=3)
 
                 # Cancel button
                 save_button = tk.Button(edit_plan_window, text="Cancel", command=lambda: self.cancel_btn(edit_plan_window, selected_item))
-                save_button.grid(row=len(plan_details)+1, column=1)
+                save_button.grid(row=len(plan_details)+1, column=1, pady=3)
 
 
     def save_plan(self, edit_plan_window, selected_item):
@@ -192,20 +193,70 @@ class AdminViewSummaries:
             if selected_id in data[data.columns[0]].values:
                 row_index = data[data[data.columns[0]] == selected_id].index[0]
 
+                # Validate and convert data using the validate function in general functions file
+                #validated_values = validate_and_convert_data(updated_values, data, row_index)
+
+                validated_values = validate_data(updated_values, data, row_index)
+                casted_values = cast_data(validated_values, data)
+
+                # start of new code for saving data:
+                """for i, col_name in enumerate(data.columns):
+                    updated_value = updated_values[i]
+
+                    # Check if the input field is not empty
+                    if updated_value != '':
+                        # Determine the column data type in the DataFrame
+                        col_type = data[col_name].dtype
+
+                        # Check if the column is of integer type
+                        if col_type == 'int64':
+                            if updated_value.isdigit():
+                                # Convert to integer if input is a digit
+                                updated_values[i] = int(updated_value)
+                            else:
+                                # If input is not a digit, retain the original value
+                                updated_values[i] = data.at[row_index, col_name]
+
+                        # Check if the column is of float type
+                        elif col_type == 'float64':
+                            try:
+                                # Try converting to float
+                                updated_values[i] = float(updated_value)
+                            except ValueError:
+                                # If input is not a valid float, retain the original value
+                                updated_values[i] = data.at[row_index, col_name]
+
+                        # For string or other types, keep the new value as it is
+                        else:
+                            updated_values[i] = updated_value
+
+                    # If the input field is empty, retain the original value
+                    else:
+                        updated_values[i] = data.at[row_index, col_name]"""
+
                 # Iterate over each column and convert updated values to the correct type
-                for i, col_name in enumerate(data.columns):
-                    col_type = data[col_name].dtype
+                '''for i, col_att in enumerate(data.columns):
+                    col_type = data[col_att].dtype
 
                     # Convert the value to the column's type
                     if pd.api.types.is_numeric_dtype(col_type):
                         if updated_values[i] != '':
                             updated_values[i] = col_type.type(updated_values[i])
                         else:
-                            updated_values[i] = pd.NA
+                            updated_values[i] = pd.NA'''
 
-                data.loc[row_index] = updated_values
+                '''data.loc[row_index] = updated_values
                 data.to_csv("crisis_events.csv", index=False)
-                self.end_plan_tree.item(selected_item, values=updated_values)
+                self.end_plan_tree.item(selected_item, values=updated_values)'''
+
+                '''data.loc[row_index] = validated_values
+                data.to_csv("crisis_events.csv", index=False)
+                self.end_plan_tree.item(selected_item, values=validated_values)'''
+
+                data.loc[row_index] = casted_values
+                data.to_csv("crisis_events.csv", index=False)
+                self.end_plan_tree.item(selected_item, values=casted_values)
+
 
             edit_plan_window.destroy()
             # CSV data
