@@ -180,7 +180,7 @@ class AdminEditVolunteerDetails:
 
         self.create_account_window.rowconfigure(9, weight=1)
         print("Placing the button on the grid")
-        confirm_button.grid(row=9, column=0, columnspan=2, pady=10, ipadx=80, ipady=25, sticky='ew')
+        confirm_button.grid(row=9, column=0, columnspan=2, pady=10, ipadx=20, ipady=15, sticky='ew')
         print("Button should be placed now")
 
     def create_account(self, new_volunteer):
@@ -283,7 +283,7 @@ class AdminEditVolunteerDetails:
                                                            edit_details_window=self.edit_details_window
                                                        ))
 
-                            confirm_button.grid(row=9, column=0, columnspan=2, pady=10, ipadx=80, ipady=25)
+                            confirm_button.grid(row=9, column=0, columnspan=2, pady=10, ipadx=20, ipady=15)
 
             except FileNotFoundError:
                 messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
