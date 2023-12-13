@@ -30,7 +30,11 @@ class AdminEndEvent:
         # CSV data
         csv_file = "crisis_events.csv"
         # csv_data = self.load_csv_data(csv_file)
-        self.upload_csv_data(self.end_plan_tree, csv_file)
+        try:
+            self.upload_csv_data(self.end_plan_tree, csv_file)
+        except:
+            messagebox.showwarning("No data found", "There is a problem accessing the database\n\nThe file may be missing or corrupted")
+            return
 
 
         # Button Frame:
