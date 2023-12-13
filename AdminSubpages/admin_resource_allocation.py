@@ -1,5 +1,6 @@
+import tkinter
 import tkinter as tk
-from tkinter import ttk, Listbox
+from tkinter import ttk
 import general_functions as gf
 from resource_allocation_csv_creation import update_crisis_events
 import csv
@@ -23,7 +24,7 @@ class AdminResourceAllocation:
                         self.camp_ids_from_csv.append(row[0])
         except FileNotFoundError:
             print("Error: 'crisis_events.csv' file not found.")
-        self.camp_ids = self.camp_ids_from_csv
+        self.camp_ids = list(self.camp_ids_from_csv)
 
     def create_gui_resource_allocation(self, window):
         self.read_crisis_events_csv()
@@ -40,34 +41,26 @@ class AdminResourceAllocation:
         resource_frame.grid(row=1, column=0, padx=5, pady=5)
 
         # Creating list of CAMP IDs
-        self.camp_id_listbox, self.camp_id_scrollbar = create_listbox_with_label(resource_frame, "Camp ID:", 1, 0,
-                                                                                     self.camp_ids)
-        self.camp_id_listbox.grid(padx=5, pady=5)
+        camp_ID_label = tk.Label(resource_frame, text='Camp ID: ')
+        camp_ID_label.grid(row=1, column=0, padx=5, pady=5)
+        self.camp_ID_box = ttk.Combobox(resource_frame, values= self.camp_ids)
+        self.camp_ID_box.grid(row=1, column=1, padx=5, pady=5)
+        self.camp_ID_box.bind('<<ComboboxSelected>>', self.update_number_of_refugees)
+
+        # self.camp_id_listbox, self.camp_id_scrollbar = create_listbox_with_label(resource_frame, "Camp ID:", 1, 0,
+        #                                                                              self.camp_ids)
+        # self.camp_id_listbox.grid(padx=5, pady=5)
 
         # Label for displaying number of refugees
         refugee_label = tk.Label(resource_frame, text="Estimated Number of Refugees at camp:")
         refugee_label.grid(row=2, column=0, padx=5, pady=5)
-        refugee_count = tk.Label(resource_frame, text="")
-        refugee_count.grid(row=2, column=1, padx=5, pady=5)
-
-        # Event handler function to update number of refugees
-        def update_number_of_refugees(event):
-            selected_index = self.camp_id_listbox.curselection()
-            if selected_index:
-                selected_camp_id = self.camp_id_listbox.get(selected_index[0])
-                number_of_refugees_actual = 0
-                with open('refugee_info.csv', 'r') as file:
-                    csv_reader = csv.reader(file)
-                    next(csv_reader)
-                    for row in csv_reader:
-                        if selected_camp_id == row[1]:
-                            number_of_refugees_actual += 1
-                refugee_count.config(text=str(number_of_refugees_actual))
+        self.refugee_count = tk.Label(resource_frame, text="")
+        self.refugee_count.grid(row=2, column=1, padx=5, pady=5)
 
         # Bind the event handler to the listbox
-        self.camp_id_listbox.bind('<<ListboxSelect>>', update_number_of_refugees)
+        # self.camp_id_listbox.bind('<<ListboxSelect>>', update_number_of_refugees)
 
-        tk.Label(resource_frame, text= 'Estimated Number of Refugees Expected:').grid(row=3, column=0, padx=5, pady=5)
+        tk.Label(resource_frame, text='Estimated Number of Refugees Expected:').grid(row=3, column=0, padx=5, pady=5)
         no_refugees_entry = tk.Entry(resource_frame)
         no_refugees_entry.grid(row=3, column=1)
 
@@ -83,18 +76,42 @@ class AdminResourceAllocation:
         total_medicine_supplied_entry = tk.Entry(resource_frame)
         total_medicine_supplied_entry.grid(row=6, column=1, padx=5, pady=5)
 
-        food_amount_refugee = [7, 14, 21, 28]
-        #gf.food_amount_refugee_listbox, gf.food_amount_refugee_scrollbar = create_listbox_with_label(self.window, "Number of Weekly Meals Provided per Refugee: ", 5, 0, food_amount_refugee)
-        self.food_amount_refugee_listbox, self.food_amount_refugee_scrollbar = create_listbox_with_label(resource_frame,"Number of Weekly Meals Provided per Refugee: ",7, 0,food_amount_refugee)
-        medicine_amount_refugee = [1, 2, 3, 4, 5, 6, 7]
-        medicine_amount_refugee_listbox, medicine_amount_refugee_scrollbar = create_listbox_with_label(resource_frame, "Number of Health Supplies Provided per Refugee Weekly: ", 8, 0, medicine_amount_refugee)
 
-        estimated_delivery_time_options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-        #estimated_delivery_time_listbox, estimated_delivery_time_scrollbar = create_listbox_with_label(self.window,"Estimated Resource Delivery Time (weeks): ",7, 0, estimated_delivery_time_options)
+        # gf.food_amount_refugee_listbox, gf.food_amount_refugee_scrollbar = create_listbox_with_label(self.window, "Number of Weekly Meals Provided per Refugee: ", 5, 0, food_amount_refugee)
+        # self.food_amount_refugee_listbox, self.food_amount_refugee_scrollbar = create_listbox_with_label(resource_frame,
+        # Food label and spinbox
+        food_label = tk.Label(resource_frame, text='Number of Weekly Meals Provided per Refugee:')
+        food_label.grid(row=7, column=0, padx=5, pady=5)
+        self.food_box = tk.Spinbox(resource_frame, from_=0, to=28, increment=7)
+        self.food_box.grid(row=7, column=1, padx=5, pady=5)
 
-        self.estimated_delivery_time_listbox, self.estimated_delivery_time_scrollbar = create_listbox_with_label(resource_frame, "Estimated Resource Delivery Time (days): ", 9, 0, estimated_delivery_time_options)
 
-        submit_button = ttk.Button(resource_frame, text="Submit", command=lambda: self.resource_allocation(self.camp_id_listbox, no_refugees_entry, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry,  self.food_amount_refugee_listbox, medicine_amount_refugee_listbox, self.estimated_delivery_time_listbox, self.camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options))
+       # medicine_amount_refugee_listbox, medicine_amount_refugee_scrollbar = create_listbox_with_label(resource_frame,
+
+                                                                                                  #    "Number of Health Supplies Provided per Refugee Weekly: ",                                                                                       #    8,                                                                                         #   medicine_amount_refugee)
+        medicine_label = tk.Label(resource_frame, text='Number of health supplies per refugee per week: ')
+        medicine_label.grid(row=8, column=0, padx=5, pady=5)
+        self.medicine_box = tk.Spinbox(resource_frame, from_=0, to=7)
+        self.medicine_box.grid(row=8, column=1, padx=5, pady=5)
+       # estimated_delivery_time_options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+        # estimated_delivery_time_listbox, estimated_delivery_time_scrollbar = create_listbox_with_label(self.window,"Estimated Resource Delivery Time (weeks): ",7, 0, estimated_delivery_time_options)
+
+        # self.estimated_delivery_time_listbox, self.estimated_delivery_time_scrollbar = create_listbox_with_label(
+        #     resource_frame, "Estimated Resource Delivery Time (days): ", 9, 0, estimated_delivery_time_options)
+
+        estimated_delivery_label = tk.Label(resource_frame, text='Estimated reosurce delivery time (days): ')
+        estimated_delivery_label.grid(row=9, column=0, padx=5, pady=5)
+        self.estimated_delivery_box = tk.Spinbox(resource_frame, from_=0, to=14)
+        self.estimated_delivery_box.grid(row=9, column=1, padx=5, pady=5)
+        submit_button = ttk.Button(resource_frame, text="Submit",
+                                   command=lambda: self.resource_allocation(self.camp_ID_box, no_refugees_entry,
+                                                                            no_weeks_aid_entry,
+                                                                            total_food_supplied_entry,
+                                                                            total_medicine_supplied_entry,
+                                                                            self.food_box,
+                                                                            self.medicine_box,
+                                                                            self.estimated_delivery_box,
+                                                                            self.camp_ids))
 
         submit_button.grid(row=10, column=0, columnspan=2, padx=10, pady=10)
 
@@ -102,7 +119,29 @@ class AdminResourceAllocation:
         back_button = tk.Button(self.window, text='Back to Home', command=self.back_button_to_admin_main)
         back_button.grid(row=11, column=0, padx=5, pady=10)
 
-    def turn_data_into_valid_form(self, camp_id_listbox, no_refugees_entry, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry,  food_amount_refugee_listbox, medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options):
+        # Event handler function to update number of refugees
+    def update_number_of_refugees(self, event):
+        selected_camp_id = self.camp_ID_box.get()
+        print(selected_camp_id)
+        try:
+            with open('refugee_info.csv', 'r') as file:
+                    csv_reader = csv.reader(file)
+                    next(csv_reader)
+                    for row in csv_reader:
+                        if selected_camp_id == row[0]:
+                            number_of_actual_refugees = int(row[9])
+                        else:
+                            number_of_actual_refugees = 0
+        except FileNotFoundError:
+            print("Error: 'refugee_info.csv' file not found.")
+        self.refugee_count.config(text=str(number_of_actual_refugees))
+
+        # Bind the event handler to the listbox
+        # self.camp_id_listbox.bind('<<ListboxSelect>>', update_number_of_refugees)
+
+
+
+    def turn_data_into_valid_form(self, camp_ID_box, no_refugees_entry, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry,  food_box, medicine_box, estimated_delivery_box, camp_ids):
             '''
             '''
             message_label = tk.Label(self.window, text="")
@@ -110,16 +149,14 @@ class AdminResourceAllocation:
             submit_button_column = 0
             submit_column_span = 2
 
-            camp_id = self.get_selected_listbox_value(None, camp_id_listbox, self.camp_ids)
+            camp_id = self.camp_ID_box.get()
             no_refugees = no_refugees_entry.get()
             no_weeks_aid = no_weeks_aid_entry.get()
             total_food_supplied = total_food_supplied_entry.get()
             total_medicine_supplied = total_medicine_supplied_entry.get()
-            week_food_per_refugee = self.get_selected_listbox_value(None, food_amount_refugee_listbox, food_amount_refugee)
-            week_medicine_per_refugee = self.get_selected_listbox_value(None, medicine_amount_refugee_listbox,
-                                                                   medicine_amount_refugee)
-            delivery_time_weeks = self.get_selected_listbox_value(None, estimated_delivery_time_listbox,
-                                                             estimated_delivery_time_options)
+            week_food_per_refugee = self.food_box.get()
+            week_medicine_per_refugee = self.medicine_box.get()
+            delivery_time_weeks = self.estimated_delivery_box.get()
 
             if self.check_input_valid(camp_id) == False:
                 message_label.config(text="Invalid camp ID.")
@@ -266,10 +303,9 @@ class AdminResourceAllocation:
         window.wait_window()
 
 
-    def resource_allocation(self, camp_id_listbox, no_refugees_entry, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry,
-                             food_amount_refugee_listbox, medicine_amount_refugee_listbox,
-                            estimated_delivery_time_listbox, camp_ids, food_amount_refugee, medicine_amount_refugee,
-                            estimated_delivery_time_options):
+    def resource_allocation(self, camp_ID_box, no_refugees_entry, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry,
+                             food_box, medicine_box,
+                            estimated_delivery_box, camp_ids):
         '''
         This function enables the administrator to allocate resources to a camp and will notify the administrator
         if the resources provided to the camp are not adequate to cover the total period in which aid is provided.
@@ -279,7 +315,7 @@ class AdminResourceAllocation:
             print("Resource allocation function entered into.")
 
             (camp_id, no_refugees, no_weeks_aid, total_food_supplied, total_medicine_supplied,
-             week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks) = self.turn_data_into_valid_form(camp_id_listbox, no_refugees_entry, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry, food_amount_refugee_listbox, medicine_amount_refugee_listbox, estimated_delivery_time_listbox, camp_ids, food_amount_refugee, medicine_amount_refugee, estimated_delivery_time_options)
+             week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks) = self.turn_data_into_valid_form(self.camp_ID_box, no_refugees_entry, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry, self.food_box, self.medicine_box, self.estimated_delivery_box, camp_ids)
 
             print("Data Converted.")
 
