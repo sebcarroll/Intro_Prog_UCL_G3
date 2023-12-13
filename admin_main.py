@@ -118,7 +118,6 @@ class AdminHomepage:
 
     # Main Buttons Homepage Commands
     def create_event(self):
-        # This needs linking to create plan final
         self.create_plan.create_plan_gui(self)
 
     def end_event(self):
