@@ -71,8 +71,20 @@ class AdminViewSummaries:
         self.create_pie_chart()
         self.create_pie_chart_crisis_type()
 
-        # map
-        self.create_map()
+        # # map
+        # self.create_map()
+
+        # # Sample crisis type counts
+        # crisis_type_counts = self.calculate_crisis_type_counts()
+        # self.calculate_crisis_type_counts()
+        #
+        # # Draw bar chart
+        # self.draw_bar_chart(crisis_type_counts)
+        #
+        #
+        # # Add legend (key)
+        # self.add_legend(crisis_type_counts)
+
 
 
 
@@ -171,7 +183,7 @@ class AdminViewSummaries:
         # Create a pie chart using canvas
         canvas = tk.Canvas(self.window, width=200, height=200)
         # canvas.grid(row=17, column=0, padx=10, pady=5)
-        canvas.place(x=200, y=400)
+        canvas.place(x=100, y=400)
 
         # Draw active slice
         canvas.create_arc(50, 50, 150, 150, start=0, extent=active_percentage, fill='green', outline='white')
@@ -225,8 +237,9 @@ class AdminViewSummaries:
         other_percentage = (other_count/ total) * 360
 
         # Create a pie chart using canvas
-        canvas = tk.Canvas(self.window, width=300, height=200)
-        canvas.place(x=500, y=400)
+        canvas = tk.Canvas(self.window, width=200, height=200)
+        # canvas.grid(row=17, column=2)
+        canvas.place(x=1100, y=400)
 
         # Draw slices  of pie chart
 
@@ -237,17 +250,17 @@ class AdminViewSummaries:
         canvas.create_arc(50, 50, 150, 150, start=war_percentage + environmental_percentage + supply_shortage_percentage + political_unrest_percentage, extent=displacement_percentage, fill='purple', outline='white')
         canvas.create_arc(50, 50, 150, 150, start=war_percentage + environmental_percentage + supply_shortage_percentage + political_unrest_percentage + displacement_percentage, extent=other_percentage, fill='orange', outline='white')
 
-        # canvas_legend = tk.Canvas(self.window, width=100, height=150)
-        # canvas_legend.grid(row=, column=5)
+        canvas_legend = tk.Canvas(self.window, width=200, height=200)
+        canvas_legend.place(x=900, y =400)
         # Add legend (key)
         legend_labels_crisis_type = ['War', 'Environmental', 'Supply Shortage', 'Political Unrest', 'Displacement', 'Other']
         legend_colors_crisis_type = ['red', 'blue', 'green', 'yellow', 'purple', 'orange']
 
         for i, label in enumerate(legend_labels_crisis_type):
             # Draw legend rectangle
-            canvas.create_rectangle(10, 10 + i * 20, 30, 30 + i * 20, fill=legend_colors_crisis_type[i], outline='white')
+            canvas_legend.create_rectangle(10, 10 + i * 20, 30, 30 + i * 20, fill=legend_colors_crisis_type[i], outline='white')
             # Draw legend label
-            canvas.create_text(40, 20 + i * 20, text=label, anchor=tk.W, fill='white')
+            canvas_legend.create_text(40, 20 + i * 20, text=label, anchor=tk.W, fill='white')
 
 
     # def create_map(self):
@@ -390,6 +403,75 @@ class AdminViewSummaries:
 
 
 
+
+    # def calculate_crisis_type_counts(self):
+    #     war_count = 0
+    #     environmental_count = 0
+    #     supply_shortage_count = 0
+    #     political_unrest_count = 0
+    #     displacement_count = 0
+    #     other_count = 0
+    #
+    #     with open('crisis_events.csv', 'r') as file:
+    #         reader = csv.DictReader(file)
+    #         for row in reader:
+    #             status = row['Crisis Type']
+    #             if status.lower() == 'war':
+    #                 war_count += 1
+    #             elif status.lower() == 'environmental':
+    #                 environmental_count += 1
+    #             elif status.lower() == 'political unrest':
+    #                 political_unrest_count += 1
+    #             elif status.lower() == 'displacement':
+    #                 displacement_count += 1
+    #             elif status.lower() == 'supply shortage':
+    #                 supply_shortage_count += 1
+    #             elif status.lower() == 'other':
+    #                 other_count += 1
+    #
+    #         canvas = tk.Canvas(self.window, width=300, height=200, bg="white")
+    #         canvas.grid(row=15, column=2, padx=10, pady=20)
+    #
+    #         # Sample crisis type counts
+    #         crisis_type_counts = self.calculate_crisis_type_counts()
+    #
+    #         # Draw bar chart
+    #         self.draw_bar_chart(crisis_type_counts)
+    #
+    #         # Add legend (key)
+    #         self.add_legend(crisis_type_counts)
+    #
+    #     crisis_type_counts = {
+    #         'War': war_count,
+    #         'Environmental': environmental_count,
+    #         'Supply Shortage': supply_shortage_count,
+    #         'Political Unrest': political_unrest_count,
+    #         'Displacement': displacement_count,
+    #         'Other': other_count,
+    #     }
+    #
+    #     return crisis_type_counts
+    #
+    # def draw_bar_chart(self, crisis_type_counts):
+    #     bar_width = 30
+    #     x_start = 50
+    #     x_spacing = 50
+    #
+    #     for i, (crisis_type, count) in enumerate(crisis_type_counts.items()):
+    #         x = x_start + i * x_spacing
+    #         y = 150 - count  # Invert the count for proper orientation
+    #         self.canvas.create_rectangle(x, y, x + bar_width, 150, fill='blue', outline='white')
+    #         self.canvas.create_text(x + bar_width / 2, 160, text=crisis_type, anchor=tk.CENTER)
+    #
+    # def add_legend(self, crisis_type_counts):
+    #     legend_colors_crisis_type = ['blue', 'green', 'yellow', 'purple', 'orange', 'red']
+    #
+    #     for i, (crisis_type, count) in enumerate(crisis_type_counts.items()):
+    #         # Draw legend rectangle
+    #         self.canvas.create_rectangle(10, 10 + i * 20, 30, 30 + i * 20, fill=legend_colors_crisis_type[i],
+    #                                      outline='white')
+    #         # Draw legend label
+    #         self.canvas.create_text(40, 20 + i * 20, text=crisis_type, anchor=tk.W, fill='white')
 
 
 
