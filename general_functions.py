@@ -1,8 +1,5 @@
 import tkinter as tk
-
-
-# THIS IS A TEMPORARY FILE DO NOT ADD ANYTHING TO THIS
-
+import pandas as pd
 
 def create_listbox_with_label(widget, text_label, row_num, column_num, list_of_options):
     '''
@@ -86,3 +83,117 @@ def check_is_numeric(variable, window, message_label, submit_button_row_num, sub
         window.update()
         message_label.grid(row=submit_button_row_num + 1, column=submit_button_column_num, columnspan=column_span)
         return False
+
+
+'''def validate_and_convert_data(input_data, original_data, row_index):
+    # List of valid months
+    valid_months = ['January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December']
+
+    validated_data = []
+
+    for i, col_name in enumerate(original_data.columns):
+        value = input_data[i]
+
+        if col_name == 'Camp ID':
+            validated_data.append(value if value.isdigit() and len(value) == 5 else original_data.at[row_index, 'Camp ID'])
+
+        elif col_name == 'Crisis Type' or col_name == 'Description' or col_name == 'Country':
+            validated_data.append(value)
+
+        elif col_name == 'Day':
+            validated_data.append(int(value) if value.isdigit() and 1 <= int(value) <= 31 else original_data.at[row_index, 'Day'])
+
+        elif col_name == 'Month':
+            validated_data.append(value if value in valid_months else original_data.at[row_index, 'Month'])
+
+        elif col_name == 'Year':
+            validated_data.append(int(value) if value.isdigit() and 2023 <= int(value) <= 2030 else original_data.at[row_index, 'Year'])
+
+        elif col_name == 'Status' or col_name == 'End Date':
+            validated_data.append(original_data.at[row_index, col_name])  # These fields cannot change
+
+        elif col_name in ['Number of Refugees', 'Crisis Length', 'Total Meals', 'Total Medicine', 'Meals/week', 'Medicine/week', 'Delivery Time (days)', 'Current No. of Refugees']:
+            validated_data.append(int(value) if value.isdigit() else original_data.at[row_index, col_name])
+
+        else:
+            validated_data.append(value)  # Default case for any other column
+
+    #return validated_data
+
+
+    casted_values = []
+    for i, col_name in enumerate(original_data.columns):
+        validated_value = validated_data[i]
+        col_type = original_data[col_name].dtype
+
+        if pd.api.types.is_integer_dtype(col_type):
+            # Convert to integer if possible
+            try:
+                casted_value = int(validated_value) if validated_value else original_data.at[row_index, col_name]
+            except ValueError:
+                casted_value = original_data.at[row_index, col_name]
+
+        elif pd.api.types.is_float_dtype(col_type):
+            # Convert to float if possible
+            try:
+                casted_value = float(validated_value) if validated_value else original_data.at[row_index, col_name]
+            except ValueError:
+                casted_value = original_data.at[row_index, col_name]
+
+        else:
+            # Use the string value as it is for other types
+            casted_value = validated_value if validated_value else original_data.at[row_index, col_name]
+
+        casted_values.append(casted_value)
+
+    return casted_values'''
+
+def validate_data(input_data, original_data, row_index):
+    valid_months = ['January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December']
+
+    validated_data = []
+    for i, col_name in enumerate(original_data.columns):
+        value = input_data[i]
+
+        # Apply validation rules based on column name
+        if col_name == 'Camp ID':
+            value = value if value.isdigit() and len(value) == 5 else original_data.at[row_index, col_name]
+        elif col_name == 'Month':
+            value = value if value in valid_months else original_data.at[row_index, col_name]
+        elif col_name == 'Day':
+            value = value if value.isdigit() and 1 <= int(value) <= 31 else original_data.at[row_index, col_name]
+        elif col_name == 'Year':
+            value = value if value.isdigit() and 2023 <= int(value) <= 2030 else original_data.at[row_index, col_name]
+        elif col_name in ['Status', 'End Date']:
+            value = original_data.at[row_index, col_name]
+        else:
+            value = value
+
+        validated_data.append(value)
+    return validated_data
+
+def cast_data(validated_data, original_data):
+    casted_values = []
+    for i, col_name in enumerate(original_data.columns):
+        value = validated_data[i]
+        col_type = original_data[col_name].dtype
+
+        if pd.api.types.is_integer_dtype(col_type):
+            try:
+                # Attempt to cast to integer, if possible
+                value = int(value)
+            except (ValueError, TypeError):
+                # If casting fails, keep the validated value
+                pass
+        elif pd.api.types.is_float_dtype(col_type):
+            try:
+                # Attempt to cast to float, if possible
+                value = float(value)
+            except (ValueError, TypeError):
+                # If casting fails, keep the validated value
+                pass
+
+        casted_values.append(value)
+    return casted_values
