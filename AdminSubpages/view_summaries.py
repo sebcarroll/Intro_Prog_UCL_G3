@@ -21,12 +21,6 @@ class AdminViewSummaries:
         end_plan_frame.grid_columnconfigure(0, weight=1)
         end_plan_frame.grid_rowconfigure(1, weight=3)
         end_plan_frame.grid_rowconfigure(2, weight=1)
-        # pie_chart_frame = tk.Frame(self.window)
-        # pie_chart_frame.grid(sticky="nsew", padx=5, pady=5)
-        # pie_chart_frame.grid_columnconfigure(0, weight=1)
-        # pie_chart_frame.grid_rowconfigure(1, weight=3)
-        # pie_chart_frame.grid_rowconfigure(2, weight=1)
-
 
         # Labels
         end_plan_title = tk.Label(end_plan_frame, text="View Plan Summaries", font=('Helvetica', 16))
@@ -62,8 +56,6 @@ class AdminViewSummaries:
         # Back button
         back_button = tk.Button(btn_frame, text='Back to Home', command=self.back_button_to_admin_main)
         back_button.grid(row=2, column=1, padx=5, pady=40)
-        # for i in self.window.winfo_children():
-        #     i.grid_forget()
 
 
         # CSV data
