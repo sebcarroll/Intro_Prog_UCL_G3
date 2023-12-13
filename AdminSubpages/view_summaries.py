@@ -9,7 +9,6 @@ class AdminViewSummaries:
     def __init__(self, window, back_button_to_admin_main):
         self.window = window
         self.back_button_to_admin_main = back_button_to_admin_main
-        self.volunteer_number = self.volunteer_number()
 
     def create_gui_view_summaries(self, window):
         # Main frame for this whole page
@@ -61,6 +60,7 @@ class AdminViewSummaries:
 
         # CSV data
         csv_file = "crisis_events.csv"
+        self.upload_csv_data(self.end_plan_tree, csv_file)
         # csv_data = self.load_csv_data(csv_file)
         try:
             self.upload_csv_data(self.end_plan_tree, csv_file)
@@ -68,21 +68,30 @@ class AdminViewSummaries:
             messagebox.showwarning("No data found",
                                    "There is a problem accessing the database\n\nThe file may be missing or corrupted")
 
+
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename)
 
-        for camp_ID, count in self.volunteer_number.items():
-            if camp_ID in data['Camp ID'].values:
-                data.loc[data['Camp ID'] == camp_ID, 'No. Volunteers'] = count
+        # Convert 'Camp ID' to integer, handling missing or non-integer values
+        data['Camp ID'] = pd.to_numeric(data['Camp ID'], errors='coerce').fillna(0).astype('int64')
+        #print(data['Camp ID'])
 
-        #print(data)
+        volunteer_counts = self.volunteer_camp_count()
+        #print("Volunteer counts from method:", volunteer_counts)
+
+        # Ensure volunteer_counts is a Series and perform mapping
+        if isinstance(volunteer_counts, pd.Series):
+            data['Volunteer Count'] = data['Camp ID'].map(volunteer_counts).fillna(0).astype('int64')
+            #print(data['Volunteer Count'])
+        else:
+            data['Volunteer Count'] = 0
 
         # The following block will convert floats to integers for the GUI to remove the ".0"
         # columns with float numbers
         float_columns = data.select_dtypes(include=['float']).columns
         # Convert floats to integers for display in treeview
         for col in float_columns:
-            data[col] = data[col].fillna(0).astype(int)
+            data[col] = data[col].fillna(0).astype('int64')
 
         tree.delete(*tree.get_children())
         tree['columns'] = list(data.columns)
@@ -95,7 +104,6 @@ class AdminViewSummaries:
 
         for index, row in data.iterrows():
             tree.insert("", tk.END, values=list(row), iid=str(index))
-
 
 
     def delete_csv_data_entry(self, tree, filename):
@@ -236,20 +244,17 @@ class AdminViewSummaries:
         except:
             messagebox.showinfo("Data Types", "Please select valid data types to save your edit")
 
-    def volunteer_number(self):
-        volunteer_df = pd.read_csv("volunteer_info.csv")
-        volunteer_number = {}
-        for index, row in volunteer_df.iterrows():
-            camp_id = row['Camp ID']
 
-            if pd.notna(camp_id):
-                if camp_id not in volunteer_number:
-                    volunteer_number[camp_id] = 1
-                else:
-                    volunteer_number[camp_id] += 1
-
-        #print(volunteer_number)
-        return volunteer_number
+    def volunteer_camp_count(self):
+        try:
+            volunteer_info_df = pd.read_csv("volunteer_info.csv")
+            # Convert 'Camp ID' to integer
+            volunteer_info_df['Camp ID'] = pd.to_numeric(volunteer_info_df['Camp ID'], errors='coerce').fillna(0).astype('int64')
+            #print(volunteer_info_df['Camp ID'].value_counts())
+            return volunteer_info_df['Camp ID'].value_counts()
+        except Exception as e:
+            messagebox.showwarning("Error", f"Error in processing volunteer_info.csv: {e}")
+            return pd.Series()
 
     def cancel_btn(self, edit_plan_window, selected_item):
         edit_plan_window.destroy()
