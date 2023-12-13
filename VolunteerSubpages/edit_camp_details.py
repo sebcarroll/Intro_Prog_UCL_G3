@@ -47,14 +47,14 @@ def edit_camp_details(window, y_camp_info, back_button_to_volunteer_main):
 def edit_refugee_no(df, selected_camp_id):
     try:
         if selected_camp_id:
-            current_capacity = df.loc[df["Camp ID"] == selected_camp_id, 'Refugee Count'].values[0]
+            current_capacity = df.loc[df["Camp ID"] == selected_camp_id, 'Refugees'].values[0]
             new_capacity = simpledialog.askinteger("Add/Remove refugees", f"Current total Capacity for Camp ID {selected_camp_id}: {current_capacity}"
                                                                           f"\nHow many refugees would you like to add/remove?", initialvalue=1)
 
 
             if type(new_capacity) == int:
                 # Update the DataFrame with the new value
-                df.loc[df["Camp ID"] == selected_camp_id, 'Refugee Capacity'] += new_capacity
+                df.loc[df["Camp ID"] == selected_camp_id, 'Capacity'] += new_capacity
                 df.to_csv('crisis_events.csv', index=False)
 
 

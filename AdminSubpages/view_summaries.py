@@ -81,10 +81,10 @@ class AdminViewSummaries:
 
         # Ensure volunteer_counts is a Series and perform mapping
         if isinstance(volunteer_counts, pd.Series):
-            data['Volunteer Count'] = data['Camp ID'].map(volunteer_counts).fillna(0).astype('int64')
+            data['Volunteers'] = data['Camp ID'].map(volunteer_counts).fillna(0).astype('int64')
             #print(data['Volunteer Count'])
         else:
-            data['Volunteer Count'] = 0
+            data['Volunteers'] = 0
 
         # The following block will convert floats to integers for the GUI to remove the ".0"
         # columns with float numbers
@@ -253,7 +253,9 @@ class AdminViewSummaries:
             #print(volunteer_info_df['Camp ID'].value_counts())
             return volunteer_info_df['Camp ID'].value_counts()
         except Exception as e:
-            messagebox.showwarning("Error", f"Error in processing volunteer_info.csv: {e}")
+            #messagebox.showwarning("Error", f"Error in processing volunteer_info.csv: {e}")
+            messagebox.showwarning("No data found",
+                                   "There is a problem accessing the database\n\nThe file may be missing or corrupted")
             return pd.Series()
 
     def cancel_btn(self, edit_plan_window, selected_item):
