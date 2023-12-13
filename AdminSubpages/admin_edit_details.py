@@ -136,7 +136,6 @@ class AdminEditVolunteerDetails:
         # Create a new window for creating a new account
         self.create_account_window = tk.Toplevel(self.window)
         self.create_account_window.title("Create New Account")
-        self.create_account_window.geometry('800x600')
 
         # Labels and Entry widgets for user input
         tk.Label(self.create_account_window, text="Username:").grid(row=1, column=0, padx=10, pady=10)
@@ -189,10 +188,10 @@ class AdminEditVolunteerDetails:
                                        'Deactivated': 'False'
                                    }))
 
-        self.create_account_window.rowconfigure(9, weight=1)
-        print("Placing the button on the grid")
-        confirm_button.grid(row=9, column=0, columnspan=2, pady=10, ipadx=20, ipady=15, sticky='ew')
-        print("Button should be placed now")
+        confirm_button.grid(row=9, column=0,columnspan=2, pady=10, ipadx=20, ipady=15)
+        for i in range(10):
+            self.create_account_window.grid_rowconfigure(i, weight=1)
+        self.create_account_window.grid_columnconfigure(0, weight=1)
 
     def create_account(self, new_volunteer):
         try:
@@ -205,9 +204,11 @@ class AdminEditVolunteerDetails:
             submit_button_row = 10
             submit_button_column = 0
             submit_column_span = 2
-            message_label.config(text="Values Submitted and Saved. Please return to the home page.")
-            message_label.grid(row=submit_button_row + 1, column=submit_button_column, columnspan=submit_column_span,
-                               sticky='W')
+            username = new_volunteer['Name']
+            # message_label.config(text="Values Submitted and Saved. Please return to the home page.")
+            # message_label.grid(row=submit_button_row + 1, column=submit_button_column, columnspan=submit_column_span,
+            #                    sticky='W')
+            tk.messagebox.showinfo(title='Details Saved', message=f"Details for {username} successfully created.")
 
         except FileNotFoundError:
             messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
@@ -300,6 +301,9 @@ class AdminEditVolunteerDetails:
                                                        ))
 
                             confirm_button.grid(row=9, column=0, columnspan=2, pady=10, ipadx=20, ipady=15)
+                            for i in range(10):
+                                self.edit_details_window.grid_rowconfigure(i, weight=1)
+                            self.edit_details_window.grid_columnconfigure(0, weight=1)
 
             except FileNotFoundError:
                 messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
@@ -321,7 +325,7 @@ class AdminEditVolunteerDetails:
                     # Only include fields that match the original fieldnames
                     writer.writerow({fieldname: row[fieldname] for fieldname in fieldnames})
 
-            messagebox.showinfo("Update", f"Details for {old_username} updated successfully.")
+            tk.messagebox.showinfo("Update", f"Details for {old_username} updated successfully.")
             edit_details_window.destroy()
         except FileNotFoundError:
             messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
@@ -334,19 +338,19 @@ class AdminEditVolunteerDetails:
             confirm_reactivate = messagebox.askokcancel('Confirmation', f"Are you sure you want to reactivate account for '{username_to_reactivate}'?")
             if confirm_reactivate:
                 self.update_account_status(username_to_reactivate, deactivated=False)
-                messagebox.showinfo(f"Account for f'{username_to_reactivate}' reactivated successfully")
+                tk.messagebox.showinfo(f"Account for f'{username_to_reactivate}' reactivated successfully")
         else:
-            messagebox.showwarning("No Selection", "Please select a volunteer.")
+            tk.messagebox.showwarning("No Selection", "Please select a volunteer.")
 
     def deactivate_account(self):
         selected_index = self.volunteer_listbox.curselection()
         if selected_index:
             username_to_deactivate = self.volunteer_listbox.get(selected_index)
-            confirm_deactivate = messagebox.askokcancel("Confirmation", f"Are you sure you want to deactivate the account for '{username_to_deactivate}'?")
+            confirm_deactivate = tk.messagebox.askokcancel("Confirmation", f"Are you sure you want to deactivate the account for '{username_to_deactivate}'?")
 
             if confirm_deactivate:
                 self.update_account_status(username_to_deactivate, deactivated=True)
-                messagebox.showinfo("Success" f"The account for '{username_to_deactivate}' has been deactivated successfully")
+                tk.messagebox.showinfo("Success" f"The account for '{username_to_deactivate}' has been deactivated successfully")
         else:
             messagebox.showwarning("No Selection", "Please select a volunteer.")
 
@@ -354,14 +358,14 @@ class AdminEditVolunteerDetails:
         selected_index = self.volunteer_listbox.curselection()
         if selected_index:
             username_to_delete = self.volunteer_listbox.get(selected_index)
-            confirm_delete = messagebox.askokcancel("Confirmation",
+            confirm_delete = tk.messagebox.askokcancel("Confirmation",
                                                     f"Are you sure you want to delete the account '{username_to_delete}'?")
             if confirm_delete:
                 self.remove_account(username_to_delete)
-                messagebox.showinfo("Success", f"The account '{username_to_delete}' has been deleted successfully.")
+                tk.messagebox.showinfo("Success", f"The account '{username_to_delete}' has been deleted successfully.")
             self.remove_account(username_to_delete)
         else:
-            messagebox.showwarning("No Selection", "Please select a volunteer.")
+            tk.messagebox.showwarning("No Selection", "Please select a volunteer.")
 
     def remove_account(self, username):
         try:
