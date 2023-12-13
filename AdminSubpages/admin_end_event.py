@@ -27,10 +27,7 @@ class AdminEndEvent:
 
         self.end_plan_tree = ttk.Treeview(end_plan_frame, height=15)
         self.end_plan_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
-        # CSV data
-        csv_file = "crisis_events.csv"
-        # csv_data = self.load_csv_data(csv_file)
-        self.upload_csv_data(self.end_plan_tree, csv_file)
+
 
 
         # Button Frame:
@@ -47,6 +44,15 @@ class AdminEndEvent:
         back_button = tk.Button(btn_frame, text='Back to Home', command=self.back_button_to_admin_main)
         back_button.grid(row=2, column=1, padx=5, pady=40)
 
+        # CSV data
+        csv_file = "crisis_events.csv"
+        # csv_data = self.load_csv_data(csv_file)
+        try:
+            self.upload_csv_data(self.end_plan_tree, csv_file)
+        except:
+            messagebox.showwarning("No data found",
+                                   "There is a problem accessing the database\n\nThe file may be missing or corrupted")
+            return
 
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename)

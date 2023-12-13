@@ -2,9 +2,14 @@ import tkinter as tk
 from tkinter import ttk
 import pandas as pd
 from tkinter import messagebox
-from general_functions import validate_data, cast_data
+import os
+# <<<<<<< HEAD
+# from general_functions import validate_data, cast_data
 import csv
-
+# =======
+from general_functions import validate_data
+# >>>>>>> b31256ca14805062552b86c986eb7f4ee3f48127
+from tkinter import PhotoImage
 
 class AdminViewSummaries:
     def __init__(self, window, back_button_to_admin_main):
@@ -53,16 +58,21 @@ class AdminViewSummaries:
         back_button = tk.Button(btn_frame, text='Back to Home', command=self.back_button_to_admin_main)
         back_button.grid(row=2, column=1, padx=5, pady=40)
 
-
-
         # CSV data
         csv_file = "crisis_events.csv"
         # csv_data = self.load_csv_data(csv_file)
-        self.upload_csv_data(self.end_plan_tree, csv_file)
+        try:
+            self.upload_csv_data(self.end_plan_tree, csv_file)
+        except:
+            messagebox.showwarning("No data found",
+                                   "There is a problem accessing the database\n\nThe file may be missing or corrupted")
 
         # pie chart
         self.create_pie_chart()
         self.create_pie_chart_crisis_type()
+
+        # map
+        self.create_map()
 
 
 
@@ -160,7 +170,8 @@ class AdminViewSummaries:
 
         # Create a pie chart using canvas
         canvas = tk.Canvas(self.window, width=200, height=200)
-        canvas.grid(row=15, column=10)
+        # canvas.grid(row=17, column=0, padx=10, pady=5)
+        canvas.place(x=200, y=400)
 
         # Draw active slice
         canvas.create_arc(50, 50, 150, 150, start=0, extent=active_percentage, fill='green', outline='white')
@@ -169,12 +180,12 @@ class AdminViewSummaries:
                           outline='white')
 
         # Add legend (key)
-        legend_labels = ['Active Crisis', 'Inactive Crisis']
-        legend_colors = ['green', 'red']
+        legend_labels_crisis_status = ['Active Crisis', 'Inactive Crisis']
+        legend_colors_crisis_status = ['green', 'red']
 
-        for i, label in enumerate(legend_labels):
+        for i, label in enumerate(legend_labels_crisis_status):
             # Draw legend rectangle
-            canvas.create_rectangle(10, 10 + i * 20, 30, 30 + i * 20, fill=legend_colors[i], outline='white')
+            canvas.create_rectangle(10, 10 + i * 20, 30, 30 + i * 20, fill=legend_colors_crisis_status[i], outline='white')
             # Draw legend label
             canvas.create_text(40, 20 + i * 20, text=label, anchor=tk.W, fill='white')
 
@@ -214,8 +225,8 @@ class AdminViewSummaries:
         other_percentage = (other_count/ total) * 360
 
         # Create a pie chart using canvas
-        canvas = tk.Canvas(self.window, width=200, height=200)
-        canvas.grid(row=15, column=1)
+        canvas = tk.Canvas(self.window, width=300, height=200)
+        canvas.place(x=500, y=400)
 
         # Draw slices  of pie chart
 
@@ -229,18 +240,66 @@ class AdminViewSummaries:
         # canvas_legend = tk.Canvas(self.window, width=100, height=150)
         # canvas_legend.grid(row=, column=5)
         # Add legend (key)
-        legend_labels = ['War', 'Environmental', 'Supply Shortage', 'Political Unrest', 'Displacement', 'Other']
-        legend_colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange']
+        legend_labels_crisis_type = ['War', 'Environmental', 'Supply Shortage', 'Political Unrest', 'Displacement', 'Other']
+        legend_colors_crisis_type = ['red', 'blue', 'green', 'yellow', 'purple', 'orange']
 
-
-        for i, label in enumerate(legend_labels):
+        for i, label in enumerate(legend_labels_crisis_type):
             # Draw legend rectangle
-            canvas.create_rectangle(10, 10 + i * 20, 30, 30 + i * 20, fill=legend_colors[i], outline='white')
+            canvas.create_rectangle(10, 10 + i * 20, 30, 30 + i * 20, fill=legend_colors_crisis_type[i], outline='white')
             # Draw legend label
             canvas.create_text(40, 20 + i * 20, text=label, anchor=tk.W, fill='white')
 
 
+    # def create_map(self):
+    #
+    #     print("Creating map...")
+    #
+    #     # Create a canvas for the map
+    #     # map_canvas.place(x=800, y=400)
+    #
+    #     # Read data from CSV file for crisis event locations
+    #     locations = self.read_location_data_from_csv('crisis_events.csv')
+    #     print("Loaded locations:", locations)
+    #
+    #     countries = [location['country'] for location in locations]
+    #
+    #     country_coordinates = {
+    #         'Nigeria': (50, 100),
+    #         'Sudan': (100, 150),
+    #         'South Sudan': (150, 200),
+    #         'Somalia': (50, 250),
+    #         'Yemen': (100, 50),
+    #         'Afghanistan': (150, 100),
+    #         'England': (200, 150),
+    #     }
+    #
+    #     # Load the world map image
+    #     world_map_image = tk.PhotoImage(file='/Users/aymanasaria/PycharmProjects/Untitled/AdminSubpages/world_map.png')  # Replace 'world_map.png' with the path to your image file
+    #     world_map_image = tk.PhotoImage(file=os.path.abspath('/Users/aymanasaria/PycharmProjects/Untitled/AdminSubpages/world_map.png'))
+    #     # Create a canvas for the world map
+    #     world_map_canvas = tk.Canvas(self.window, width=400, height=200)
+    #     # world_map_canvas.grid(row=10, column=10, padx=10, pady=5)
+    #     world_map_canvas.place(x=800,y=400)
+    #
+    #     # Display the world map image on the canvas
+    #     world_map_canvas.create_image(0, 0, anchor=tk.W, image=world_map_image)
+    #
+    #     # for country in countries:
+    #     #     if country in country_coordinates:
+    #     #         x, y = country_coordinates[country]
+    #     #         world_map_canvas.create_oval(x - 5, y - 5, x + 5, y + 5, fill='red')
+    #     #         world_map_canvas.create_text(x, y - 10, text=country, anchor=tk.CENTER)
 
+    def read_location_data_from_csv(self, crisis_events):
+        data = pd.read_csv(crisis_events)
+        locations = []
+        for index, row in data.iterrows():
+            # Assuming x and y are columns in your CSV file
+            country = row['Country']
+            crisis_type = row['Crisis Type']
+            if pd.notna(country) and pd.notna(crisis_type):
+                locations.append({'country': country, 'crisis_type': crisis_type})
+        return locations
 
     def edit_csv_data_entry(self):
         selected_item = self.end_plan_tree.focus()
@@ -302,70 +361,23 @@ class AdminViewSummaries:
             if selected_id in data[data.columns[0]].values:
                 row_index = data[data[data.columns[0]] == selected_id].index[0]
 
-                # Validate and convert data using the validate function in general functions file
-                #validated_values = validate_and_convert_data(updated_values, data, row_index)
-
+                # VALIDATE data using the validate function in general functions file
                 validated_values = validate_data(updated_values, data, row_index)
-                casted_values = cast_data(validated_values, data)
 
-                # start of new code for saving data:
-                """for i, col_name in enumerate(data.columns):
-                    updated_value = updated_values[i]
-
-                    # Check if the input field is not empty
-                    if updated_value != '':
-                        # Determine the column data type in the DataFrame
-                        col_type = data[col_name].dtype
-
-                        # Check if the column is of integer type
-                        if col_type == 'int64':
-                            if updated_value.isdigit():
-                                # Convert to integer if input is a digit
-                                updated_values[i] = int(updated_value)
-                            else:
-                                # If input is not a digit, retain the original value
-                                updated_values[i] = data.at[row_index, col_name]
-
-                        # Check if the column is of float type
-                        elif col_type == 'float64':
-                            try:
-                                # Try converting to float
-                                updated_values[i] = float(updated_value)
-                            except ValueError:
-                                # If input is not a valid float, retain the original value
-                                updated_values[i] = data.at[row_index, col_name]
-
-                        # For string or other types, keep the new value as it is
-                        else:
-                            updated_values[i] = updated_value
-
-                    # If the input field is empty, retain the original value
-                    else:
-                        updated_values[i] = data.at[row_index, col_name]"""
-
-                # Iterate over each column and convert updated values to the correct type
-                '''for i, col_att in enumerate(data.columns):
+                # CASTING to correct data type for the column
+                for i, col_att in enumerate(data.columns):
                     col_type = data[col_att].dtype
 
                     # Convert the value to the column's type
                     if pd.api.types.is_numeric_dtype(col_type):
-                        if updated_values[i] != '':
-                            updated_values[i] = col_type.type(updated_values[i])
+                        if validated_values[i] != '':
+                            validated_values[i] = col_type.type(validated_values[i])
                         else:
-                            updated_values[i] = pd.NA'''
+                            validated_values[i] = pd.NA
 
-                '''data.loc[row_index] = updated_values
+                data.loc[row_index] = validated_values
                 data.to_csv("crisis_events.csv", index=False)
-                self.end_plan_tree.item(selected_item, values=updated_values)'''
-
-                '''data.loc[row_index] = validated_values
-                data.to_csv("crisis_events.csv", index=False)
-                self.end_plan_tree.item(selected_item, values=validated_values)'''
-
-                data.loc[row_index] = casted_values
-                data.to_csv("crisis_events.csv", index=False)
-                self.end_plan_tree.item(selected_item, values=casted_values)
-
+                self.end_plan_tree.item(selected_item, values=validated_values)
 
             edit_plan_window.destroy()
             # CSV data
@@ -374,7 +386,6 @@ class AdminViewSummaries:
             self.upload_csv_data(self.end_plan_tree, csv_file)
 
         except:
-
             messagebox.showinfo("Data Types", "Please select valid data types to save your edit")
 
 
