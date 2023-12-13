@@ -212,7 +212,7 @@ class AdminCreatePlan:
 
             self.events_dict = {
                 'Camp ID': new_camp_id,
-                'Crisis type': crisis_type,
+                'Crisis Type': crisis_type,
                 'Description': description,
                 'Country': country,
                 'Day': day,
