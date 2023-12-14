@@ -57,7 +57,7 @@ class AdminViewSummaries:
         delete_btn.grid(row=0, column=2, padx=20, pady=(50,10))
 
         # View data button
-        generate_data_btn = tk.Button(btn_frame, text="Generate Charts", command=lambda: self.generate_chart_window())
+        generate_data_btn = tk.Button(btn_frame, text="Generate Charts & Map", command=lambda: self.generate_chart_window())
         generate_data_btn.grid(row=0, column=3, padx=20, pady=(50,10))
 
         # Back button
