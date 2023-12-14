@@ -240,6 +240,11 @@ class AdminCreatePlan:
             #self.save_plan_button.config(state=tk.DISABLED)
             #self.save_plan_button.destroy()
 
+            self.clear_entry(self.crisis_type_combobox)
+            self.clear_entry(self.description_label_Entry)
+            self.clear_entry(self.country_Entry)
+
+
         except option_no_exist:
             tk.messagebox.showinfo(title="Option does not exist", message="Please make sure you've selected valid options")
         except (invalid_date, ValueError):
@@ -252,7 +257,6 @@ class AdminCreatePlan:
         value = random.randint(10000, 99999)
         print(value)
         return value
-
 
     def save_to_csv(self):
 
@@ -287,3 +291,12 @@ class AdminCreatePlan:
                 writer.writeheader()
             writer.writerows(data)
 
+    @staticmethod
+    def clear_entry(entry):
+        #entry.delete(0, tk.END)
+        if isinstance(entry, tk.Entry):
+            entry.delete(0, tk.END)
+        elif isinstance(entry, ttk.Combobox):
+            entry.set('')
+        elif isinstance(entry, tk.Text):
+            entry.delete("1.0", tk.END)
