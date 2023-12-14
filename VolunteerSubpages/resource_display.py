@@ -16,6 +16,11 @@ def resource_display(window, back_button_to_volunteer_main):
 
     resources_df = resources_df.fillna(0)
 
+    # Convert float columns to integers
+    float_columns = ['Meals(T)', 'Medicine(T)', 'Duration', 'Capacity', 'Meals/w', 'Medicine/w']
+    for col in float_columns:
+        resources_df[col] = resources_df[col].astype(int)
+
     columns = ['Camp ID', 'Capacity', 'Meals(T)', 'Medicine(T)', 'Meals/w', 'Medicine/w', 'Delivery Time(d)']
 
     total_meals = 100000000
@@ -56,13 +61,14 @@ def resource_display(window, back_button_to_volunteer_main):
     tree.heading('Delivery Time(d)', text='Delivery Time(d)')
 
 
-    tree.column('Camp ID', width=80)
-    tree.column('Capacity', width=105)
-    tree.column('Meals(T)', width=100)
-    tree.column('Medicine(T)', width=125)
-    tree.column('Meals/w', width=150)
-    tree.column('Medicine/w', width=175)
-    tree.column('Delivery Time(d)', width=125)
+    tree.column('Camp ID', anchor="center", width=80)
+    tree.column('Capacity', anchor="center", width=105)
+    tree.column('Meals(T)', anchor="center", width=100)
+    tree.column('Medicine(T)', anchor="center", width=125)
+    tree.column('Meals/w', anchor="center", width=150)
+    tree.column('Medicine/w', anchor="center", width=175)
+    tree.column('Delivery Time(d)', anchor="center", width=125)
+
 
     for _, row in resources_df.iterrows():
         tree.insert('', tk.END, values=row.tolist())
