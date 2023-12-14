@@ -87,17 +87,17 @@ class AdminHomepage:
 
     def create_gui_admin_main(self):
         # WELCOME TITLE
-        self.admin_welcome_title = tk.Label(self.window, text='Welcome to the admin portal', font=('Arial', 40), bg='grey', fg='white', relief=tk.RAISED, borderwidth=5)
+        self.admin_welcome_title = tk.Label(self.window, text='Welcome to the Admin Portal', font=('Arial', 40), bg='grey', fg='white', relief=tk.RAISED, borderwidth=5)
         self.admin_welcome_title.grid(row=0, column=0, columnspan=2, sticky="nsew", padx=10, pady=20)
         self.admin_welcome_title.configure(background="grey")
 
         # MAIN BUTTONS
         # Create new event button
-        self.btn_create_event = tk.Button(self.window, text="Create new event", command=self.create_event)
+        self.btn_create_event = tk.Button(self.window, text="Create New Event", command=self.create_event)
         self.btn_create_event.grid(row=1, column=0, pady=(50,10), ipadx=93, ipady=25)
 
         # End an event button
-        self.btn_end_event = tk.Button(self.window, text="End an event", command=self.end_event)
+        self.btn_end_event = tk.Button(self.window, text="End an Event", command=self.end_event)
         self.btn_end_event.grid(row=2, column=0, pady=10, ipadx=105, ipady=25)
 
         # View summaries button
@@ -105,11 +105,11 @@ class AdminHomepage:
         self.btn_view_summaries.grid(row=3, column=0, pady=10, ipadx=98, ipady=25)
 
         # Edit volunteer accounts button
-        self.btn_edit_accounts = tk.Button(self.window, text="Edit volunteer accounts", command=self.edit_accounts)
+        self.btn_edit_accounts = tk.Button(self.window, text="Edit Volunteer Accounts", command=self.edit_accounts)
         self.btn_edit_accounts.grid(row=4, column=0, pady=10, ipadx=80, ipady=25)
 
         # Allocate resources button
-        self.btn_allocate_resources = tk.Button(self.window, text="Allocate resources", command=self.allocate_resources)
+        self.btn_allocate_resources = tk.Button(self.window, text="Allocate Resources", command=self.allocate_resources)
         self.btn_allocate_resources.grid(row=5, column=0, pady=(10,50), ipadx=93, ipady=25)
 
 

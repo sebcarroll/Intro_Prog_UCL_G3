@@ -125,7 +125,7 @@ class VolunteerHomepage():
 
         self.create_gui_volunteer_main()
     def create_gui_volunteer_main(self):
-        self.t_summary_title = tk.Label(self.window, text='Welcome to the volunteer portal', font=('Arial Bold', 40),
+        self.t_summary_title = tk.Label(self.window, text='Welcome to the Volunteer Portal', font=('Arial Bold', 40),
                                         bg='grey', fg='white')
         self.t_summary_title.grid(row=0, column=0, columnspan=2, sticky='news', padx=20, pady=10)
         self.t_summary_title.configure(background='grey')
@@ -134,17 +134,17 @@ class VolunteerHomepage():
         self.show_camp_id_label = tk.Label(self.window, text=f"{self.camp_id_label}", font=("Arial Bold", 15), fg="black")
         self.show_camp_id_label.grid(row=2, column=0, pady=10, ipadx=0, ipady=0)
 
-        self.t_summary_editdetails = tk.Button(self.window, text='Personal information',
+        self.t_summary_editdetails = tk.Button(self.window, text='Personal Information',
                                                command=self.t_personal_information_base)
         self.t_summary_editdetails.grid(row=3, column=0, pady=(30, 10), ipadx=98, ipady=25)
 
-        self.t_summary_editcamp = tk.Button(self.window, text='Edit camp information', command=self.t_edit_camp)
+        self.t_summary_editcamp = tk.Button(self.window, text='Edit Camp Information', command=self.t_edit_camp)
         self.t_summary_editcamp.grid(row=4, column=0, pady=10, ipadx=98, ipady=25)
 
-        self.t_summary_refugee = tk.Button(self.window, text='Create a refugee profile', command=self.t_create_refugee)
+        self.t_summary_refugee = tk.Button(self.window, text='Create a Refugee Profile', command=self.t_create_refugee)
         self.t_summary_refugee.grid(row=5, column=0, pady=10, ipadx=90, ipady=25)
 
-        self.t_summary_resources = tk.Button(self.window, text='Display resources available',
+        self.t_summary_resources = tk.Button(self.window, text='Display Resources Available',
                                              command=self.t_display_resources)
         self.t_summary_resources.grid(row=6, column=0, pady=10, ipadx=85, ipady=25)
 
