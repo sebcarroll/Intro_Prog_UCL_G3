@@ -137,7 +137,7 @@ class AdminCreatePlan:
         description_label.grid(row=11, column=3, padx=5)
         self.description_label_Entry = tk.Text(new_plan_frame, height=7, width=20, font=("TkinterDefault", 10))
         self.description_label_Entry.grid(row=11, column=4, padx=5)
-        self.description_label_Entry.bind('<KeyRelease>', lambda event: self.character_limit())
+        self.description_label_Entry.bind('<KeyRelease>', lambda event: self.character_lim())
 
         country_label = tk.Label(new_plan_frame, text='Country of crisis', font=('TkinterDefault', 15))
         country_label.grid(row=1, column=3, padx=5)
@@ -157,9 +157,14 @@ class AdminCreatePlan:
 
 
 
-    def character_limit(self):
-        if len(self.description_label_Entry.get()) > 100:
-            self.description_label_Entry.delete(100, tk.END)
+    # def character_limit(self):
+    #     if len(self.description_label_Entry.get(1, tk.END)) > 100:
+    #         self.description_label_Entry.delete(101, tk.END)
+
+    def character_lim(self):
+        if len(self.description_label_Entry.get("1.0", tk.END)) > 100:
+            messagebox.showerror('Error', 'Description must contain less than 100 characters')
+            self.description_label_Entry.delete("1.0", tk.END)
 
     def plan_dict(self):
         try:
