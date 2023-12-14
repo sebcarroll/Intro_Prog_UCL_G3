@@ -10,6 +10,7 @@ from AdminSubpages.admin_resource_allocation import AdminResourceAllocation
 # Imports for the menu commands
 from AdminSubpages.view_summaries_with_pie_chart import AdminViewSummariesWithCharts
 from AdminSubpages.admin_refugee_profiles import AdminRefugeeDisplay
+from AdminSubpages.admin_volunteer_accounts import AdminVolunteerDisplay
 
 class AdminHomepage:
     def __init__(self, root, go_to_landing_page):
@@ -30,7 +31,7 @@ class AdminHomepage:
         # Instances for menu commands
         self.view_summaries_with_pie_chart = AdminViewSummariesWithCharts(self.window, self.back_button_to_admin_main)
         self.admin_display_refugees = AdminRefugeeDisplay(self.window, self.back_button_to_admin_main)
-
+        self.admin_display_volunteers = AdminVolunteerDisplay(self.window, self.back_button_to_admin_main)
 
 
         self.window.bind('<F11>', self.toggle_fullscreen)
@@ -69,7 +70,7 @@ class AdminHomepage:
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Accounts", menu=file_menu)
         file_menu.add_command(label="Create", command=self.create_volunteer_account)
-        file_menu.add_command(label="Volunteers", command=self.do_nothing)
+        file_menu.add_command(label="Volunteers", command=self.edit_view_delete_volunteers)
         file_menu.add_separator()
         file_menu.add_command(label="Admin", command=self.do_nothing)
         # create a menu item 5
@@ -166,7 +167,8 @@ class AdminHomepage:
     def edit_view_delete_refugee(self):
         self.admin_display_refugees.create_gui_refugee_display(self)
 
-
+    def edit_view_delete_volunteers(self):
+        self.admin_display_volunteers.create_gui_volunteer_display(self)
 
 
 
