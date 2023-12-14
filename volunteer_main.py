@@ -35,7 +35,9 @@ class VolunteerHomepage():
         self.window.title('Volunteer Homepage')
         self.window.geometry('1300x600')
 
+        self.admin_help = AdminHelp(self.window, self.back_button_to_volunteer_main)
         self.refugee_display_instance = RefugeeDisplay(self.window, self.back_button_to_volunteer_main)
+        
         self.camp_id_label = self.get_camp_id_for_volunteer()
         self.show_camp_id_label = None
 
