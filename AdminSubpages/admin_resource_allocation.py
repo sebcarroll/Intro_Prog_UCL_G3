@@ -123,15 +123,14 @@ class AdminResourceAllocation:
     def update_number_of_refugees(self, event):
         selected_camp_id = self.camp_ID_box.get()
         print(selected_camp_id)
+        number_of_actual_refugees = 0
         try:
             with open('refugee_info.csv', 'r') as file:
                     csv_reader = csv.reader(file)
                     next(csv_reader)
                     for row in csv_reader:
-                        if selected_camp_id == row[0]:
-                            number_of_actual_refugees = int(row[9])
-                        else:
-                            number_of_actual_refugees = 0
+                        if int(selected_camp_id) == int(float(row[1])):
+                            number_of_actual_refugees = number_of_actual_refugees + 1
         except FileNotFoundError:
             print("Error: 'refugee_info.csv' file not found.")
         self.refugee_count.config(text=str(number_of_actual_refugees))

@@ -26,7 +26,7 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         self.exit_software = exit_software
 
         try:
-            self.y_personal_info = pd.read_csv('volunteer_info.csv', index_col='Username')
+            self.y_personal_info = pd.read_csv('../volunteer_info.csv', index_col='Username')
             self.y_personal_info = self.y_personal_info.to_dict(orient='index')
             print(self.y_personal_info)
 
@@ -45,7 +45,7 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
             df = pd.DataFrame.from_dict(self.y_personal_info, orient='index')
             df.index.name = 'Username'
             df.to_csv('volunteer_info.csv', index='Username')
-            self.y_personal_info = pd.read_csv('volunteer_info.csv')
+            self.y_personal_info = pd.read_csv('../volunteer_info.csv')
 
         #self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}
 
