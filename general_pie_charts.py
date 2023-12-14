@@ -1,5 +1,8 @@
 import tkinter as tk
 import csv
+import os
+import pandas as pd
+from PIL import Image, ImageTk
 
 class SummaryCharts:
     def __init__(self, window, back_button_to_admin_main):
@@ -10,11 +13,12 @@ class SummaryCharts:
         # Create a new window for the pie chart
         generate_charts_window = tk.Toplevel(self.window)
         generate_charts_window.title("View Charts")
-        generate_charts_window.geometry("800x400")
+        generate_charts_window.geometry("1000x800")
 
         # Call the method to create the pie chart in the new window
         self.create_pie_chart_status(generate_charts_window)
         self.create_bar_chart_crisis_type(generate_charts_window)
+        self.show_map(generate_charts_window)
 
     def create_pie_chart_status(self, window):
         # Read data from CSV file
@@ -153,3 +157,55 @@ class SummaryCharts:
             canvas_legend_bar.create_rectangle(10, 10 + i * 20, 30, 30 + i * 20, fill=legend_colors_crisis_type[i], outline='white')
             # Draw legend label
             canvas_legend_bar.create_text(40, 20 + i * 20, text=label, anchor=tk.W, fill='black')
+
+    def show_map(self, window):
+
+        # Create a canvas for the map
+        map_canvas = tk.Canvas(window, width=800, height=400)
+        map_canvas.place(x=400,y=500)
+
+        # Load the world map image with a relative path using Pillow
+        image_path = 'AdminSubpages/world_map.png'
+        world_map_image = Image.open(image_path)
+        self.world_map_image_tk = ImageTk.PhotoImage(world_map_image)
+
+        # # Load the world map image with a relative path
+        # world_map_image = tk.PhotoImage(file='AdminSubpages/world-map.gif')
+        # map_canvas.create_image(0, 0, anchor=tk.NW, image=world_map_image)
+
+        # Read data from CSV file for crisis event locations
+        locations = self.read_location_data_from_csv('crisis_events.csv')
+        # Checking locations are being loaded from csv correctly
+        print("Loaded locations:", locations)
+
+        country_coordinates = {
+            'Nigeria': (100, 100),
+            'Sudan': (100, 150),
+            'South Sudan': (150, 200),
+            'Somalia': (50, 250),
+            'Yemen': (100, 50),
+            'Afghanistan': (150, 100),
+            'England': (200, 150),
+        }
+
+        # country_coordinates = {}
+        # for i, location in enumerate(locations):
+        #     country_coordinates[location['country']] = (50 + i * 50, 100)
+
+        for location in locations:
+            country = location["country"]
+            if country in country_coordinates:
+                x, y = country_coordinates[country]
+                map_canvas.create_oval(x - 5, y - 5, x + 5, y + 5, fill='red')
+                map_canvas.create_text(x, y - 10, text=country, anchor=tk.CENTER)
+
+    def read_location_data_from_csv(self, crisis_events):
+        data = pd.read_csv(crisis_events)
+        locations = []
+        for index, row in data.iterrows():
+            # x and y are columns in the csv
+            country = row['Country']
+            crisis_type = row['Crisis Type']
+            if pd.notna(country) and pd.notna(crisis_type):
+                locations.append({'country': country, 'crisis_type': crisis_type})
+        return locations
