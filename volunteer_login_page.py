@@ -51,11 +51,11 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
 
         welcome_label = tk.Label(
             self,
-            text='Welcome to the UCL Humanity Rescue Volunteer Portal',
+            text='UCL Humanity Rescue Volunteer Portal',
             font=('TkDefaultFont', 25, 'bold'),
             foreground='blue'
         )
-        welcome_label.grid(row=0, column=0, padx=30, pady=30)
+        welcome_label.grid(row=1, column=0, padx=30, pady=30)
 
         # instruction_label = tk.Label(
         #     self,
@@ -68,7 +68,7 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         volunteer_entries_frame.grid()
 
         # Label frame for this page that then stores all of the labels and entries
-        volunteer_log_in_frame = tk.LabelFrame(volunteer_entries_frame)
+        volunteer_log_in_frame = tk.LabelFrame(volunteer_entries_frame, borderwidth=5)
         volunteer_log_in_frame.grid(row=1, column=0, pady=30)
 
         # Volunteer title
