@@ -225,6 +225,7 @@ class AdminViewSummaries:
 
             if selected_id in data[data.columns[0]].values:
                 row_index = data[data[data.columns[0]] == selected_id].index[0]
+                original_camp_id = data.at[row_index, 'Camp ID']
 
                 # VALIDATE data using the validate function in general functions file
                 validated_values = validate_data(updated_values, data, row_index)
@@ -244,6 +245,11 @@ class AdminViewSummaries:
                 data.to_csv("crisis_events.csv", index=False)
                 self.end_plan_tree.item(selected_item, values=validated_values)
 
+                # Check if Camp ID was changed and update in other CSVs
+                new_camp_id = validated_values[data.columns.get_loc('Camp ID')]
+                if new_camp_id != original_camp_id:
+                    self.update_camp_id_in_other_csvs(original_camp_id, new_camp_id)
+
             edit_plan_window.destroy()
             # CSV data
             csv_file = "crisis_events.csv"
@@ -253,6 +259,15 @@ class AdminViewSummaries:
         except:
             messagebox.showinfo("Data Types", "Please select valid data types to save your edit")
 
+    def update_camp_id_in_other_csvs(self, old_id, new_id):
+        for filename in ["volunteer_info.csv", "refugee_info.csv"]:
+            try:
+                df = pd.read_csv(filename)
+                if 'Camp ID' in df.columns:
+                    df['Camp ID'] = df['Camp ID'].replace(old_id, new_id)
+                    df.to_csv(filename, index=False)
+            except Exception as e:
+                messagebox.showwarning("Error", f"Error updating {filename}: {e}")
 
     def volunteer_camp_count(self):
         try:
