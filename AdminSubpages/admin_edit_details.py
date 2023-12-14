@@ -2,24 +2,47 @@ import tkinter as tk
 from tkinter import ttk, Listbox
 from tkinter import messagebox
 import csv
+import pandas as pd
 
 class AdminEditVolunteerDetails:
     def __init__(self, window, back_button_to_admin_main):
         self.window = window
         self.back_button_to_admin_main = back_button_to_admin_main
         self.volunteer_listbox = None  # To be initialized later
-    def read_crisis_events_csv(self):
-        self.camp_ids_from_csv = []
-        try:
-            with open('crisis_events.csv', 'r') as file:
-                csv_reader = csv.reader(file)
-                next(csv_reader)
-                for row in csv_reader:
-                    if row[7] == "Active":
-                        self.camp_ids_from_csv.append(row[0])
-        except FileNotFoundError:
-            print("Error: 'crisis_events.csv' file not found.")
-        self.camp_ids = list(self.camp_ids_from_csv)
+    # def read_crisis_events_csv(self):
+    #     self.camp_ids_from_csv = []
+    #     try:
+    #         with open('crisis_events.csv', 'r') as file:
+    #             csv_reader = csv.reader(file)
+    #             next(csv_reader)
+    #             for row in csv_reader:
+    #                 if row[7] == "Active":
+    #                     self.camp_ids_from_csv.append(row[0])
+    #     except FileNotFoundError:
+    #         print("Error: 'crisis_events.csv' file not found.")
+    #     self.camp_ids = list(self.camp_ids_from_csv)
+
+    def upload_csv_data(self, tree, filename):
+        data = pd.read_csv(filename)
+
+        # The following block will convert floats to integers for the GUI to remove the ".0"
+        # columns with float numbers
+        float_columns = data.select_dtypes(include=['float']).columns
+        # Convert floats to integers for display in treeview
+        for col in float_columns:
+            data[col] = data[col].fillna(0).astype(int)
+
+        tree.delete(*tree.get_children())
+        tree['columns'] = list(data.columns)
+        tree.column("#0", width=0, stretch=tk.NO)
+        tree.heading("#0", text="", anchor=tk.W)
+
+        for col in data.columns:
+            tree.column(col, anchor=tk.CENTER, width=80)
+            tree.heading(col, text=col, anchor=tk.CENTER)
+
+        for index, row in data.iterrows():
+            tree.insert("", tk.END, values=list(row), iid=str(index))
 
     def create_gui(self, window):
         # Main frame for this whole page
@@ -36,9 +59,16 @@ class AdminEditVolunteerDetails:
         # Listbox to display volunteer usernames
         # edit_details_labelFrame = tk.LabelFrame(self.window)
         # edit_details_labelFrame.grid(row=1, column=0)
-        self.volunteer_listbox = tk.Listbox(self.window, selectmode=tk.SINGLE)
-        self.populate_volunteer_listbox()
-        self.volunteer_listbox.grid(row=1, column=0, pady=5)
+        # self.volunteer_listbox = tk.Listbox(self.window, selectmode=tk.SINGLE)
+        # self.populate_volunteer_listbox()
+        # self.volunteer_listbox.grid(row=1, column=0, pady=5)
+        display_volunteer_frame = tk.Frame(self.window)
+        display_volunteer_frame.grid(sticky="nsew", padx=5, pady=5)
+        display_volunteer_frame.grid_columnconfigure(0, weight=1)
+        display_volunteer_frame.grid_rowconfigure(1, weight=3)
+        display_volunteer_frame.grid_rowconfigure(2, weight=1)
+        self.display_volunteer_tree = ttk.Treeview(display_volunteer_frame, height=20)
+        self.display_volunteer_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
 
         # Buttons
         tk.Button(self.window, text="Edit Account", command=self.edit_details, width=20).grid(row=3,
@@ -61,15 +91,17 @@ class AdminEditVolunteerDetails:
             self.window.grid_rowconfigure(i, weight=1)
         self.window.grid_columnconfigure(0, weight=1)
 
-    def populate_volunteer_listbox(self):
-        try:
-            with open('volunteer_info.csv', 'r', newline='') as csvfile:
-                reader = csv.DictReader(csvfile)
-                for row in reader:
-                    username = row['Username']
-                    self.volunteer_listbox.insert(tk.END, username)
-        except FileNotFoundError:
-            messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
+    # def populate_volunteer_listbox(self):
+    #     try:
+    #         with open('volunteer_info.csv', 'r', newline='') as csvfile:
+    #             reader = csv.DictReader(csvfile)
+    #             for row in reader:
+    #                 username = row['Username']
+    #                 self.volunteer_listbox.insert(tk.END, username)
+    #     except FileNotFoundError:
+    #         messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
+        csv_file = 'volunteer_info.csv'
+        self.upload_csv_data(self.display_volunteer_tree, csv_file)
     def read_crisis_events_csv(self):
         self.camp_ids_from_csv = []
         try:
@@ -214,12 +246,14 @@ class AdminEditVolunteerDetails:
             messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
 
     def edit_details(self):
+        print('Edit volunteer details')
         self.read_crisis_events_csv()
-        selected_index = self.volunteer_listbox.curselection()
+        selected_index = self.display_volunteer_tree.focus()
 
         if selected_index:
             # Get the username of the selected volunteer
-            username_to_edit = self.volunteer_listbox.get(selected_index)
+            item_values = self.display_volunteer_tree.item(selected_index, 'values')
+            username_to_edit = item_values[0]
 
             # Open the CSV file and find the volunteer's details
             try:
@@ -332,9 +366,9 @@ class AdminEditVolunteerDetails:
 
 
     def reactivate_account(self):
-        selected_index = self.volunteer_listbox.curselection()
+        selected_index = self.display_volunteer_tree.focus()
         if selected_index:
-            username_to_reactivate = self.volunteer_listbox.get(selected_index)
+            username_to_reactivate = self.display_volunteer_tree.item(selected_index, 'values')[0]
             confirm_reactivate = messagebox.askokcancel('Confirmation', f"Are you sure you want to reactivate account for '{username_to_reactivate}'?")
             if confirm_reactivate:
                 self.update_account_status(username_to_reactivate, deactivated=False)
@@ -343,9 +377,9 @@ class AdminEditVolunteerDetails:
             tk.messagebox.showwarning("No Selection", "Please select a volunteer.")
 
     def deactivate_account(self):
-        selected_index = self.volunteer_listbox.curselection()
+        selected_index = self.display_volunteer_tree.focus()
         if selected_index:
-            username_to_deactivate = self.volunteer_listbox.get(selected_index)
+            username_to_deactivate = self.display_volunteer_tree.item(selected_index, 'values')[0]
             confirm_deactivate = tk.messagebox.askokcancel("Confirmation", f"Are you sure you want to deactivate the account for '{username_to_deactivate}'?")
 
             if confirm_deactivate:
@@ -355,9 +389,9 @@ class AdminEditVolunteerDetails:
             messagebox.showwarning("No Selection", "Please select a volunteer.")
 
     def delete_account(self):
-        selected_index = self.volunteer_listbox.curselection()
+        selected_index = self.display_volunteer_tree.focus()
         if selected_index:
-            username_to_delete = self.volunteer_listbox.get(selected_index)
+            username_to_delete = self.display_volunteer_tree.item(selected_index, 'values')[0]
             confirm_delete = tk.messagebox.askokcancel("Confirmation",
                                                     f"Are you sure you want to delete the account '{username_to_delete}'?")
             if confirm_delete:
