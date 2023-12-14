@@ -36,9 +36,8 @@ class VolunteerHomepage():
         self.window.geometry('1300x600')
 
         self.refugee_display_instance = RefugeeDisplay(self.window, self.back_button_to_volunteer_main)
-        self.admin_help = AdminHelp(self.window, self.back_button_to_volunteer_main)
-
-        self.camp_id = self.get_camp_id_for_volunteer()
+        self.camp_id_label = self.get_camp_id_for_volunteer()
+        self.show_camp_id_label = None
 
         self.window.protocol("WM_DELETE_WINDOW", self.window_exit_button)
 
@@ -126,7 +125,7 @@ class VolunteerHomepage():
         self.t_summary_title.configure(background='grey')
 
 
-        self.show_camp_id_label = tk.Label(self.window, text=f"YOUR CAMP ID: {self.camp_id}", font=("Arial Bold", 18), fg="black")
+        self.show_camp_id_label = tk.Label(self.window, text=f"{self.camp_id_label}", font=("Arial Bold", 15), fg="black")
         self.show_camp_id_label.grid(row=2, column=0, pady=10, ipadx=0, ipady=0)
 
         self.t_summary_editdetails = tk.Button(self.window, text='Personal information',
@@ -156,14 +155,23 @@ class VolunteerHomepage():
         with open("volunteer_info.csv", 'r') as file:
             csv_reader = csv.reader(file)
 
-            # Name is in the first column (index 0)
             for row in csv_reader:
+
                 if row and row[0].strip() == self.username:
                     # Camp ID is the second value (index 1)
-                    return row[1].strip()
+                    camp_id = row[1].strip()
 
-        # Return None if camp ID for that volunteer not found
-        return None
+                    # Check if the camp ID is blank
+                    if not camp_id:
+                        return "NO CAMP ID ASSIGNED"
+
+                    camp_id = round(float(camp_id))
+
+                    self.camp_ID_label = camp_id
+                    return f"YOUR CAMP ID: {camp_id}"
+
+            # Return "No camp ID assigned" if the loop completes without finding a matching volunteer
+            return "No camp ID assigned"
 
 
     # SUBPAGES WITHIN VOLUNTEER HOMEPAGE - PYTHON PACKAGE VOLUNTEER SUBPAGES:
