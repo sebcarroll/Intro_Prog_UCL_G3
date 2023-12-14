@@ -53,7 +53,7 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
             self,
             text='Welcome to the UCL Humanity Rescue Volunteer Portal',
             font=('TkDefaultFont', 25, 'bold'),
-            foreground='light blue'
+            foreground='blue'
         )
         welcome_label.grid(row=0, column=0, padx=30, pady=30)
 
@@ -120,7 +120,7 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
 
 
         # Shows caps lock on/off (OLD BINDING NOT WORKING)
-        self.label_caps = tk.Label(self, text='')
+        self.label_caps = tk.Label(volunteer_log_in_frame, text='')
         self.label_caps.grid(row=4, column=1)
         #self.bind("<KeyPress>", self.caps_lock_on)
         #self.bind("<KeyRelease>", self.caps_lock_off)

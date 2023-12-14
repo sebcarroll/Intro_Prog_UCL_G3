@@ -8,7 +8,7 @@ from AdminSubpages.view_summaries import AdminViewSummaries
 from AdminSubpages.admin_edit_details import AdminEditVolunteerDetails
 from AdminSubpages.admin_resource_allocation import AdminResourceAllocation
 # Imports for the menu commands
-from AdminSubpages.view_summaries_with_pie_chart import AdminViewSummaries
+from AdminSubpages.view_summaries_with_pie_chart import AdminViewSummariesWithCharts
 
 class AdminHomepage:
     def __init__(self, root, go_to_landing_page):
@@ -27,7 +27,7 @@ class AdminHomepage:
         self.admin_edit_details = AdminEditVolunteerDetails(self.window, self.back_button_to_admin_main)
         self.admin_resource_allocation = AdminResourceAllocation(self.window, self.back_button_to_admin_main)
         # Instances for menu commands
-        self.view_summaries_with_pie_chart = AdminViewSummaries(self.window, self.back_button_to_admin_main)
+        self.view_summaries_with_pie_chart = AdminViewSummariesWithCharts(self.window, self.back_button_to_admin_main)
 
 
 

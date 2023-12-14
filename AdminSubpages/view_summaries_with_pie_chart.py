@@ -11,7 +11,7 @@ from general_functions import validate_data
 # >>>>>>> b31256ca14805062552b86c986eb7f4ee3f48127
 from tkinter import PhotoImage
 
-class AdminViewSummaries:
+class AdminViewSummariesWithCharts:
     def __init__(self, window, back_button_to_admin_main):
         self.window = window
         self.back_button_to_admin_main = back_button_to_admin_main

@@ -173,7 +173,7 @@ class RefugeeDisplay:
         cancel_button.grid(row=len(refugee_details)+1, column=1)
 
 
-    def save_details(self, edit_plan_window, selected_item):
+    def save_details(self, refugee_profile_window, selected_item):
 
         try:
             # list comprehension for new edited values
@@ -181,7 +181,7 @@ class RefugeeDisplay:
 
             data = pd.read_csv("refugee_info.csv")
 
-            selected_id = int(self.display_refugee_tree.item(selected_item, 'values')[0])
+            selected_id = self.display_refugee_tree.item(selected_item, 'values')[0]
 
             if selected_id in data[data.columns[0]].values:
                 row_index = data[data[data.columns[0]] == selected_id].index[0]
@@ -201,7 +201,7 @@ class RefugeeDisplay:
                 data.to_csv("refugee_info.csv", index=False)
                 self.display_refugee_tree.item(selected_item, values=updated_values)
 
-            edit_plan_window.destroy()
+            refugee_profile_window.destroy()
             # CSV data
             csv_file = "refugee_info.csv"
             # csv_data = self.load_csv_data(csv_file)
