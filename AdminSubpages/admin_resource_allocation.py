@@ -89,7 +89,7 @@ class AdminResourceAllocation:
        # medicine_amount_refugee_listbox, medicine_amount_refugee_scrollbar = create_listbox_with_label(resource_frame,
 
                                                                                                   #    "Number of Health Supplies Provided per Refugee Weekly: ",                                                                                       #    8,                                                                                         #   medicine_amount_refugee)
-        medicine_label = tk.Label(resource_frame, text='Number of health supplies per refugee per week: ')
+        medicine_label = tk.Label(resource_frame, text='Number of Health Supplies per Refugee per Eeek: ')
         medicine_label.grid(row=8, column=0, padx=5, pady=5)
         self.medicine_box = tk.Spinbox(resource_frame, from_=0, to=7)
         self.medicine_box.grid(row=8, column=1, padx=5, pady=5)
@@ -99,7 +99,7 @@ class AdminResourceAllocation:
         # self.estimated_delivery_time_listbox, self.estimated_delivery_time_scrollbar = create_listbox_with_label(
         #     resource_frame, "Estimated Resource Delivery Time (days): ", 9, 0, estimated_delivery_time_options)
 
-        estimated_delivery_label = tk.Label(resource_frame, text='Estimated reosurce delivery time (days): ')
+        estimated_delivery_label = tk.Label(resource_frame, text='Estimated Resource Delivery Time (days): ')
         estimated_delivery_label.grid(row=9, column=0, padx=5, pady=5)
         self.estimated_delivery_box = tk.Spinbox(resource_frame, from_=0, to=14)
         self.estimated_delivery_box.grid(row=9, column=1, padx=5, pady=5)
@@ -123,15 +123,14 @@ class AdminResourceAllocation:
     def update_number_of_refugees(self, event):
         selected_camp_id = self.camp_ID_box.get()
         print(selected_camp_id)
+        number_of_actual_refugees = 0
         try:
             with open('refugee_info.csv', 'r') as file:
                     csv_reader = csv.reader(file)
                     next(csv_reader)
                     for row in csv_reader:
-                        if selected_camp_id == row[0]:
-                            number_of_actual_refugees = int(row[9])
-                        else:
-                            number_of_actual_refugees = 0
+                        if int(selected_camp_id) == int(float(row[1])):
+                            number_of_actual_refugees = number_of_actual_refugees + 1
         except FileNotFoundError:
             print("Error: 'refugee_info.csv' file not found.")
         self.refugee_count.config(text=str(number_of_actual_refugees))
