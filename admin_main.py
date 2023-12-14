@@ -113,6 +113,7 @@ class AdminHomepage:
         self.btn_allocate_resources = tk.Button(self.window, text="Allocate resources", command=self.allocate_resources)
         self.btn_allocate_resources.grid(row=5, column=0, pady=(10,50), ipadx=93, ipady=25)
 
+
         for i in range(6):
             self.window.grid_rowconfigure(i, weight=1)
         self.window.grid_columnconfigure(0, weight=1)
