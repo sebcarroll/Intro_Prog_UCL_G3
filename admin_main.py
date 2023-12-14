@@ -1,6 +1,4 @@
 import tkinter as tk
-import pickle
-import os
 # Imports for the main button commands
 from AdminSubpages.create_plan import AdminCreatePlan
 from AdminSubpages.admin_end_event import AdminEndEvent
@@ -11,7 +9,7 @@ from AdminSubpages.admin_resource_allocation import AdminResourceAllocation
 from AdminSubpages.view_summaries_with_pie_chart import AdminViewSummariesWithCharts
 from AdminSubpages.admin_refugee_profiles import AdminRefugeeDisplay
 from AdminSubpages.admin_volunteer_accounts import AdminVolunteerDisplay
-from AdminSubpages.admin_help import AdminHelp
+from admin_help import AdminHelp
 from AdminSubpages.edit_camp_capacity import edit_camp_details
 
 class AdminHomepage:

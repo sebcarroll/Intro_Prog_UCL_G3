@@ -10,6 +10,8 @@ from VolunteerSubpages.edit_camp_details import edit_camp_details
 from VolunteerSubpages.new_refugee import new_refugee, na_refugee_info_dict
 from VolunteerSubpages.resource_display import resource_display
 from VolunteerSubpages.refugee_display import RefugeeDisplay
+# Import for menu commands
+from admin_help import AdminHelp
 import csv
 
 class invalid_email(Exception):
@@ -34,13 +36,17 @@ class VolunteerHomepage():
         self.window.geometry('1300x600')
 
         self.refugee_display_instance = RefugeeDisplay(self.window, self.back_button_to_volunteer_main)
+        self.admin_help = AdminHelp(self.window, self.back_button_to_volunteer_main)
+
         self.camp_id = self.get_camp_id_for_volunteer()
+
+        self.window.protocol("WM_DELETE_WINDOW", self.window_exit_button)
 
         menu_bar = tk.Menu(self.window)
         self.window.config(menu=menu_bar)
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="File", menu=file_menu)
-        file_menu.add_command(label="New Refugee", command=self.do_nothing)
+        file_menu.add_command(label="New Refugee", command=self.t_create_refugee)
         file_menu.add_separator()
         file_menu.add_command(label="Settings", command=self.do_nothing)
         file_menu.add_separator()
@@ -50,15 +56,22 @@ class VolunteerHomepage():
         # create a menu item 2
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Edit", menu=file_menu)
-        file_menu.add_command(label="Edit Camp", command=self.do_nothing)
+        file_menu.add_command(label="Edit Camp", command=self.t_edit_camp)
         file_menu.add_separator()
-        file_menu.add_command(label="Resources", command=self.do_nothing)
+        file_menu.add_command(label="Edit Profile", command=self.t_personal_information_base)
         # create a menu item 3
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="View", menu=file_menu)
-        file_menu.add_command(label="View Refugees", command=self.do_nothing)
+        file_menu.add_command(label="View Refugees", command=self.display_refugees)
         file_menu.add_separator()
-        file_menu.add_command(label="View Resources", command=self.do_nothing)
+        file_menu.add_command(label="View Resources", command=self.t_display_resources)
+        # create a menu item 6
+        file_menu = tk.Menu(menu_bar, tearoff=0)
+        menu_bar.add_cascade(label="Help", menu=file_menu)
+        file_menu.add_command(label="Information", command=self.help_info)
+        file_menu.add_command(label="About", command=self.help_about)
+        file_menu.add_separator()
+        file_menu.add_command(label="Support", command=self.help_support)
 
 
         try:
@@ -153,9 +166,7 @@ class VolunteerHomepage():
         return None
 
 
-
     # SUBPAGES WITHIN VOLUNTEER HOMEPAGE - PYTHON PACKAGE VOLUNTEER SUBPAGES:
-
     # Volunteer Details (personal_information.py)
     def t_personal_information_base(self):
         personal_information(self.window, self.username, self.y_personal_info, self.t_personal_info_edit, self.back_button_to_volunteer_main)
@@ -166,12 +177,9 @@ class VolunteerHomepage():
     def personal_details_storage_handler(self, nameEntry, emailEntry, phoneEntry, commitmentEntry, worktypeEntry):
         store_personal_details(self.username, self.y_personal_info, nameEntry, emailEntry, phoneEntry, commitmentEntry, worktypeEntry)
 
-
     # Edit Camp Info (edit_camp_details.py)
     def t_edit_camp(self):
         edit_camp_details(self.window, self.y_camp_info, self.back_button_to_volunteer_main)
-
-
 
     # Create Refugee (new_refugee.py)
     def t_create_refugee(self):
@@ -179,16 +187,27 @@ class VolunteerHomepage():
     def refugee_details_storage_handler(self, camp_ID, name_entry, family_label, medical_conditionsEntry, languages_spokenEntry, second_languageEntry):
         na_refugee_info_dict(self.na_refugee_info, camp_ID, name_entry, family_label, medical_conditionsEntry, languages_spokenEntry, second_languageEntry)
 
-
-
     # Display Resources (resource_display.py)
     def t_display_resources(self):
         resource_display(self.window, self.back_button_to_volunteer_main)
 
-
     def display_refugees(self):
         # Open the resource allocation GUI
         self.refugee_display_instance.create_gui_refugee_display(self)
+
+
+
+    # MENU COMMANDS
+
+    def help_about(self):
+        self.admin_help.about_pop_up()
+
+    def help_info(self):
+        self.admin_help.info_pop_up()
+
+    def help_support(self):
+        self.admin_help.support_pop_up()
+
 
 
 
@@ -200,6 +219,7 @@ class VolunteerHomepage():
             widget.grid_forget()
         # Repopulate main page
         self.create_gui_volunteer_main()
+
 
     def do_nothing(self):
         pass
