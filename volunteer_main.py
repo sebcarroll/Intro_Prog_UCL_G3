@@ -112,6 +112,7 @@ class VolunteerHomepage():
         self.t_summary_title.grid(row=0, column=0, columnspan=2, sticky='news', padx=20, pady=10)
         self.t_summary_title.configure(background='grey')
 
+
         self.show_camp_id_label = tk.Label(self.window, text=f"Your camp id: {self.camp_id}", font=("Arial", 20), fg="black")
         self.show_camp_id_label.grid(row=2, column=0, pady=10, ipadx=0, ipady=0)
 
