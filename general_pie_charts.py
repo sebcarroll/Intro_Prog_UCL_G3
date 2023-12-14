@@ -9,7 +9,7 @@ class SummaryCharts:
     def generate_charts_window(self):
         # Create a new window for the pie chart
         generate_charts_window = tk.Toplevel(self.window)
-        generate_charts_window.title("View charts")
+        generate_charts_window.title("View Charts")
         generate_charts_window.geometry("800x400")
 
         # Call the method to create the pie chart in the new window
