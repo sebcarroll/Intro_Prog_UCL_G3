@@ -1,8 +1,11 @@
+
 import tkinter as tk
 from tkinter import messagebox
 import os
 import pickle
 import pandas as pd
+import csv
+volunteer_camp_id_for_new_refugee = None
 
 class t_case_sensitive(Exception):
     pass
@@ -137,19 +140,36 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         if event.keysym == 'Caps_Lock':
             self.label_caps.config(text='Caps lock is off')
 
+    def get_camp_id_for_volunteer_for_new_refugee(self):
+        global volunteer_camp_id_for_new_refugee
+
+        with open("volunteer_info.csv", 'r') as file:
+            csv_reader = csv.reader(file)
+
+            # Name is in the first column (index 0)
+            for row in csv_reader:
+                if row and str(row[0].strip()) == self.username:
+                    # Camp ID is the second value (index 1)
+                    volunteer_camp_id_for_new_refugee = row[1].strip()
+                    print(volunteer_camp_id_for_new_refugee)
+                    break
+        return volunteer_camp_id_for_new_refugee
+
     # Login checker
     def t_details_confirmation(self):
-        username = self.name_entry.get()
+        self.username = self.name_entry.get()
+        print(self.name_entry.get())
         password = self.password_entry.get()
         try:
-            if username not in self.y_personal_info.keys():
+            if self.username not in self.y_personal_info.keys():
                 raise t_deleted_account
-            elif self.y_personal_info[username]['Deactivated'] == True:
+            elif self.y_personal_info[self.username]['Deactivated'] == True:
                 raise t_deactivated_account
             else:
-                if password == str(self.y_personal_info[username]['password']):
-                    self.go_to_volunteer_main(username)
-                elif password != self.y_personal_info[username]['password']:
+                if password == str(self.y_personal_info[self.username]['password']):
+                    self.go_to_volunteer_main(self.username)
+                    self.get_camp_id_for_volunteer_for_new_refugee()
+                elif password != self.y_personal_info[self.username]['password']:
                     raise t_incorrect_details
 
             # if (username.lower() or password.lower()) in self.volunteer_dict:
@@ -163,8 +183,6 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         except(t_deactivated_account):
             tk.messagebox.showinfo(title='Deactivated account',
                                         message='Your account has been deactivated, \nPlease contact admin for more details')
-
-
 
     def on_login(self):
         # Add volunteer login logic here
