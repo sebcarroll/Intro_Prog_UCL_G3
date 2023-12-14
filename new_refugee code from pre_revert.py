@@ -1,3 +1,4 @@
+'''
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
@@ -162,3 +163,4 @@ def update_number_of_refugees(camp_ID):
         writer = csv.writer(file)
         writer.writerow(header)
         writer.writerows(data)
+'''

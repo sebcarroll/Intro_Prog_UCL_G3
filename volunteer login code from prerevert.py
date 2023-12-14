@@ -1,3 +1,4 @@
+'''
 import tkinter as tk
 from tkinter import messagebox
 import os
@@ -194,3 +195,4 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         from landing_page import LandingPage
         LandingPage.create_landing_page_widgets(self)
 
+'''
