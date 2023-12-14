@@ -2,6 +2,7 @@ import tkinter as tk
 import csv
 import os
 import pandas as pd
+from PIL import Image, ImageTk
 
 class SummaryCharts:
     def __init__(self, window, back_button_to_admin_main):
@@ -163,10 +164,10 @@ class SummaryCharts:
         map_canvas = tk.Canvas(window, width=800, height=400)
         map_canvas.place(x=400,y=500)
 
-        # # Load the world map image with a relative path using Pillow
-        # image_path = 'AdminSubpages/world_map.png'
-        # world_map_image = Image.open(image_path)
-        # self.world_map_image_tk = ImageTk.PhotoImage(world_map_image)
+        # Load the world map image with a relative path using Pillow
+        image_path = 'AdminSubpages/world_map.png'
+        world_map_image = Image.open(image_path)
+        self.world_map_image_tk = ImageTk.PhotoImage(world_map_image)
 
         # # Load the world map image with a relative path
         # world_map_image = tk.PhotoImage(file='AdminSubpages/world-map.gif')
@@ -174,78 +175,29 @@ class SummaryCharts:
 
         # Read data from CSV file for crisis event locations
         locations = self.read_location_data_from_csv('crisis_events.csv')
-
         # Checking locations are being loaded from csv correctly
         print("Loaded locations:", locations)
 
         country_coordinates = {
-            'Nigeria': [100, 150],
-            'Sudan': [100, 150],
-            'South Sudan': [150, 200],
-            'Somalia': [50, 250],
-            'Yemen': [100, 50],
-            'Afghanistan': [150, 100],
-            'England': [200, 150],
-            'Syria': [50, 200],
-            'Democratic Republic of the Congo': [200, 200],
-            'Venezuela': [250, 100],
-            'Iraq': [250, 150],
-            'Ethiopia': [150, 250],
-            'Myanmar': [200, 250],
-            'Haiti': [250, 200],
-            'Central African Republic': [150, 300],
-            'Libya': [300, 200],
-            'Chad': [200, 300],
-            'Mali': [250, 250],
-            'Niger': [300, 250],
-            'Cameroon': [300, 300],
-            'Ukraine': [350, 100],
-            'Pakistan': [350, 150],
-            'Bangladesh': [350, 200],
-            'Lebanon': [350, 250],
-            'Zimbabwe': [350, 300],
-            'Eritrea': [400, 100],
-            'North Korea': [400, 150],
-            'Eswatini': [400, 200],
-            'Zambia': [400, 250],
-            'Malawi': [400, 300],
+            'Nigeria': (100, 100),
+            'Sudan': (100, 150),
+            'South Sudan': (150, 200),
+            'Somalia': (50, 250),
+            'Yemen': (100, 50),
+            'Afghanistan': (150, 100),
+            'England': (200, 150),
         }
 
-
-        # Read locations from CSV file
-        locations = self.read_location_data_from_csv('crisis_events.csv')
-
-        # Track the count for each country
-        country_counts = {country: 0 for country in country_coordinates}
+        # country_coordinates = {}
+        # for i, location in enumerate(locations):
+        #     country_coordinates[location['country']] = (50 + i * 50, 100)
 
         for location in locations:
             country = location["country"]
             if country in country_coordinates:
-                coordinates = country_coordinates[country]
-
-                # Increase the count for the country
-                country_counts[country] += 1
-
-                # Adjust the oval size based on the count
-                oval_size = 5 + country_counts[country]
-
-                # Draw the oval with adjusted size
-                map_canvas.create_oval(
-                    coordinates[0] - oval_size,
-                    coordinates[1] - oval_size,
-                    coordinates[0] + oval_size,
-                    coordinates[1] + oval_size,
-                    fill='red'
-                )
-
-                map_canvas.create_text(coordinates[0], coordinates[1] - 10, text=country, anchor=tk.CENTER)
-
-        # for location in locations:
-        #     country = location["country"]
-        #     if country in country_coordinates:
-        #         coordinates = country_coordinates[country]
-        #         map_canvas.create_oval(coordinates[0] - 5, coordinates[1] - 5, coordinates[0] + 5, coordinates[1] + 5, fill='red')
-        #         map_canvas.create_text(coordinates[0], coordinates[1] - 10, text=country, anchor=tk.CENTER)
+                x, y = country_coordinates[country]
+                map_canvas.create_oval(x - 5, y - 5, x + 5, y + 5, fill='red')
+                map_canvas.create_text(x, y - 10, text=country, anchor=tk.CENTER)
 
     def read_location_data_from_csv(self, crisis_events):
         data = pd.read_csv(crisis_events)

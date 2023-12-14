@@ -6,7 +6,7 @@ class taken_ID(Exception):
     pass
 class none_selected(Exception):
     pass
-def edit_camp_details(window, y_camp_info, back_button_to_volunteer_main):
+def edit_camp_details(window, y_camp_info, camp_id, back_button_to_volunteer_main):
     try:
         for i in window.winfo_children():
             i.grid_forget()
@@ -23,8 +23,12 @@ def edit_camp_details(window, y_camp_info, back_button_to_volunteer_main):
         t_select_camp_title.grid(row=0, column=1)
 
         camp_ID_listbox = tk.Listbox(t_edit_campframe, selectmode=tk.SINGLE)
-        for camp_id in camp_ID_choices:
-            camp_ID_listbox.insert(tk.END, camp_id)
+
+        for i in range(len(camp_ID_choices)):
+            if camp_ID_choices[i] == camp_id:
+                camp_ID_listbox.insert(tk.END, camp_ID_choices[i])
+            #else:
+                #camp_ID_listbox.insert(tk.END, "No camp assigned")
         camp_ID_listbox.grid(row=1, column=1, padx=5, pady=5)
 
         # BUTTONS:
@@ -84,8 +88,8 @@ def edit_camp_id(df, selected_camp_id, listbox):
 
                     # Clear the listbox and insert the updated camp IDs
                     listbox.delete(0, tk.END)
-                    for camp_id in new_camp_ids:
-                        listbox.insert(tk.END, camp_id)
+                    for c_id in new_camp_ids:
+                        listbox.insert(tk.END, c_id)
 
                     # Save the DataFrame to the CSV file
                     df.to_csv('crisis_events.csv', index=False)
