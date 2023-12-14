@@ -10,6 +10,7 @@ from VolunteerSubpages.edit_camp_details import edit_camp_details
 from VolunteerSubpages.new_refugee import new_refugee, na_refugee_info_dict
 from VolunteerSubpages.resource_display import resource_display
 from VolunteerSubpages.refugee_display import RefugeeDisplay
+import csv
 
 class invalid_email(Exception):
     pass
@@ -33,6 +34,7 @@ class VolunteerHomepage():
         self.window.geometry('1300x600')
 
         self.refugee_display_instance = RefugeeDisplay(self.window, self.back_button_to_volunteer_main)
+        self.camp_id = self.get_camp_id_for_volunteer()
 
         menu_bar = tk.Menu(self.window)
         self.window.config(menu=menu_bar)
@@ -107,32 +109,47 @@ class VolunteerHomepage():
     def create_gui_volunteer_main(self):
         self.t_summary_title = tk.Label(self.window, text='Welcome to the volunteer portal', font=('Arial Bold', 40),
                                         bg='grey', fg='white')
-        self.t_summary_title.grid(row=0, column=0, columnspan=2, sticky='news', padx=10, pady=20)
+        self.t_summary_title.grid(row=0, column=0, columnspan=2, sticky='news', padx=20, pady=10)
         self.t_summary_title.configure(background='grey')
+
+        self.show_camp_id_label = tk.Label(self.window, text=f"Your camp id: {self.camp_id}", font=("Arial", 20), fg="black")
+        self.show_camp_id_label.place(x=550,y=75)
 
         self.t_summary_editdetails = tk.Button(self.window, text='Personal information',
                                                command=self.t_personal_information_base)
-        self.t_summary_editdetails.grid(row=1, column=0, pady=(50, 10), ipadx=98, ipady=25)
+        self.t_summary_editdetails.grid(row=2, column=0, pady=(50, 10), ipadx=98, ipady=25)
 
         self.t_summary_editcamp = tk.Button(self.window, text='Edit camp information', command=self.t_edit_camp)
-        self.t_summary_editcamp.grid(row=2, column=0, pady=10, ipadx=98, ipady=25)
+        self.t_summary_editcamp.grid(row=3, column=0, pady=10, ipadx=98, ipady=25)
 
         self.t_summary_refugee = tk.Button(self.window, text='Create a refugee profile', command=self.t_create_refugee)
-        self.t_summary_refugee.grid(row=3, column=0, pady=10, ipadx=90, ipady=25)
+        self.t_summary_refugee.grid(row=4, column=0, pady=10, ipadx=90, ipady=25)
 
         self.t_summary_resources = tk.Button(self.window, text='Display resources available',
                                              command=self.t_display_resources)
-        self.t_summary_resources.grid(row=4, column=0, pady=10, ipadx=85, ipady=25)
+        self.t_summary_resources.grid(row=5, column=0, pady=10, ipadx=85, ipady=25)
 
         self.summary_refugees = tk.Button(self.window, text='Display Refugees Created',
                                              command=self.display_refugees)
-        self.summary_refugees.grid(row=5, column=0, pady=(10, 50), ipadx=85, ipady=25)
+        self.summary_refugees.grid(row=6, column=0, pady=(10, 50), ipadx=85, ipady=25)
 
         for i in range(5):
             self.window.grid_rowconfigure(i, weight=1)
         self.window.grid_columnconfigure(0, weight=1)
 
 
+    def get_camp_id_for_volunteer(self):
+        with open("volunteer_info.csv", 'r') as file:
+            csv_reader = csv.reader(file)
+
+            # Name is in the first column (index 0)
+            for row in csv_reader:
+                if row and row[0].strip() == self.username:
+                    # Camp ID is the second value (index 1)
+                    return row[1].strip()
+
+        # Return None if camp ID for that volunteer not found
+        return None
 
 
 
