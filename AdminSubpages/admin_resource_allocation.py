@@ -99,7 +99,7 @@ class AdminResourceAllocation:
         # self.estimated_delivery_time_listbox, self.estimated_delivery_time_scrollbar = create_listbox_with_label(
         #     resource_frame, "Estimated Resource Delivery Time (days): ", 9, 0, estimated_delivery_time_options)
 
-        estimated_delivery_label = tk.Label(resource_frame, text='Estimated reosurce delivery time (days): ')
+        estimated_delivery_label = tk.Label(resource_frame, text='Estimated resource delivery time (days): ')
         estimated_delivery_label.grid(row=9, column=0, padx=5, pady=5)
         self.estimated_delivery_box = tk.Spinbox(resource_frame, from_=0, to=14)
         self.estimated_delivery_box.grid(row=9, column=1, padx=5, pady=5)
