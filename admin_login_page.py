@@ -15,16 +15,16 @@ class AdminLoginPage(tk.Frame):
             self,
             text='Welcome to the UCL Humanity Rescue Admin Portal',
             font=('TkDefaultFont', 25, 'bold'),
-            foreground='orange red'
+            foreground='orange red', relief=tk.RAISED, borderwidth=5
         )
         welcome_label.grid(row=1, column=0, padx=30, pady=30)
 
-        admin_entries_frame = tk.Frame(self)
+        admin_entries_frame = tk.Frame(self, relief=tk.RAISED, borderwidth=5)
         admin_entries_frame.grid()
 
         # Label frame for this page that then stores all of the labels and entries
-        admin_log_in_frame = tk.LabelFrame(admin_entries_frame)
-        admin_log_in_frame.grid(row=3, column=1, pady=30)
+        admin_log_in_frame = tk.LabelFrame(admin_entries_frame, borderwidth=5)
+        admin_log_in_frame.grid(row=3, column=1, pady=30, padx=30)
 
         # Username entry box
         self.name_label = tk.Label(admin_log_in_frame, text='Username', font=('TkDefault', 17))

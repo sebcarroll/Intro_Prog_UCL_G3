@@ -11,6 +11,7 @@ from AdminSubpages.admin_resource_allocation import AdminResourceAllocation
 from AdminSubpages.view_summaries_with_pie_chart import AdminViewSummariesWithCharts
 from AdminSubpages.admin_refugee_profiles import AdminRefugeeDisplay
 from AdminSubpages.admin_volunteer_accounts import AdminVolunteerDisplay
+from AdminSubpages.admin_help import AdminHelp
 
 class AdminHomepage:
     def __init__(self, root, go_to_landing_page):
@@ -32,7 +33,7 @@ class AdminHomepage:
         self.view_summaries_with_pie_chart = AdminViewSummariesWithCharts(self.window, self.back_button_to_admin_main)
         self.admin_display_refugees = AdminRefugeeDisplay(self.window, self.back_button_to_admin_main)
         self.admin_display_volunteers = AdminVolunteerDisplay(self.window, self.back_button_to_admin_main)
-
+        self.admin_help = AdminHelp(self.window, self.back_button_to_admin_main)
 
         self.window.bind('<F11>', self.toggle_fullscreen)
         self.window.bind('<Escape>', self.end_fullscreen)
@@ -44,28 +45,24 @@ class AdminHomepage:
         # create a menu item 1
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="File", menu=file_menu)
+        file_menu.add_command(label="Home", command=self.back_button_to_admin_main)
+        file_menu.add_separator()
         file_menu.add_command(label="New Plan", command=self.create_event)
-        file_menu.add_separator()
         file_menu.add_command(label="Settings", command=self.do_nothing)
-        file_menu.add_separator()
         file_menu.add_command(label="Log Out", command=self.exit_and_go_back)
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.exit_software)
         # create a menu item 2
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Edit", menu=file_menu)
-        file_menu.add_command(label="Edit Event", command=self.do_nothing)
+        file_menu.add_command(label="Edit Crisis Events", command=self.view_summaries)
         file_menu.add_separator()
-        file_menu.add_command(label="Edit Refugee Profile", command=self.edit_view_delete_refugee)
+        file_menu.add_command(label="Edit Refugee Profiles", command=self.edit_view_delete_refugee)
         # create a menu item 3
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="View", menu=file_menu)
-        file_menu.add_command(label="View Events", command=self.do_nothing)
-        file_menu.add_separator()
-        file_menu.add_command(label="View Summaries", command=self.do_nothing)
-        file_menu.add_command(label="View Charts", command=self.view_charts)
-        file_menu.add_separator()
-        file_menu.add_command(label="Allocate Resources", command=self.do_nothing)
+        file_menu.add_command(label="View Summaries", command=self.view_summaries)
+        file_menu.add_command(label="View Chart Summaries", command=self.view_charts)
         # create a menu item 4
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Accounts", menu=file_menu)
@@ -82,16 +79,16 @@ class AdminHomepage:
         # create a menu item 6
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Help", menu=file_menu)
-        file_menu.add_command(label="Information", command=self.do_nothing)
-        file_menu.add_command(label="About", command=self.do_nothing)
+        file_menu.add_command(label="Information", command=self.help_info)
+        file_menu.add_command(label="About", command=self.help_about)
         file_menu.add_separator()
-        file_menu.add_command(label="Support", command=self.do_nothing)
+        file_menu.add_command(label="Support", command=self.help_support)
 
         self.create_gui_admin_main()
 
     def create_gui_admin_main(self):
         # WELCOME TITLE
-        self.admin_welcome_title = tk.Label(self.window, text='Welcome to the admin portal', font=('Arial', 40), bg='grey', fg='white')
+        self.admin_welcome_title = tk.Label(self.window, text='Welcome to the admin portal', font=('Arial', 40), bg='grey', fg='white', relief=tk.RAISED, borderwidth=5)
         self.admin_welcome_title.grid(row=0, column=0, columnspan=2, sticky="nsew", padx=10, pady=20)
         self.admin_welcome_title.configure(background="grey")
 
@@ -170,10 +167,14 @@ class AdminHomepage:
     def edit_view_delete_volunteers(self):
         self.admin_display_volunteers.create_gui_volunteer_display(self)
 
+    def help_about(self):
+        self.admin_help.about_pop_up()
 
+    def help_info(self):
+        self.admin_help.info_pop_up()
 
-
-
+    def help_support(self):
+        self.admin_help.support_pop_up()
 
 
     def do_nothing(self):
