@@ -113,7 +113,7 @@ class VolunteerHomepage():
         self.t_summary_title.configure(background='grey')
 
         self.show_camp_id_label = tk.Label(self.window, text=f"Your Camp ID: {self.camp_id}", font=("Arial", 20), fg="black")
-        self.show_camp_id_label.place(x=550,y=75)
+        self.show_camp_id_label.place(x=540,y=75)
 
         self.t_summary_editdetails = tk.Button(self.window, text='Personal information',
                                                command=self.t_personal_information_base)
