@@ -14,27 +14,6 @@ def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main
     active_camps= crisis_df[crisis_df['Status']== 'Active']
     camp_IDs = list(active_camps['Camp ID'])
 
-    camp_ids_from_csv = []
-    try:
-        with open('crisis_events.csv', 'r') as file:
-            csv_reader = csv.reader(file)
-            next(csv_reader)
-            for row in csv_reader:
-                if row[7] == "Active":
-                    camp_ids_from_csv.append(row[0])
-    except FileNotFoundError:
-        print("Error: 'crisis_events.csv' file not found.")
-
-    camp_IDs_unfiltered = list(camp_ids_from_csv)
-    camp_IDs_filtered = []
-    for camp_ids in camp_IDs_unfiltered:
-        from volunteer_login_page import volunteer_camp_id_for_new_refugee
-        print(volunteer_camp_id_for_new_refugee)
-        if int(float(camp_ids)) == int(float(volunteer_camp_id_for_new_refugee)):
-            camp_IDs_filtered.append(camp_ids)
-
-    camp_IDs = camp_IDs_filtered
-
     # Title for the page
     refugee_title = tk.Label(refugeeframe, text='Create Refugee Profile', font=('TkinterDefault', 30))
     refugee_title.grid(row=0, column=0, pady=30)
