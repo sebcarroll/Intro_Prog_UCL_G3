@@ -9,6 +9,7 @@ from AdminSubpages.admin_edit_details import AdminEditVolunteerDetails
 from AdminSubpages.admin_resource_allocation import AdminResourceAllocation
 # Imports for the menu commands
 from AdminSubpages.view_summaries_with_pie_chart import AdminViewSummariesWithCharts
+from AdminSubpages.admin_refugee_profiles import AdminRefugeeDisplay
 
 class AdminHomepage:
     def __init__(self, root, go_to_landing_page):
@@ -28,7 +29,7 @@ class AdminHomepage:
         self.admin_resource_allocation = AdminResourceAllocation(self.window, self.back_button_to_admin_main)
         # Instances for menu commands
         self.view_summaries_with_pie_chart = AdminViewSummariesWithCharts(self.window, self.back_button_to_admin_main)
-
+        self.admin_display_refugees = AdminRefugeeDisplay(self.window, self.back_button_to_admin_main)
 
 
 
@@ -42,7 +43,7 @@ class AdminHomepage:
         # create a menu item 1
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="File", menu=file_menu)
-        file_menu.add_command(label="New Plan", command=self.do_nothing)
+        file_menu.add_command(label="New Plan", command=self.create_event)
         file_menu.add_separator()
         file_menu.add_command(label="Settings", command=self.do_nothing)
         file_menu.add_separator()
@@ -54,7 +55,7 @@ class AdminHomepage:
         menu_bar.add_cascade(label="Edit", menu=file_menu)
         file_menu.add_command(label="Edit Event", command=self.do_nothing)
         file_menu.add_separator()
-        file_menu.add_command(label="Resources", command=self.do_nothing)
+        file_menu.add_command(label="Edit Refugee Profile", command=self.edit_view_delete_refugee)
         # create a menu item 3
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="View", menu=file_menu)
@@ -68,10 +69,9 @@ class AdminHomepage:
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Accounts", menu=file_menu)
         file_menu.add_command(label="Create", command=self.create_volunteer_account)
-        file_menu.add_separator()
         file_menu.add_command(label="Volunteers", command=self.do_nothing)
         file_menu.add_separator()
-        file_menu.add_command(label="Admins", command=self.do_nothing)
+        file_menu.add_command(label="Admin", command=self.do_nothing)
         # create a menu item 5
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Settings", menu=file_menu)
@@ -81,9 +81,10 @@ class AdminHomepage:
         # create a menu item 6
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Help", menu=file_menu)
-        file_menu.add_command(label="Contact Support", command=self.do_nothing)
-        file_menu.add_separator()
+        file_menu.add_command(label="Information", command=self.do_nothing)
         file_menu.add_command(label="About", command=self.do_nothing)
+        file_menu.add_separator()
+        file_menu.add_command(label="Support", command=self.do_nothing)
 
         self.create_gui_admin_main()
 
@@ -161,6 +162,15 @@ class AdminHomepage:
 
     def view_charts(self):
         self.view_summaries_with_pie_chart.create_gui_view_summaries(self)
+
+    def edit_view_delete_refugee(self):
+        self.admin_display_refugees.create_gui_refugee_display(self)
+
+
+
+
+
+
 
 
 
