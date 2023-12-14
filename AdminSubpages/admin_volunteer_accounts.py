@@ -22,7 +22,7 @@ class AdminVolunteerDisplay:
         display_volunteer_frame.grid_rowconfigure(2, weight=1)
 
         # Labels
-        display_volunteer_title = tk.Label(display_volunteer_frame, text="Display Refugees", font=('Helvetica', 16))
+        display_volunteer_title = tk.Label(display_volunteer_frame, text="Display Volunteer Accounts", font=('Helvetica', 16))
         display_volunteer_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5)
 
         self.display_volunteer_tree = ttk.Treeview(display_volunteer_frame, height=20)
@@ -36,15 +36,15 @@ class AdminVolunteerDisplay:
 
         # Buttons
         # View event
-        view_btn = tk.Button(btn_frame, text="View Refugee Profile", command=lambda: self.view_csv_data_entry())
+        view_btn = tk.Button(btn_frame, text="View Volunteer Profile", command=lambda: self.view_csv_data_entry())
         view_btn.grid(row=0, column=0, padx=20, pady=(50,10))
 
         # Edit event
-        edit_btn = tk.Button(btn_frame, text="Edit Refugee Profile", command=lambda: self.edit_csv_data_entry())
+        edit_btn = tk.Button(btn_frame, text="Edit Volunteer Profile", command=lambda: self.edit_csv_data_entry())
         edit_btn.grid(row=0, column=1, padx=20, pady=(50,10))
 
         # Delete button
-        delete_btn = tk.Button(btn_frame, text="Delete Refugee Profile", command=lambda: self.delete_csv_data_entry(self.display_volunteer_tree, csv_file))
+        delete_btn = tk.Button(btn_frame, text="Delete Volunteer Profile", command=lambda: self.delete_csv_data_entry(self.display_volunteer_tree, csv_file))
         delete_btn.grid(row=0, column=2, padx=20, pady=(50,10))
 
         # Back button
