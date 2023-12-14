@@ -12,6 +12,7 @@ from AdminSubpages.view_summaries_with_pie_chart import AdminViewSummariesWithCh
 from AdminSubpages.admin_refugee_profiles import AdminRefugeeDisplay
 from AdminSubpages.admin_volunteer_accounts import AdminVolunteerDisplay
 from AdminSubpages.admin_help import AdminHelp
+from AdminSubpages.edit_camp_capacity import edit_camp_details
 
 class AdminHomepage:
     def __init__(self, root, go_to_landing_page):
@@ -55,7 +56,7 @@ class AdminHomepage:
         # create a menu item 2
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Edit", menu=file_menu)
-        file_menu.add_command(label="Edit Crisis Events", command=self.view_summaries)
+        file_menu.add_command(label="Edit Camp Capacity", command=self.t_edit_camp)
         file_menu.add_separator()
         file_menu.add_command(label="Edit Refugee Profiles", command=self.edit_view_delete_refugee)
         # create a menu item 3
@@ -175,6 +176,10 @@ class AdminHomepage:
 
     def help_support(self):
         self.admin_help.support_pop_up()
+
+    # Edit Camp Info (edit_camp_details.py)
+    def t_edit_camp(self):
+        edit_camp_details(self.window, self.back_button_to_admin_main)
 
 
     def do_nothing(self):
