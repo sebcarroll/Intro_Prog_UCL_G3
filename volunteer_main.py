@@ -12,6 +12,7 @@ from VolunteerSubpages.resource_display import resource_display
 from VolunteerSubpages.refugee_display import RefugeeDisplay
 # Import for menu commands
 from admin_help import AdminHelp
+from general_pie_charts import SummaryCharts
 import csv
 
 class invalid_email(Exception):
@@ -36,8 +37,9 @@ class VolunteerHomepage():
         self.window.geometry('1300x600')
 
         self.admin_help = AdminHelp(self.window, self.back_button_to_volunteer_main)
+        self.charts = SummaryCharts(self.window, self.back_button_to_volunteer_main)
         self.refugee_display_instance = RefugeeDisplay(self.window, self.back_button_to_volunteer_main)
-        
+
         self.camp_id_label = self.get_camp_id_for_volunteer()
         self.show_camp_id_label = None
 
@@ -66,6 +68,8 @@ class VolunteerHomepage():
         file_menu.add_command(label="View Refugees", command=self.display_refugees)
         file_menu.add_separator()
         file_menu.add_command(label="View Resources", command=self.t_display_resources)
+        file_menu.add_separator()
+        file_menu.add_command(label="View Charts", command=lambda: self.generate_chart_window())
         # create a menu item 6
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Help", menu=file_menu)
@@ -218,7 +222,8 @@ class VolunteerHomepage():
     def help_support(self):
         self.admin_help.support_pop_up()
 
-
+    def generate_chart_window(self):
+        self.charts.generate_charts_window()
 
 
     # NAVIGATION - VOLUNTEER USERS:
