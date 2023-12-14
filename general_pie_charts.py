@@ -2,7 +2,7 @@ import tkinter as tk
 import csv
 import os
 import pandas as pd
-from PIL import Image, ImageTk
+#from PIL import Image, ImageTk
 
 class SummaryCharts:
     def __init__(self, window, back_button_to_admin_main):

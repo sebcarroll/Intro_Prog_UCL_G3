@@ -165,16 +165,16 @@ class VolunteerHomepage():
 
                 if row and row[0].strip() == self.username:
                     # Camp ID is the second value (index 1)
-                    camp_id = row[1].strip()
+                    self.camp_id = row[1].strip()
 
                     # Check if the camp ID is blank
-                    if not camp_id:
+                    if not self.camp_id:
                         return "NO CAMP ID ASSIGNED"
 
-                    camp_id = round(float(camp_id))
+                    self.camp_id = round(float(self.camp_id))
 
-                    self.camp_ID_label = camp_id
-                    return f"YOUR CAMP ID: {camp_id}"
+                    self.camp_ID_label = self.camp_id
+                    return f"YOUR CAMP ID: {self.camp_id}"
 
             # Return "No camp ID assigned" if the loop completes without finding a matching volunteer
             return "No camp ID assigned"
@@ -193,7 +193,7 @@ class VolunteerHomepage():
 
     # Edit Camp Info (edit_camp_details.py)
     def t_edit_camp(self):
-        edit_camp_details(self.window, self.y_camp_info, self.back_button_to_volunteer_main)
+        edit_camp_details(self.window, self.y_camp_info, self.camp_id, self.back_button_to_volunteer_main)
 
     # Create Refugee (new_refugee.py)
     def t_create_refugee(self):
