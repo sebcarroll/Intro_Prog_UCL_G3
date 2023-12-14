@@ -11,7 +11,7 @@ def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main
     # Main frame for this whole page
     refugeeframe = tk.Frame(window)
     refugeeframe.grid()
-    crisis_df = pd.read_csv('crisis_events.csv')
+    crisis_df = pd.read_csv('../crisis_events.csv')
     active_camps= crisis_df[crisis_df['Status']== 'Active']
     camp_IDs = list(active_camps['Camp ID'])
 
@@ -86,7 +86,7 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
                                t_second_languageEntry, name_entry):
     try:
         # Update self.t_create_refugee dictionary
-        refugee_info = pd.read_csv('refugee_info.csv', index_col='Name')
+        refugee_info = pd.read_csv('../refugee_info.csv', index_col='Name')
 
 
         camp_ID = int(t_camp_IDbox.get())
@@ -119,7 +119,7 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
 
 def update_number_of_refugees(camp_ID):
     number_of_refugees_actual = 0
-    with open('refugee_info.csv', 'r') as file:
+    with open('../refugee_info.csv', 'r') as file:
         csv_reader = csv.reader(file)
         next(csv_reader)
         for row in csv_reader:
@@ -129,7 +129,7 @@ def update_number_of_refugees(camp_ID):
 
     header = []
     data = []
-    with open('crisis_events.csv', 'r') as file:
+    with open('../crisis_events.csv', 'r') as file:
         csv_reader = csv.reader(file)
         header = next(csv_reader)
         data = list(csv_reader)
@@ -138,7 +138,7 @@ def update_number_of_refugees(camp_ID):
         if int(float(row[0])) == int(camp_ID):
             row[16] = str(number_of_refugees_actual)
 
-    with open('crisis_events.csv', 'w', newline='') as file:
+    with open('../crisis_events.csv', 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(header)
         writer.writerows(data)
