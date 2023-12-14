@@ -66,10 +66,10 @@ class AdminLoginPage(tk.Frame):
         # For caps lock on/off
     def caps_lock_on(self, event):
         if event.keysym == 'Caps_Lock':
-            self.label_caps.config(text='Caps lock is on')
+            self.label_caps.config(text='Caps lock is on', fg='red')
     def caps_lock_off(self, event):
         if event.keysym == 'Caps_Lock':
-            self.label_caps.config(text='Caps lock is off')
+            self.label_caps.config(text='Caps lock is off', fg ='red')
 
         # Admin login checker
 
