@@ -2,7 +2,6 @@ import tkinter as tk
 import csv
 import os
 import pandas as pd
-from PIL import Image, ImageTk
 
 class SummaryCharts:
     def __init__(self, window, back_button_to_admin_main):
@@ -12,7 +11,7 @@ class SummaryCharts:
     def generate_charts_window(self):
         # Create a new window for the pie chart
         generate_charts_window = tk.Toplevel(self.window)
-        generate_charts_window.title("View Charts")
+        generate_charts_window.title("View Charts & Map")
         generate_charts_window.geometry("1000x800")
 
         # Call the method to create the pie chart in the new window
@@ -162,41 +161,42 @@ class SummaryCharts:
 
         # Create a canvas for the map
         map_canvas = tk.Canvas(window, width=800, height=400)
-        map_canvas.place(x=400, y=500)
+        map_canvas.place(x=400, y=400)
 
         # Define coordinates for each country
         country_coordinates = {
             'Nigeria': [100, 100],
             'Sudan': [100, 150],
-            'South Sudan': [150, 200],
-            'Somalia': [50, 250],
-            'Yemen': [100, 50],
-            'Afghanistan': [150, 100],
+            'South Sudan': [100, 200],
+            'Somalia': [100, 250],
+            'Yemen': [150, 250],
+            'Afghanistan': [200, 100],
             'England': [200, 150],
-            'Syria': [50, 200],
-            'Democratic Republic of the Congo': [200, 200],
+            'Syria': [200, 200],
+            'Democratic Republic of the Congo': [150, 200],
             'Venezuela': [250, 100],
             'Iraq': [250, 150],
             'Ethiopia': [150, 250],
             'Myanmar': [200, 250],
             'Haiti': [250, 200],
             'Central African Republic': [150, 300],
-            'Libya': [300, 200],
-            'Chad': [200, 300],
-            'Mali': [250, 250],
-            'Niger': [300, 250],
-            'Cameroon': [300, 300],
-            'Ukraine': [350, 100],
-            'Pakistan': [350, 150],
+            'Libya': [200, 250],
+            'Chad': [150, 300],
+            'Mali': [150, 250],
+            'Niger': [150, 300],
+            'Cameroon': [150, 300],
+            'Ukraine': [300, 100],
+            'Pakistan': [300, 150],
             'Bangladesh': [350, 200],
-            'Lebanon': [350, 250],
-            'Zimbabwe': [350, 300],
-            'Eritrea': [400, 100],
-            'North Korea': [400, 150],
-            'Eswatini': [400, 200],
-            'Zambia': [400, 250],
-            'Malawi': [400, 300],
+            'Lebanon': [200, 200],
+            'Zimbabwe': [200, 300],
+            'Eritrea': [100, 200],
+            'North Korea': [350, 150],
+            'Eswatini': [200, 300],
+            'Zambia': [200, 250],
+            'Malawi': [200, 300],
         }
+
 
 
         # Read locations from CSV file
