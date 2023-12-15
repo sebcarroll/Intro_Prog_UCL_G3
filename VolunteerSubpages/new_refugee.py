@@ -5,6 +5,9 @@ from tkinter import messagebox
 import pandas as pd
 import csv
 
+class no_text_entered(Exception):
+    pass
+
 def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volunteer_main, store_details_callback):
     for i in window.winfo_children():
         i.grid_forget()
@@ -110,6 +113,7 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
         refugee_info = pd.read_csv('refugee_info.csv', index_col='Name')
 
 
+
         camp_ID = int(t_camp_IDbox.get())
         name = name_entry.get()
         family_members = family_labelbox.get()
@@ -122,11 +126,15 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
         refugee_info.loc[name, 'Languages Spoken'] = languages_spoken
         refugee_info.loc[name, 'Second Language'] = second_language
         refugee_info.loc[name, 'Family Members'] = family_members
-
+        if name == '' or family_labelbox.get() == '' or t_medical_conditionsEntry.get() == '':
+            raise no_text_entered
         # new_refugee_info.index.name = 'Name'
         refugee_info.to_csv('refugee_info.csv')
         update_number_of_refugees(camp_ID)
-        tk.messagebox.showinfo(title='Details saved', message='Details have been saved')
+        tk.messagebox.showinfo(title='Details saved', message='Details have been saved successfully')
+
+    except (no_text_entered):
+        tk.messagebox.showinfo(title = 'No text entered', message = 'Family name, number of family members and medical conditions must be inputted')
 
     except FileNotFoundError:
         data = {'Name': [name], 'Camp ID': [camp_ID],

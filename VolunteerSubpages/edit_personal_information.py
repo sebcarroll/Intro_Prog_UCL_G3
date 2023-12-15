@@ -205,7 +205,7 @@ def store_personal_details(username, y_personal_info, t_personal_nameEntry, t_pe
         else:
             email = t_personal_emailEntry.get()
         if t_phonenumberEntry.get() == '':
-            phone = str(y_personal_info[username]['Phone Number'])
+            phone = int(y_personal_info[username]['Phone Number'])
         else:
             phone = t_phonenumberEntry.get()
         if t_commitmentEntry.get() == '':
