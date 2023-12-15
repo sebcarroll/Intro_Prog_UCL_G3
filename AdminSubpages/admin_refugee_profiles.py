@@ -15,22 +15,27 @@ class AdminRefugeeDisplay:
             i.grid_forget()
         for i in range(9):
             self.window.grid_columnconfigure(i, weight=1)
-
         display_refugee_frame = tk.Frame(self.window)
-        display_refugee_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9)
+        display_refugee_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9, rowspan=9)
         for i in range(9):
             display_refugee_frame.grid_columnconfigure(i, weight=1)
+        for i in range(9):
+            display_refugee_frame.grid_rowconfigure(i, weight=1)
+        '''display_refugee_frame = tk.Frame(self.window)
+        display_refugee_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9)
+        for i in range(9):
+            display_refugee_frame.grid_columnconfigure(i, weight=1)'''
 
         # Labels
         display_refugee_title = tk.Label(display_refugee_frame, text="Display Refugees", font=('TKDefault', 25))
         display_refugee_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
 
         self.display_refugee_tree = ttk.Treeview(display_refugee_frame, height=15)
-        self.display_refugee_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5, columnspan=9)
+        self.display_refugee_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5, columnspan=9, rowspan=4)
 
         # Button Frame:
         btn_frame = tk.Frame(display_refugee_frame)
-        btn_frame.grid(row=2, column=4, pady=10)
+        btn_frame.grid(row=6, column=4, pady=10, rowspan=4)
         btn_frame.grid_columnconfigure(0, weight=1)
         btn_frame.grid_columnconfigure(2, weight=1)
 

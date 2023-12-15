@@ -52,11 +52,17 @@ class AdminEditVolunteerDetails:
             i.grid_forget()
         for i in range(9):
             self.window.grid_columnconfigure(i, weight=1)
-
         display_volunteer_frame = tk.Frame(self.window)
-        display_volunteer_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9)
+        display_volunteer_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9, rowspan=9)
         for i in range(9):
             display_volunteer_frame.grid_columnconfigure(i, weight=1)
+        for i in range(9):
+            display_volunteer_frame.grid_rowconfigure(i, weight=1)
+
+        '''display_volunteer_frame = tk.Frame(self.window)
+        display_volunteer_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9)
+        for i in range(9):
+            display_volunteer_frame.grid_columnconfigure(i, weight=1)'''
 
         # Labels
         volunteer_title = tk.Label(display_volunteer_frame, text="Edit Volunteer Details", font=('TKDefault', 25))
@@ -86,17 +92,17 @@ class AdminEditVolunteerDetails:
 
         # Buttons
         tk.Button(btn_frame, text="Edit Account", command=self.edit_details, width=20).grid(row=0,
-                                                                                          column=0, padx=10)
+                                                                                          column=0, padx=10, pady=5)
 
         tk.Button(btn_frame, text="Create Account", command=self.create_account_gui, width=20).grid(row=1,
-                                                                                            column=0, padx=10)
+                                                                                            column=0, padx=10, pady=5)
 
         tk.Button(btn_frame, text="Deactivate Account", command=self.deactivate_account, width=20).grid(row=2,
-                                                                                                column=0, padx=10)
+                                                                                                column=0, padx=10, pady=5)
         tk.Button(btn_frame, text="Reactivate Account", command=self.reactivate_account, width=20).grid(row=3,
-                                                                                                column=0, padx=10)
+                                                                                                column=0, padx=10, pady=5)
         tk.Button(btn_frame, text="Delete Account", command=self.delete_account, width=20).grid(row=4, column=0,
-                                                                                        padx= 10)
+                                                                                        padx=10, pady=5)
         # Back button
         back_button = tk.Button(btn_frame, text='Back to Home', command=self.back_button_to_admin_main)
         back_button.grid(row=5, column=0, padx=5, pady=10)
