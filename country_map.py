@@ -2,18 +2,20 @@ import tkinter as tk
 import csv
 import os
 import pandas as pd
+from tkinter import PhotoImage
 
 class CountryMap:
     def __init__(self, window, back_button_to_admin_main):
         self.window = window
         self.back_button_to_admin_main = back_button_to_admin_main
+        self.map_image = None
 
 
     def view_country_map_window(self):
         # Create a new window for the map
         self.map_window = tk.Toplevel(self.window)
-        self.map_window.title("View Country Crisis Map")
-        self.map_window.geometry("800x800")
+        self.map_window.title("Country Crisis Visualisation")
+        self.map_window.geometry("1000x800")
 
         self.map_window.grab_set()
 
@@ -24,48 +26,62 @@ class CountryMap:
     def show_map(self, window):
 
         # Create a canvas for the map
-        map_canvas = tk.Canvas(window, width=800, height=600)
-        map_canvas.place(x=400, y=400)
+        map_canvas = tk.Canvas(window, width=1000, height=800)  # Adjust the canvas size as needed
+        map_canvas.place(x=0, y=0)  # Adjust the x and y coordinates as needed
 
-        # Create a label for the map
-        map_label = tk.Label(window, text="Country Crisis View", font=('Helvetica', 15, 'bold'))
-        map_label.place(x=200, y=50)  # Adjust the x and y coordinates as needed
+        # Load the image using PhotoImage
+        if self.map_image is None:
+            self.map_image = PhotoImage(file="world_map_tkinter.png")
+
+        # Display the image on the canvas
+        map_canvas.create_image(0, 0, anchor=tk.NW, image=self.map_image)
+
+        # # Load the image using PhotoImage
+        # map_image = PhotoImage(file="AdminSubpages/world_map_tkinter.png")  # Replace with the path to your image file
+        #
+        # map_label = tk.Label(window, image=map_image)
+        # map_label.pack()
+
+        # print("Loading image...")
+        # photo = PhotoImage(file="world_map_tkinter.png")
+        # print("Image loaded.")
+        # label = tk.Label(window, image=photo)
+        #
+        # label.pack()
 
         # Define coordinates for each country
         country_coordinates = {
-            'Nigeria': [100, 100],
-            'Sudan': [100, 150],
+            'Nigeria': [150, 150],
+            'Sudan': [150, 200],
             'South Sudan': [100, 200],
             'Somalia': [100, 250],
-            'Yemen': [150, 250],
-            'Afghanistan': [200, 100],
-            'England': [200, 150],
-            'Syria': [200, 200],
-            'Democratic Republic of the Congo': [150, 200],
-            'Venezuela': [250, 100],
-            'Iraq': [250, 150],
-            'Ethiopia': [150, 250],
-            'Myanmar': [200, 250],
-            'Haiti': [250, 200],
-            'Central African Republic': [150, 300],
-            'Libya': [200, 250],
-            'Chad': [150, 300],
-            'Mali': [150, 250],
-            'Niger': [150, 300],
-            'Cameroon': [150, 300],
-            'Ukraine': [300, 100],
-            'Pakistan': [300, 150],
-            'Bangladesh': [350, 200],
-            'Lebanon': [200, 200],
-            'Zimbabwe': [200, 300],
-            'Eritrea': [100, 200],
-            'North Korea': [350, 150],
-            'Eswatini': [200, 300],
-            'Zambia': [200, 250],
-            'Malawi': [200, 300],
+            'Yemen': [150, 300],
+            'Afghanistan': [200, 350],
+            'England': [200, 400],
+            'Syria': [200, 450],
+            'Democratic Republic of the Congo': [150, 500],
+            'Venezuela': [250, 550],
+            'Iraq': [250, 600],
+            'Ethiopia': [150, 650],
+            'Myanmar': [200, 700],
+            'Haiti': [250, 750],
+            'Central African Republic': [150, 800],
+            'Libya': [200, 850],
+            'Chad': [150, 900],
+            'Mali': [150, 950],
+            'Niger': [150, 1000],
+            'Cameroon': [150, 1050],
+            'Ukraine': [300, 1100],
+            'Pakistan': [300, 1150],
+            'Bangladesh': [350, 1200],
+            'Lebanon': [200, 1250],
+            'Zimbabwe': [200, 1300],
+            'Eritrea': [100, 1350],
+            'North Korea': [350, 1400],
+            'Eswatini': [200, 1450],
+            'Zambia': [200, 1500],
+            'Malawi': [400, 900],
         }
-
-
 
         # Read locations from CSV file
         locations = self.read_location_data_from_csv('crisis_events.csv')
