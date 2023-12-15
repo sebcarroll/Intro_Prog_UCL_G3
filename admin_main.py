@@ -23,6 +23,12 @@ class AdminHomepage:
         self.window = tk.Toplevel(self.root)
         self.window.title('Admin Homepage')
         self.window.geometry('1300x600')
+
+        # Default theme
+        #self.default_bg = self.window.cget('bg')
+        self.current_theme = tk.StringVar(value='no_theme')
+        self.apply_theme('no_theme')
+
         #self.window.configure(background="red")
         #self.window.attributes('-fullscreen', True)
 
@@ -73,7 +79,7 @@ class AdminHomepage:
         file_menu.add_command(label="Admin", command=self.do_nothing)
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Settings", menu=file_menu)
-        file_menu.add_command(label="Display", command=self.do_nothing)
+        file_menu.add_command(label="Display", command=self.open_theme_window)
         file_menu.add_separator()
         file_menu.add_command(label="Audio", command=self.do_nothing)
         file_menu = tk.Menu(menu_bar, tearoff=0)
@@ -220,3 +226,29 @@ class AdminHomepage:
             self.root.destroy()
         #self.root.destroy()
 
+
+
+    def open_theme_window(self):
+        theme_window = tk.Toplevel(self.root)
+        theme_window.title("Select Theme")
+        theme_window.geometry("200x100")
+
+        theme_window.grab_set()
+
+        # Radio buttons for theme selection
+        tk.Radiobutton(theme_window, text="Light Theme", variable=self.current_theme,
+                       value='light', command=lambda: self.apply_theme('light')).pack(anchor=tk.W)
+        tk.Radiobutton(theme_window, text="Dark Theme", variable=self.current_theme,
+                       value='dark', command=lambda: self.apply_theme('dark')).pack(anchor=tk.W)
+        tk.Radiobutton(theme_window, text="No Theme", variable=self.current_theme,
+                       value='no_theme', command=lambda: self.apply_theme('no_theme')).pack(anchor=tk.W)
+
+    def apply_theme(self, theme):
+        if theme == 'dark':
+            self.window.configure(bg='black')
+            # Set other widget and text colors for dark theme
+        elif theme == 'light':
+            self.window.configure(bg='white')
+            # Set other widget and text colors for light theme
+        else:
+            self.window.configure(bg='SystemButtonFace')
