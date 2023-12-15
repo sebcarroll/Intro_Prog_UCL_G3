@@ -110,7 +110,7 @@ class CountryMap:
                     fill='red'
                 )
 
-                map_canvas.create_text(coordinates[0], coordinates[1] - 10, text=country, anchor=tk.CENTER)
+                map_canvas.create_text(coordinates[0], coordinates[1] - 10, text=country, anchor=tk.CENTER, fill='white')
 
 
     def read_location_data_from_csv(self, crisis_events):
