@@ -4,6 +4,7 @@ import pandas as pd
 from tkinter import messagebox
 from general_functions import validate_data
 from general_pie_charts import SummaryCharts
+from country_map import CountryMap
 import csv
 
 
@@ -12,6 +13,7 @@ class AdminViewSummaries:
         self.window = window
         self.back_button_to_admin_main = back_button_to_admin_main
         self.charts = SummaryCharts(self.window, self.back_button_to_admin_main)
+        self.map = CountryMap(self.window, self.back_button_to_admin_main)
 
     def create_gui_view_summaries(self, window):
         # Main frame for this whole page
@@ -56,9 +58,13 @@ class AdminViewSummaries:
         delete_btn = tk.Button(btn_frame, text="Delete Event", command=lambda: self.delete_csv_data_entry(self.end_plan_tree, csv_file))
         delete_btn.grid(row=0, column=2, padx=20, pady=(50,10))
 
-        # View data button
-        generate_data_btn = tk.Button(btn_frame, text="Generate Charts & Crisis Map View", command=lambda: self.generate_chart_window())
+        # Generate charts button
+        generate_data_btn = tk.Button(btn_frame, text="Generate Charts", command=lambda: self.generate_chart_window())
         generate_data_btn.grid(row=0, column=3, padx=20, pady=(50,10))
+
+        # View country map
+        view_map_btn = tk.Button(btn_frame, text="View Country Crisis Map", command=lambda: self.generate_map_window())
+        view_map_btn.grid(row=0, column=4, padx=20, pady=(50,10))
 
         # Back button
         back_button = tk.Button(btn_frame, text='Back to Home', command=self.back_button_to_admin_main)
@@ -81,6 +87,8 @@ class AdminViewSummaries:
     def generate_chart_window(self):
         self.charts.generate_charts_window()
 
+    def generate_map_window(self):
+        self.map.view_country_map_window()
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename)
 
