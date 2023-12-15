@@ -1,8 +1,8 @@
 Camp ID,Crisis Type,Description,Country,Day,Month,Year,Status,End Date,Capacity,Duration,Meals(T),Medicine(T),Meals/w,Medicine/w,Delivery Time(d),Refugees
 50055,War, Voldemort has found Harry Potter, Nigeria,6,December,2023,Active,0000-00-00 00:00:00,90.0,1.0,42.0,3.0,14.0,1.0,2.0,14.0
 55098,Supply Shortage,0,Sudan,8,December,2023,Inactive,2023-12-14 19:18:41,140.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-68692,Environmental,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,100.0,15.0,100000.0,100000.0,14.0,2.0,2.0,5
-68691,Environmental,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,3000,10,10000000,1000000,7,1,1,2
+68692,Environmental,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,100.0,15.0,100000.0,100000.0,14.0,2.0,2.0,6.0
+68691,Environmental,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,3000.0,10.0,10000000.0,1000000.0,7.0,1.0,1.0,2.0
 32586,Displacement,0,South Sudan,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
 23950,Political unrest,0,Somalia,8,December,2023,Active,0000-00-00 00:00:00,15.0,30.0,10000.0,10000.0,14.0,2.0,0.0,0.0
 47972,Supply Shortage,0,Somalia,8,December,2023,Active,0000-00-00 00:00:00,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
@@ -17,26 +17,9 @@ Camp ID,Crisis Type,Description,Country,Day,Month,Year,Status,End Date,Capacity,
 46753,Supply Shortage,Death,Afghanistan,10,December,2023,Inactive,2023-12-13 13:57:57,6666.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
 87303,Displacement,No description,Malawi,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
 52434,Political unrest,kim jong un,North Korea,1,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-17916,Environmental,No description,Democratic Republic of the Congo,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
 77295,Displacement,No description,Venezuela,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-70153,Political unrest,No description,Iraq,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
 56597,Political unrest,No description,Nigeria,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-13676,Supply Shortage,No description,Zambia,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-21633,Environmental,No description,Eswatini,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
 14619,Political unrest,No description,North Korea,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-18085,Environmental,No description,Eritrea,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-54763,Supply Shortage,No description,Zimbabwe,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
 84603,Displacement,No description,Lebanon,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-86488,Displacement,No description,Bangladesh,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-53184,Other,No description,Pakistan,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-85423,Supply Shortage,No description,Ukraine,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-13975,Political unrest,No description,Cameroon,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-31986,Environmental,No description,Niger,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-76667,War,No description,Mali,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-60867,War,No description,Chad,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
 47747,Other,No description,Libya,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-65543,Supply Shortage,No description,Central African Republic,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
 95210,Supply Shortage,No description,Haiti,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-39278,Environmental,No description,Myanmar,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-63528,Environmental,No description,Ethiopia,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-87369,Other,No description,Nigeria,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,

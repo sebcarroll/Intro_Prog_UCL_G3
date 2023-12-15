@@ -223,7 +223,7 @@ class VolunteerHomepage():
 
     # Display Resources (resource_display.py)
     def t_display_resources(self):
-        resource_display(self.window, self.back_button_to_volunteer_main)
+        resource_display(self.window, self.camp_id, self.back_button_to_volunteer_main)
 
     def display_refugees(self):
         # Open the resource allocation GUI

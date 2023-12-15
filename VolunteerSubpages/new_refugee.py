@@ -71,7 +71,7 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
                                        text='Enter any medical condition(s) for each family member.',
                                        font=("TkinterDefault", 15))
     medical_conditionslabel.grid(row=5, column=0, padx=5, pady=5)
-    t_medical_conditionsEntry = tk.Entry(refugee_labelframe)
+    t_medical_conditionsEntry = tk.Text(refugee_labelframe, height=7, width=30, font=("TkinterDefault", 10))
     t_medical_conditionsEntry.grid(row=5, column=1, padx=5, pady=5)
 
     # Languages spoken by refugees
@@ -117,7 +117,7 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
         camp_ID = int(t_camp_IDbox.get())
         name = name_entry.get()
         family_members = family_labelbox.get()
-        medical_conditions = t_medical_conditionsEntry.get()
+        medical_conditions = t_medical_conditionsEntry.get("1.0", "end-1c")
         languages_spoken = t_languages_spokenEntry.get()
         second_language = t_second_languageEntry.get()
         refugee_info.loc[name,'Camp ID'] = camp_ID
@@ -126,7 +126,7 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
         refugee_info.loc[name, 'Languages Spoken'] = languages_spoken
         refugee_info.loc[name, 'Second Language'] = second_language
         refugee_info.loc[name, 'Family Members'] = family_members
-        if name == '' or family_labelbox.get() == '' or t_medical_conditionsEntry.get() == '':
+        if name == '' or family_labelbox.get() == '' or t_medical_conditionsEntry.get("1.0", "end-1c") == '':
             raise no_text_entered
         # new_refugee_info.index.name = 'Name'
         refugee_info.to_csv('refugee_info.csv')
