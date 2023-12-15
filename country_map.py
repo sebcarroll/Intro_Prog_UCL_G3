@@ -36,51 +36,38 @@ class CountryMap:
         # Display the image on the canvas
         map_canvas.create_image(0, 0, anchor=tk.NW, image=self.map_image)
 
-        # # Load the image using PhotoImage
-        # map_image = PhotoImage(file="AdminSubpages/world_map_tkinter.png")  # Replace with the path to your image file
-        #
-        # map_label = tk.Label(window, image=map_image)
-        # map_label.pack()
-
-        # print("Loading image...")
-        # photo = PhotoImage(file="world_map_tkinter.png")
-        # print("Image loaded.")
-        # label = tk.Label(window, image=photo)
-        #
-        # label.pack()
-
         # Define coordinates for each country
         country_coordinates = {
-            'Nigeria': [150, 150],
-            'Sudan': [150, 200],
-            'South Sudan': [100, 200],
-            'Somalia': [100, 250],
-            'Yemen': [150, 300],
-            'Afghanistan': [200, 350],
-            'England': [200, 400],
-            'Syria': [200, 450],
-            'Democratic Republic of the Congo': [150, 500],
-            'Venezuela': [250, 550],
-            'Iraq': [250, 600],
-            'Ethiopia': [150, 650],
-            'Myanmar': [200, 700],
-            'Haiti': [250, 750],
-            'Central African Republic': [150, 800],
-            'Libya': [200, 850],
-            'Chad': [150, 900],
-            'Mali': [150, 950],
-            'Niger': [150, 1000],
-            'Cameroon': [150, 1050],
-            'Ukraine': [300, 1100],
-            'Pakistan': [300, 1150],
-            'Bangladesh': [350, 1200],
-            'Lebanon': [200, 1250],
-            'Zimbabwe': [200, 1300],
-            'Eritrea': [100, 1350],
-            'North Korea': [350, 1400],
-            'Eswatini': [200, 1450],
-            'Zambia': [200, 1500],
-            'Malawi': [400, 900],
+            'Nigeria': [450, 350],
+            'Sudan': [500, 300],
+            'South Sudan': [550, 300],
+            'Somalia': [600, 350],
+            'Yemen': [500, 400],
+            'Afghanistan': [600, 250],
+            'England': [450, 200],
+            'Syria': [500, 150],
+            'Democratic Republic of the Congo': [450, 300],
+            'Venezuela': [700, 150],
+            'Iraq': [600, 150],
+            'Ethiopia': [550, 350],
+            'Myanmar': [600, 500],
+            'Haiti': [750, 150],
+            'Central African Republic': [550, 300],
+            'Libya': [500, 150],
+            'Chad': [500, 250],
+            'Mali': [550, 300],
+            'Niger': [600, 300],
+            'Cameroon': [550, 350],
+            'Ukraine': [750, 50],
+            'Pakistan': [800, 100],
+            'Bangladesh': [850, 150],
+            'Lebanon': [700, 150],
+            'Zimbabwe': [550, 400],
+            'Eritrea': [600, 400],
+            'North Korea': [850, 200],
+            'Eswatini': [550, 450],
+            'Zambia': [600, 400],
+            'Malawi': [700, 350],
         }
 
         # Read locations from CSV file
@@ -123,3 +110,5 @@ class CountryMap:
             if pd.notna(country) and pd.notna(crisis_type):
                 locations.append({'country': country, 'crisis_type': crisis_type})
         return locations
+
+scale_factor = 1

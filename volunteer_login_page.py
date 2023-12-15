@@ -1,6 +1,7 @@
 
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import PhotoImage
 import os
 import pickle
 import pandas as pd
@@ -60,6 +61,8 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         )
         welcome_label.grid(row=1, column=0, padx=30, pady=30)
 
+
+
         # instruction_label = tk.Label(
         #     self,
         #     text='Volunteer login',
@@ -69,6 +72,8 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
 
         volunteer_entries_frame = tk.Frame(self, relief=tk.RAISED, borderwidth=5)
         volunteer_entries_frame.grid()
+
+
 
         # Label frame for this page that then stores all of the labels and entries
         volunteer_log_in_frame = tk.LabelFrame(volunteer_entries_frame, borderwidth=5)
@@ -120,6 +125,9 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         # Back to landing page
         back_button = tk.Button(volunteer_log_in_frame, text="Back", command=self.exit_and_go_back)
         back_button.grid(row=10, column=0, pady=10)
+
+        #image_label = tk.Label(volunteer_log_in_frame, image=PhotoImage(file="Images/new_camp_image.png").subsample(4, 4))
+        #image_label.grid(row=11, column=0)
 
 
         # Shows caps lock on/off (OLD BINDING NOT WORKING)
