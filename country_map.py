@@ -19,15 +19,15 @@ class CountryMap:
 
         self.map_window.grab_set()
 
-        # Call the method to create the pie chart in the new window
+        # Call the method to create the map in the new window
         self.show_map(self.map_window)
 
 
     def show_map(self, window):
 
         # Create a canvas for the map
-        map_canvas = tk.Canvas(window, width=1000, height=800)  # Adjust the canvas size as needed
-        map_canvas.place(x=0, y=0)  # Adjust the x and y coordinates as needed
+        map_canvas = tk.Canvas(window, width=1000, height=800)
+        map_canvas.place(x=0, y=0)
 
         # Load the image using PhotoImage
         if self.map_image is None:
@@ -41,7 +41,7 @@ class CountryMap:
             'Nigeria': [500, 300],
             'Sudan': [550, 270],
             'South Sudan': [550, 290],
-            'Somalia': [600, 300],
+            'Somalia': [585, 300],
             'Yemen': [600, 270],
             'Afghanistan': [650, 250],
             'England': [460, 175],
@@ -85,7 +85,7 @@ class CountryMap:
                 country_counts[country] += 1
 
                 # Adjust the oval size based on the count
-                oval_size = 5 + country_counts[country]
+                oval_size = 3 + country_counts[country]
 
                 # Draw the oval with adjusted size
                 map_canvas.create_oval(
@@ -96,7 +96,11 @@ class CountryMap:
                     fill='red'
                 )
 
-                map_canvas.create_text(coordinates[0], coordinates[1] - 10, text=country, anchor=tk.CENTER, fill='white')
+                # Adjust font size based on the count (scaled down)
+                font_size = int(8 - country_counts[country] * 0.2)
+
+                map_canvas.create_text(coordinates[0], coordinates[1] - 10, text=country, anchor=tk.CENTER,
+                                       fill='white', font=("Helvetica", font_size))
 
 
     def read_location_data_from_csv(self, crisis_events):
