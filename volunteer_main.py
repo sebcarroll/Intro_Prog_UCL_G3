@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from volunteer_login_page import VolunteerLoginPage
-import pickle
+from tkinter import messagebox
 import pandas as pd
 import os
 from VolunteerSubpages.personal_information import personal_information
@@ -277,4 +277,6 @@ class VolunteerHomepage():
         self.window.geometry("1300x600")
 
     def window_exit_button(self):
-        self.root.destroy()
+        if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
+            self.root.destroy()
+        #self.root.destroy()

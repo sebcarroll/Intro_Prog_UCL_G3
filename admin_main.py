@@ -1,5 +1,6 @@
 import tkinter as tk
 import pandas as pd
+from tkinter import messagebox
 # Imports for the main button commands
 from AdminSubpages.create_plan import AdminCreatePlan
 from AdminSubpages.admin_end_event import AdminEndEvent
@@ -213,5 +214,7 @@ class AdminHomepage:
         self.window.geometry("1300x600")
 
     def window_exit_button(self):
-        self.root.destroy()
+        if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
+            self.root.destroy()
+        #self.root.destroy()
 
