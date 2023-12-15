@@ -43,6 +43,10 @@ def edit_camp_details(window, back_button_to_admin_main):
         tk.messagebox.showwarning(message="Please enter an integer value")
     except taken_ID:
         tk.messagebox.showwarning(message="ID already exists, Please choose a different ID")
+    except FileNotFoundError:
+        messagebox.showwarning("No data found",
+                               "There is a problem accessing the database\n\nThe file may be missing or corrupted")
+        back_button_to_admin_main()
 
 def edit_refugee_no(df, selected_camp_id):
     try:
