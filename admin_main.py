@@ -1,4 +1,5 @@
 import tkinter as tk
+import pandas as pd
 # Imports for the main button commands
 from AdminSubpages.create_plan import AdminCreatePlan
 from AdminSubpages.admin_end_event import AdminEndEvent
@@ -11,6 +12,7 @@ from AdminSubpages.admin_refugee_profiles import AdminRefugeeDisplay
 from AdminSubpages.admin_volunteer_accounts import AdminVolunteerDisplay
 from admin_help import AdminHelp
 from AdminSubpages.edit_camp_capacity import edit_camp_details
+from AdminSubpages.admin_new_refugee import new_refugee, na_refugee_info_dict
 
 class AdminHomepage:
     def __init__(self, root, go_to_landing_page):
@@ -47,6 +49,7 @@ class AdminHomepage:
         file_menu.add_command(label="Home", command=self.back_button_to_admin_main)
         file_menu.add_separator()
         file_menu.add_command(label="New Plan", command=self.create_event)
+        file_menu.add_command(label="New Refugee", command=self.t_create_refugee)
         file_menu.add_command(label="Settings", command=self.do_nothing)
         file_menu.add_command(label="Log Out", command=self.exit_and_go_back)
         file_menu.add_separator()
@@ -82,6 +85,29 @@ class AdminHomepage:
         file_menu.add_command(label="About", command=self.help_about)
         file_menu.add_separator()
         file_menu.add_command(label="Support", command=self.help_support)
+
+
+        try:
+            # Update self.t_create_refugee dictionary
+            self.refugee_info = pd.read_csv('refugee_info.csv', index_col='Name')
+            self.refugee_info = self.refugee_info.to_dict(orient='index')
+        except FileNotFoundError:
+            self.refugee_info = {
+                'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
+                            'Second Language': ''}
+                    }
+
+            df = pd.DataFrame.from_dict(self.refugee_info, orient='index')
+            df.index.name = 'Name'
+            df.to_csv('refugee_info.csv', index='Name')
+            self.refugee_info = pd.read_csv('refugee_info.csv')
+
+        self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}
+        # Initialize na_refugee_info before trying to load from the pickled file
+        self.na_refugee_info = {
+            'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
+                         'Second Language': ''}
+        }
 
         self.create_gui_admin_main()
 
@@ -178,6 +204,11 @@ class AdminHomepage:
     # Edit Camp Info (edit_camp_details.py)
     def t_edit_camp(self):
         edit_camp_details(self.window, self.back_button_to_admin_main)
+
+    def t_create_refugee(self):
+        self.refugee_entry_widgets = new_refugee(self.window, self.y_camp_info, self.na_refugee_info, self.back_button_to_admin_main, self.refugee_details_storage_handler)
+    def refugee_details_storage_handler(self, camp_ID, name_entry, family_label, medical_conditionsEntry, languages_spokenEntry, second_languageEntry):
+        na_refugee_info_dict(self.na_refugee_info, camp_ID, name_entry, family_label, medical_conditionsEntry, languages_spokenEntry, second_languageEntry)
 
 
     def do_nothing(self):
