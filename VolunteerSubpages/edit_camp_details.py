@@ -74,7 +74,6 @@ def edit_refugee_no(df, selected_camp_id):
         messagebox.showwarning(title="Invalid Entry", message="Please enter a valid number")
 
 
-
 def edit_camp_id(df, selected_camp_id, listbox):
     # Convert selected_camp_id to string if it's not
     selected_camp_id_str = str(selected_camp_id)
