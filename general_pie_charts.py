@@ -12,15 +12,14 @@ class SummaryCharts:
     def generate_charts_window(self):
         # Create a new window for the pie chart
         self.charts_window = tk.Toplevel(self.window)
-        self.charts_window.title("View Charts & Map")
-        self.charts_window.geometry("1000x800")
+        self.charts_window.title("View Charts")
+        self.charts_window.geometry("800x400")
 
         self.charts_window.grab_set()
 
         # Call the method to create the pie chart in the new window
         self.create_pie_chart_status(self.charts_window)
         self.create_bar_chart_crisis_type(self.charts_window)
-        self.show_map(self.charts_window)
 
     def create_pie_chart_status(self, window):
         # Read data from CSV file
@@ -160,84 +159,4 @@ class SummaryCharts:
             # Draw legend label
             canvas_legend_bar.create_text(40, 20 + i * 20, text=label, anchor=tk.W, fill='black')
 
-    def show_map(self, window):
 
-        # Create a canvas for the map
-        map_canvas = tk.Canvas(window, width=800, height=400)
-        map_canvas.place(x=400, y=400)
-
-        # Define coordinates for each country
-        country_coordinates = {
-            'Nigeria': [100, 100],
-            'Sudan': [100, 150],
-            'South Sudan': [100, 200],
-            'Somalia': [100, 250],
-            'Yemen': [150, 250],
-            'Afghanistan': [200, 100],
-            'England': [200, 150],
-            'Syria': [200, 200],
-            'Democratic Republic of the Congo': [150, 200],
-            'Venezuela': [250, 100],
-            'Iraq': [250, 150],
-            'Ethiopia': [150, 250],
-            'Myanmar': [200, 250],
-            'Haiti': [250, 200],
-            'Central African Republic': [150, 300],
-            'Libya': [200, 250],
-            'Chad': [150, 300],
-            'Mali': [150, 250],
-            'Niger': [150, 300],
-            'Cameroon': [150, 300],
-            'Ukraine': [300, 100],
-            'Pakistan': [300, 150],
-            'Bangladesh': [350, 200],
-            'Lebanon': [200, 200],
-            'Zimbabwe': [200, 300],
-            'Eritrea': [100, 200],
-            'North Korea': [350, 150],
-            'Eswatini': [200, 300],
-            'Zambia': [200, 250],
-            'Malawi': [200, 300],
-        }
-
-
-
-        # Read locations from CSV file
-        locations = self.read_location_data_from_csv('crisis_events.csv')
-
-        # Track the count for each country
-        country_counts = {country: 0 for country in country_coordinates}
-
-        for location in locations:
-            country = location["country"]
-            if country in country_coordinates:
-                coordinates = country_coordinates[country]
-
-                # Increase the count for the country
-                country_counts[country] += 1
-
-                # Adjust the oval size based on the count
-                oval_size = 5 + country_counts[country]
-
-                # Draw the oval with adjusted size
-                map_canvas.create_oval(
-                    coordinates[0] - oval_size,
-                    coordinates[1] - oval_size,
-                    coordinates[0] + oval_size,
-                    coordinates[1] + oval_size,
-                    fill='red'
-                )
-
-                map_canvas.create_text(coordinates[0], coordinates[1] - 10, text=country, anchor=tk.CENTER)
-
-
-    def read_location_data_from_csv(self, crisis_events):
-        data = pd.read_csv(crisis_events)
-        locations = []
-        for index, row in data.iterrows():
-            # x and y are columns in the csv
-            country = row['Country']
-            crisis_type = row['Crisis Type']
-            if pd.notna(country) and pd.notna(crisis_type):
-                locations.append({'country': country, 'crisis_type': crisis_type})
-        return locations
