@@ -3,7 +3,7 @@ from tkinter import ttk
 import pandas as pd
 
 
-def resource_display(window, back_button_to_volunteer_main):
+def resource_display(window, camp_id, back_button_to_volunteer_main):
     for i in window.winfo_children():
         i.grid_forget()
     resources_frame = tk.Frame(window)
@@ -11,8 +11,12 @@ def resource_display(window, back_button_to_volunteer_main):
 
     crisis_df = pd.read_csv('crisis_events.csv')
 
-    resources_df = crisis_df.loc[:, ['Camp ID', 'Meals(T)', 'Medicine(T)', 'Duration', 'Capacity',
-                                     'Meals/w', 'Medicine/w']]
+    # Filter resources for the camp that the volunteer belongs to
+    resources_df = crisis_df[crisis_df['Camp ID'] == camp_id].loc[:, ['Camp ID', 'Meals(T)', 'Medicine(T)', 'Duration', 'Capacity',
+                                                                                        'Meals/w', 'Medicine/w']]
+
+    # resources_df = crisis_df.loc[:, ['Camp ID', 'Meals(T)', 'Medicine(T)', 'Duration', 'Capacity',
+    #                                  'Meals/w', 'Medicine/w']]
 
     resources_df = resources_df.fillna(0)
 
