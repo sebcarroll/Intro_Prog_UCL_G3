@@ -1,6 +1,7 @@
-import tkinter
+
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 import general_functions as gf
 from resource_allocation_csv_creation import update_crisis_events
 import csv
@@ -52,7 +53,7 @@ class AdminResourceAllocation:
         # self.camp_id_listbox.grid(padx=5, pady=5)
 
         # Label for displaying number of refugees
-        refugee_label = tk.Label(resource_frame, text="Estimated Number of Refugees at camp:")
+        refugee_label = tk.Label(resource_frame, text="Current No. Refugees at camp:")
         refugee_label.grid(row=2, column=0, padx=5, pady=5)
         self.refugee_count = tk.Label(resource_frame, text="")
         self.refugee_count.grid(row=2, column=1, padx=5, pady=5)
@@ -267,13 +268,8 @@ class AdminResourceAllocation:
              week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks)
         print(self.resource_allocation_variables)
         print("Values Submitted and Saved")
-        message_label = tk.Label(self.window, text="")
-        submit_button_row = 9
-        submit_button_column = 0
-        submit_column_span = 2
-        message_label.config(text="Values Submitted and Saved. Please return to the home page.")
-        message_label.grid(row=submit_button_row + 1, column=submit_button_column, columnspan=submit_column_span,
-                           sticky='W')
+        tk.messagebox.showinfo(title='Details saved', message='Details have been saved')
+
 
     def confirmation_before_submission(self, message_to_be_displayed, callback):
         '''
