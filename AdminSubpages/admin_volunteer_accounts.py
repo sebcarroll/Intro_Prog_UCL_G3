@@ -13,24 +13,31 @@ class AdminVolunteerDisplay:
         # Main frame for this whole page
         for i in self.window.winfo_children():
             i.grid_forget()
-        self.window.grid_columnconfigure(0, weight=1)
+        for i in range(9):
+            self.window.grid_columnconfigure(i, weight=1)
+        display_volunteer_frame = tk.Frame(self.window)
+        display_volunteer_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9)
+        for i in range(9):
+            display_volunteer_frame.grid_columnconfigure(i, weight=1)
+
+        '''self.window.grid_columnconfigure(0, weight=1)
         self.window.grid_rowconfigure(0, weight=1)
         display_volunteer_frame = tk.Frame(self.window)
         display_volunteer_frame.grid(sticky="nsew", padx=5, pady=5)
         display_volunteer_frame.grid_columnconfigure(0, weight=1)
         display_volunteer_frame.grid_rowconfigure(1, weight=3)
-        display_volunteer_frame.grid_rowconfigure(2, weight=1)
+        display_volunteer_frame.grid_rowconfigure(2, weight=1)'''
 
         # Labels
         display_volunteer_title = tk.Label(display_volunteer_frame, text="Display Volunteer Accounts", font=('Helvetica', 16))
-        display_volunteer_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5)
+        display_volunteer_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
 
-        self.display_volunteer_tree = ttk.Treeview(display_volunteer_frame, height=20)
-        self.display_volunteer_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
+        self.display_volunteer_tree = ttk.Treeview(display_volunteer_frame, height=10)
+        self.display_volunteer_tree.grid(row=1, column=0, columnspan=9, sticky="ew", padx=10, pady=5)
 
         # Button Frame:
         btn_frame = tk.Frame(display_volunteer_frame)
-        btn_frame.grid(row=2, column=0, pady=10)
+        btn_frame.grid(row=2, column=4, pady=10)
         btn_frame.grid_columnconfigure(0, weight=1)
         btn_frame.grid_columnconfigure(2, weight=1)
 

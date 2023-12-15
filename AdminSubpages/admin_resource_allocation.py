@@ -34,12 +34,12 @@ class AdminResourceAllocation:
             i.grid_forget()
 
         # Title
-        title = tk.Label(self.window, text='Resource Allocation', font=('TkDefault', 35))
-        title.grid(row=0, column=0, pady=30)
+        title = tk.Label(self.window, text='Resource Allocation', font=('TKDefault', 25))
+        title.grid(row=0, column=2, pady=30)
 
         # Resource Frame
         resource_frame = tk.Frame(self.window)
-        resource_frame.grid(row=1, column=0, padx=5, pady=5)
+        resource_frame.grid(row=1, column=2, padx=5, pady=5)
 
         # Creating list of CAMP IDs
         camp_ID_label = tk.Label(resource_frame, text='Camp ID: ')
@@ -129,7 +129,7 @@ class AdminResourceAllocation:
 
         # Back button
         back_button = tk.Button(self.window, text='Back to Home', command=self.back_button_to_admin_main)
-        back_button.grid(row=13, column=0, padx=5, pady=10)
+        back_button.grid(row=13, column=2, padx=5, pady=10)
         self.setup_callback()
         # Event handler function to update number of refugees
     def update_number_of_refugees(self, event):

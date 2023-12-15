@@ -103,7 +103,7 @@ class AdminCreatePlan:
         self.year_combobox.set(self.current_year)
 
 
-        refugee_title = tk.Label(new_plan_frame, text='Create New Crisis Event', font=('TkinterDefault', 30))
+        refugee_title = tk.Label(new_plan_frame, text='Create New Crisis Event', font=('TKDefault', 25))
         refugee_title.grid(row=0, column=3, pady=30)
 
         # def randnum(self):

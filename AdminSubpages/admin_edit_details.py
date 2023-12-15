@@ -50,13 +50,17 @@ class AdminEditVolunteerDetails:
         # Main frame for this whole page
         for i in self.window.winfo_children():
             i.grid_forget()
-        new_plan_frame = tk.Frame(self.window)
-        new_plan_frame.grid()
+        for i in range(9):
+            self.window.grid_columnconfigure(i, weight=1)
+
+        display_volunteer_frame = tk.Frame(self.window)
+        display_volunteer_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9)
+        for i in range(9):
+            display_volunteer_frame.grid_columnconfigure(i, weight=1)
 
         # Labels
-        tk.Label(self.window, text="Edit Volunteer Details", font=('TKDefault', 25)).grid(row=0, column=0,
-                                                                                            columnspan=2,
-                                                                                            padx=10, pady=20)
+        volunteer_title = tk.Label(display_volunteer_frame, text="Edit Volunteer Details", font=('TKDefault', 25))
+        volunteer_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
 
         # Listbox to display volunteer usernames
         # edit_details_labelFrame = tk.LabelFrame(self.window)
@@ -64,34 +68,42 @@ class AdminEditVolunteerDetails:
         # self.volunteer_listbox = tk.Listbox(self.window, selectmode=tk.SINGLE)
         # self.populate_volunteer_listbox()
         # self.volunteer_listbox.grid(row=1, column=0, pady=5)
-        display_volunteer_frame = tk.Frame(self.window)
-        display_volunteer_frame.grid(sticky="nsew", padx=5, pady=5)
-        display_volunteer_frame.grid_columnconfigure(0, weight=1)
-        display_volunteer_frame.grid_rowconfigure(1, weight=3)
-        display_volunteer_frame.grid_rowconfigure(2, weight=1)
+        #display_volunteer_frame = tk.Frame(self.window)
+        #display_volunteer_frame.grid(sticky="nsew", padx=5, pady=5)
+        #display_volunteer_frame.grid_columnconfigure(0, weight=1)
+        #display_volunteer_frame.grid_rowconfigure(1, weight=3)
+        #display_volunteer_frame.grid_rowconfigure(2, weight=1)
+
+
         self.display_volunteer_tree = ttk.Treeview(display_volunteer_frame, height=10)
-        self.display_volunteer_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
+        self.display_volunteer_tree.grid(row=1, column=0, columnspan=9, sticky="ew", padx=10, pady=5)
+
+        # Button Frame:
+        btn_frame = tk.Frame(display_volunteer_frame)
+        btn_frame.grid(row=2, column=4, pady=10)
+        btn_frame.grid_columnconfigure(0, weight=1)
+        btn_frame.grid_columnconfigure(2, weight=1)
 
         # Buttons
-        tk.Button(self.window, text="Edit Account", command=self.edit_details, width=20).grid(row=3,
+        tk.Button(btn_frame, text="Edit Account", command=self.edit_details, width=20).grid(row=0,
                                                                                           column=0, padx=10)
 
-        tk.Button(self.window, text="Create Account", command=self.create_account_gui, width=20).grid(row=4,
+        tk.Button(btn_frame, text="Create Account", command=self.create_account_gui, width=20).grid(row=1,
                                                                                             column=0, padx=10)
 
-        tk.Button(self.window, text="Deactivate Account", command=self.deactivate_account, width=20).grid(row=5,
+        tk.Button(btn_frame, text="Deactivate Account", command=self.deactivate_account, width=20).grid(row=2,
                                                                                                 column=0, padx=10)
-        tk.Button(self.window, text="Reactivate Account", command=self.reactivate_account, width=20).grid(row=6,
+        tk.Button(btn_frame, text="Reactivate Account", command=self.reactivate_account, width=20).grid(row=3,
                                                                                                 column=0, padx=10)
-        tk.Button(self.window, text="Delete Account", command=self.delete_account, width=20).grid(row=7, column=0,
+        tk.Button(btn_frame, text="Delete Account", command=self.delete_account, width=20).grid(row=4, column=0,
                                                                                         padx= 10)
         # Back button
-        back_button = tk.Button(self.window, text='Back to Home', command=self.back_button_to_admin_main)
-        back_button.grid(row=8, column=0, padx=5, pady=10)
+        back_button = tk.Button(btn_frame, text='Back to Home', command=self.back_button_to_admin_main)
+        back_button.grid(row=5, column=0, padx=5, pady=10)
 
-        for i in range(9):
-            self.window.grid_rowconfigure(i, weight=1)
-        self.window.grid_columnconfigure(0, weight=1)
+        # for i in range(9):
+        #     self.window.grid_rowconfigure(i, weight=1)
+        # self.window.grid_columnconfigure(0, weight=1)
 
     # def populate_volunteer_listbox(self):
     #     try:

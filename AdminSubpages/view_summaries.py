@@ -28,7 +28,7 @@ class AdminViewSummaries:
         end_plan_frame.grid_rowconfigure(2, weight=1)
 
         # Labels
-        end_plan_title = tk.Label(end_plan_frame, text="View Plan Summaries", font=('Helvetica', 16))
+        end_plan_title = tk.Label(end_plan_frame, text="View Plan Summaries", font=('TKDefault', 25))
         end_plan_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5)
 
         self.end_plan_tree = ttk.Treeview(end_plan_frame, height=15)

@@ -12,7 +12,7 @@ def edit_camp_details(window, back_button_to_admin_main):
             i.grid_forget()
 
         t_edit_campframe = tk.Frame(window)
-        t_edit_campframe.grid(sticky="nsew", padx=5, pady=5, columnspan=9)
+        t_edit_campframe.grid(sticky="nsew", padx=5, pady=5, columnspan=9, column=3)
 
         for i in range(9):
             t_edit_campframe.grid_columnconfigure(i, weight=1)
@@ -22,7 +22,7 @@ def edit_camp_details(window, back_button_to_admin_main):
         crisis_df = crisis_df.fillna(0)
         camp_ID_choices = crisis_df.iloc[:, 0]
 
-        t_select_camp_title = tk.Label(t_edit_campframe, text='Select camp ID', font=('Arial Bold', 30), pady=30)
+        t_select_camp_title = tk.Label(t_edit_campframe, text='Select camp ID', font=('TKDefault', 25), pady=30)
         t_select_camp_title.grid(row=0, column=1)
 
         camp_ID_listbox = tk.Listbox(t_edit_campframe, selectmode=tk.SINGLE)
