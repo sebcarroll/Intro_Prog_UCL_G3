@@ -5,9 +5,11 @@ from tkinter import messagebox
 
 
 class RefugeeDisplay:
-    def __init__(self, window, back_button_to_volunteer_main):
+    def __init__(self, window, back_button_to_volunteer_main, get_camp_id_for_volunteer):
         self.window = window
         self.back_button_to_volunteer_main = back_button_to_volunteer_main
+        self.get_camp_id_for_volunteer = get_camp_id_for_volunteer
+        self.camp_id = None
 
     def create_gui_refugee_display(self, window):
         # Main frame for this whole page
@@ -59,8 +61,11 @@ class RefugeeDisplay:
         self.upload_csv_data(self.display_refugee_tree, csv_file)
 
     def upload_csv_data(self, tree, filename):
-        data = pd.read_csv(filename)
 
+        self.camp_id = self.get_camp_id_for_volunteer()
+
+        data = pd.read_csv(filename)
+        data = data[data['Camp ID'] == self.camp_id]
         # The following block will convert floats to integers for the GUI to remove the ".0"
         # columns with float numbers
         float_columns = data.select_dtypes(include=['float']).columns

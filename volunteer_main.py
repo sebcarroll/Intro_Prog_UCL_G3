@@ -34,9 +34,11 @@ class VolunteerHomepage():
         self.window.title('Volunteer Homepage')
         self.window.geometry('1300x600')
 
+        #self.camp_id_label = self.get_camp_id_for_volunteer()
+
         self.admin_help = AdminHelp(self.window, self.back_button_to_volunteer_main)
         self.charts = SummaryCharts(self.window, self.back_button_to_volunteer_main)
-        self.refugee_display_instance = RefugeeDisplay(self.window, self.back_button_to_volunteer_main)
+        self.refugee_display_instance = RefugeeDisplay(self.window, self.back_button_to_volunteer_main, self.get_current_camp_id)
 
         self.camp_id_label = self.get_camp_id_for_volunteer()
         self.show_camp_id_label = None
@@ -156,6 +158,23 @@ class VolunteerHomepage():
         for i in range(8):
             self.window.grid_rowconfigure(i, weight=1)
         self.window.grid_columnconfigure(0, weight=1)
+
+
+    def get_current_camp_id(self):
+        with open("volunteer_info.csv", 'r') as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                if row and row[0].strip() == self.username:
+                    # Camp ID is the second value (index 1)
+                    self.camp_id = row[1].strip()
+                    # Check if the camp ID is blank
+                    if not self.camp_id:
+                        return None
+                    self.camp_id = round(float(self.camp_id))
+                    self.camp_ID_label = self.camp_id
+                    return self.camp_id
+            # Return "No camp ID assigned" if the loop completes without finding a matching volunteer
+            return None
 
     def get_camp_id_for_volunteer(self):
         with open("volunteer_info.csv", 'r') as file:
