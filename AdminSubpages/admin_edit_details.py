@@ -23,7 +23,7 @@ class AdminEditVolunteerDetails:
     #     self.camp_ids = list(self.camp_ids_from_csv)
 
     def upload_csv_data(self, tree, filename):
-        data = pd.read_csv(filename)
+        data = pd.read_csv(filename, dtype={'Phone Number': str} )
 
         # The following block will convert floats to integers for the GUI to remove the ".0"
         # columns with float numbers
