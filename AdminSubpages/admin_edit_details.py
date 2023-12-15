@@ -33,13 +33,13 @@ class AdminEditVolunteerDetails:
         # Convert floats to integers for display in treeview
         for col in float_columns:
             data[col] = data[col].fillna(0).astype(int)
-
+        columns_to_display = [col for col in data.columns if col != "Deleted"]
         tree.delete(*tree.get_children())
-        tree['columns'] = list(data.columns)
+        tree['columns'] = columns_to_display
         tree.column("#0", width=0, stretch=tk.NO)
         tree.heading("#0", text="", anchor=tk.W)
 
-        for col in data.columns:
+        for col in columns_to_display:
             tree.column(col, anchor=tk.CENTER, width=80)
             tree.heading(col, text=col, anchor=tk.CENTER)
 
@@ -239,8 +239,23 @@ class AdminEditVolunteerDetails:
     def create_account(self, new_volunteer):
 
         username_check = new_volunteer['Username']
+        password_check = new_volunteer['Password']
+        name_check = new_volunteer['Name']
+
         if self.username_exists(username_check):
             tk.messagebox.showerror("Error",f"Username '{username_check}' already exists. Please choose a different username.")
+            return
+
+        if not username_check:
+            tk.messagebox.showerror("Error", "Username must be filled in")
+            return
+
+        if not password_check:
+            tk.messagebox.showerror("Error", "Password must be filled in")
+            return
+        
+        if not name_check:
+            tk.messagebox.showerror("Error", "Name must be filled in")
             return
 
 
@@ -375,6 +390,28 @@ class AdminEditVolunteerDetails:
             except FileNotFoundError:
                 messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
     def save_changes(self, old_username, updated_details,edit_details_window):
+
+        new_username = updated_details['Username']
+        new_password = updated_details['Password']
+        new_name = updated_details['Name']
+
+        if new_username != old_username and self.username_exists(new_username):
+            tk.messagebox.showerror("Error", f"Username '{new_username}' already exists. Please choose a different username.")
+            return
+
+        if not new_username:
+            tk.messagebox.showerror("Error", "Username must be filled in")
+            return
+
+        if not new_password:
+            tk.messagebox.showerror("Error", "Password must be filled in")
+            return
+
+        if not new_name:
+            tk.messagebox.showerror("Error", "Name must be filled in")
+            return
+
+
         try:
             with open('volunteer_info.csv', 'r', newline='') as csvfile:
                 reader = csv.DictReader(csvfile)

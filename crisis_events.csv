@@ -16,3 +16,4 @@ Camp ID,Crisis Type,Description,Country,Day,Month,Year,Status,End Date,Capacity,
 56645,Political unrest,Dark Lord Harry Potter,Sudan,9,December,2023,Inactive,2023-12-10 15:00:33,30.0,15.0,100000.0,100000.0,14.0,2.0,1.0,0.0
 46753,Supply Shortage,Death,Afghanistan,10,December,2023,Inactive,2023-12-13 13:57:57,6666.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
 87303,Displacement,No description,Malawi,15,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
+52434,Political unrest,kim jong un,North Korea,1,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
