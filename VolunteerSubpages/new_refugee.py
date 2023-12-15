@@ -51,7 +51,7 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
     t_camp_IDbox.grid(row=2, column=1, padx=5, pady=5)
 
     # Refugee name
-    name_label = tk.Label(refugee_labelframe, text='Name', font=('TkinterDefault', 15))
+    name_label = tk.Label(refugee_labelframe, text='Family Name', font=('TkinterDefault', 15))
     name_label.grid(row=3, column=0, padx=5, pady=5)
     name_entry = tk.Entry(refugee_labelframe)
     name_entry.grid(row=3, column=1, padx=5, pady=5)

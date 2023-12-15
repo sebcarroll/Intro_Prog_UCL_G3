@@ -30,7 +30,7 @@ def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main
     t_camp_IDbox.grid(row=2, column=1, padx=5, pady=5)
 
     # Refugee name
-    name_label = tk.Label(refugee_labelframe, text='Name', font=('TkinterDefault', 15))
+    name_label = tk.Label(refugee_labelframe, text='Family Name', font=('TkinterDefault', 15))
     name_label.grid(row=3, column=0, padx=5, pady=5)
     name_entry = tk.Entry(refugee_labelframe)
     name_entry.grid(row=3, column=1, padx=5, pady=5)
@@ -44,7 +44,7 @@ def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main
 
     # Medical conditions, we need to add dictionaries and everything for this
     medical_conditionslabel = tk.Label(refugee_labelframe,
-                                       text='Enter any medical condition(s) for each family member. If none, please enter \"none\"',
+                                       text='Enter any medical condition(s) for each family member',
                                        font=("TkinterDefault", 15))
     medical_conditionslabel.grid(row=5, column=0, padx=5, pady=5)
     t_medical_conditionsEntry = tk.Entry(refugee_labelframe)
@@ -60,7 +60,7 @@ def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main
 
     # secondlanguage entry box
     second_languagelabel = tk.Label(refugee_labelframe,
-                                    text='Please enter any other languages spoken by each family member. If none, please enter \'none\'',
+                                    text='Please enter any other languages spoken by each family member',
                                     font=('TkinterDefault', 15))
     second_languagelabel.grid(row=7, column=0, padx=5, pady=5)
     t_second_languageEntry = tk.Entry(refugee_labelframe)
