@@ -8,12 +8,13 @@ from AdminSubpages.view_summaries import AdminViewSummaries
 from AdminSubpages.admin_edit_details import AdminEditVolunteerDetails
 from AdminSubpages.admin_resource_allocation import AdminResourceAllocation
 # Imports for the menu commands
-from AdminSubpages.view_summaries_with_pie_chart import AdminViewSummariesWithCharts
+#from AdminSubpages.view_summaries_with_pie_chart import AdminViewSummariesWithCharts
 from AdminSubpages.admin_refugee_profiles import AdminRefugeeDisplay
 from AdminSubpages.admin_volunteer_accounts import AdminVolunteerDisplay
 from admin_help import AdminHelp
 from AdminSubpages.edit_camp_capacity import edit_camp_details
 from AdminSubpages.admin_new_refugee import new_refugee, na_refugee_info_dict
+from general_pie_charts import SummaryCharts
 
 class AdminHomepage:
     def __init__(self, root, go_to_landing_page):
@@ -32,7 +33,8 @@ class AdminHomepage:
         self.admin_edit_details = AdminEditVolunteerDetails(self.window, self.back_button_to_admin_main)
         self.admin_resource_allocation = AdminResourceAllocation(self.window, self.back_button_to_admin_main)
         # Instances for menu commands
-        self.view_summaries_with_pie_chart = AdminViewSummariesWithCharts(self.window, self.back_button_to_admin_main)
+        #self.view_summaries_with_pie_chart = AdminViewSummariesWithCharts(self.window, self.back_button_to_admin_main)
+        self.pie_charts_instance = SummaryCharts(self.window, self.back_button_to_admin_main)
         self.admin_display_refugees = AdminRefugeeDisplay(self.window, self.back_button_to_admin_main)
         self.admin_display_volunteers = AdminVolunteerDisplay(self.window, self.back_button_to_admin_main)
         self.admin_help = AdminHelp(self.window, self.back_button_to_admin_main)
@@ -166,7 +168,7 @@ class AdminHomepage:
         self.admin_edit_details.create_account_gui()
 
     def view_charts(self):
-        self.view_summaries_with_pie_chart.create_gui_view_summaries(self)
+        self.pie_charts_instance.generate_charts_window()
 
     def edit_view_delete_refugee(self):
         self.admin_display_refugees.create_gui_refugee_display(self)
