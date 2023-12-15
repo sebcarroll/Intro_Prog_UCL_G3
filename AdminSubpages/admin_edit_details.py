@@ -240,15 +240,22 @@ class AdminEditVolunteerDetails:
 
         username_check = new_volunteer['Username']
         password_check = new_volunteer['Password']
+        name_check = new_volunteer['Name']
+
         if self.username_exists(username_check):
             tk.messagebox.showerror("Error",f"Username '{username_check}' already exists. Please choose a different username.")
             return
+
         if not username_check:
             tk.messagebox.showerror("Error", "Username must be filled in")
             return
 
         if not password_check:
             tk.messagebox.showerror("Error", "Password must be filled in")
+            return
+        
+        if not name_check:
+            tk.messagebox.showerror("Error", "Name must be filled in")
             return
 
 
@@ -386,9 +393,12 @@ class AdminEditVolunteerDetails:
 
         new_username = updated_details['Username']
         new_password = updated_details['Password']
+        new_name = updated_details['Name']
+
         if new_username != old_username and self.username_exists(new_username):
             tk.messagebox.showerror("Error", f"Username '{new_username}' already exists. Please choose a different username.")
             return
+
         if not new_username:
             tk.messagebox.showerror("Error", "Username must be filled in")
             return
@@ -396,6 +406,11 @@ class AdminEditVolunteerDetails:
         if not new_password:
             tk.messagebox.showerror("Error", "Password must be filled in")
             return
+
+        if not new_name:
+            tk.messagebox.showerror("Error", "Name must be filled in")
+            return
+
 
         try:
             with open('volunteer_info.csv', 'r', newline='') as csvfile:
