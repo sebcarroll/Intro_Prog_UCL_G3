@@ -68,7 +68,7 @@ class AdminViewSummaries:
 
         # Back button
         back_button = tk.Button(btn_frame, text='Back to Home', command=self.back_button_to_admin_main)
-        back_button.grid(row=2, column=2, padx=20, pady=40)
+        back_button.grid(row=1, column=2, padx=(50, 10), pady=40)
 
 
         # CSV data
