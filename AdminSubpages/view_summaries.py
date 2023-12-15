@@ -63,12 +63,12 @@ class AdminViewSummaries:
         generate_data_btn.grid(row=0, column=3, padx=20, pady=(50,10))
 
         # View country map
-        view_map_btn = tk.Button(btn_frame, text="Country Crisis Visualisation", command=lambda: self.generate_map_window())
+        view_map_btn = tk.Button(btn_frame, text="View Crisis Map", command=lambda: self.generate_map_window())
         view_map_btn.grid(row=0, column=4, padx=20, pady=(50,10))
 
         # Back button
         back_button = tk.Button(btn_frame, text='Back to Home', command=self.back_button_to_admin_main)
-        back_button.grid(row=2, column=2, padx=20, pady=40)
+        back_button.grid(row=1, column=2, padx=(50, 10), pady=40)
 
 
         # CSV data

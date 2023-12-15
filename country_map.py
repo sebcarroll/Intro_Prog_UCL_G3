@@ -14,8 +14,8 @@ class CountryMap:
     def view_country_map_window(self):
         # Create a new window for the map
         self.map_window = tk.Toplevel(self.window)
-        self.map_window.title("Country Crisis Visualisation")
-        self.map_window.geometry("1000x800")
+        self.map_window.title("View Crisis Map")
+        self.map_window.geometry("1000x500")
 
         self.map_window.grab_set()
 
@@ -110,7 +110,7 @@ class CountryMap:
                     fill='red'
                 )
 
-                map_canvas.create_text(coordinates[0], coordinates[1] - 10, text=country, anchor=tk.CENTER)
+                map_canvas.create_text(coordinates[0], coordinates[1] - 10, text=country, anchor=tk.CENTER, fill='white')
 
 
     def read_location_data_from_csv(self, crisis_events):
