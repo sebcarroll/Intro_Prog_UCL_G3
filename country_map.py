@@ -97,7 +97,7 @@ class CountryMap:
                 )
 
                 # Adjust font size based on the count (scaled down)
-                font_size = int(8 - country_counts[country] * 0.2)
+                font_size = int(10 - country_counts[country] * 0.2)
 
                 map_canvas.create_text(coordinates[0], coordinates[1] - 10, text=country, anchor=tk.CENTER,
                                        fill='white', font=("Helvetica", font_size))
