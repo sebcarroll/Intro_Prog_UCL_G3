@@ -198,7 +198,7 @@ class VolunteerHomepage():
 
     # Create Refugee (new_refugee.py)
     def t_create_refugee(self):
-        self.refugee_entry_widgets = new_refugee(self.window, self.y_camp_info, self.na_refugee_info, self.back_button_to_volunteer_main, self.refugee_details_storage_handler)
+        self.refugee_entry_widgets = new_refugee(self.window, self.y_camp_info, self.camp_id, self.na_refugee_info, self.back_button_to_volunteer_main, self.refugee_details_storage_handler)
     def refugee_details_storage_handler(self, camp_ID, name_entry, family_label, medical_conditionsEntry, languages_spokenEntry, second_languageEntry):
         na_refugee_info_dict(self.na_refugee_info, camp_ID, name_entry, family_label, medical_conditionsEntry, languages_spokenEntry, second_languageEntry)
 

@@ -5,14 +5,14 @@ from tkinter import messagebox
 import pandas as pd
 import csv
 
-def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main, store_details_callback):
+def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volunteer_main, store_details_callback):
     for i in window.winfo_children():
         i.grid_forget()
     # Main frame for this whole page
     refugeeframe = tk.Frame(window)
     refugeeframe.grid()
     crisis_df = pd.read_csv('crisis_events.csv')
-    active_camps= crisis_df[crisis_df['Status']== 'Active']
+    active_camps= crisis_df[crisis_df['Status'] == 'Active']
     camp_IDs = list(active_camps['Camp ID'])
 
     camp_ids_from_csv = []
@@ -47,7 +47,7 @@ def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main
     # Camp ID
     t_camp_ID_label = tk.Label(refugee_labelframe, text='Camp ID', font=('TkinterDefault', 15))
     t_camp_ID_label.grid(row=2, column=0)
-    t_camp_IDbox = ttk.Combobox(refugee_labelframe, values=camp_IDs)
+    t_camp_IDbox = ttk.Combobox(refugee_labelframe, values=camp_id)
     t_camp_IDbox.grid(row=2, column=1, padx=5, pady=5)
 
     # Refugee name
