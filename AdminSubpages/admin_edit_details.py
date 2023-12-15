@@ -25,6 +25,8 @@ class AdminEditVolunteerDetails:
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename, dtype={'Phone Number': str} )
 
+        data['Phone Number'] = data['Phone Number'].astype(str)
+
         # The following block will convert floats to integers for the GUI to remove the ".0"
         # columns with float numbers
         float_columns = data.select_dtypes(include=['float']).columns
@@ -235,6 +237,13 @@ class AdminEditVolunteerDetails:
         self.create_account_window.grid_columnconfigure(0, weight=1)
 
     def create_account(self, new_volunteer):
+
+        username_check = new_volunteer['Username']
+        if self.username_exists(username_check):
+            tk.messagebox.showerror("Error",f"Username '{username_check}' already exists. Please choose a different username.")
+            return
+
+
         try:
             with open('volunteer_info.csv', 'a', newline='') as csvfile:
                 fieldnames = ['Username', 'Camp ID', 'Password', 'Name', 'Email Address', 'Phone Number', 'Commitment',
@@ -255,6 +264,19 @@ class AdminEditVolunteerDetails:
 
         except FileNotFoundError:
             messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
+
+    def username_exists(self, username):
+        try:
+            with open('volunteer_info.csv', 'r', newline = '')as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    if row ['Username']==username:
+                        return True
+        except FileNotFoundError:
+            tk.messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
+        return False
+
+
 
     def edit_details(self):
         print('Edit volunteer details')
@@ -438,23 +460,31 @@ class AdminEditVolunteerDetails:
 
     def update_account_status(self, username, deactivated):
         try:
-            with open('volunteer_info.csv', 'r', newline='') as csvfile:
-                reader = csv.DictReader(csvfile)
-                rows = list(reader)
-                for row in rows:
-                    if row['Username'] == username:
-                        if row['Deactivated'] == 'True' and deactivated:
-                            messagebox.showinfo("Deactivation", f"Account for {username} is already deactivated.")
-                        row['Deactivated'] = str(deactivated).lower()
+            csv_file = 'volunteer_info.csv'
+            data = pd.read_csv(csv_file, dtype={'Phone Number': str})
 
-            with open('volunteer_info.csv', 'w', newline='') as csvfile:
-                fieldnames = reader.fieldnames
-                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-                writer.writeheader()
-                writer.writerows(rows)
+            mask = data['Username'] == username
+            if mask.any():
+                current_status = data.loc[mask, 'Deactivated'].iloc[0]
 
-            action = "Deactivation" if deactivated else "Reactivation"
-            messagebox.showinfo(action, f"Account for {username} {action.lower()} successful.")
-            self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
+                if (current_status and deactivated) or (not current_status and not deactivated):
+                    action = "Deactivation" if deactivated else "Reactivation"
+                    messagebox.showinfo("Status Unchanged", f"Account for {username} is already {action.lower()}.")
+                else:
+                    # Convert 'Phone Number' column explicitly to string
+                    data['Phone Number'] = data['Phone Number'].astype(str)
+
+                    # Update the 'Deactivated' column
+                    data.loc[mask, 'Deactivated'] = deactivated
+
+                    # Save the updated DataFrame to the CSV file
+                    data.to_csv(csv_file, index=False)
+
+                    action = "Deactivated" if deactivated else "Reactivated"
+                    messagebox.showinfo(action, f"Account for {username} {action.lower()} successfully.")
+                    self.upload_csv_data(self.display_volunteer_tree, csv_file)
+            else:
+                messagebox.showwarning("Error", f"Account for {username} not found.")
+
         except FileNotFoundError:
             messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
