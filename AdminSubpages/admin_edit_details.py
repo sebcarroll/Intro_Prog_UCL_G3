@@ -197,12 +197,12 @@ class AdminEditVolunteerDetails:
         commitment_entry.grid(row=7, column=1, padx=10, pady=10)
 
         tk.Label(self.create_account_window, text="Work Type:").grid(row=8, column=0, padx=10, pady=10)
-        work_type_entry = ttk.Combobox(self.create_account_window, values=['Medical Aid', 'Food counselling'])
+        work_type_entry = ttk.Combobox(self.create_account_window, values=['Medical Aid', 'Food counselling'], state='readonly')
         work_type_entry.grid(row=8, column=1, padx=10, pady=10)
 
         camp_ID_label = tk.Label(self.create_account_window, text='Camp ID: ' )
         camp_ID_label.grid(row=3, column= 0, padx=10, pady=10)
-        camp_ID_box = ttk.Combobox(self.create_account_window, values= self.camp_ids)
+        camp_ID_box = ttk.Combobox(self.create_account_window, values= self.camp_ids, state='readonly')
         camp_ID_box.grid(row=3, column=1, padx=10, pady=10)
 
 
@@ -246,7 +246,6 @@ class AdminEditVolunteerDetails:
             messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
 
     def edit_details(self):
-        print('Edit volunteer details')
         self.read_crisis_events_csv()
         selected_index = self.display_volunteer_tree.focus()
 
@@ -300,7 +299,7 @@ class AdminEditVolunteerDetails:
 
                             tk.Label(self.edit_details_window, text="Work Type:").grid(row=8, column=0, padx=10, pady=10)
                             work_type_entry = ttk.Combobox(self.edit_details_window,
-                                                           values=['Medical Aid', 'Food counselling'])
+                                                           values=['Medical Aid', 'Food counselling'], state='readonly')
                             work_type_entry.set(row['Work Type'])
                             work_type_entry.grid(row=8, column=1, padx=10, pady=10)
 
@@ -312,7 +311,7 @@ class AdminEditVolunteerDetails:
                             # self.camp_id = self.get_selected_listbox_value(None, self.camp_id_listbox, self.camp_ids)
                             camp_ID_label = tk.Label(self.edit_details_window, text="Camp ID:")
                             camp_ID_label.grid(row=3, column=0, padx=10, pady=10)
-                            Camp_ID_box = ttk.Combobox(self.edit_details_window, values=self.camp_ids)
+                            Camp_ID_box = ttk.Combobox(self.edit_details_window, values=self.camp_ids, state='readonly')
                             Camp_ID_box.set(row['Camp ID'])
                             Camp_ID_box.grid(row=3, column=1, padx=10, pady=10)
 
