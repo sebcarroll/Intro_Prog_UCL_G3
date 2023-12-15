@@ -37,7 +37,7 @@ class AdminCreatePlan:
             i.grid_forget()
 
         new_plan_frame = tk.Frame(self.window)
-        new_plan_frame.grid(row=0, column=0)
+        new_plan_frame.grid(row=0, column=4)
 
         self.day_combobox = None
         self.month_combobox = None

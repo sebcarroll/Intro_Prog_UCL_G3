@@ -12,7 +12,10 @@ def edit_camp_details(window, back_button_to_admin_main):
             i.grid_forget()
 
         t_edit_campframe = tk.Frame(window)
-        t_edit_campframe.grid()
+        t_edit_campframe.grid(sticky="nsew", padx=5, pady=5, columnspan=9)
+
+        for i in range(9):
+            t_edit_campframe.grid_columnconfigure(i, weight=1)
 
         # Access the Camp_ID's
         crisis_df = pd.read_csv("crisis_events.csv", header=0)

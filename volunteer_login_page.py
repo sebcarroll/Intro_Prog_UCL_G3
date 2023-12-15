@@ -126,8 +126,7 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         back_button = tk.Button(volunteer_log_in_frame, text="Back", command=self.exit_and_go_back)
         back_button.grid(row=10, column=0, pady=10)
 
-        #image_label = tk.Label(volunteer_log_in_frame, image=PhotoImage(file="Images/new_camp_image.png").subsample(4, 4))
-        #image_label.grid(row=11, column=0)
+
 
 
         # Shows caps lock on/off (OLD BINDING NOT WORKING)

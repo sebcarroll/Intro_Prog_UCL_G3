@@ -13,36 +13,38 @@ class AdminEndEvent:
         # Main frame for this whole page
         for i in self.window.winfo_children():
             i.grid_forget()
-        self.window.grid_columnconfigure(0, weight=1)
-        self.window.grid_rowconfigure(0, weight=1)
+        for i in range(9):
+            self.window.grid_columnconfigure(i, weight=1)
         end_plan_frame = tk.Frame(self.window)
-        end_plan_frame.grid(sticky="nsew", padx=5, pady=5)
-        end_plan_frame.grid_columnconfigure(0, weight=1)
-        end_plan_frame.grid_rowconfigure(1, weight=3)
-        end_plan_frame.grid_rowconfigure(2, weight=1)
+        end_plan_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9)
+        for i in range(9):
+            end_plan_frame.grid_columnconfigure(i, weight=1)
+
 
         # Labels
         end_plan_title = tk.Label(end_plan_frame, text="End Plan", font=('Helvetica', 16))
-        end_plan_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5)
+        end_plan_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
 
         self.end_plan_tree = ttk.Treeview(end_plan_frame, height=15)
-        self.end_plan_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
+        self.end_plan_tree.grid(row=1, column=0, columnspan=9, sticky="ew", padx=10, pady=5)
 
 
 
         # Button Frame:
         btn_frame = tk.Frame(end_plan_frame)
-        btn_frame.grid(row=2, column=0, pady=10)
+        btn_frame.grid(row=2, column=4, pady=10)
         btn_frame.grid_columnconfigure(0, weight=1)
         btn_frame.grid_columnconfigure(2, weight=1)
 
         # Buttons
         end_event_btn = tk.Button(btn_frame, text="End Event", command=lambda: self.deactivate_csv_data_entry(self.end_plan_tree, csv_file))
-        end_event_btn.grid(row=0, column=1, padx=20, pady=(50,10))
+        end_event_btn.grid(row=0, column=0, padx=20, pady=(50,10))
 
         # Back button
         back_button = tk.Button(btn_frame, text='Back to Home', command=self.back_button_to_admin_main)
-        back_button.grid(row=2, column=1, padx=5, pady=40)
+        back_button.grid(row=2, column=0, padx=5, pady=40)
+
+
 
         # CSV data
         csv_file = "crisis_events.csv"

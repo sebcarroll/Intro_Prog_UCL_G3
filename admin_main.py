@@ -1,6 +1,6 @@
 import tkinter as tk
 import pandas as pd
-from tkinter import messagebox
+from tkinter import messagebox, PhotoImage
 # Imports for the main button commands
 from AdminSubpages.create_plan import AdminCreatePlan
 from AdminSubpages.admin_end_event import AdminEndEvent
@@ -112,34 +112,45 @@ class AdminHomepage:
     def create_gui_admin_main(self):
         # WELCOME TITLE
         self.admin_welcome_title = tk.Label(self.window, text='Welcome to the Admin Portal', font=('Arial', 40), bg='grey', fg='white', relief=tk.RAISED, borderwidth=5)
-        self.admin_welcome_title.grid(row=0, column=0, columnspan=2, sticky="nsew", padx=10, pady=20)
+        self.admin_welcome_title.grid(row=0, column=0, columnspan=9, sticky="nsew", padx=10, pady=20)
         self.admin_welcome_title.configure(background="grey")
 
         # MAIN BUTTONS
         # Create new event button
         self.btn_create_event = tk.Button(self.window, text="Create New Event", command=self.create_event)
-        self.btn_create_event.grid(row=1, column=0, pady=(50,10), ipadx=93, ipady=25)
+        self.btn_create_event.grid(row=1, column=4, pady=(50,10), ipadx=93, ipady=25)
+
+        self.image = PhotoImage(file="Images/new_camp_image.png").subsample(4, 4)
+        image_label = tk.Label(self.window, image=self.image)
+        image_label.grid(row=1, column=3, pady=(50, 10))
+
 
         # End an event button
         self.btn_end_event = tk.Button(self.window, text="End an Event", command=self.end_event)
-        self.btn_end_event.grid(row=2, column=0, pady=10, ipadx=105, ipady=25)
+        self.btn_end_event.grid(row=2, column=4, pady=10, ipadx=105, ipady=25)
 
         # View summaries button
         self.btn_view_summaries = tk.Button(self.window, text="View Summaries", command=self.view_summaries)
-        self.btn_view_summaries.grid(row=3, column=0, pady=10, ipadx=98, ipady=25)
+        self.btn_view_summaries.grid(row=3, column=4, pady=10, ipadx=98, ipady=25)
 
         # Edit volunteer accounts button
         self.btn_edit_accounts = tk.Button(self.window, text="Edit Volunteer Accounts", command=self.edit_accounts)
-        self.btn_edit_accounts.grid(row=4, column=0, pady=10, ipadx=80, ipady=25)
+        self.btn_edit_accounts.grid(row=4, column=4, pady=10, ipadx=80, ipady=25)
 
         # Allocate resources button
         self.btn_allocate_resources = tk.Button(self.window, text="Allocate Resources", command=self.allocate_resources)
-        self.btn_allocate_resources.grid(row=5, column=0, pady=(10,50), ipadx=93, ipady=25)
+        self.btn_allocate_resources.grid(row=5, column=4, pady=(10,50), ipadx=93, ipady=25)
+
+        self.image5 = PhotoImage(file="Images/resource_allocation.png").subsample(4, 4)
+        image_label = tk.Label(self.window, image=self.image5)
+        image_label.grid(row=5, column=3, pady=(10,50))
 
 
         for i in range(6):
             self.window.grid_rowconfigure(i, weight=1)
-        self.window.grid_columnconfigure(0, weight=1)
+        for i in range(9):
+            self.window.grid_columnconfigure(i, weight=1)
+
 
 
     # Main Buttons Homepage Commands
