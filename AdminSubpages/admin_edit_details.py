@@ -67,7 +67,7 @@ class AdminEditVolunteerDetails:
         display_volunteer_frame.grid_columnconfigure(0, weight=1)
         display_volunteer_frame.grid_rowconfigure(1, weight=3)
         display_volunteer_frame.grid_rowconfigure(2, weight=1)
-        self.display_volunteer_tree = ttk.Treeview(display_volunteer_frame, height=20)
+        self.display_volunteer_tree = ttk.Treeview(display_volunteer_frame, height=10)
         self.display_volunteer_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
 
         # Buttons
@@ -108,7 +108,7 @@ class AdminEditVolunteerDetails:
                        "Work Type", "Deactivated", "Deleted"]
             empty_df = pd.DataFrame(columns=headers)
             empty_df.to_csv(csv_file, index=False)
-            messagebox.showinfo("File Created", "An new file was created as 'volunteer_info.csv' was not found.")
+            messagebox.showinfo("File Created", "A new file was created as 'volunteer_info.csv' was not found.")
             self.upload_csv_data(self.display_volunteer_tree, csv_file)
 
     def read_crisis_events_csv(self):
@@ -384,7 +384,7 @@ class AdminEditVolunteerDetails:
             confirm_reactivate = messagebox.askokcancel('Confirmation', f"Are you sure you want to reactivate account for '{username_to_reactivate}'?")
             if confirm_reactivate:
                 self.update_account_status(username_to_reactivate, deactivated=False)
-                tk.messagebox.showinfo(f"Account for f'{username_to_reactivate}' reactivated successfully")
+                #tk.messagebox.showinfo(f"Account for f'{username_to_reactivate}' reactivated successfully")
                 self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
         else:
             tk.messagebox.showwarning("No Selection", "Please select a volunteer.")
@@ -397,7 +397,7 @@ class AdminEditVolunteerDetails:
 
             if confirm_deactivate:
                 self.update_account_status(username_to_deactivate, deactivated=True)
-                tk.messagebox.showinfo("Success" f"The account for '{username_to_deactivate}' has been deactivated successfully")
+                #tk.messagebox.showinfo("Success" f"The account for '{username_to_deactivate}' has been deactivated successfully")
                 self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
         else:
             messagebox.showwarning("No Selection", "Please select a volunteer.")
@@ -430,7 +430,7 @@ class AdminEditVolunteerDetails:
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                 writer.writeheader()
                 writer.writerows(rows)
-                
+
             self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
 
         except FileNotFoundError:
