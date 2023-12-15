@@ -65,7 +65,7 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
     phone_label = tk.Label(t_personal_labelframe, text='Phone number: ', font=('tkDefault', 15))
     phone_label.grid(row=3, column=0, padx=5, pady=5)
     phone_number = tk.Label(t_personal_labelframe,
-                                 text=y_personal_info[username]['Phone Number'],
+                                 text=int(y_personal_info[username]['Phone Number']),
                                  font=('tkDefault', 15))
     phone_number.grid(row=3, column=1, padx=5, pady=5)
     t_phonenumberEntry = tk.Entry(t_personal_labelframe)
