@@ -101,7 +101,16 @@ class AdminEditVolunteerDetails:
     #     except FileNotFoundError:
     #         messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
         csv_file = 'volunteer_info.csv'
-        self.upload_csv_data(self.display_volunteer_tree, csv_file)
+        try:
+            self.upload_csv_data(self.display_volunteer_tree, csv_file)
+        except:
+            headers = ["Username", "Camp ID", "password", "name", "Email Address", "Phone Number", "Commitment",
+                       "Work Type", "Deactivated", "Deleted"]
+            empty_df = pd.DataFrame(columns=headers)
+            empty_df.to_csv(csv_file, index=False)
+            messagebox.showinfo("File Created", "An new file was created as 'volunteer_info.csv' was not found.")
+            self.upload_csv_data(self.display_volunteer_tree, csv_file)
+
     def read_crisis_events_csv(self):
         self.camp_ids_from_csv = []
         try:
