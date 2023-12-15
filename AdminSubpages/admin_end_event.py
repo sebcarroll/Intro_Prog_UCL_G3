@@ -16,10 +16,11 @@ class AdminEndEvent:
         for i in range(9):
             self.window.grid_columnconfigure(i, weight=1)
         end_plan_frame = tk.Frame(self.window)
-        end_plan_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9)
+        end_plan_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9, rowspan=9)
         for i in range(9):
             end_plan_frame.grid_columnconfigure(i, weight=1)
-
+        for i in range(9):
+            end_plan_frame.grid_rowconfigure(i, weight=1)
 
         # Labels
         end_plan_title = tk.Label(end_plan_frame, text="End Plan", font=('TKDefault', 25))
