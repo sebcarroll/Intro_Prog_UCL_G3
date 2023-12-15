@@ -43,7 +43,6 @@ class AdminHomepage:
         # MENU BAR:
         menu_bar = tk.Menu(self.window)
         self.window.config(menu=menu_bar)
-        # create a menu item 1
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="File", menu=file_menu)
         file_menu.add_command(label="Home", command=self.back_button_to_admin_main)
@@ -54,31 +53,26 @@ class AdminHomepage:
         file_menu.add_command(label="Log Out", command=self.exit_and_go_back)
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.exit_software)
-        # create a menu item 2
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Edit", menu=file_menu)
         file_menu.add_command(label="Edit Camp Capacity", command=self.t_edit_camp)
         file_menu.add_separator()
         file_menu.add_command(label="Edit Refugee Profiles", command=self.edit_view_delete_refugee)
-        # create a menu item 3
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="View", menu=file_menu)
         file_menu.add_command(label="View Summaries", command=self.view_summaries)
         file_menu.add_command(label="View Chart Summaries", command=self.view_charts)
-        # create a menu item 4
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Accounts", menu=file_menu)
         file_menu.add_command(label="Create", command=self.create_volunteer_account)
         file_menu.add_command(label="Volunteers", command=self.edit_view_delete_volunteers)
         file_menu.add_separator()
         file_menu.add_command(label="Admin", command=self.do_nothing)
-        # create a menu item 5
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Settings", menu=file_menu)
         file_menu.add_command(label="Display", command=self.do_nothing)
         file_menu.add_separator()
         file_menu.add_command(label="Audio", command=self.do_nothing)
-        # create a menu item 6
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Help", menu=file_menu)
         file_menu.add_command(label="Information", command=self.help_info)
@@ -92,21 +86,13 @@ class AdminHomepage:
             self.refugee_info = pd.read_csv('refugee_info.csv', index_col='Name')
             self.refugee_info = self.refugee_info.to_dict(orient='index')
         except FileNotFoundError:
-            # Define the headers for the empty CSV file
             headers = ['Name', 'Camp ID', 'Family Members', 'Medical Conditions', 'Languages Spoken', 'Second Language']
-
-            # Create an empty DataFrame with the specified headers
             empty_df = pd.DataFrame(columns=headers)
             empty_df.to_csv('refugee_info.csv', index=False)
 
-            # Reload the now existing empty DataFrame into self.refugee_info as an empty dictionary
-            # since the DataFrame is empty, to_dict(orient='index') will result in an empty dictionary
             self.refugee_info = {}
 
-
-
         self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}
-        # Initialize na_refugee_info before trying to load from the pickled file
         self.na_refugee_info = {
             'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
                          'Second Language': ''}
@@ -146,11 +132,6 @@ class AdminHomepage:
             self.window.grid_rowconfigure(i, weight=1)
         self.window.grid_columnconfigure(0, weight=1)
 
-    #def create_event(self):
-        # Open the resource allocation GUI
-        #new_plan(self.window, self.back_button_to_admin_main)
-        #new_window = tk.Toplevel()
-        #apcg.create_plan_gui(new_window)
 
     # Main Buttons Homepage Commands
     def create_event(self):
@@ -179,10 +160,7 @@ class AdminHomepage:
         # Repopulate main page
         self.create_gui_admin_main()
 
-
-
     # Menu Commands
-
     def create_volunteer_account(self):
         self.admin_edit_details.create_account_gui()
 

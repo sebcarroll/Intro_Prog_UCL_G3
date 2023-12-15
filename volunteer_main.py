@@ -56,13 +56,13 @@ class VolunteerHomepage():
         file_menu.add_command(label="Log Out", command=self.exit_and_go_back)
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.exit_software)
-        # create a menu item 2
+
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Edit", menu=file_menu)
         file_menu.add_command(label="Edit Camp", command=self.t_edit_camp)
         file_menu.add_separator()
         file_menu.add_command(label="Edit Profile", command=self.t_personal_information_base)
-        # create a menu item 3
+
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="View", menu=file_menu)
         file_menu.add_command(label="View Refugees", command=self.display_refugees)
@@ -70,7 +70,7 @@ class VolunteerHomepage():
         file_menu.add_command(label="View Resources", command=self.t_display_resources)
         file_menu.add_separator()
         file_menu.add_command(label="View Charts", command=lambda: self.generate_chart_window())
-        # create a menu item 6
+
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Help", menu=file_menu)
         file_menu.add_command(label="Information", command=self.help_info)

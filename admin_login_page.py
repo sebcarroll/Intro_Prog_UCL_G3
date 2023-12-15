@@ -22,7 +22,6 @@ class AdminLoginPage(tk.Frame):
         admin_entries_frame = tk.Frame(self, relief=tk.RAISED, borderwidth=5)
         admin_entries_frame.grid()
 
-        # Label frame for this page that then stores all of the labels and entries
         admin_log_in_frame = tk.LabelFrame(admin_entries_frame, borderwidth=5)
         admin_log_in_frame.grid(row=3, column=1, pady=30, padx=30)
 
@@ -40,10 +39,6 @@ class AdminLoginPage(tk.Frame):
 
         self.password_entry.bind("<KeyPress>", self.caps_lock_on)
         self.password_entry.bind("<KeyRelease>", self.caps_lock_off)
-
-
-
-
 
         # Login button
         login_btn = tk.Button(admin_log_in_frame, text="Login", command=self.on_login)
@@ -71,9 +66,7 @@ class AdminLoginPage(tk.Frame):
         if event.keysym == 'Caps_Lock':
             self.label_caps.config(text='Caps lock is off', fg ='red')
 
-        # Admin login checker
-
-
+    # Admin login checker
     def details_confirmation(self):
         username = self.name_entry.get()
         password = self.password_entry.get()

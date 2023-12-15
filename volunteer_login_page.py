@@ -146,10 +146,10 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         with open("volunteer_info.csv", 'r') as file:
             csv_reader = csv.reader(file)
 
-            # Name is in the first column (index 0)
+            # Name is in the first column
             for row in csv_reader:
                 if row and str(row[0].strip()) == self.username:
-                    # Camp ID is the second value (index 1)
+                    # Camp ID is the second value
                     volunteer_camp_id_for_new_refugee = row[1].strip()
                     print(volunteer_camp_id_for_new_refugee)
                     break

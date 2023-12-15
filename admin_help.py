@@ -9,16 +9,14 @@ class AdminHelp:
     def about_pop_up(self):
         about_window = tk.Toplevel(self.window)
         about_window.title("About")
-        about_window.geometry("400x550")  # Adjust the size as needed
+        about_window.geometry("400x550")
 
         about_title = tk.Label(about_window, text="About", font=('Helvetica', 16))
         about_title.pack()
 
-        # Frame for the About text
         about_frame = tk.Frame(about_window, relief=tk.RAISED, borderwidth=2)
         about_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-        # About text
         about_text = (
             "During wars, people flee their homes to more secure camps where they can receive medical"
             "assistance, food, and shelter.To distribute resources equally, humanitarian agencies need to"
@@ -32,12 +30,6 @@ class AdminHelp:
             "vital tool in humanitarian response and support."
         )
 
-        '''# Text widget to display the About text
-        text_widget = tk.Text(about_frame, wrap=tk.WORD, height=20, width=80)
-        text_widget.insert(tk.END, about_text)
-        text_widget.config(state=tk.DISABLED)  # Make the text read-only
-        text_widget.pack(padx=5, pady=5)'''
-
         label_widget = tk.Label(about_frame, text=about_text, wraplength=350, justify=tk.LEFT)
         label_widget.pack(padx=5, pady=5)
 
@@ -48,16 +40,14 @@ class AdminHelp:
     def info_pop_up(self):
         info_window = tk.Toplevel(self.window)
         info_window.title("Information")
-        info_window.geometry("470x630")  # Adjust the size as needed
+        info_window.geometry("470x630")
 
         about_title = tk.Label(info_window, text="Information", font=('Helvetica', 16))
         about_title.pack()
 
-        # Frame for the About text
         about_frame = tk.Frame(info_window, relief=tk.RAISED, borderwidth=2)
         about_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-        # About text
         about_text = (
             "(A) The general application admin can:\n\n" \
             "a. Create new humanitarian plans. Humanitarian plans recorded in the\n" \
@@ -90,32 +80,23 @@ class AdminHelp:
             "d. Display resources (food packets, etc) currently available to the camp"
         )
 
-        '''# Text widget to display the About text
-        text_widget = tk.Text(about_frame, wrap=tk.WORD, height=20, width=80)
-        text_widget.insert(tk.END, about_text)
-        text_widget.config(state=tk.DISABLED)  # Make the text read-only
-        text_widget.pack(padx=5, pady=5)'''
-
         label_widget = tk.Label(about_frame, text=about_text, wraplength=400, justify=tk.LEFT)
         label_widget.pack(padx=5, pady=5)
 
-        # Close button
         close_button = tk.Button(info_window, text="Close", command=info_window.destroy)
         close_button.pack(pady=10)
 
     def support_pop_up(self):
         about_window = tk.Toplevel(self.window)
         about_window.title("IT Support")
-        about_window.geometry("400x400")  # Adjust the size as needed
+        about_window.geometry("400x400")
 
         about_title = tk.Label(about_window, text="Producers", font=('Helvetica', 16))
         about_title.pack()
 
-        # Frame for the About text
         about_frame = tk.Frame(about_window, relief=tk.RAISED, borderwidth=2)
         about_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-        # About text
         about_text = (
             "About the Producers:\n\n" \
             "The software is the result of the collective efforts of a dedicated and skilled team. " \
@@ -131,12 +112,6 @@ class AdminHelp:
             "Yingzhe Feng"
 
         )
-
-        '''# Text widget to display the About text
-        text_widget = tk.Text(about_frame, wrap=tk.WORD, height=20, width=80)
-        text_widget.insert(tk.END, about_text)
-        text_widget.config(state=tk.DISABLED)  # Make the text read-only
-        text_widget.pack(padx=5, pady=5)'''
 
         label_widget = tk.Label(about_frame, text=about_text, wraplength=350, justify=tk.LEFT)
         label_widget.pack(padx=5, pady=5)
