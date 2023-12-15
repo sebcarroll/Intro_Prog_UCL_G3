@@ -8,16 +8,19 @@ class SummaryCharts:
         self.window = window
         self.back_button_to_admin_main = back_button_to_admin_main
 
+
     def generate_charts_window(self):
         # Create a new window for the pie chart
-        generate_charts_window = tk.Toplevel(self.window)
-        generate_charts_window.title("View Charts & Map")
-        generate_charts_window.geometry("1000x800")
+        self.generate_charts_window = tk.Toplevel(self.window)
+        self.generate_charts_window.title("View Charts & Map")
+        self.generate_charts_window.geometry("1000x800")
+
+        self.generate_charts_window.grab_set()
 
         # Call the method to create the pie chart in the new window
-        self.create_pie_chart_status(generate_charts_window)
-        self.create_bar_chart_crisis_type(generate_charts_window)
-        self.show_map(generate_charts_window)
+        self.create_pie_chart_status(self.generate_charts_window)
+        self.create_bar_chart_crisis_type(self.generate_charts_window)
+        self.show_map(self.generate_charts_window)
 
     def create_pie_chart_status(self, window):
         # Read data from CSV file
