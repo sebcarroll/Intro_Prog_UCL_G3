@@ -375,6 +375,12 @@ class AdminEditVolunteerDetails:
             except FileNotFoundError:
                 messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
     def save_changes(self, old_username, updated_details,edit_details_window):
+
+        new_username = updated_details['Username']
+        if new_username != old_username and self.username_exists(new_username):
+            tk.messagebox.showerror("Error", f"Username '{new_username}' already exists. Please choose a different username.")
+            return
+
         try:
             with open('volunteer_info.csv', 'r', newline='') as csvfile:
                 reader = csv.DictReader(csvfile)
