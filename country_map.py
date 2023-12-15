@@ -14,7 +14,7 @@ class CountryMap:
     def view_country_map_window(self):
         # Create a new window for the map
         self.map_window = tk.Toplevel(self.window)
-        self.map_window.title("Country Crisis Visualisation")
+        self.map_window.title("View Crisis Map")
         self.map_window.geometry("1000x800")
 
         self.map_window.grab_set()

@@ -63,7 +63,7 @@ class AdminViewSummaries:
         generate_data_btn.grid(row=0, column=3, padx=20, pady=(50,10))
 
         # View country map
-        view_map_btn = tk.Button(btn_frame, text="Country Crisis Visualisation", command=lambda: self.generate_map_window())
+        view_map_btn = tk.Button(btn_frame, text="View Crisis Map", command=lambda: self.generate_map_window())
         view_map_btn.grid(row=0, column=4, padx=20, pady=(50,10))
 
         # Back button
