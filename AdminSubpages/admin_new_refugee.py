@@ -126,7 +126,9 @@ def update_number_of_refugees(camp_ID):
         csv_reader = csv.reader(file)
         next(csv_reader)
         for row in csv_reader:
-            if camp_ID == int(float(row[1])):
+            if row[1] == '':
+                number_of_refugees_actual = 1
+            elif camp_ID == int(float(row[1])):
                 number_of_refugees_actual += 1
     print(f"Total refugees counted: {number_of_refugees_actual}")
 

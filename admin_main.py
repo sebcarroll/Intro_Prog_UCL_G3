@@ -92,15 +92,18 @@ class AdminHomepage:
             self.refugee_info = pd.read_csv('refugee_info.csv', index_col='Name')
             self.refugee_info = self.refugee_info.to_dict(orient='index')
         except FileNotFoundError:
-            self.refugee_info = {
-                'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
-                            'Second Language': ''}
-                    }
+            # Define the headers for the empty CSV file
+            headers = ['Name', 'Camp ID', 'Family Members', 'Medical Conditions', 'Languages Spoken', 'Second Language']
 
-            df = pd.DataFrame.from_dict(self.refugee_info, orient='index')
-            df.index.name = 'Name'
-            df.to_csv('refugee_info.csv', index='Name')
-            self.refugee_info = pd.read_csv('refugee_info.csv')
+            # Create an empty DataFrame with the specified headers
+            empty_df = pd.DataFrame(columns=headers)
+            empty_df.to_csv('refugee_info.csv', index=False)
+
+            # Reload the now existing empty DataFrame into self.refugee_info as an empty dictionary
+            # since the DataFrame is empty, to_dict(orient='index') will result in an empty dictionary
+            self.refugee_info = {}
+
+
 
         self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}
         # Initialize na_refugee_info before trying to load from the pickled file
