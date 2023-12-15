@@ -12,7 +12,7 @@ class CountryMap:
     def view_country_map_window(self):
         # Create a new window for the map
         self.map_window = tk.Toplevel(self.window)
-        self.map_window.title("View Charts & Map")
+        self.map_window.title("View Country Crisis Map")
         self.map_window.geometry("800x800")
 
         self.map_window.grab_set()
@@ -29,7 +29,7 @@ class CountryMap:
 
         # Create a label for the map
         map_label = tk.Label(window, text="Country Crisis View", font=('Helvetica', 15, 'bold'))
-        map_label.place(x=400, y=425)  # Adjust the x and y coordinates as needed
+        map_label.place(x=200, y=50)  # Adjust the x and y coordinates as needed
 
         # Define coordinates for each country
         country_coordinates = {
