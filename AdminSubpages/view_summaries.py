@@ -83,10 +83,8 @@ class AdminViewSummaries:
 
         # Convert 'Camp ID' to integer, handling missing or non-integer values
         data['Camp ID'] = pd.to_numeric(data['Camp ID'], errors='coerce').fillna(0).astype('int64')
-        #print(data['Camp ID'])
 
         volunteer_counts = self.volunteer_camp_count()
-        #print("Volunteer counts from method:", volunteer_counts)
 
         # Ensure volunteer_counts is a Series and perform mapping
         if isinstance(volunteer_counts, pd.Series):

@@ -24,8 +24,6 @@ class invalid_name(Exception):
 
 class VolunteerHomepage():
     def __init__(self, root, username, go_to_landing_page):
-        #super().__init__(root)
-        #VolunteerLoginPage.__init__(self, root, go_to_landing_page)
         self.root = root
         self.username = username
         self.personal_entry_widgets = None
@@ -124,12 +122,15 @@ class VolunteerHomepage():
         }
 
         self.create_gui_volunteer_main()
+
     def create_gui_volunteer_main(self):
+        self.camp_id_label = self.get_camp_id_for_volunteer()
+        self.show_camp_id_label = None
+
         self.t_summary_title = tk.Label(self.window, text='Welcome to the Volunteer Portal', font=('Arial Bold', 40),
                                         bg='grey', fg='white')
         self.t_summary_title.grid(row=0, column=0, columnspan=2, sticky='news', padx=20, pady=10)
         self.t_summary_title.configure(background='grey')
-
 
         self.show_camp_id_label = tk.Label(self.window, text=f"{self.camp_id_label}", font=("Arial Bold", 15), fg="black")
         self.show_camp_id_label.grid(row=2, column=0, pady=10, ipadx=0, ipady=0)
@@ -156,7 +157,6 @@ class VolunteerHomepage():
             self.window.grid_rowconfigure(i, weight=1)
         self.window.grid_columnconfigure(0, weight=1)
 
-
     def get_camp_id_for_volunteer(self):
         with open("volunteer_info.csv", 'r') as file:
             csv_reader = csv.reader(file)
@@ -178,6 +178,7 @@ class VolunteerHomepage():
 
             # Return "No camp ID assigned" if the loop completes without finding a matching volunteer
             return "No camp ID assigned"
+
 
 
     # SUBPAGES WITHIN VOLUNTEER HOMEPAGE - PYTHON PACKAGE VOLUNTEER SUBPAGES:
