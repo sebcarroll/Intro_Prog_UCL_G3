@@ -526,7 +526,7 @@ class AdminEditVolunteerDetails:
                 current_status = data.loc[mask, 'Deactivated'].iloc[0]
 
                 if (current_status and deactivated) or (not current_status and not deactivated):
-                    action = "Deactivation" if deactivated else "Reactivation"
+                    action = "inactive" if deactivated else "active"
                     messagebox.showinfo("Status Unchanged", f"Account for {username} is already {action.lower()}.")
                 else:
                     # Convert 'Phone Number' column explicitly to string
