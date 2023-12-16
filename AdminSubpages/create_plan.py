@@ -35,131 +35,84 @@ class AdminCreatePlan:
     def create_plan_gui(self, window):
         for i in self.window.winfo_children():
             i.grid_forget()
-
+        for i in range(9):
+            self.window.grid_columnconfigure(i, weight=1)
         new_plan_frame = tk.Frame(self.window)
-        new_plan_frame.grid(row=0, column=4)
+        new_plan_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9, rowspan=9)
+        for i in range(9):
+            new_plan_frame.grid_columnconfigure(i, weight=1)
+        for i in range(9):
+            new_plan_frame.grid_rowconfigure(i, weight=1)
 
         self.day_combobox = None
         self.month_combobox = None
         self.year_combobox = None
-
-        # def open_calendar():
-        #     calendar_window = tk.Toplevel()
-        #     calendar_window.title("Calendar Humanitarian Crisis")
-
-        # def is_valid_date(day, month, year):
-        #     try:
-        #         date_str = f"{day} {month} {year}"
-        #         selected_date = datetime.strptime(date_str, "%d %B %Y").date()
-        #         current_date = datetime.now().date()
-        #
-        #         if selected_date > current_date:
-        #             raise ValueError("Selected date must be in the past.")
-        #         return True
-        #
-        #     except ValueError as e:
-        #         messagebox.showerror("Invalid Date", str(e))
-        #         return False
-
-
-            #     else:
-            #         messagebox.showerror("Invalid Date", "Please select a valid date.")
-            # else:
-            # messagebox.showerror("Invalid Date", "Please select a valid date.")
-
-
-
-
-        #
-        # def get_selected_date():
-        #     day = self.day_combobox.get()
-        #     month = self.month_combobox.get()
-        #     year = self.year_combobox.get()
-
 
         current_date = datetime.now()
         self.current_year = current_date.year
         current_month = current_date.strftime("%B")
         current_day = current_date.day
 
-
-        day_label = ttk.Label(new_plan_frame, text="Day:")
-        day_label.grid(row=14, column=3)
-        self.day_combobox = ttk.Combobox(new_plan_frame, values=self.days)
-        self.day_combobox.grid(row=14, column=4)
-        self.day_combobox.set(current_day)
-
-        month_label = ttk.Label(new_plan_frame, text="Month:")
-        month_label.grid(row=15, column=3)
-        self.month_combobox = ttk.Combobox(new_plan_frame,
-                                           values=self.months)
-        self.month_combobox.grid(row=15, column=4)
-        self.month_combobox.set(current_month)
-
-        year_label = ttk.Label(new_plan_frame, text="Year:")
-        year_label.grid(row=16, column=3)
-        self.year_combobox = ttk.Combobox(new_plan_frame, values=list(range(self.current_year, self.current_year - 2, -1)))
-        self.year_combobox.grid(row=16, column=4)
-        self.year_combobox.set(self.current_year)
-
-
+        # TITLE
         refugee_title = tk.Label(new_plan_frame, text='Create New Crisis Event', font=('TKDefault', 25))
-        refugee_title.grid(row=0, column=3, pady=30)
+        refugee_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
 
-        # def randnum(self):
-        #     import random
-        #     value = random.randint(10000, 99999)
-        #     print(value)
-        #     displayVariable.set(f"Generated Camp ID: {value}")
-        #     camp_ID_generator_button.destroy()
-        #     return value
-
-
-
-        # camp_ID_generator_button = tk.Button(new_plan_frame, text="Generate Camp ID")
-        # camp_ID_generator_button.bind("<Button-1>", generate_camp_id)
-        # camp_ID_generator_button.grid(row=17, column=3, padx=5)
-        #
-        # displayVariable = tk.StringVar()
-        # displayLabel = tk.Label(new_plan_frame, textvariable=displayVariable)
-        # displayLabel.grid(row=17, column=4, padx=5)
-
-        start_date_label = tk.Label(new_plan_frame, text="Please select the start date below", font=("TkinterDefault", 15))
-        start_date_label.grid(row=13, column=3)
-
-        crisis_type_label = tk.Label(new_plan_frame, text='Crisis Type', font=('TkinterDefault', 15))
-        crisis_type_label.grid(row=7, column=3, padx=5)
-        crisis_type = ["War", "Environmental", "Supply Shortage", "Political unrest", "Displacement", "Other"]
-        self.crisis_type_combobox = ttk.Combobox(new_plan_frame, values=crisis_type)
-        self.crisis_type_combobox.grid(row=7, column=4, padx=5)
-
-        description_label = tk.Label(new_plan_frame, text='Description (max 100 characters)', font=('TkinterDefault', 15))
-        description_label.grid(row=11, column=3, padx=5)
-        self.description_label_Entry = tk.Text(new_plan_frame, height=7, width=20, font=("TkinterDefault", 10))
-        self.description_label_Entry.grid(row=11, column=4, padx=5)
-        self.description_label_Entry.bind('<KeyRelease>', lambda event: self.character_lim())
-
+        # NEW CAMP INFO
         country_label = tk.Label(new_plan_frame, text='Country of crisis', font=('TkinterDefault', 15))
-        country_label.grid(row=1, column=3, padx=5)
+        country_label.grid(row=2, column=2, padx=5)
         self.country_Entry = ttk.Combobox(new_plan_frame, values=[
             "Afghanistan", "Syria", "Yemen", "South Sudan", "Somalia", "Sudan", "Democratic Republic of the Congo",
             "Venezuela", "Iraq", "Nigeria", "Ethiopia", "Myanmar", "Haiti", "Central African Republic", "Libya",
             "Chad", "Mali", "Niger", "Cameroon", "Ukraine", "Pakistan", "Bangladesh", "Lebanon", "Zimbabwe", "Eritrea",
             "North Korea", "Eswatini", "Zambia", "Malawi"])
-        self.country_Entry.grid(row=1, column=4, padx=5)
+        self.country_Entry.grid(row=2, column=3, padx=5)
 
-        self.save_plan_button = tk.Button(new_plan_frame, text="Save plan", command=self.plan_dict
-                                     , height=1, width=20)
-        self.save_plan_button.grid(row=19, column=3)
+        crisis_type_label = tk.Label(new_plan_frame, text='Crisis Type', font=('TkinterDefault', 15))
+        crisis_type_label.grid(row=3, column=2, padx=5)
+        crisis_type = ["War", "Environmental", "Supply Shortage", "Political unrest", "Displacement", "Other"]
+        self.crisis_type_combobox = ttk.Combobox(new_plan_frame, values=crisis_type)
+        self.crisis_type_combobox.grid(row=3, column=3, padx=5)
+
+        description_label = tk.Label(new_plan_frame, text='Description (max 100 characters)',
+                                     font=('TkinterDefault', 15))
+        description_label.grid(row=4, column=2, padx=5)
+        self.description_label_Entry = tk.Text(new_plan_frame, height=7, width=20, font=("TkinterDefault", 10))
+        self.description_label_Entry.grid(row=4, column=3, padx=5)
+        self.description_label_Entry.bind('<KeyRelease>', lambda event: self.character_lim())
+
+
+        # Date
+        start_date_label = tk.Label(new_plan_frame, text="Please select the start date below",
+                                    font=("TkinterDefault", 15))
+        start_date_label.grid(row=6, column=2)
+
+        day_label = ttk.Label(new_plan_frame, text="Day:")
+        day_label.grid(row=7, column=2, sticky='s')
+        self.day_combobox = ttk.Combobox(new_plan_frame, values=self.days)
+        self.day_combobox.grid(row=7, column=3, sticky='s')
+        self.day_combobox.set(current_day)
+
+        month_label = ttk.Label(new_plan_frame, text="Month:")
+        month_label.grid(row=8, column=2)
+        self.month_combobox = ttk.Combobox(new_plan_frame,
+                                           values=self.months)
+        self.month_combobox.grid(row=8, column=3)
+        self.month_combobox.set(current_month)
+
+        year_label = ttk.Label(new_plan_frame, text="Year:")
+        year_label.grid(row=9, column=2, sticky='n')
+        self.year_combobox = ttk.Combobox(new_plan_frame, values=list(range(self.current_year, self.current_year - 2, -1)))
+        self.year_combobox.grid(row=9, column=3, sticky='n', pady=(0,20))
+        self.year_combobox.set(self.current_year)
+
+
+
+        # Buttons
+        self.save_plan_button = tk.Button(new_plan_frame, text="Save plan", command=self.plan_dict, height=1, width=20)
+        self.save_plan_button.grid(row=19, column=3, pady=40)
 
         back_button = tk.Button(new_plan_frame, text='Back to Home', command=self.back_button_to_admin_main)
-        back_button.grid(row=19, column=1, padx=5, pady=10)
-
-
-
-    # def character_limit(self):
-    #     if len(self.description_label_Entry.get(1, tk.END)) > 100:
-    #         self.description_label_Entry.delete(101, tk.END)
+        back_button.grid(row=19, column=1, padx=5, pady=40)
 
     def character_lim(self):
         if len(self.description_label_Entry.get("1.0", tk.END)) > 100:
