@@ -242,8 +242,8 @@ class AdminEditVolunteerDetails:
                                    command=lambda: self.create_account({
                                        'Username': username_entry.get(),
                                        'Camp ID': camp_ID_box.get(),
-                                       'Password': password_entry.get(),
-                                       'Name': name_entry.get(),
+                                       'password': password_entry.get(),
+                                       'name': name_entry.get(),
                                        'Email Address': email_entry.get(),
                                        'Phone Number': phone_entry.get(),
                                        'Commitment': commitment_entry.get(),
@@ -259,8 +259,8 @@ class AdminEditVolunteerDetails:
     def create_account(self, new_volunteer):
 
         username_check = new_volunteer['Username']
-        password_check = new_volunteer['Password']
-        name_check = new_volunteer['Name']
+        password_check = new_volunteer['password']
+
 
         if self.username_exists(username_check):
             tk.messagebox.showerror("Error",f"Username '{username_check}' already exists. Please choose a different username.")
@@ -274,14 +274,12 @@ class AdminEditVolunteerDetails:
             tk.messagebox.showerror("Error", "Password must be filled in")
             return
 
-        if not name_check:
-            tk.messagebox.showerror("Error", "Name must be filled in")
-            return
+
 
 
         try:
             with open('volunteer_info.csv', 'a', newline='') as csvfile:
-                fieldnames = ['Username', 'Camp ID', 'Password', 'Name', 'Email Address', 'Phone Number', 'Commitment',
+                fieldnames = ['Username', 'Camp ID', 'password', 'name', 'Email Address', 'Phone Number', 'Commitment',
                               'Work Type', 'Deactivated']
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                 writer.writerow(new_volunteer)
@@ -391,8 +389,8 @@ class AdminEditVolunteerDetails:
                                                            updated_details={
                                                                'Username': username_entry.get(),
                                                                'Camp ID': Camp_ID_box.get(),
-                                                               'Password': password_entry.get(),
-                                                               'Name': name_entry.get(),
+                                                               'password': password_entry.get(),
+                                                               'name': name_entry.get(),
                                                                'Email Address': email_entry.get(),
                                                                'Phone Number': phone_entry.get(),
                                                                'Commitment': commitment_entry.get(),
@@ -412,8 +410,8 @@ class AdminEditVolunteerDetails:
     def save_changes(self, old_username, updated_details,edit_details_window):
 
         new_username = updated_details['Username']
-        new_password = updated_details['Password']
-        new_name = updated_details['Name']
+        new_password = updated_details['password']
+
 
         if new_username != old_username and self.username_exists(new_username):
             tk.messagebox.showerror("Error", f"Username '{new_username}' already exists. Please choose a different username.")
@@ -427,9 +425,6 @@ class AdminEditVolunteerDetails:
             tk.messagebox.showerror("Error", "Password must be filled in")
             return
 
-        if not new_name:
-            tk.messagebox.showerror("Error", "Name must be filled in")
-            return
 
 
         try:
