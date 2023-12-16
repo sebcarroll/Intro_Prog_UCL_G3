@@ -69,14 +69,17 @@ def edit_refugee_no(df, selected_camp_id):
                                                                           f"\nHow many refugees would you like to add/remove?", initialvalue=1)
 
 
-            if type(new_capacity) == int:
+            if isinstance(new_capacity, int):
                 # Update the DataFrame with the new value
                 df.loc[df["Camp ID"] == selected_camp_id, 'Capacity'] += new_capacity
                 df.to_csv('crisis_events.csv', index=False)
 
+            elif new_capacity is None:
+                messagebox.showinfo("Operation Cancelled", "No changes have been made.")
+                return
 
             else:
-                raise ValueError
+                raise ValueError("An integer value was not provided.")
         else:
             raise none_selected
     except none_selected:

@@ -188,7 +188,10 @@ class AdminResourceAllocation:
             self.recommended_food_count.config(text=str(self.minimum_amount_of_food))
             self.recommended_medicine_count.config(text=str(self.minimum_amount_of_medicine))
         else:
-            print("Invalid input for weeks of aid.")
+            self.error_message = print("None")
+            self.recommended_food_count.config(text=str(self.error_message))
+            self.recommended_medicine_count.config(text=str(self.error_message))
+
 
     def turn_data_into_valid_form(self, camp_ID_box, no_refugees_entry, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry,  food_box, medicine_box, estimated_delivery_box, camp_ids):
             '''
