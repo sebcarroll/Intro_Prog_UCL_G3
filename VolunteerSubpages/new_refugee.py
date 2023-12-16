@@ -48,7 +48,7 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
     for camp_ids in camp_IDs_unfiltered:
         from volunteer_login_page import volunteer_camp_id_for_new_refugee
         print(volunteer_camp_id_for_new_refugee)
-        if int(float(camp_ids)) == int(float(volunteer_camp_id_for_new_refugee)):
+        if volunteer_camp_id_for_new_refugee and int(float(camp_ids)) == int(float(volunteer_camp_id_for_new_refugee)):
             camp_IDs_filtered.append(camp_ids)
 
     camp_IDs = camp_IDs_filtered
@@ -130,9 +130,12 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
         # Update self.t_create_refugee dictionary
         refugee_info = pd.read_csv('refugee_info.csv', index_col='Name')
 
+        camp_ID_str = t_camp_IDbox.get().strip()
+        if not camp_ID_str:
+            raise ValueError("Camp ID is required. Please speak to the administrator for camp assignment.")
+        camp_ID = int(camp_ID_str)
 
-
-        camp_ID = int(t_camp_IDbox.get())
+        #camp_ID = int(t_camp_IDbox.get())
         name = name_entry.get()
         family_members = family_labelbox.get()
         medical_conditions = t_medical_conditionsEntry.get("1.0", "end-1c")
@@ -150,6 +153,11 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
         refugee_info.to_csv('refugee_info.csv')
         update_number_of_refugees(camp_ID)
         tk.messagebox.showinfo(title='Details saved', message='Details have been saved successfully')
+
+    # if no camp ID assigned or selected
+    except ValueError as e:
+        messagebox.showerror("No camp ID found", str(e))
+        return  # Exit the function early if there's an error
 
     except (no_text_entered):
         tk.messagebox.showinfo(title = 'No text entered', message = 'Family name, number of family members and medical conditions must be inputted')
