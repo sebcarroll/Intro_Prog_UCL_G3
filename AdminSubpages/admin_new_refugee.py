@@ -7,9 +7,21 @@ import csv
 def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main, store_details_callback):
     for i in window.winfo_children():
         i.grid_forget()
+    for i in range(9):
+        window.grid_columnconfigure(i, weight=1)
+    refugeeframe = tk.Frame(window)
+    refugeeframe.grid(sticky="nsew", padx=5, pady=5, columnspan=9, rowspan=9)
+    for i in range(9):
+        refugeeframe.grid_columnconfigure(i, weight=1)
+    for i in range(9):
+        refugeeframe.grid_rowconfigure(i, weight=1)
+
+
+    '''for i in window.winfo_children():
+        i.grid_forget()
     # Main frame for this whole page
     refugeeframe = tk.Frame(window)
-    refugeeframe.grid()
+    refugeeframe.grid(row=0, column=2)'''
 
     try:
         crisis_df = pd.read_csv('crisis_events.csv')
@@ -19,64 +31,65 @@ def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main
         camp_IDs = []
 
     # Title for the page
-    refugee_title = tk.Label(refugeeframe, text='Create Refugee Profile', font=('TkinterDefault', 30))
-    refugee_title.grid(row=0, column=0, pady=30)
+    refugee_title = tk.Label(refugeeframe, text='Create Refugee Profile', font=('TKDefault', 25), fg='white')
+    refugee_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
+    refugee_title.configure(background="grey")
 
     # Label frame for this page that then stores all of the labels and entries
-    refugee_labelframe = tk.LabelFrame(refugeeframe)
-    refugee_labelframe.grid(row=1, column=0)
+    refugee_labelframe = tk.Frame(refugeeframe)
+    refugee_labelframe.grid(row=1, column=4, pady=30, sticky="ew", columnspan=3)
 
     # Camp ID
-    t_camp_ID_label = tk.Label(refugee_labelframe, text='Camp ID', font=('TkinterDefault', 15))
-    t_camp_ID_label.grid(row=2, column=0)
+    t_camp_ID_label = tk.Label(refugee_labelframe, text='Camp ID (This will be generated randomly on submission)', font=('TkinterDefault', 15))
+    t_camp_ID_label.grid(row=2, column=0, padx=20)
     t_camp_IDbox = ttk.Combobox(refugee_labelframe, values=camp_IDs)
-    t_camp_IDbox.grid(row=2, column=1, padx=5, pady=5)
+    t_camp_IDbox.grid(row=2, column=2, padx=5, pady=10)
 
     # Refugee name
     name_label = tk.Label(refugee_labelframe, text='Family Name', font=('TkinterDefault', 15))
-    name_label.grid(row=3, column=0, padx=5, pady=5)
+    name_label.grid(row=3, column=0, padx=20, pady=10)
     name_entry = tk.Entry(refugee_labelframe)
-    name_entry.grid(row=3, column=1, padx=5, pady=5)
+    name_entry.grid(row=3, column=2, padx=5, pady=10)
 
     # Family members
-    family_label = tk.Label(refugee_labelframe, text='Enter total number of family members',
+    family_label = tk.Label(refugee_labelframe, text='Total number of family members',
                             font=('TkinterDefault', 15))
-    family_label.grid(row=4, column=0, padx=5, pady=5)
+    family_label.grid(row=4, column=0, padx=20, pady=10)
     family_labelbox = ttk.Spinbox(refugee_labelframe, from_=0, to=20, style='info.TSpinbox')
-    family_labelbox.grid(row=4, column=1, padx=5, pady=5)
+    family_labelbox.grid(row=4, column=2, padx=5, pady=10)
 
     # Medical conditions, we need to add dictionaries and everything for this
     medical_conditionslabel = tk.Label(refugee_labelframe,
-                                       text='Enter any medical condition(s) for each family member',
+                                       text='Medical condition(s) for each family member',
                                        font=("TkinterDefault", 15))
-    medical_conditionslabel.grid(row=5, column=0, padx=5, pady=5)
+    medical_conditionslabel.grid(row=5, column=0, padx=20, pady=10)
     t_medical_conditionsEntry = tk.Entry(refugee_labelframe)
-    t_medical_conditionsEntry.grid(row=5, column=1, padx=5, pady=5)
+    t_medical_conditionsEntry.grid(row=5, column=2, padx=5, pady=10)
 
     # Languages spoken by refugees
-    languages_spokenlabel = tk.Label(refugee_labelframe, text='Please select main language spoken in the family',
+    languages_spokenlabel = tk.Label(refugee_labelframe, text='Main language(s) spoken in the family',
                                      font=('TkinterDefault', 15))
-    languages_spokenlabel.grid(row=6, column=0, padx=5, pady=5)
+    languages_spokenlabel.grid(row=6, column=0, padx=20, pady=10)
     t_languages_spokenEntry = ttk.Combobox(refugee_labelframe,
                                            values='English Chinese Hindi Spanish French Arabic Bengali Portuguese Russian Urdu Indonesian German Swahili Marathi Tamil Telugu Turkish Vietnamese Korean Italian Thai Gujarati Persian Polish Pashto Kannada Ukrainian Somali Kurdish')
-    t_languages_spokenEntry.grid(row=6, column=1, padx=5, pady=5)
+    t_languages_spokenEntry.grid(row=6, column=2, padx=5, pady=10)
 
     # secondlanguage entry box
     second_languagelabel = tk.Label(refugee_labelframe,
-                                    text='Please enter any other languages spoken by each family member',
+                                    text='Other language(s) spoken by family member(s)',
                                     font=('TkinterDefault', 15))
-    second_languagelabel.grid(row=7, column=0, padx=5, pady=5)
+    second_languagelabel.grid(row=7, column=0, padx=20, pady=10)
     t_second_languageEntry = tk.Entry(refugee_labelframe)
-    t_second_languageEntry.grid(row=7, column=1, padx=5, pady=5)
+    t_second_languageEntry.grid(row=7, column=2, padx=5, pady=10)
 
     na_store_details = tk.Button(refugee_labelframe, text="Store refugee info", command=lambda: [
         store_details_callback(t_camp_IDbox, family_labelbox, t_medical_conditionsEntry, t_languages_spokenEntry,
                                t_second_languageEntry, name_entry), back_button_to_volunteer_main], height=1, width=20)
-    na_store_details.grid(row=8, column=1, pady=5)
+    na_store_details.grid(row=9, column=2, pady=(50,20))
 
     # Back button
     t_back_button = tk.Button(refugee_labelframe, text='Back to Home', command=back_button_to_volunteer_main)
-    t_back_button.grid(row=9, column=0, padx=5, pady=10)
+    t_back_button.grid(row=9, column=0, padx=5, pady=(50,20))
 
     for i in range(10):
         refugeeframe.grid_rowconfigure(i, weight=1)

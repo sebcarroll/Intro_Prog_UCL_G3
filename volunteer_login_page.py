@@ -1,6 +1,7 @@
 
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import PhotoImage
 import os
 import pickle
 import pandas as pd
@@ -35,13 +36,13 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
 
         except(FileNotFoundError):
             self.y_personal_info = {
-                'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                'volunteer1': {'Camp ID': '', 'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                'Work Type': '', 'Deactivated': False, 'Deleted': False},
-                'volunteer2': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                'volunteer2': {'Camp ID': '', 'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                'Work Type': '', 'Deactivated': False, 'Deleted': False},
-                'volunteer3': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                'volunteer3': {'Camp ID': '', 'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                'Work Type': '', 'Deactivated': True, 'Deleted': False},
-                'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                'volunteer4': {'Camp ID': '', 'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                'Work Type': '', 'Deactivated': False, 'Deleted': False}
             }
 
@@ -70,6 +71,8 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         volunteer_entries_frame = tk.Frame(self, relief=tk.RAISED, borderwidth=5)
         volunteer_entries_frame.grid()
 
+
+
         # Label frame for this page that then stores all of the labels and entries
         volunteer_log_in_frame = tk.LabelFrame(volunteer_entries_frame, borderwidth=5)
         volunteer_log_in_frame.grid(row=3, column=1, pady=30, padx=30)
@@ -91,6 +94,10 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         self.password_entry.grid(row=8, column=1, pady=10)
         self.password_entry.bind("<KeyPress>", self.caps_lock_on)
         self.password_entry.bind("<KeyRelease>", self.caps_lock_off)
+
+        self.image3 = PhotoImage(file="Images/volunteer_icon.png").subsample(6, 6)
+        image_label = tk.Label(volunteer_log_in_frame, image=self.image3, relief=tk.RAISED, borderwidth=5)
+        image_label.grid(row=5, column=0, pady=10, padx=(150, 0))
 
         # # Username entry box
         # self.t_name_label = tk.Label(self, text='Username')
@@ -120,6 +127,8 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         # Back to landing page
         back_button = tk.Button(volunteer_log_in_frame, text="Back", command=self.exit_and_go_back)
         back_button.grid(row=10, column=0, pady=10)
+
+
 
 
         # Shows caps lock on/off (OLD BINDING NOT WORKING)

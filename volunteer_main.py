@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, PhotoImage
 from volunteer_login_page import VolunteerLoginPage
 from tkinter import messagebox
 import pandas as pd
@@ -13,6 +13,7 @@ from VolunteerSubpages.refugee_display import RefugeeDisplay
 # Import for menu commands
 from admin_help import AdminHelp
 from general_pie_charts import SummaryCharts
+from country_map import CountryMap
 import csv
 
 class invalid_email(Exception):
@@ -32,12 +33,18 @@ class VolunteerHomepage():
 
         self.window = tk.Toplevel(self.root)
         self.window.title('Volunteer Homepage')
-        self.window.geometry('1300x600')
+        self.window.geometry('1400x700')
+
+        # Default theme
+        # self.default_bg = self.window.cget('bg')
+        self.current_theme = tk.StringVar(value='no_theme')
+        self.apply_theme('no_theme')
 
         #self.camp_id_label = self.get_camp_id_for_volunteer()
 
         self.admin_help = AdminHelp(self.window, self.back_button_to_volunteer_main)
         self.charts = SummaryCharts(self.window, self.back_button_to_volunteer_main)
+        self.map_instance = CountryMap(self.window, self.back_button_to_volunteer_main)
         self.refugee_display_instance = RefugeeDisplay(self.window, self.back_button_to_volunteer_main, self.get_current_camp_id)
 
         self.camp_id_label = self.get_camp_id_for_volunteer()
@@ -49,10 +56,10 @@ class VolunteerHomepage():
         self.window.config(menu=menu_bar)
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="File", menu=file_menu)
+        file_menu.add_command(label="Home", command=self.back_button_to_volunteer_main)
         file_menu.add_command(label="New Refugee", command=self.t_create_refugee)
         file_menu.add_separator()
-        file_menu.add_command(label="Settings", command=self.do_nothing)
-        file_menu.add_separator()
+        #file_menu.add_command(label="Settings", command=self.do_nothing)
         file_menu.add_command(label="Log Out", command=self.exit_and_go_back)
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.exit_software)
@@ -70,6 +77,11 @@ class VolunteerHomepage():
         file_menu.add_command(label="View Resources", command=self.t_display_resources)
         file_menu.add_separator()
         file_menu.add_command(label="View Charts", command=lambda: self.generate_chart_window())
+        file_menu.add_command(label="View Map", command=lambda: self.view_map())
+
+        file_menu = tk.Menu(menu_bar, tearoff=0)
+        menu_bar.add_cascade(label="Settings", menu=file_menu)
+        file_menu.add_command(label="Display", command=self.open_theme_window)
 
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Help", menu=file_menu)
@@ -80,7 +92,7 @@ class VolunteerHomepage():
 
 
         try:
-            self.y_personal_info = pd.read_csv('volunteer_info.csv', index_col='Username')
+            self.y_personal_info = pd.read_csv('volunteer_info.csv', index_col='Username', dtype={'Phone Number': str})
             self.y_personal_info = self.y_personal_info.to_dict(orient='index')
         except(FileNotFoundError):
             self.y_personal_info = {
@@ -130,34 +142,52 @@ class VolunteerHomepage():
         self.show_camp_id_label = None
 
         self.t_summary_title = tk.Label(self.window, text='Welcome to the Volunteer Portal', font=('Arial Bold', 40),
-                                        bg='grey', fg='white')
-        self.t_summary_title.grid(row=0, column=0, columnspan=2, sticky='news', padx=20, pady=10)
+                                        bg='grey', fg='white', relief=tk.RAISED, borderwidth=5)
+        self.t_summary_title.grid(row=0, column=0, columnspan=9, sticky='nsew', padx=10, pady=20)
         self.t_summary_title.configure(background='grey')
 
-        self.show_camp_id_label = tk.Label(self.window, text=f"{self.camp_id_label}", font=("Arial Bold", 15), fg="black")
-        self.show_camp_id_label.grid(row=2, column=0, pady=10, ipadx=0, ipady=0)
+        self.show_camp_id_label = tk.Label(self.window, text=f"{self.camp_id_label}", font=("Arial Bold", 15), fg="black", relief=tk.RAISED, borderwidth=5)
+        self.show_camp_id_label.grid(row=2, column=4, pady=10, ipadx=0, ipady=0)
+
+
 
         self.t_summary_editdetails = tk.Button(self.window, text='Personal Information',
                                                command=self.t_personal_information_base)
-        self.t_summary_editdetails.grid(row=3, column=0, pady=(30, 10), ipadx=98, ipady=25)
+        self.t_summary_editdetails.grid(row=3, column=4, pady=(30, 10), ipadx=98, ipady=25)
+        self.image1 = PhotoImage(file="Images/personal_info.png").subsample(4, 4)
+        image_label = tk.Label(self.window, image=self.image1)
+        image_label.grid(row=3, column=3, pady=(30, 10))
 
         self.t_summary_editcamp = tk.Button(self.window, text='Edit Camp Information', command=self.t_edit_camp)
-        self.t_summary_editcamp.grid(row=4, column=0, pady=10, ipadx=98, ipady=25)
+        self.t_summary_editcamp.grid(row=4, column=4, pady=10, ipadx=93, ipady=25)
+        self.image2 = PhotoImage(file="Images/camps.png").subsample(4, 4)
+        image_label = tk.Label(self.window, image=self.image2)
+        image_label.grid(row=4, column=3, pady=10)
 
         self.t_summary_refugee = tk.Button(self.window, text='Create a Refugee Profile', command=self.t_create_refugee)
-        self.t_summary_refugee.grid(row=5, column=0, pady=10, ipadx=90, ipady=25)
+        self.t_summary_refugee.grid(row=5, column=4, pady=10, ipadx=90, ipady=25)
+        self.image3 = PhotoImage(file="Images/add_refugee.png").subsample(4, 4)
+        image_label = tk.Label(self.window, image=self.image3)
+        image_label.grid(row=5, column=3, pady=10)
 
         self.t_summary_resources = tk.Button(self.window, text='Display Resources Available',
                                              command=self.t_display_resources)
-        self.t_summary_resources.grid(row=6, column=0, pady=10, ipadx=85, ipady=25)
+        self.t_summary_resources.grid(row=6, column=4, pady=10, ipadx=80, ipady=25)
+        self.image4 = PhotoImage(file="Images/resource_allocation.png").subsample(4, 4)
+        image_label = tk.Label(self.window, image=self.image4)
+        image_label.grid(row=6, column=3, pady=10)
 
         self.summary_refugees = tk.Button(self.window, text='Display Refugees Created',
                                              command=self.display_refugees)
-        self.summary_refugees.grid(row=7, column=0, pady=(10, 30), ipadx=85, ipady=25)
+        self.summary_refugees.grid(row=7, column=4, pady=(10, 30), ipadx=85, ipady=25)
+        self.image5 = PhotoImage(file="Images/new_refugees.png").subsample(4, 4)
+        image_label = tk.Label(self.window, image=self.image5)
+        image_label.grid(row=7, column=3, pady=(10, 30))
 
         for i in range(8):
             self.window.grid_rowconfigure(i, weight=1)
-        self.window.grid_columnconfigure(0, weight=1)
+        for i in range(9):
+            self.window.grid_columnconfigure(i, weight=1)
 
 
     def get_current_camp_id(self):
@@ -209,7 +239,7 @@ class VolunteerHomepage():
     def t_personal_info_edit(self):
         self.personal_entry_widgets = edit_personal_info(self.window, self.username, self.y_personal_info, self.t_personal_information_base, self.back_button_to_volunteer_main, self.personal_details_storage_handler)
     def personal_details_storage_handler(self, nameEntry, emailEntry, phoneEntry, commitmentEntry, worktypeEntry):
-        store_personal_details(self.username, self.y_personal_info, nameEntry, emailEntry, phoneEntry, commitmentEntry, worktypeEntry)
+        store_personal_details(self.username, self.y_personal_info, nameEntry, emailEntry, phoneEntry, commitmentEntry, worktypeEntry, self.t_personal_information_base)
 
     # Edit Camp Info (edit_camp_details.py)
     def t_edit_camp(self):
@@ -223,7 +253,7 @@ class VolunteerHomepage():
 
     # Display Resources (resource_display.py)
     def t_display_resources(self):
-        resource_display(self.window, self.back_button_to_volunteer_main)
+        resource_display(self.window, self.camp_id, self.back_button_to_volunteer_main)
 
     def display_refugees(self):
         # Open the resource allocation GUI
@@ -244,6 +274,9 @@ class VolunteerHomepage():
 
     def generate_chart_window(self):
         self.charts.generate_charts_window()
+
+    def view_map(self):
+        self.map_instance.view_country_map_window()
 
 
     # NAVIGATION - VOLUNTEER USERS:
@@ -280,3 +313,29 @@ class VolunteerHomepage():
         if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
             self.root.destroy()
         #self.root.destroy()
+
+
+    def open_theme_window(self):
+        theme_window = tk.Toplevel(self.root)
+        theme_window.title("Select Theme")
+        theme_window.geometry("200x100")
+
+        theme_window.grab_set()
+
+        # Radio buttons for theme selection
+        tk.Radiobutton(theme_window, text="Light Theme", variable=self.current_theme,
+                       value='light', command=lambda: self.apply_theme('light')).pack(anchor=tk.W)
+        tk.Radiobutton(theme_window, text="Dark Theme", variable=self.current_theme,
+                       value='dark', command=lambda: self.apply_theme('dark')).pack(anchor=tk.W)
+        tk.Radiobutton(theme_window, text="No Theme", variable=self.current_theme,
+                       value='no_theme', command=lambda: self.apply_theme('no_theme')).pack(anchor=tk.W)
+
+    def apply_theme(self, theme):
+        if theme == 'dark':
+            self.window.configure(bg='blue')
+            # Set other widget and text colors for dark theme
+        elif theme == 'light':
+            self.window.configure(bg='light blue')
+            # Set other widget and text colors for light theme
+        else:
+            self.window.configure(bg='SystemButtonFace')

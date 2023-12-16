@@ -2,6 +2,7 @@ import tkinter as tk
 from admin_login_page import AdminLoginPage
 from volunteer_login_page import VolunteerLoginPage
 from tkinter import messagebox
+import pandas as pd
 class LandingPage:
     def __init__(self, root, go_to_admin_main, go_to_volunteer_main):
         self.root = root
@@ -9,10 +10,32 @@ class LandingPage:
         self.go_to_volunteer_main = go_to_volunteer_main
         self.window = tk.Toplevel(self.root)
         self.window.title('Welcome to the UCL Humanity Rescue Portal')
-        self.window.geometry('1000x600')
+        self.window.geometry('800x500')
         self.window.configure(background="lightgrey")
         self.create_landing_page_widgets()
         self.window.protocol("WM_DELETE_WINDOW", self.window_exit_button)
+
+        try:
+            self.y_personal_info = pd.read_csv('volunteer_info.csv', index_col='Username')
+            self.y_personal_info = self.y_personal_info.to_dict(orient='index')
+            print(self.y_personal_info)
+
+        except(FileNotFoundError):
+            self.y_personal_info = {
+                'volunteer1': {'Camp ID': '', 'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                               'Work Type': '', 'Deactivated': False, 'Deleted': False},
+                'volunteer2': {'Camp ID': '', 'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                               'Work Type': '', 'Deactivated': False, 'Deleted': False},
+                'volunteer3': {'Camp ID': '', 'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                               'Work Type': '', 'Deactivated': True, 'Deleted': False},
+                'volunteer4': {'Camp ID': '', 'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                               'Work Type': '', 'Deactivated': False, 'Deleted': False}
+            }
+
+            df = pd.DataFrame.from_dict(self.y_personal_info, orient='index')
+            df.index.name = 'Username'
+            df.to_csv('volunteer_info.csv', index='Username')
+            self.y_personal_info = pd.read_csv('volunteer_info.csv')
 
     def create_landing_page_widgets(self):
         welcome_label = tk.Label(
@@ -21,7 +44,7 @@ class LandingPage:
             font=('TkDefaultFont', 25, 'bold'),
             foreground='white'
         )
-        welcome_label.pack(padx=50, pady=50)
+        welcome_label.pack(padx=25, pady=25)
         welcome_label.configure(background="orange")
 
         instruction_label = tk.Label(
@@ -42,7 +65,7 @@ class LandingPage:
         volunteer_login_btn.configure(background="lightblue")
         # Exit program button
         exit_btn = tk.Button(self.window, text="Exit Software", foreground='black', command=self.exit_software)
-        exit_btn.pack(ipadx=10, ipady=2, pady=70)
+        exit_btn.pack(ipadx=10, ipady=2, pady=20)
         #exit_btn.configure(background="black")
 
 

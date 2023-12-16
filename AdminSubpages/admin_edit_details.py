@@ -23,7 +23,9 @@ class AdminEditVolunteerDetails:
     #     self.camp_ids = list(self.camp_ids_from_csv)
 
     def upload_csv_data(self, tree, filename):
-        data = pd.read_csv(filename, dtype={'Phone Number': str} )
+        data = pd.read_csv(filename, dtype={'Phone Number': str})
+
+        data['Phone Number'] = data['Phone Number'].astype(str)
 
         # The following block will convert floats to integers for the GUI to remove the ".0"
         # columns with float numbers
@@ -31,13 +33,13 @@ class AdminEditVolunteerDetails:
         # Convert floats to integers for display in treeview
         for col in float_columns:
             data[col] = data[col].fillna(0).astype(int)
-
+        columns_to_display = [col for col in data.columns if col != "Deleted"]
         tree.delete(*tree.get_children())
-        tree['columns'] = list(data.columns)
+        tree['columns'] = columns_to_display
         tree.column("#0", width=0, stretch=tk.NO)
         tree.heading("#0", text="", anchor=tk.W)
 
-        for col in data.columns:
+        for col in columns_to_display:
             tree.column(col, anchor=tk.CENTER, width=80)
             tree.heading(col, text=col, anchor=tk.CENTER)
 
@@ -48,13 +50,24 @@ class AdminEditVolunteerDetails:
         # Main frame for this whole page
         for i in self.window.winfo_children():
             i.grid_forget()
-        new_plan_frame = tk.Frame(self.window)
-        new_plan_frame.grid()
+        for i in range(9):
+            self.window.grid_columnconfigure(i, weight=1)
+        display_volunteer_frame = tk.Frame(self.window)
+        display_volunteer_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9, rowspan=9)
+        for i in range(9):
+            display_volunteer_frame.grid_columnconfigure(i, weight=1)
+        for i in range(9):
+            display_volunteer_frame.grid_rowconfigure(i, weight=1)
+
+        '''display_volunteer_frame = tk.Frame(self.window)
+        display_volunteer_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9)
+        for i in range(9):
+            display_volunteer_frame.grid_columnconfigure(i, weight=1)'''
 
         # Labels
-        tk.Label(self.window, text="Edit Volunteer Details", font=('TKDefault', 25)).grid(row=0, column=0,
-                                                                                            columnspan=2,
-                                                                                            padx=10, pady=20)
+        volunteer_title = tk.Label(display_volunteer_frame, text="Edit Volunteer Details", font=('TKDefault', 25), fg='white')
+        volunteer_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
+        volunteer_title.configure(background="grey")
 
         # Listbox to display volunteer usernames
         # edit_details_labelFrame = tk.LabelFrame(self.window)
@@ -62,34 +75,42 @@ class AdminEditVolunteerDetails:
         # self.volunteer_listbox = tk.Listbox(self.window, selectmode=tk.SINGLE)
         # self.populate_volunteer_listbox()
         # self.volunteer_listbox.grid(row=1, column=0, pady=5)
-        display_volunteer_frame = tk.Frame(self.window)
-        display_volunteer_frame.grid(sticky="nsew", padx=5, pady=5)
-        display_volunteer_frame.grid_columnconfigure(0, weight=1)
-        display_volunteer_frame.grid_rowconfigure(1, weight=3)
-        display_volunteer_frame.grid_rowconfigure(2, weight=1)
+        #display_volunteer_frame = tk.Frame(self.window)
+        #display_volunteer_frame.grid(sticky="nsew", padx=5, pady=5)
+        #display_volunteer_frame.grid_columnconfigure(0, weight=1)
+        #display_volunteer_frame.grid_rowconfigure(1, weight=3)
+        #display_volunteer_frame.grid_rowconfigure(2, weight=1)
+
+
         self.display_volunteer_tree = ttk.Treeview(display_volunteer_frame, height=10)
-        self.display_volunteer_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
+        self.display_volunteer_tree.grid(row=1, column=0, columnspan=9, sticky="ew", padx=10, pady=5)
+
+        # Button Frame:
+        btn_frame = tk.Frame(display_volunteer_frame)
+        btn_frame.grid(row=2, column=4, pady=10)
+        btn_frame.grid_columnconfigure(0, weight=1)
+        btn_frame.grid_columnconfigure(2, weight=1)
 
         # Buttons
-        tk.Button(self.window, text="Edit Account", command=self.edit_details, width=20).grid(row=3,
-                                                                                          column=0, padx=10)
+        tk.Button(btn_frame, text="Edit Account", command=self.edit_details, width=20).grid(row=0,
+                                                                                          column=0, padx=10, pady=5)
 
-        tk.Button(self.window, text="Create Account", command=self.create_account_gui, width=20).grid(row=4,
-                                                                                            column=0, padx=10)
+        tk.Button(btn_frame, text="Create Account", command=self.create_account_gui, width=20).grid(row=1,
+                                                                                            column=0, padx=10, pady=5)
 
-        tk.Button(self.window, text="Deactivate Account", command=self.deactivate_account, width=20).grid(row=5,
-                                                                                                column=0, padx=10)
-        tk.Button(self.window, text="Reactivate Account", command=self.reactivate_account, width=20).grid(row=6,
-                                                                                                column=0, padx=10)
-        tk.Button(self.window, text="Delete Account", command=self.delete_account, width=20).grid(row=7, column=0,
-                                                                                        padx= 10)
+        tk.Button(btn_frame, text="Deactivate Account", command=self.deactivate_account, width=20).grid(row=2,
+                                                                                                column=0, padx=10, pady=5)
+        tk.Button(btn_frame, text="Reactivate Account", command=self.reactivate_account, width=20).grid(row=3,
+                                                                                                column=0, padx=10, pady=5)
+        tk.Button(btn_frame, text="Delete Account", command=self.delete_account, width=20).grid(row=4, column=0,
+                                                                                        padx=10, pady=5)
         # Back button
-        back_button = tk.Button(self.window, text='Back to Home', command=self.back_button_to_admin_main)
-        back_button.grid(row=8, column=0, padx=5, pady=10)
+        back_button = tk.Button(btn_frame, text='Back to Home', command=self.back_button_to_admin_main)
+        back_button.grid(row=5, column=0, padx=5, pady=10)
 
-        for i in range(9):
-            self.window.grid_rowconfigure(i, weight=1)
-        self.window.grid_columnconfigure(0, weight=1)
+        # for i in range(9):
+        #     self.window.grid_rowconfigure(i, weight=1)
+        # self.window.grid_columnconfigure(0, weight=1)
 
     # def populate_volunteer_listbox(self):
     #     try:
@@ -177,6 +198,7 @@ class AdminEditVolunteerDetails:
         # Create a new window for creating a new account
         self.create_account_window = tk.Toplevel(self.window)
         self.create_account_window.title("Create New Account")
+        self.create_account_window.grab_set()
 
         # Labels and Entry widgets for user input
         tk.Label(self.create_account_window, text="Username:").grid(row=1, column=0, padx=10, pady=10)
@@ -235,6 +257,28 @@ class AdminEditVolunteerDetails:
         self.create_account_window.grid_columnconfigure(0, weight=1)
 
     def create_account(self, new_volunteer):
+
+        username_check = new_volunteer['Username']
+        password_check = new_volunteer['Password']
+        name_check = new_volunteer['Name']
+
+        if self.username_exists(username_check):
+            tk.messagebox.showerror("Error",f"Username '{username_check}' already exists. Please choose a different username.")
+            return
+
+        if not username_check:
+            tk.messagebox.showerror("Error", "Username must be filled in")
+            return
+
+        if not password_check:
+            tk.messagebox.showerror("Error", "Password must be filled in")
+            return
+
+        if not name_check:
+            tk.messagebox.showerror("Error", "Name must be filled in")
+            return
+
+
         try:
             with open('volunteer_info.csv', 'a', newline='') as csvfile:
                 fieldnames = ['Username', 'Camp ID', 'Password', 'Name', 'Email Address', 'Phone Number', 'Commitment',
@@ -256,6 +300,19 @@ class AdminEditVolunteerDetails:
         except FileNotFoundError:
             messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
 
+    def username_exists(self, username):
+        try:
+            with open('volunteer_info.csv', 'r', newline = '')as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    if row ['Username']==username:
+                        return True
+        except FileNotFoundError:
+            tk.messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
+        return False
+
+
+
     def edit_details(self):
         self.read_crisis_events_csv()
         selected_index = self.display_volunteer_tree.focus()
@@ -274,6 +331,7 @@ class AdminEditVolunteerDetails:
                             # Creates a new window for editing details
                             self.edit_details_window = tk.Toplevel(self.window)
                             self.edit_details_window.title("Edit Volunteer Details")
+                            self.edit_details_window.grab_set()
 
                             # Labels and Entry widgets for user input
                             tk.Label(self.edit_details_window, text="Username:").grid(row=1, column=0, padx=10, pady=10)
@@ -352,6 +410,28 @@ class AdminEditVolunteerDetails:
             except FileNotFoundError:
                 messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
     def save_changes(self, old_username, updated_details,edit_details_window):
+
+        new_username = updated_details['Username']
+        new_password = updated_details['Password']
+        new_name = updated_details['Name']
+
+        if new_username != old_username and self.username_exists(new_username):
+            tk.messagebox.showerror("Error", f"Username '{new_username}' already exists. Please choose a different username.")
+            return
+
+        if not new_username:
+            tk.messagebox.showerror("Error", "Username must be filled in")
+            return
+
+        if not new_password:
+            tk.messagebox.showerror("Error", "Password must be filled in")
+            return
+
+        if not new_name:
+            tk.messagebox.showerror("Error", "Name must be filled in")
+            return
+
+
         try:
             with open('volunteer_info.csv', 'r', newline='') as csvfile:
                 reader = csv.DictReader(csvfile)
@@ -410,8 +490,8 @@ class AdminEditVolunteerDetails:
             if confirm_delete:
                 self.remove_account(username_to_delete)
                 tk.messagebox.showinfo("Success", f"The account '{username_to_delete}' has been deleted successfully.")
-            self.remove_account(username_to_delete)
-            self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
+                self.remove_account(username_to_delete)
+                self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
         else:
             tk.messagebox.showwarning("No Selection", "Please select a volunteer.")
 
@@ -437,23 +517,31 @@ class AdminEditVolunteerDetails:
 
     def update_account_status(self, username, deactivated):
         try:
-            with open('volunteer_info.csv', 'r', newline='') as csvfile:
-                reader = csv.DictReader(csvfile)
-                rows = list(reader)
-                for row in rows:
-                    if row['Username'] == username:
-                        if row['Deactivated'] == 'True' and deactivated:
-                            messagebox.showinfo("Deactivation", f"Account for {username} is already deactivated.")
-                        row['Deactivated'] = str(deactivated).lower()
+            csv_file = 'volunteer_info.csv'
+            data = pd.read_csv(csv_file, dtype={'Phone Number': str})
 
-            with open('volunteer_info.csv', 'w', newline='') as csvfile:
-                fieldnames = reader.fieldnames
-                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-                writer.writeheader()
-                writer.writerows(rows)
+            mask = data['Username'] == username
+            if mask.any():
+                current_status = data.loc[mask, 'Deactivated'].iloc[0]
 
-            action = "Deactivation" if deactivated else "Reactivation"
-            messagebox.showinfo(action, f"Account for {username} {action.lower()} successful.")
-            self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
+                if (current_status and deactivated) or (not current_status and not deactivated):
+                    action = "inactive" if deactivated else "active"
+                    messagebox.showinfo("Status Unchanged", f"Account for {username} is already {action.lower()}.")
+                else:
+                    # Convert 'Phone Number' column explicitly to string
+                    data['Phone Number'] = data['Phone Number'].astype(str)
+
+                    # Update the 'Deactivated' column
+                    data.loc[mask, 'Deactivated'] = deactivated
+
+                    # Save the updated DataFrame to the CSV file
+                    data.to_csv(csv_file, index=False)
+
+                    action = "Deactivated" if deactivated else "Reactivated"
+                    messagebox.showinfo(action, f"Account for {username} {action.lower()} successfully.")
+                    self.upload_csv_data(self.display_volunteer_tree, csv_file)
+            else:
+                messagebox.showwarning("Error", f"Account for {username} not found.")
+
         except FileNotFoundError:
             messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")

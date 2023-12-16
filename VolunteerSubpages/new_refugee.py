@@ -5,15 +5,33 @@ from tkinter import messagebox
 import pandas as pd
 import csv
 
+class no_text_entered(Exception):
+    pass
+
 def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volunteer_main, store_details_callback):
+    # for i in window.winfo_children():
+    #     i.grid_forget()
+    # # Main frame for this whole page
+    # refugeeframe = tk.Frame(window)
+    # refugeeframe.grid()
+
     for i in window.winfo_children():
         i.grid_forget()
-    # Main frame for this whole page
+    for i in range(9):
+        window.grid_columnconfigure(i, weight=1)
     refugeeframe = tk.Frame(window)
-    refugeeframe.grid()
-    crisis_df = pd.read_csv('crisis_events.csv')
-    active_camps= crisis_df[crisis_df['Status'] == 'Active']
-    camp_IDs = list(active_camps['Camp ID'])
+    refugeeframe.grid(sticky="nsew", padx=5, pady=5, columnspan=9, rowspan=9)
+    for i in range(9):
+        refugeeframe.grid_columnconfigure(i, weight=1)
+    for i in range(8):
+        refugeeframe.grid_rowconfigure(i, weight=1)
+
+
+
+    # crisis_df = pd.read_csv('crisis_events.csv')
+    # active_camps = crisis_df[crisis_df['Status'] == 'Active']
+    # camp_IDs = list(active_camps['Camp ID'])
+
 
     camp_ids_from_csv = []
     try:
@@ -30,19 +48,20 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
     camp_IDs_filtered = []
     for camp_ids in camp_IDs_unfiltered:
         from volunteer_login_page import volunteer_camp_id_for_new_refugee
-        print(volunteer_camp_id_for_new_refugee)
-        if int(float(camp_ids)) == int(float(volunteer_camp_id_for_new_refugee)):
+        #print(volunteer_camp_id_for_new_refugee)
+        if volunteer_camp_id_for_new_refugee and int(float(camp_ids)) == int(float(volunteer_camp_id_for_new_refugee)):
             camp_IDs_filtered.append(camp_ids)
 
     camp_IDs = camp_IDs_filtered
 
     # Title for the page
-    refugee_title = tk.Label(refugeeframe, text='Create Refugee Profile', font=('TkinterDefault', 30))
-    refugee_title.grid(row=0, column=0, pady=30)
+    refugee_title = tk.Label(refugeeframe, text='Create Refugee Profile', font=('TKDefault', 25), fg='white')
+    refugee_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
+    refugee_title.configure(background="grey")
 
     # Label frame for this page that then stores all of the labels and entries
     refugee_labelframe = tk.LabelFrame(refugeeframe)
-    refugee_labelframe.grid(row=1, column=0)
+    refugee_labelframe.grid(row=1, column=0, columnspan=9)
 
     # Camp ID
     t_camp_ID_label = tk.Label(refugee_labelframe, text='Camp ID', font=('TkinterDefault', 15))
@@ -60,7 +79,7 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
     family_label = tk.Label(refugee_labelframe, text='Enter total number of family members',
                             font=('TkinterDefault', 15))
     family_label.grid(row=4, column=0, padx=5, pady=5)
-    family_labelbox = ttk.Spinbox(refugee_labelframe, from_=0, to=20, style='info.TSpinbox')
+    family_labelbox = ttk.Spinbox(refugee_labelframe, from_=0, to=20, style='info.TSpinbox', format="%d")
     family_labelbox.grid(row=4, column=1, padx=5, pady=5)
 
     # Medical conditions, we need to add dictionaries and everything for this
@@ -68,7 +87,7 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
                                        text='Enter any medical condition(s) for each family member.',
                                        font=("TkinterDefault", 15))
     medical_conditionslabel.grid(row=5, column=0, padx=5, pady=5)
-    t_medical_conditionsEntry = tk.Entry(refugee_labelframe)
+    t_medical_conditionsEntry = tk.Text(refugee_labelframe, height=7, width=30, font=("TkinterDefault", 10))
     t_medical_conditionsEntry.grid(row=5, column=1, padx=5, pady=5)
 
     # Languages spoken by refugees
@@ -90,15 +109,15 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
     na_store_details = tk.Button(refugee_labelframe, text="Store refugee info", command=lambda: [
         store_details_callback(t_camp_IDbox, family_labelbox, t_medical_conditionsEntry, t_languages_spokenEntry,
                                t_second_languageEntry, name_entry), back_button_to_volunteer_main], height=1, width=20)
-    na_store_details.grid(row=8, column=1, pady=5)
+    na_store_details.grid(row=9, column=1, pady=20)
 
     # Back button
     t_back_button = tk.Button(refugee_labelframe, text='Back to Home', command=back_button_to_volunteer_main)
-    t_back_button.grid(row=9, column=0, padx=5, pady=10)
+    t_back_button.grid(row=9, column=0, padx=5, pady=20)
 
-    for i in range(10):
-        refugeeframe.grid_rowconfigure(i, weight=1)
-    refugeeframe.grid_columnconfigure(0, weight=1)
+    # for i in range(10):
+    #     refugeeframe.grid_rowconfigure(i, weight=1)
+    # refugeeframe.grid_columnconfigure(0, weight=1)
 
     return t_camp_IDbox, name_entry, t_medical_conditionsEntry, t_languages_spokenEntry, t_second_languageEntry
 
@@ -109,11 +128,15 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
         # Update self.t_create_refugee dictionary
         refugee_info = pd.read_csv('refugee_info.csv', index_col='Name')
 
+        camp_ID_str = t_camp_IDbox.get().strip()
+        if not camp_ID_str:
+            raise ValueError("Camp ID is required. Please speak to the administrator for camp assignment.")
+        camp_ID = int(camp_ID_str)
 
-        camp_ID = int(t_camp_IDbox.get())
+        #camp_ID = int(t_camp_IDbox.get())
         name = name_entry.get()
-        family_members = family_labelbox.get()
-        medical_conditions = t_medical_conditionsEntry.get()
+        family_members = int(family_labelbox.get())
+        medical_conditions = t_medical_conditionsEntry.get("1.0", "end-1c")
         languages_spoken = t_languages_spokenEntry.get()
         second_language = t_second_languageEntry.get()
         refugee_info.loc[name,'Camp ID'] = camp_ID
@@ -122,11 +145,20 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
         refugee_info.loc[name, 'Languages Spoken'] = languages_spoken
         refugee_info.loc[name, 'Second Language'] = second_language
         refugee_info.loc[name, 'Family Members'] = family_members
-
+        if name == '' or family_labelbox.get() == '' or t_medical_conditionsEntry.get("1.0", "end-1c") == '':
+            raise no_text_entered
         # new_refugee_info.index.name = 'Name'
         refugee_info.to_csv('refugee_info.csv')
         update_number_of_refugees(camp_ID)
-        tk.messagebox.showinfo(title='Details saved', message='Details have been saved')
+        tk.messagebox.showinfo(title='Details saved', message='Details have been saved successfully')
+
+    # if no camp ID assigned or selected
+    except ValueError as e:
+        messagebox.showerror("No camp ID found", str(e))
+        return  # Exit the function early if there's an error
+
+    except (no_text_entered):
+        tk.messagebox.showinfo(title = 'No text entered', message = 'Family name, number of family members and medical conditions must be inputted')
 
     except FileNotFoundError:
         data = {'Name': [name], 'Camp ID': [camp_ID],
@@ -146,7 +178,7 @@ def update_number_of_refugees(camp_ID):
         for row in csv_reader:
             if camp_ID == int(float(row[1])):
                 number_of_refugees_actual += 1
-    print(f"Total refugees counted: {number_of_refugees_actual}")
+    #print(f"Total refugees counted: {number_of_refugees_actual}")
 
     header = []
     data = []
