@@ -97,7 +97,11 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
 
         self.image3 = PhotoImage(file="Images/volunteer_icon.png").subsample(6, 6)
         image_label = tk.Label(volunteer_log_in_frame, image=self.image3, relief=tk.RAISED, borderwidth=5)
-        image_label.grid(row=5, column=0, pady=10, padx=(150, 0))
+        image_label.grid(row=5, column=1, pady=10, padx=(0, 0))
+
+        self.logo = PhotoImage(file="Images/logo.png").subsample(4, 4)
+        image_label = tk.Label(volunteer_log_in_frame, image=self.logo, relief=tk.RAISED)
+        image_label.grid(row=5, column=0, pady=10, padx=(0, 0))
 
         # # Username entry box
         # self.t_name_label = tk.Label(self, text='Username')

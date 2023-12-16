@@ -1,7 +1,7 @@
 import tkinter as tk
 from admin_login_page import AdminLoginPage
 from volunteer_login_page import VolunteerLoginPage
-from tkinter import messagebox
+from tkinter import messagebox, PhotoImage
 import pandas as pd
 class LandingPage:
     def __init__(self, root, go_to_admin_main, go_to_volunteer_main):
@@ -47,12 +47,16 @@ class LandingPage:
         welcome_label.pack(padx=25, pady=25)
         welcome_label.configure(background="orange")
 
+        self.logo = PhotoImage(file="Images/logo.png").subsample(4, 4)
+        image_label = tk.Label(self.window, image=self.logo, relief=tk.RAISED)
+        image_label.pack(pady=0, padx=(0, 0))
+
         instruction_label = tk.Label(
             self.window,
             text='Please select admin or volunteer sign in',
-            font=('TkDefaultFont', 20)
+            font=('TkDefaultFont', 10)
         )
-        instruction_label.pack(pady=25)
+        instruction_label.pack(pady=(20,20))
         instruction_label.configure(background="lightgrey")
 
         # Admin login button
