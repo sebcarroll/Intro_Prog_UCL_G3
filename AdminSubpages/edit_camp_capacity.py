@@ -89,32 +89,32 @@ def edit_refugee_no(df, selected_camp_id):
 def edit_camp_id(df, selected_camp_id, listbox):
     try:
         if selected_camp_id:
-            # Ask the user for a new camp ID
-            new_id = simpledialog.askstring("Change camp ID", prompt="Enter new camp ID - using only numbers (5 characters ONLY)")
+            new_id = simpledialog.askstring("Change camp ID",
+                                            "Enter new camp ID - using only numbers (5 characters ONLY)")
 
-            # Check if the new ID is not empty and is different from the current ID
-            if new_id.isnumeric() and len(new_id) == 5:
-                # Check if the new ID already exists in the DataFrame
-                if new_id not in df['Camp ID'].values:
-                    # Update the camp ID in the DataFrame
-                    df.loc[df['Camp ID'] == selected_camp_id, 'Camp ID'] = new_id
+            if new_id is None:
+                messagebox.showinfo("Operation Cancelled", "No changes have been made.")
+                return
+            elif not new_id.isnumeric() or len(new_id) != 5:
+                raise ValueError("Please enter a valid ID: a numeric value of 5 characters length.")
 
-                    # Convert the 'New Camp ID' column to a list
-                    new_camp_ids = df['Camp ID'].tolist()
+            if new_id in df['Camp ID'].values:
+                raise taken_ID("ID is already taken by another camp.")
 
-                    # Clear the listbox and insert the updated camp IDs
-                    listbox.delete(0, tk.END)
-                    for camp_id in new_camp_ids:
-                        listbox.insert(tk.END, camp_id)
+            # Update the camp ID in the DataFrame
+            df.loc[df['Camp ID'] == selected_camp_id, 'Camp ID'] = new_id
+            df.to_csv('crisis_events.csv', index=False)
 
-                    # Save the DataFrame to the CSV file
-                    df.to_csv('crisis_events.csv', index=False)
-                else:
-                    raise taken_ID
-            else:
-                raise ValueError
+            listbox.delete(0, tk.END)
+            for camp_id in df['Camp ID']:
+                listbox.insert(tk.END, camp_id)
 
-    except taken_ID:
-        messagebox.showwarning("Error", "ID is already taken")
-    except ValueError:
-        messagebox.showwarning("Invalid ID", message="Please enter a valid ID")
+        else:
+            raise none_selected("No camp ID selected.")
+
+    except taken_ID as e:
+        messagebox.showwarning("Error", str(e))
+    except ValueError as e:
+        messagebox.showwarning("Invalid ID", str(e))
+    except none_selected as e:
+        messagebox.showwarning("Camp ID not selected", str(e))
