@@ -8,15 +8,6 @@ class none_selected(Exception):
     pass
 def edit_camp_details(window, back_button_to_admin_main):
     try:
-        '''for i in window.winfo_children():
-            i.grid_forget()
-
-        t_edit_campframe = tk.Frame(window)
-        t_edit_campframe.grid(sticky="nsew", padx=5, pady=5, columnspan=9, column=3)
-
-        for i in range(9):
-            t_edit_campframe.grid_columnconfigure(i, weight=1)'''
-
         for i in window.winfo_children():
             i.grid_forget()
         for i in range(9):
