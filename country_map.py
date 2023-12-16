@@ -16,7 +16,8 @@ class CountryMap:
         self.map_window = tk.Toplevel(self.window)
         self.map_window.title("View Crisis Map")
         self.map_window.geometry("1000x500")
-
+        # THIS SETS THE WINDOW FIXED SIZE!
+        self.map_window.resizable(False, False)
         self.map_window.grab_set()
 
         # Call the method to create the map in the new window
@@ -31,7 +32,8 @@ class CountryMap:
 
         # Load the image using PhotoImage
         if self.map_image is None:
-            self.map_image = PhotoImage(file="world_map_tkinter.png")
+            self.map_image = PhotoImage(file="Images/dark_map.png")
+        # ORIGINAL MAP DIRECTORY: file="world_map_tkinter.png"
 
         # Display the image on the canvas
         map_canvas.create_image(0, 0, anchor=tk.NW, image=self.map_image)
