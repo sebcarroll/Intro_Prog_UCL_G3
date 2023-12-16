@@ -32,7 +32,12 @@ class VolunteerHomepage():
 
         self.window = tk.Toplevel(self.root)
         self.window.title('Volunteer Homepage')
-        self.window.geometry('1300x600')
+        self.window.geometry('1400x700')
+
+        # Default theme
+        # self.default_bg = self.window.cget('bg')
+        self.current_theme = tk.StringVar(value='no_theme')
+        self.apply_theme('no_theme')
 
         #self.camp_id_label = self.get_camp_id_for_volunteer()
 
@@ -49,10 +54,10 @@ class VolunteerHomepage():
         self.window.config(menu=menu_bar)
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="File", menu=file_menu)
+        file_menu.add_command(label="Home", command=self.back_button_to_volunteer_main)
         file_menu.add_command(label="New Refugee", command=self.t_create_refugee)
         file_menu.add_separator()
-        file_menu.add_command(label="Settings", command=self.do_nothing)
-        file_menu.add_separator()
+        #file_menu.add_command(label="Settings", command=self.do_nothing)
         file_menu.add_command(label="Log Out", command=self.exit_and_go_back)
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.exit_software)
@@ -70,6 +75,10 @@ class VolunteerHomepage():
         file_menu.add_command(label="View Resources", command=self.t_display_resources)
         file_menu.add_separator()
         file_menu.add_command(label="View Charts", command=lambda: self.generate_chart_window())
+
+        file_menu = tk.Menu(menu_bar, tearoff=0)
+        menu_bar.add_cascade(label="Settings", menu=file_menu)
+        file_menu.add_command(label="Display", command=self.open_theme_window)
 
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Help", menu=file_menu)
@@ -280,3 +289,29 @@ class VolunteerHomepage():
         if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
             self.root.destroy()
         #self.root.destroy()
+
+
+    def open_theme_window(self):
+        theme_window = tk.Toplevel(self.root)
+        theme_window.title("Select Theme")
+        theme_window.geometry("200x100")
+
+        theme_window.grab_set()
+
+        # Radio buttons for theme selection
+        tk.Radiobutton(theme_window, text="Light Theme", variable=self.current_theme,
+                       value='light', command=lambda: self.apply_theme('light')).pack(anchor=tk.W)
+        tk.Radiobutton(theme_window, text="Dark Theme", variable=self.current_theme,
+                       value='dark', command=lambda: self.apply_theme('dark')).pack(anchor=tk.W)
+        tk.Radiobutton(theme_window, text="No Theme", variable=self.current_theme,
+                       value='no_theme', command=lambda: self.apply_theme('no_theme')).pack(anchor=tk.W)
+
+    def apply_theme(self, theme):
+        if theme == 'dark':
+            self.window.configure(bg='blue')
+            # Set other widget and text colors for dark theme
+        elif theme == 'light':
+            self.window.configure(bg='light blue')
+            # Set other widget and text colors for light theme
+        else:
+            self.window.configure(bg='SystemButtonFace')

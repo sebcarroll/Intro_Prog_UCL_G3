@@ -99,7 +99,7 @@ def edit_camp_id(df, selected_camp_id, listbox):
             new_id = simpledialog.askstring("Change camp ID", prompt="Enter new camp ID - using only numbers (5 characters ONLY)")
 
             # Check if the new ID is not empty and is different from the current ID
-            if new_id.isnumeric() and len(new_id) != 5:
+            if new_id.isnumeric() and len(new_id) == 5:
                 # Check if the new ID already exists in the DataFrame
                 if new_id not in df['Camp ID'].values:
                     # Update the camp ID in the DataFrame

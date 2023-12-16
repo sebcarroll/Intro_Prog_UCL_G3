@@ -22,7 +22,7 @@ class AdminHomepage:
         self.go_to_landing_page = go_to_landing_page
         self.window = tk.Toplevel(self.root)
         self.window.title('Admin Homepage')
-        self.window.geometry('1300x600')
+        self.window.geometry('1400x700')
 
         # Default theme
         #self.default_bg = self.window.cget('bg')
@@ -58,7 +58,7 @@ class AdminHomepage:
         file_menu.add_separator()
         file_menu.add_command(label="New Plan", command=self.create_event)
         file_menu.add_command(label="New Refugee", command=self.t_create_refugee)
-        file_menu.add_command(label="Settings", command=self.do_nothing)
+        #file_menu.add_command(label="Settings", command=self.do_nothing)
         file_menu.add_command(label="Log Out", command=self.exit_and_go_back)
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.exit_software)
@@ -80,8 +80,8 @@ class AdminHomepage:
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Settings", menu=file_menu)
         file_menu.add_command(label="Display", command=self.open_theme_window)
-        file_menu.add_separator()
-        file_menu.add_command(label="Audio", command=self.do_nothing)
+        #file_menu.add_separator()
+        #file_menu.add_command(label="Audio", command=self.do_nothing)
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Help", menu=file_menu)
         file_menu.add_command(label="Information", command=self.help_info)

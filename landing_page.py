@@ -9,7 +9,7 @@ class LandingPage:
         self.go_to_volunteer_main = go_to_volunteer_main
         self.window = tk.Toplevel(self.root)
         self.window.title('Welcome to the UCL Humanity Rescue Portal')
-        self.window.geometry('1000x600')
+        self.window.geometry('800x500')
         self.window.configure(background="lightgrey")
         self.create_landing_page_widgets()
         self.window.protocol("WM_DELETE_WINDOW", self.window_exit_button)
@@ -21,7 +21,7 @@ class LandingPage:
             font=('TkDefaultFont', 25, 'bold'),
             foreground='white'
         )
-        welcome_label.pack(padx=50, pady=50)
+        welcome_label.pack(padx=25, pady=25)
         welcome_label.configure(background="orange")
 
         instruction_label = tk.Label(
@@ -42,7 +42,7 @@ class LandingPage:
         volunteer_login_btn.configure(background="lightblue")
         # Exit program button
         exit_btn = tk.Button(self.window, text="Exit Software", foreground='black', command=self.exit_software)
-        exit_btn.pack(ipadx=10, ipady=2, pady=70)
+        exit_btn.pack(ipadx=10, ipady=2, pady=20)
         #exit_btn.configure(background="black")
 
 
