@@ -182,6 +182,11 @@ class AdminResourceAllocation:
             print(f"Calculated food: {self.minimum_amount_of_food}, medicine: {self.minimum_amount_of_medicine}")
             self.recommended_food_count.config(text=str(self.minimum_amount_of_food))
             self.recommended_medicine_count.config(text=str(self.minimum_amount_of_medicine))
+        elif no_weeks_aid == "":
+            self.minimum_amount_of_food = 0
+            self.minimum_amount_of_medicine = 0
+            self.recommended_food_count.config(text=str(self.minimum_amount_of_food))
+            self.recommended_medicine_count.config(text=str(self.minimum_amount_of_medicine))
         else:
             print("Invalid input for weeks of aid.")
 
