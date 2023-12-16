@@ -2,6 +2,7 @@ import tkinter as tk
 from admin_login_page import AdminLoginPage
 from volunteer_login_page import VolunteerLoginPage
 from tkinter import messagebox
+import pandas as pd
 class LandingPage:
     def __init__(self, root, go_to_admin_main, go_to_volunteer_main):
         self.root = root
@@ -13,6 +14,28 @@ class LandingPage:
         self.window.configure(background="lightgrey")
         self.create_landing_page_widgets()
         self.window.protocol("WM_DELETE_WINDOW", self.window_exit_button)
+
+        try:
+            self.y_personal_info = pd.read_csv('volunteer_info.csv', index_col='Username')
+            self.y_personal_info = self.y_personal_info.to_dict(orient='index')
+            print(self.y_personal_info)
+
+        except(FileNotFoundError):
+            self.y_personal_info = {
+                'volunteer1': {'Camp ID': '', 'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                               'Work Type': '', 'Deactivated': False, 'Deleted': False},
+                'volunteer2': {'Camp ID': '', 'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                               'Work Type': '', 'Deactivated': False, 'Deleted': False},
+                'volunteer3': {'Camp ID': '', 'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                               'Work Type': '', 'Deactivated': True, 'Deleted': False},
+                'volunteer4': {'Camp ID': '', 'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                               'Work Type': '', 'Deactivated': False, 'Deleted': False}
+            }
+
+            df = pd.DataFrame.from_dict(self.y_personal_info, orient='index')
+            df.index.name = 'Username'
+            df.to_csv('volunteer_info.csv', index='Username')
+            self.y_personal_info = pd.read_csv('volunteer_info.csv')
 
     def create_landing_page_widgets(self):
         welcome_label = tk.Label(
