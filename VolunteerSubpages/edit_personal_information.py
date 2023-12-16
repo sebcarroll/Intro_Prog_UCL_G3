@@ -217,34 +217,42 @@ def store_personal_details(username, y_personal_info, t_personal_nameEntry, t_pe
             name = y_personal_info[username]['name']
         else:
             name = t_personal_nameEntry.get()
+
         if t_personal_emailEntry.get() == '':
-            email = y_personal_info[username]['Email Address']
+            email = y_personal_info[username].get('Email Address', '')
+            email = str(email) if email else ''
         else:
             email = t_personal_emailEntry.get()
+
         if t_phonenumberEntry.get() == '':
-            phone = int(y_personal_info[username]['Phone Number'])
+            phone = str(y_personal_info[username]['Phone Number'])
         else:
             phone = t_phonenumberEntry.get()
+
         if t_commitmentEntry.get() == '':
             commitment = y_personal_info[username]['Commitment']
         else:
             commitment = t_commitmentEntry.get()
+
         if t_worktypeEntry.get() == '':
             work = y_personal_info[username]['Work Type']
         else:
             work = t_worktypeEntry.get()
+
         # If entered non-alpha characters, raise error
         if re.search(r'^[A-Za-z]', name):
                 y_personal_info[username]['name'] = name.strip()
         else:
             raise invalid_name
+
         # If entered non-number characters, raise error
         if re.search(r'^[0-9]+', str(phone)):
             y_personal_info[username]['Phone Number'] = str(phone)
         else:
             raise invalid_phone_number
+
         # Make sure they include correct email format
-        if re.search(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', email):
+        if email and re.search(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', email):
             y_personal_info[username]['Email Address'] = email
         else:
             raise invalid_email
@@ -256,15 +264,14 @@ def store_personal_details(username, y_personal_info, t_personal_nameEntry, t_pe
         new_data.to_csv('volunteer_info.csv')
 
         tk.messagebox.showinfo(title='Saved', message='Details have been saved\n '
-                                                      'Please click "Back to Volunteer Details" to view updated details')
+                                                      'Please click "ok" to view your updated details')
         t_personal_information_base()
 
 
     except(invalid_email):
         tk.messagebox.showinfo(title='Invalid Email', message='Please enter a valid email address')
     except(invalid_phone_number):
-        tk.messagebox.showinfo(title='Invalid Phone Number',
-                                       message='Please enter a valid phone number')
+        tk.messagebox.showinfo(title='Invalid Phone Number', message='Please enter a valid phone number')
     except(invalid_name):
          tk.messagebox.showinfo(title='Invalid Name', message='Please enter a valid name')
 

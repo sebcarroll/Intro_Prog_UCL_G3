@@ -19,7 +19,7 @@ def personal_information(window, username, y_personal_info, t_personal_info_edit
     # t_personal_frame.grid(padx=(window.winfo_width() - t_personal_frame.winfo_reqwidth()) // 3)
 
 
-    t_personal_title = tk.Label(t_personal_frame, text='Volunteer Details', font=('TKDefault', 25), fg='white')
+    t_personal_title = tk.Label(t_personal_frame, text='Your Personal Details', font=('TKDefault', 25), fg='white')
     t_personal_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
     t_personal_title.configure(background="grey")
 
