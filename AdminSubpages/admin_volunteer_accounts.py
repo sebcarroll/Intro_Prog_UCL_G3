@@ -123,6 +123,7 @@ class AdminVolunteerDisplay:
         # Open pop up edit window
         refugee_profile_window = tk.Toplevel(self.window)
         refugee_profile_window.title("View Volunteer Details")
+        refugee_profile_window.grab_set()
 
         # Create a label and entry for each plan attribute using column attributes
         for i in range(treeview_width):
@@ -155,6 +156,7 @@ class AdminVolunteerDisplay:
         # Open pop up edit window
         refugee_profile_window = tk.Toplevel(self.window)
         refugee_profile_window.title("Edit Volunteer Details")
+        refugee_profile_window.grab_set()
 
         # Create empty dictionary to store new edited info with key as attribute, value as new edited entry
         self.edited_entry_dictionary = {}

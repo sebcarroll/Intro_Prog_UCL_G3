@@ -168,6 +168,7 @@ class AdminViewSummaries:
         # Open pop up edit window
         view_plan_window = tk.Toplevel(self.window)
         view_plan_window.title("View Plan")
+        view_plan_window.grab_set()
 
         # Create a label and entry for each plan attribute using column attributes
         for i in range(treeview_width):
@@ -206,6 +207,7 @@ class AdminViewSummaries:
                 # Open pop up edit window
                 edit_plan_window = tk.Toplevel(self.window)
                 edit_plan_window.title("Edit Plan")
+                edit_plan_window.grab_set()
 
                 # Create empty dictionary to store new edited info with key as attribute, value as new edited entry
                 self.edited_entry_dictionary = {}

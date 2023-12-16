@@ -198,6 +198,7 @@ class AdminEditVolunteerDetails:
         # Create a new window for creating a new account
         self.create_account_window = tk.Toplevel(self.window)
         self.create_account_window.title("Create New Account")
+        self.create_account_window.grab_set()
 
         # Labels and Entry widgets for user input
         tk.Label(self.create_account_window, text="Username:").grid(row=1, column=0, padx=10, pady=10)
@@ -331,6 +332,7 @@ class AdminEditVolunteerDetails:
                             # Creates a new window for editing details
                             self.edit_details_window = tk.Toplevel(self.window)
                             self.edit_details_window.title("Edit Volunteer Details")
+                            self.edit_details_window.grab_set()
 
                             # Labels and Entry widgets for user input
                             tk.Label(self.edit_details_window, text="Username:").grid(row=1, column=0, padx=10, pady=10)

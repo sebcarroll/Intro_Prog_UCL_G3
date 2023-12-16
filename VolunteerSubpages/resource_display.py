@@ -1,13 +1,23 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 import pandas as pd
 
 
 def resource_display(window, camp_id, back_button_to_volunteer_main):
+    # for i in window.winfo_children():
+    #     i.grid_forget()
+    # resources_frame = tk.Frame(window)
+    # resources_frame.grid()
     for i in window.winfo_children():
         i.grid_forget()
+    for i in range(9):
+        window.grid_columnconfigure(i, weight=1)
     resources_frame = tk.Frame(window)
-    resources_frame.grid()
+    resources_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9, rowspan=9)
+    for i in range(9):
+        resources_frame.grid_columnconfigure(i, weight=1)
+    for i in range(8):
+        resources_frame.grid_rowconfigure(i, weight=1)
 
     crisis_df = pd.read_csv('crisis_events.csv')
 
@@ -34,9 +44,15 @@ def resource_display(window, camp_id, back_button_to_volunteer_main):
     leftover_meals = total_meals - meals_used
     leftover_medicine = total_medicine - medicine_used
 
+    # Title
+    resources_title = tk.Label(resources_frame, text='Allocated Resources', font=('TKDefault', 25), fg='white')
+    resources_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
+    resources_title.configure(background="grey")
+
+
     # GIVES THE LEFT FRAME
-    availability_frame = tk.Frame(resources_frame, width=150, height=400)
-    availability_frame.grid(row=4, column=0, padx=10, pady=5)
+    availability_frame = tk.Frame(resources_frame)
+    availability_frame.grid(row=2, column=0, padx=10, pady=5, columnspan=9)
 
     available_meals = tk.Label(availability_frame, text='Meals Left:', font=('Helvetica', 12))
     available_meals.grid(row=0, column=0)
@@ -50,11 +66,11 @@ def resource_display(window, camp_id, back_button_to_volunteer_main):
     available_meds_number = tk.Label(availability_frame, text=f"{leftover_medicine}", font=('Helvetica', 12))
     available_meds_number.grid(row=5, column=20)
 
-    # GIVES THE RIGHT FRAME
-    resources_df_frame = tk.Frame(resources_frame, width=150, height=400)
-    resources_df_frame.grid(row=4, column=5, padx=10, pady=5)
+    '''# GIVES THE RIGHT FRAME
+    resources_df_frame = tk.Frame(resources_frame)
+    resources_df_frame.grid(row=2, column=1, padx=10, pady=5)'''
 
-    tree = ttk.Treeview(resources_df_frame, columns=columns, show='headings')
+    tree = ttk.Treeview(resources_frame, columns=columns, show='headings', height=5)
 
     tree.heading('Camp ID', text='Camp ID')
     tree.heading('Capacity', text='Capacity')
@@ -64,7 +80,6 @@ def resource_display(window, camp_id, back_button_to_volunteer_main):
     tree.heading('Medicine/w', text='Weekly medication per refugee')
     tree.heading('Delivery Time(d)', text='Delivery Time(d)')
 
-
     tree.column('Camp ID', anchor="center", width=80)
     tree.column('Capacity', anchor="center", width=105)
     tree.column('Meals(T)', anchor="center", width=100)
@@ -73,20 +88,50 @@ def resource_display(window, camp_id, back_button_to_volunteer_main):
     tree.column('Medicine/w', anchor="center", width=175)
     tree.column('Delivery Time(d)', anchor="center", width=125)
 
-
     for _, row in resources_df.iterrows():
         tree.insert('', tk.END, values=row.tolist())
 
-    scrollbar = ttk.Scrollbar(resources_df_frame, orient=tk.VERTICAL, command=tree.yview)
+    '''scrollbar = ttk.Scrollbar(resources_frame, orient=tk.VERTICAL, command=tree.yview)
     tree.configure(yscrollcommand=scrollbar.set)
-    scrollbar.grid(row=0, column=2, sticky='ns')
-    tree.grid(row=0, column=0, sticky='nsew')
+    scrollbar.grid(row=0, column=2, sticky='ns')'''
 
-    # Title
-    resources_title = tk.Label(resources_frame, text='Allocated Resources', font=('TkDefaultFont', 20))
-    resources_title.grid(row=0, column=5, columnspan=2)
+    tree.grid(row=1, column=0, columnspan=9, sticky="ew", padx=10, pady=5)
 
+    view_button = tk.Button(resources_frame, text='View', command=lambda: view_csv_data_entry(tree))
+    view_button.grid(row=4, column=0, padx=5, pady=10, columnspan=9)
 
     t_back_button = tk.Button(resources_frame, text='Back to Home', command=back_button_to_volunteer_main)
-    t_back_button.grid(row=20, column=0, padx=5, pady=10, columnspan=2)
+    t_back_button.grid(row=5, column=0, padx=5, pady=10, columnspan=9)
 
+
+def view_csv_data_entry(tree):
+    selected_item = tree.focus()
+    if not selected_item:
+        messagebox.showinfo("No selection", "Please select a plan to view")
+        return
+
+    plan_details = tree.item(selected_item, 'values')
+
+    # Attributes from the treeview
+    column_attributes = tree['columns']
+    treeview_width = len(column_attributes)
+
+    # Open pop up edit window
+    view_plan_window = tk.Toplevel()
+    view_plan_window.title("View Plan")
+    view_plan_window.grab_set()
+
+    # Create a label and entry for each plan attribute using column attributes
+    for i in range(treeview_width):
+        att = column_attributes[i]
+        value = plan_details[i]
+
+        label = tk.Label(view_plan_window, text=f"{att}:")
+        label.grid(row=i, column=0)
+
+        current_camp_info = tk.Label(view_plan_window, textvariable=tk.StringVar(view_plan_window, value=value))
+        current_camp_info.grid(row=i, column=1)
+
+    # Close button
+    close_button = tk.Button(view_plan_window, text="Close",command=view_plan_window.destroy)
+    close_button.grid(row=len(plan_details) + 1, column=1)
