@@ -91,7 +91,7 @@ class AdminViewSummaries:
             #empty_df = pd.DataFrame()
             self.no_file_upload_empty_data(self.end_plan_tree)
             messagebox.showwarning("No data found",
-                                   "There is a problem accessing the database\n\nThe file may be missing or corrupted")
+                                   "There is a problem accessing the database\n\nThe file 'crisis_events.csv' may be missing or corrupted")
             self.back_button_to_admin_main()
 
     def generate_chart_window(self):
@@ -300,7 +300,9 @@ class AdminViewSummaries:
         except Exception as e:
             #messagebox.showwarning("Error", f"Error in processing volunteer_info.csv: {e}")
             messagebox.showwarning("No data found",
-                                   "There is a problem accessing the database\n\nThe file may be missing or corrupted")
+                                   "There is a problem accessing the database\n\n"
+                                   "The file 'volunteer_info.csv' may be missing or corrupted"
+                                   "\n\nThe volunteer count will be set to zero")
             return pd.Series()
 
     def cancel_btn(self, edit_plan_window, selected_item):
