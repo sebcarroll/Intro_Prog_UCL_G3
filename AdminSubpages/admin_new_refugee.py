@@ -31,8 +31,9 @@ def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main
         camp_IDs = []
 
     # Title for the page
-    refugee_title = tk.Label(refugeeframe, text='Create Refugee Profile', font=('TKDefault', 25))
+    refugee_title = tk.Label(refugeeframe, text='Create Refugee Profile', font=('TKDefault', 25), fg='white')
     refugee_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
+    refugee_title.configure(background="grey")
 
     # Label frame for this page that then stores all of the labels and entries
     refugee_labelframe = tk.Frame(refugeeframe)

@@ -27,8 +27,9 @@ class AdminRefugeeDisplay:
             display_refugee_frame.grid_columnconfigure(i, weight=1)'''
 
         # Labels
-        display_refugee_title = tk.Label(display_refugee_frame, text="Display Refugees", font=('TKDefault', 25))
+        display_refugee_title = tk.Label(display_refugee_frame, text="Display Refugees", font=('TKDefault', 25), fg='white')
         display_refugee_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
+        display_refugee_title.configure(background="grey")
 
         self.display_refugee_tree = ttk.Treeview(display_refugee_frame, height=15)
         self.display_refugee_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5, columnspan=9, rowspan=4)

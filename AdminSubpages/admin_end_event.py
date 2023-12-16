@@ -23,8 +23,9 @@ class AdminEndEvent:
             end_plan_frame.grid_rowconfigure(i, weight=1)
 
         # Labels
-        end_plan_title = tk.Label(end_plan_frame, text="End Plan", font=('TKDefault', 25))
+        end_plan_title = tk.Label(end_plan_frame, text="End Plan", font=('TKDefault', 25), fg='white')
         end_plan_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
+        end_plan_title.configure(background="grey")
 
         self.end_plan_tree = ttk.Treeview(end_plan_frame, height=15)
         self.end_plan_tree.grid(row=1, column=0, columnspan=9, sticky="ew", padx=10, pady=5)

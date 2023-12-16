@@ -23,8 +23,9 @@ class AdminVolunteerDisplay:
 
 
         # Labels
-        display_volunteer_title = tk.Label(display_volunteer_frame, text="Display Volunteer Accounts", font=('TKDefault', 25))
+        display_volunteer_title = tk.Label(display_volunteer_frame, text="Display Volunteer Accounts", font=('TKDefault', 25), fg='white')
         display_volunteer_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
+        display_volunteer_title.configure(background="grey")
 
         self.display_volunteer_tree = ttk.Treeview(display_volunteer_frame, height=10)
         self.display_volunteer_tree.grid(row=1, column=0, columnspan=9, sticky="nsew", padx=10, pady=5, rowspan=4)

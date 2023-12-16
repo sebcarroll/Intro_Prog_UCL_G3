@@ -37,20 +37,21 @@ class AdminViewSummaries:
         end_plan_frame.grid_rowconfigure(2, weight=1)'''
 
         # Labels
-        end_plan_title = tk.Label(end_plan_frame, text="View Plan Summaries", font=('TKDefault', 25))
-        end_plan_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5)
+        end_plan_title = tk.Label(end_plan_frame, text="View Plan Summaries", font=('TKDefault', 25), fg='white')
+        end_plan_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
+        end_plan_title.configure(background="grey")
 
         self.end_plan_tree = ttk.Treeview(end_plan_frame, height=15)
-        self.end_plan_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
+        self.end_plan_tree.grid(row=1, column=0, columnspan=9, sticky="nsew", padx=10, pady=5, rowspan=4)
 
         # Horizontal scrollbar
         x_scrollbar = ttk.Scrollbar(end_plan_frame, orient='horizontal', command=self.end_plan_tree.xview)
-        x_scrollbar.grid(row=2, column=0, sticky='ew', columnspan=2)
+        x_scrollbar.grid(row=5, column=0, sticky='ew', columnspan=9)
         self.end_plan_tree.configure(xscrollcommand=x_scrollbar.set)
 
         # Button Frame:
         btn_frame = tk.Frame(end_plan_frame)
-        btn_frame.grid(row=3, column=0, pady=10)
+        btn_frame.grid(row=6, column=4, pady=10, sticky="sew", rowspan=4)
         btn_frame.grid_columnconfigure(0, weight=1)
         btn_frame.grid_columnconfigure(2, weight=1)
 

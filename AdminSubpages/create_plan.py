@@ -54,8 +54,9 @@ class AdminCreatePlan:
         current_day = current_date.day
 
         # TITLE
-        refugee_title = tk.Label(new_plan_frame, text='Create New Crisis Event', font=('TKDefault', 25))
+        refugee_title = tk.Label(new_plan_frame, text='Create New Crisis Event', font=('TKDefault', 25), fg='white')
         refugee_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
+        refugee_title.configure(background="grey")
 
         # NEW CAMP INFO
         country_label = tk.Label(new_plan_frame, text='Country of crisis', font=('TkinterDefault', 15))

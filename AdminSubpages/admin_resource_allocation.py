@@ -44,8 +44,9 @@ class AdminResourceAllocation:
             resource_frame.grid_rowconfigure(i, weight=1)
 
         # Title
-        title = tk.Label(self.window, text='Resource Allocation', font=('TKDefault', 25))
+        title = tk.Label(self.window, text='Resource Allocation', font=('TKDefault', 25), fg='white')
         title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
+        title.configure(background="grey")
 
         # Resource Frame
         resource_frame = tk.Frame(self.window)

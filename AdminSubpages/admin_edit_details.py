@@ -65,8 +65,9 @@ class AdminEditVolunteerDetails:
             display_volunteer_frame.grid_columnconfigure(i, weight=1)'''
 
         # Labels
-        volunteer_title = tk.Label(display_volunteer_frame, text="Edit Volunteer Details", font=('TKDefault', 25))
+        volunteer_title = tk.Label(display_volunteer_frame, text="Edit Volunteer Details", font=('TKDefault', 25), fg='white')
         volunteer_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
+        volunteer_title.configure(background="grey")
 
         # Listbox to display volunteer usernames
         # edit_details_labelFrame = tk.LabelFrame(self.window)
