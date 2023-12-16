@@ -15,23 +15,34 @@ class invalid_name(Exception):
 
 
 def edit_personal_info(window, username, y_personal_info, t_personal_information_base, back_button_to_volunteer_main, store_details_callback):
+    # for i in window.winfo_children():
+    #     i.grid_forget()
+    # t_personal_frame = tk.Frame(window)
+    # t_personal_frame.grid()
     for i in window.winfo_children():
         i.grid_forget()
+    for i in range(9):
+        window.grid_columnconfigure(i, weight=1)
     t_personal_frame = tk.Frame(window)
-    t_personal_frame.grid()
+    t_personal_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9, rowspan=9)
+    for i in range(9):
+        t_personal_frame.grid_columnconfigure(i, weight=1)
+    for i in range(8):
+        t_personal_frame.grid_rowconfigure(i, weight=1)
+
+    # t_personal_labelframe = tk.LabelFrame(t_personal_frame)
+    # t_personal_labelframe.grid(row=1, column=0, padx=(window.winfo_width() - t_personal_frame.winfo_reqwidth()) // 4)
+
+    personal_title = tk.Label(t_personal_frame, text='Edit details', font=('TKDefault', 25), fg='white')
+    personal_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
+    personal_title.configure(background="grey")
 
     t_personal_labelframe = tk.LabelFrame(t_personal_frame)
-    t_personal_labelframe.grid(row=1, column=0, padx=(window.winfo_width() - t_personal_frame.winfo_reqwidth()) // 4)
-
-    personal_title = tk.Label(t_personal_frame, text='Edit details', font=('Arial Bold', 30))
-    personal_title.grid(row=0, column=0, pady=30)
-
+    t_personal_labelframe.grid(row=1, column=0, padx=10, pady=30, columnspan=9)
     #  Currently set name and current title
 
     current_title = tk.Label(t_personal_labelframe, text='Current details', font=('tkDefault', 20))
     current_title.grid(row=0, column=1, padx=5, pady=5)
-
-
 
     # Edit column title
     edit_title = tk.Label(t_personal_labelframe, text='Edit', font=('tkDefault', 20))
@@ -97,22 +108,28 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
     t_worktypeEntry = ttk.Combobox(t_personal_labelframe, values=['Medical Aid', 'Food counselling'])
     t_worktypeEntry.grid(row=5, column=2, padx=5, pady=5, sticky='ew')
 
+    # Button Frame:
+    btn_frame = tk.Frame(t_personal_frame)
+    btn_frame.grid(row=2, column=4, pady=10)
+    btn_frame.grid_columnconfigure(0, weight=1)
+    btn_frame.grid_columnconfigure(2, weight=1)
+
     # Store details box
-    t_store_details = tk.Button(t_personal_labelframe, text='Store details', command=lambda: [store_details_callback(t_personal_nameEntry, t_personal_emailEntry, t_phonenumberEntry, t_commitmentEntry, t_worktypeEntry), t_back_to_details],
+    t_store_details = tk.Button(btn_frame, text='Store details', command=lambda: [store_details_callback(t_personal_nameEntry, t_personal_emailEntry, t_phonenumberEntry, t_commitmentEntry, t_worktypeEntry), t_back_to_details],
                                      height=1, width=20)
-    t_store_details.grid(row=6, column=1, padx=5, pady=5)
+    t_store_details.grid(row=0, column=1, padx=5, pady=5)
 
     # Back to details page
-    t_back_to_details = tk.Button(t_personal_labelframe, text='Back to volunteer details', command=t_personal_information_base)
-    t_back_to_details.grid(row=6, column=2, padx=5, pady=5)
+    t_back_to_details = tk.Button(btn_frame, text='Back to volunteer details', command=t_personal_information_base)
+    t_back_to_details.grid(row=0, column=2, padx=5, pady=5)
 
-    back_to_summary = tk.Button(t_personal_labelframe, text='Back to Home',
+    back_to_summary = tk.Button(btn_frame, text='Back to Home',
                                      command=back_button_to_volunteer_main)
-    back_to_summary.grid(row=6, column=0, padx=5, pady=5)
+    back_to_summary.grid(row=0, column=0, padx=5, pady=5)
 
-    for i in range(7):
-        t_personal_frame.grid_rowconfigure(i, weight=1)
-    t_personal_frame.grid_columnconfigure(0, weight=1)
+    # for i in range(7):
+    #     t_personal_frame.grid_rowconfigure(i, weight=1)
+    # t_personal_frame.grid_columnconfigure(0, weight=1)
 
 
     def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main, store_details_callback):

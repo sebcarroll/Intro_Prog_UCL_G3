@@ -26,7 +26,7 @@ def personal_information(window, username, y_personal_info, t_personal_info_edit
 
     t_personal_labelframe = tk.LabelFrame(t_personal_frame)
     t_personal_labelframe.grid(row=1, column=0, padx=10, pady=30, columnspan=9)
-    
+
     # Name label
     t_personal_namelabel = tk.Label(t_personal_labelframe, text='Name', font=('TkDefaultFont', 15))
     t_personal_namelabel.grid(row=2, column=0, pady=5, padx=5)
