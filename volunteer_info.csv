@@ -1,8 +1,8 @@
 Username,Camp ID,password,name,Email Address,Phone Number,Commitment,Work Type,Deactivated,Deleted
-volunteer1,68692.0,111,Costas,test@gmail.com,9918182727,Part time,Food counselling,False,False
-volunteer2,50055.0,111,Username,,02088889999,,,False,False
+volunteer1,68692,111,Costas,test@gmail.com,9918182727,Part time,Food counselling,False,False
+volunteer2,50055,111,Username,,02088889999,,,False,False
 volunteer3,,111,Username,,,,,False,False
-Thomas,32586.0,111,Tom,tomwhogg@gmail.com,02088889999,Full time,Medical Aid,False,
-Kayza,47972.0,111,Kayza,kayzawarsame@gmail.com,07421886290,Part time,Food counselling,False,
-volunteer6,87303.0,111,Bob,Bob@gmail.com,07123456789,Full time,Food counselling,False,
-volunteertest,50055.0,111,test,costas@test.com,9918273645,Part time,Food counselling,False,
+Thomas,32586,111,Tom,tomwhogg@gmail.com,02088889999,Full time,Medical Aid,False,
+Kayza,47972,111,Kayza,kayzawarsame@gmail.com,07421886290,Part time,Food counselling,False,
+volunteer6,87303,111,Bob,Bob@gmail.com,07123456789,Full time,Food counselling,False,
+volunteertest,50055,111,test,costas@test.com,9918273645,Part time,Food counselling,False,
