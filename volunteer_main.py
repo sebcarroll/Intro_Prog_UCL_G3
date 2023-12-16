@@ -146,9 +146,9 @@ class VolunteerHomepage():
         self.t_summary_title.grid(row=0, column=0, columnspan=9, sticky='nsew', padx=10, pady=20)
         self.t_summary_title.configure(background='grey')
 
-        self.show_camp_id_label = tk.Label(self.window, text=f"{self.camp_id_label}", font=("Arial Bold", 15), fg="black", relief=tk.RAISED, borderwidth=5)
+        self.show_camp_id_label = tk.Label(self.window, text=f"{self.camp_id_label}", font=("Arial Bold", 15), fg="white", relief=tk.RAISED, borderwidth=5)
         self.show_camp_id_label.grid(row=2, column=4, pady=10, ipadx=0, ipady=0)
-
+        self.show_camp_id_label.configure(background='grey')
 
 
         self.t_summary_editdetails = tk.Button(self.window, text='Personal Information',
