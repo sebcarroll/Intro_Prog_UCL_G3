@@ -36,13 +36,13 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
 
         except(FileNotFoundError):
             self.y_personal_info = {
-                'volunteer1': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                'volunteer1': {'Camp ID': '', 'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                'Work Type': '', 'Deactivated': False, 'Deleted': False},
-                'volunteer2': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                'volunteer2': {'Camp ID': '', 'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                'Work Type': '', 'Deactivated': False, 'Deleted': False},
-                'volunteer3': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                'volunteer3': {'Camp ID': '', 'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                'Work Type': '', 'Deactivated': True, 'Deleted': False},
-                'volunteer4': {'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
+                'volunteer4': {'Camp ID': '', 'password': '111', 'name': '', 'Email Address': '', 'Phone Number': '', 'Commitment': '',
                                'Work Type': '', 'Deactivated': False, 'Deleted': False}
             }
 
@@ -60,8 +60,6 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
             foreground='blue', relief=tk.RAISED, borderwidth=5
         )
         welcome_label.grid(row=1, column=0, padx=30, pady=30)
-
-
 
         # instruction_label = tk.Label(
         #     self,
