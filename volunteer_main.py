@@ -89,7 +89,7 @@ class VolunteerHomepage():
 
 
         try:
-            self.y_personal_info = pd.read_csv('volunteer_info.csv', index_col='Username')
+            self.y_personal_info = pd.read_csv('volunteer_info.csv', index_col='Username', dtype={'Phone Number': str})
             self.y_personal_info = self.y_personal_info.to_dict(orient='index')
         except(FileNotFoundError):
             self.y_personal_info = {

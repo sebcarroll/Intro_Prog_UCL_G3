@@ -67,21 +67,21 @@ class AdminVolunteerDisplay:
 
 
     def upload_csv_data(self, tree, filename):
-        data = pd.read_csv(filename)
-
+        data = pd.read_csv(filename, dtype={'Phone Number': str})
+        data['Phone Number'] = data['Phone Number'].astype(str)
         # The following block will convert floats to integers for the GUI to remove the ".0"
         # columns with float numbers
         float_columns = data.select_dtypes(include=['float']).columns
         # Convert floats to integers for display in treeview
         for col in float_columns:
             data[col] = data[col].fillna(0).astype(int)
-
+        columns_to_display = [col for col in data.columns if col != "Deleted"]
         tree.delete(*tree.get_children())
-        tree['columns'] = list(data.columns)
+        tree['columns'] = columns_to_display
         tree.column("#0", width=0, stretch=tk.NO)
         tree.heading("#0", text="", anchor=tk.W)
 
-        for col in data.columns:
+        for col in columns_to_display:
             tree.column(col, anchor=tk.CENTER, width=80)
             tree.heading(col, text=col, anchor=tk.CENTER)
 

@@ -23,7 +23,7 @@ class AdminEditVolunteerDetails:
     #     self.camp_ids = list(self.camp_ids_from_csv)
 
     def upload_csv_data(self, tree, filename):
-        data = pd.read_csv(filename, dtype={'Phone Number': str} )
+        data = pd.read_csv(filename, dtype={'Phone Number': str})
 
         data['Phone Number'] = data['Phone Number'].astype(str)
 

@@ -34,7 +34,7 @@ def personal_information(window, username, y_personal_info, t_personal_info_edit
     t_personal_phonenumberlabel = tk.Label(t_personal_labelframe, text='Phone number: ',
                                                 font=('TkDefaultFont', 15))
     t_personal_phonenumberlabel.grid(row=4, column=0, pady=5, padx=5)
-    t_phonenumber = tk.Label(t_personal_labelframe, text=int(y_personal_info[username]['Phone Number']),
+    t_phonenumber = tk.Label(t_personal_labelframe, text=str(y_personal_info[username]['Phone Number']),
                                   font=('TkDefaultFont', 15))
     t_phonenumber.grid(row=4, column=1, pady=5, padx=5)
 

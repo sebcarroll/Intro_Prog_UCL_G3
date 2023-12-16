@@ -65,7 +65,7 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
     phone_label = tk.Label(t_personal_labelframe, text='Phone number: ', font=('tkDefault', 15))
     phone_label.grid(row=3, column=0, padx=5, pady=5)
     phone_number = tk.Label(t_personal_labelframe,
-                                 text=int(y_personal_info[username]['Phone Number']),
+                                 text=str(y_personal_info[username]['Phone Number']),
                                  font=('tkDefault', 15))
     phone_number.grid(row=3, column=1, padx=5, pady=5)
     t_phonenumberEntry = tk.Entry(t_personal_labelframe)
@@ -222,7 +222,7 @@ def store_personal_details(username, y_personal_info, t_personal_nameEntry, t_pe
         else:
             raise invalid_name
         # If entered non-number characters, raise error
-        if re.search(r'^[0-9]+', phone):
+        if re.search(r'^[0-9]+', str(phone)):
             y_personal_info[username]['Phone Number'] = str(phone)
         else:
             raise invalid_phone_number
@@ -240,7 +240,6 @@ def store_personal_details(username, y_personal_info, t_personal_nameEntry, t_pe
 
         tk.messagebox.showinfo(title='Saved', message='Details have been saved\n '
                                                       'Please click "Back to Volunteer Details" to view updated details')
-
 
 
 
@@ -271,6 +270,4 @@ def store_personal_details(username, y_personal_info, t_personal_nameEntry, t_pe
         df.index.name = 'Username'
         df.to_csv('volunteer_info.csv', index='Username')
         y_personal_info = pd.read_csv('volunteer_info.csv')
-
-
 
