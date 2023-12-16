@@ -33,7 +33,7 @@ def edit_camp_details(window, back_button_to_admin_main):
         crisis_df = crisis_df.fillna(0)
         camp_ID_choices = crisis_df.iloc[:, 0]
 
-        t_select_camp_title = tk.Label(t_edit_campframe, text='Select camp ID', font=('TKDefault', 25), pady=30, fg='white')
+        t_select_camp_title = tk.Label(t_edit_campframe, text='Select camp ID', font=('TKDefault', 25), fg='white')
         t_select_camp_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
         t_select_camp_title.configure(background="grey")
 
