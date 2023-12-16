@@ -189,7 +189,7 @@ class AdminCreatePlan:
                 raise option_no_exist
 
             print(self.events_dict)
-            tkinter.messagebox.showinfo(title="Plan created", message=f"Plan successfully created - Camp ID is {self.generate_camp_id()}")
+            tkinter.messagebox.showinfo(title="Plan created", message=f"Plan successfully created - Camp ID is {new_camp_id}")
             self.save_to_csv()
             #self.save_plan_button.config(state=tk.DISABLED)
             #self.save_plan_button.destroy()
