@@ -15,6 +15,7 @@ from admin_help import AdminHelp
 from AdminSubpages.edit_camp_capacity import edit_camp_details
 from AdminSubpages.admin_new_refugee import new_refugee, na_refugee_info_dict
 from general_pie_charts import SummaryCharts
+from country_map import CountryMap
 
 class AdminHomepage:
     def __init__(self, root, go_to_landing_page):
@@ -41,6 +42,7 @@ class AdminHomepage:
         # Instances for menu commands
         #self.view_summaries_with_pie_chart = AdminViewSummariesWithCharts(self.window, self.back_button_to_admin_main)
         self.pie_charts_instance = SummaryCharts(self.window, self.back_button_to_admin_main)
+        self.map_instance = CountryMap(self.window, self.back_button_to_admin_main)
         self.admin_display_refugees = AdminRefugeeDisplay(self.window, self.back_button_to_admin_main)
         self.admin_display_volunteers = AdminVolunteerDisplay(self.window, self.back_button_to_admin_main)
         self.admin_help = AdminHelp(self.window, self.back_button_to_admin_main)
@@ -70,7 +72,8 @@ class AdminHomepage:
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="View", menu=file_menu)
         file_menu.add_command(label="View Summaries", command=self.view_summaries)
-        file_menu.add_command(label="View Chart Summaries", command=self.view_charts)
+        file_menu.add_command(label="View Charts", command=self.view_charts)
+        file_menu.add_command(label="View Map", command=self.view_map)
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Accounts", menu=file_menu)
         file_menu.add_command(label="Create", command=self.create_volunteer_account)
@@ -197,6 +200,9 @@ class AdminHomepage:
 
     def view_charts(self):
         self.pie_charts_instance.generate_charts_window()
+
+    def view_map(self):
+        self.map_instance.view_country_map_window()
 
     def edit_view_delete_refugee(self):
         self.admin_display_refugees.create_gui_refugee_display(self)

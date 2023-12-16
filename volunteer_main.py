@@ -13,6 +13,7 @@ from VolunteerSubpages.refugee_display import RefugeeDisplay
 # Import for menu commands
 from admin_help import AdminHelp
 from general_pie_charts import SummaryCharts
+from country_map import CountryMap
 import csv
 
 class invalid_email(Exception):
@@ -43,6 +44,7 @@ class VolunteerHomepage():
 
         self.admin_help = AdminHelp(self.window, self.back_button_to_volunteer_main)
         self.charts = SummaryCharts(self.window, self.back_button_to_volunteer_main)
+        self.map_instance = CountryMap(self.window, self.back_button_to_volunteer_main)
         self.refugee_display_instance = RefugeeDisplay(self.window, self.back_button_to_volunteer_main, self.get_current_camp_id)
 
         self.camp_id_label = self.get_camp_id_for_volunteer()
@@ -75,6 +77,7 @@ class VolunteerHomepage():
         file_menu.add_command(label="View Resources", command=self.t_display_resources)
         file_menu.add_separator()
         file_menu.add_command(label="View Charts", command=lambda: self.generate_chart_window())
+        file_menu.add_command(label="View Map", command=lambda: self.view_map())
 
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Settings", menu=file_menu)
@@ -271,6 +274,9 @@ class VolunteerHomepage():
 
     def generate_chart_window(self):
         self.charts.generate_charts_window()
+
+    def view_map(self):
+        self.map_instance.view_country_map_window()
 
 
     # NAVIGATION - VOLUNTEER USERS:
