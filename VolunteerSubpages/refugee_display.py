@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import pandas as pd
 from tkinter import messagebox
-
+import csv
 
 class RefugeeDisplay:
     def __init__(self, window, back_button_to_volunteer_main, get_camp_id_for_volunteer):
@@ -42,7 +42,7 @@ class RefugeeDisplay:
         view_btn.grid(row=0, column=0, padx=20, pady=(50,10))
 
         # Edit event
-        edit_btn = tk.Button(btn_frame, text="Edit Refugee Profile", state=tk.DISABLED, command=lambda: self.edit_csv_data_entry())
+        edit_btn = tk.Button(btn_frame, text="Edit Refugee Profile", command=lambda: self.edit_csv_data_entry())
         edit_btn.grid(row=0, column=1, padx=20, pady=(50,10))
 
         # Delete button
@@ -156,6 +156,9 @@ class RefugeeDisplay:
         # Create empty dictionary to store new edited info with key as attribute, value as new edited entry
         self.edited_entry_dictionary = {}
 
+        # Get camp IDs available using the function at the end of this file
+        self.camp_ids = self.get_camp_ids_from_csv()
+
         # Create a label and entry for each plan attribute using column attributes
         for i in range(treeview_width):
 
@@ -165,9 +168,16 @@ class RefugeeDisplay:
             label = tk.Label(refugee_profile_window, text=f"{att}:")
             label.grid(row=i, column=0)
 
-            edit_entry = tk.Entry(refugee_profile_window, textvariable=tk.StringVar(refugee_profile_window, value=value))
-            edit_entry.grid(row=i, column=1)
-            self.edited_entry_dictionary[att] = edit_entry
+            if att == "Camp ID":
+                # Create a dropdown for Camp ID
+                camp_ID_box = ttk.Combobox(refugee_profile_window, values=self.camp_ids)
+                camp_ID_box.set(value)  # Set the current value
+                camp_ID_box.grid(row=i, column=1)
+                self.edited_entry_dictionary[att] = camp_ID_box
+            else:
+                edit_entry = tk.Entry(refugee_profile_window, textvariable=tk.StringVar(refugee_profile_window, value=value))
+                edit_entry.grid(row=i, column=1)
+                self.edited_entry_dictionary[att] = edit_entry
 
         # Save button
         save_button = tk.Button(refugee_profile_window, text="Save", command=lambda: self.save_details(refugee_profile_window, selected_item))
@@ -218,3 +228,16 @@ class RefugeeDisplay:
 
     def cancel_btn(self, edit_plan_window, selected_item):
         edit_plan_window.destroy()
+
+    def get_camp_ids_from_csv(self):
+        camp_ids = []
+        try:
+            with open('crisis_events.csv', 'r') as file:
+                csv_reader = csv.reader(file)
+                next(csv_reader)
+                for row in csv_reader:
+                    if row[7] == "Active":
+                        camp_ids.append(row[0])
+        except FileNotFoundError:
+            print("Error: 'crisis_events.csv' file not found.")
+        return camp_ids

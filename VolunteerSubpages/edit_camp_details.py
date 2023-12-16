@@ -52,7 +52,7 @@ def edit_refugee_no(df, selected_camp_id):
 
         if selected_camp_id_str and selected_camp_id_str.isdigit():
             # Find the current capacity; if not found, default to 0
-            current_capacity = df.loc[df["Camp ID"] == int(selected_camp_id_str), 'Refugees'].values
+            current_capacity = df.loc[df["Camp ID"] == int(selected_camp_id_str), 'Capacity'].values
             current_capacity = current_capacity[0] if len(current_capacity) > 0 else 0
 
             new_capacity = simpledialog.askinteger("Add/Remove refugees",
@@ -62,7 +62,7 @@ def edit_refugee_no(df, selected_camp_id):
 
             if isinstance(new_capacity, int):
                 # Update the DataFrame with the new value
-                df.loc[df["Camp ID"] == int(selected_camp_id_str), 'Refugees'] += new_capacity
+                df.loc[df["Camp ID"] == int(selected_camp_id_str), 'Capacity'] += new_capacity
                 df.to_csv('crisis_events.csv', index=False)
             else:
                 raise ValueError
@@ -72,7 +72,6 @@ def edit_refugee_no(df, selected_camp_id):
         messagebox.showwarning(title="Camp ID not selected", message="Please select a camp ID")
     except ValueError:
         messagebox.showwarning(title="Invalid Entry", message="Please enter a valid number")
-
 
 
 def edit_camp_id(df, selected_camp_id, listbox):

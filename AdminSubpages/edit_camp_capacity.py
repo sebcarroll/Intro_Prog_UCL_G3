@@ -43,11 +43,15 @@ def edit_camp_details(window, back_button_to_admin_main):
         tk.messagebox.showwarning(message="Please enter an integer value")
     except taken_ID:
         tk.messagebox.showwarning(message="ID already exists, Please choose a different ID")
+    except FileNotFoundError:
+        messagebox.showwarning("No data found",
+                               "There is a problem accessing the database\n\nThe file may be missing or corrupted")
+        back_button_to_admin_main()
 
 def edit_refugee_no(df, selected_camp_id):
     try:
         if selected_camp_id:
-            current_capacity = df.loc[df["Camp ID"] == selected_camp_id, 'Refugees'].values[0]
+            current_capacity = df.loc[df["Camp ID"] == selected_camp_id, 'Capacity'].values[0]
             new_capacity = simpledialog.askinteger("Add/Remove refugees", f"Current total Capacity for Camp ID {selected_camp_id}: {current_capacity}"
                                                                           f"\nHow many refugees would you like to add/remove?", initialvalue=1)
 

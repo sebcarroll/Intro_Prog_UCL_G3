@@ -56,7 +56,13 @@ class AdminVolunteerDisplay:
         # CSV data
         csv_file = "volunteer_info.csv"
         # csv_data = self.load_csv_data(csv_file)
-        self.upload_csv_data(self.display_volunteer_tree, csv_file)
+        try:
+            self.upload_csv_data(self.display_volunteer_tree, csv_file)
+        except:
+            messagebox.showwarning("No data found",
+                                   "There is a problem accessing the database\n\nThe file may be missing or corrupted")
+            self.back_button_to_admin_main()
+
 
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename)

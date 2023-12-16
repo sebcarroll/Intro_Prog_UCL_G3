@@ -52,7 +52,7 @@ class AdminEndEvent:
         except:
             messagebox.showwarning("No data found",
                                    "There is a problem accessing the database\n\nThe file may be missing or corrupted")
-            return
+            self.back_button_to_admin_main()
 
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename)

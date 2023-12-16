@@ -79,9 +79,9 @@ class LandingPage:
         self.root.quit()
 
     def window_exit_button(self):
-        #if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
-            #self.root.destroy()
-        self.root.destroy()
+        if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
+            self.root.destroy()
+        #self.root.destroy()
 
     def destroy(self):
         self.window.destroy()

@@ -1,40 +1,22 @@
-
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 import pandas as pd
 import csv
 
-def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volunteer_main, store_details_callback):
+def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main, store_details_callback):
     for i in window.winfo_children():
         i.grid_forget()
     # Main frame for this whole page
     refugeeframe = tk.Frame(window)
     refugeeframe.grid()
-    crisis_df = pd.read_csv('crisis_events.csv')
-    active_camps= crisis_df[crisis_df['Status'] == 'Active']
-    camp_IDs = list(active_camps['Camp ID'])
 
-    camp_ids_from_csv = []
     try:
-        with open('crisis_events.csv', 'r') as file:
-            csv_reader = csv.reader(file)
-            next(csv_reader)
-            for row in csv_reader:
-                if row[7] == "Active":
-                    camp_ids_from_csv.append(row[0])
-    except FileNotFoundError:
-        print("Error: 'crisis_events.csv' file not found.")
-
-    camp_IDs_unfiltered = list(camp_ids_from_csv)
-    camp_IDs_filtered = []
-    for camp_ids in camp_IDs_unfiltered:
-        from volunteer_login_page import volunteer_camp_id_for_new_refugee
-        print(volunteer_camp_id_for_new_refugee)
-        if int(float(camp_ids)) == int(float(volunteer_camp_id_for_new_refugee)):
-            camp_IDs_filtered.append(camp_ids)
-
-    camp_IDs = camp_IDs_filtered
+        crisis_df = pd.read_csv('crisis_events.csv')
+        active_crisis_df = crisis_df[crisis_df['Status'] != 'Inactive']
+        camp_IDs = list(active_crisis_df['Camp ID'])
+    except:
+        camp_IDs = []
 
     # Title for the page
     refugee_title = tk.Label(refugeeframe, text='Create Refugee Profile', font=('TkinterDefault', 30))
@@ -47,7 +29,7 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
     # Camp ID
     t_camp_ID_label = tk.Label(refugee_labelframe, text='Camp ID', font=('TkinterDefault', 15))
     t_camp_ID_label.grid(row=2, column=0)
-    t_camp_IDbox = ttk.Combobox(refugee_labelframe, values=camp_id)
+    t_camp_IDbox = ttk.Combobox(refugee_labelframe, values=camp_IDs)
     t_camp_IDbox.grid(row=2, column=1, padx=5, pady=5)
 
     # Refugee name
@@ -65,7 +47,7 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
 
     # Medical conditions, we need to add dictionaries and everything for this
     medical_conditionslabel = tk.Label(refugee_labelframe,
-                                       text='Enter any medical condition(s) for each family member.',
+                                       text='Enter any medical condition(s) for each family member',
                                        font=("TkinterDefault", 15))
     medical_conditionslabel.grid(row=5, column=0, padx=5, pady=5)
     t_medical_conditionsEntry = tk.Entry(refugee_labelframe)
@@ -81,7 +63,7 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
 
     # secondlanguage entry box
     second_languagelabel = tk.Label(refugee_labelframe,
-                                    text='Please enter any other languages spoken by each family member.',
+                                    text='Please enter any other languages spoken by each family member',
                                     font=('TkinterDefault', 15))
     second_languagelabel.grid(row=7, column=0, padx=5, pady=5)
     t_second_languageEntry = tk.Entry(refugee_labelframe)
@@ -144,7 +126,9 @@ def update_number_of_refugees(camp_ID):
         csv_reader = csv.reader(file)
         next(csv_reader)
         for row in csv_reader:
-            if camp_ID == int(float(row[1])):
+            if row[1] == '':
+                number_of_refugees_actual = 1
+            elif camp_ID == int(float(row[1])):
                 number_of_refugees_actual += 1
     print(f"Total refugees counted: {number_of_refugees_actual}")
 

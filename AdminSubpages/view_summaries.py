@@ -67,13 +67,16 @@ class AdminViewSummaries:
 
         # CSV data
         csv_file = "crisis_events.csv"
-        self.upload_csv_data(self.end_plan_tree, csv_file)
+        #self.upload_csv_data(self.end_plan_tree, csv_file)
         # csv_data = self.load_csv_data(csv_file)
         try:
             self.upload_csv_data(self.end_plan_tree, csv_file)
         except:
+            #empty_df = pd.DataFrame()
+            self.no_file_upload_empty_data(self.end_plan_tree)
             messagebox.showwarning("No data found",
                                    "There is a problem accessing the database\n\nThe file may be missing or corrupted")
+            self.back_button_to_admin_main()
 
     def generate_chart_window(self):
         self.charts.generate_charts_window()
@@ -282,3 +285,9 @@ class AdminViewSummaries:
 
     def cancel_btn(self, edit_plan_window, selected_item):
         edit_plan_window.destroy()
+
+    def no_file_upload_empty_data(self, tree):
+        tree.delete(*tree.get_children())
+        tree["columns"] = []
+        tree.column("#0", width=0, stretch=tk.NO)
+        tree.heading("#0", text="", anchor=tk.W)

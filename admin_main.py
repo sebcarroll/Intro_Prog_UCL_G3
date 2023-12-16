@@ -1,4 +1,6 @@
 import tkinter as tk
+import pandas as pd
+from tkinter import messagebox
 # Imports for the main button commands
 from AdminSubpages.create_plan import AdminCreatePlan
 from AdminSubpages.admin_end_event import AdminEndEvent
@@ -6,11 +8,13 @@ from AdminSubpages.view_summaries import AdminViewSummaries
 from AdminSubpages.admin_edit_details import AdminEditVolunteerDetails
 from AdminSubpages.admin_resource_allocation import AdminResourceAllocation
 # Imports for the menu commands
-from AdminSubpages.view_summaries_with_pie_chart import AdminViewSummariesWithCharts
+#from AdminSubpages.view_summaries_with_pie_chart import AdminViewSummariesWithCharts
 from AdminSubpages.admin_refugee_profiles import AdminRefugeeDisplay
 from AdminSubpages.admin_volunteer_accounts import AdminVolunteerDisplay
 from admin_help import AdminHelp
 from AdminSubpages.edit_camp_capacity import edit_camp_details
+from AdminSubpages.admin_new_refugee import new_refugee, na_refugee_info_dict
+from general_pie_charts import SummaryCharts
 
 class AdminHomepage:
     def __init__(self, root, go_to_landing_page):
@@ -29,7 +33,8 @@ class AdminHomepage:
         self.admin_edit_details = AdminEditVolunteerDetails(self.window, self.back_button_to_admin_main)
         self.admin_resource_allocation = AdminResourceAllocation(self.window, self.back_button_to_admin_main)
         # Instances for menu commands
-        self.view_summaries_with_pie_chart = AdminViewSummariesWithCharts(self.window, self.back_button_to_admin_main)
+        #self.view_summaries_with_pie_chart = AdminViewSummariesWithCharts(self.window, self.back_button_to_admin_main)
+        self.pie_charts_instance = SummaryCharts(self.window, self.back_button_to_admin_main)
         self.admin_display_refugees = AdminRefugeeDisplay(self.window, self.back_button_to_admin_main)
         self.admin_display_volunteers = AdminVolunteerDisplay(self.window, self.back_button_to_admin_main)
         self.admin_help = AdminHelp(self.window, self.back_button_to_admin_main)
@@ -41,47 +46,60 @@ class AdminHomepage:
         # MENU BAR:
         menu_bar = tk.Menu(self.window)
         self.window.config(menu=menu_bar)
-        # create a menu item 1
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="File", menu=file_menu)
         file_menu.add_command(label="Home", command=self.back_button_to_admin_main)
         file_menu.add_separator()
         file_menu.add_command(label="New Plan", command=self.create_event)
+        file_menu.add_command(label="New Refugee", command=self.t_create_refugee)
         file_menu.add_command(label="Settings", command=self.do_nothing)
         file_menu.add_command(label="Log Out", command=self.exit_and_go_back)
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.exit_software)
-        # create a menu item 2
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Edit", menu=file_menu)
         file_menu.add_command(label="Edit Camp Capacity", command=self.t_edit_camp)
         file_menu.add_separator()
         file_menu.add_command(label="Edit Refugee Profiles", command=self.edit_view_delete_refugee)
-        # create a menu item 3
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="View", menu=file_menu)
         file_menu.add_command(label="View Summaries", command=self.view_summaries)
         file_menu.add_command(label="View Chart Summaries", command=self.view_charts)
-        # create a menu item 4
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Accounts", menu=file_menu)
         file_menu.add_command(label="Create", command=self.create_volunteer_account)
         file_menu.add_command(label="Volunteers", command=self.edit_view_delete_volunteers)
         file_menu.add_separator()
         file_menu.add_command(label="Admin", command=self.do_nothing)
-        # create a menu item 5
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Settings", menu=file_menu)
         file_menu.add_command(label="Display", command=self.do_nothing)
         file_menu.add_separator()
         file_menu.add_command(label="Audio", command=self.do_nothing)
-        # create a menu item 6
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Help", menu=file_menu)
         file_menu.add_command(label="Information", command=self.help_info)
         file_menu.add_command(label="About", command=self.help_about)
         file_menu.add_separator()
         file_menu.add_command(label="Support", command=self.help_support)
+
+
+        try:
+            # Update self.t_create_refugee dictionary
+            self.refugee_info = pd.read_csv('refugee_info.csv', index_col='Name')
+            self.refugee_info = self.refugee_info.to_dict(orient='index')
+        except FileNotFoundError:
+            headers = ['Name', 'Camp ID', 'Family Members', 'Medical Conditions', 'Languages Spoken', 'Second Language']
+            empty_df = pd.DataFrame(columns=headers)
+            empty_df.to_csv('refugee_info.csv', index=False)
+
+            self.refugee_info = {}
+
+        self.y_camp_info = {"Syria": {"ID": "123098", "Max Capacity": ""}}
+        self.na_refugee_info = {
+            'refugee1': {'Camp ID': '', 'Family Members': '', 'Medical Conditions': '', 'Languages Spoken': '',
+                         'Second Language': ''}
+        }
 
         self.create_gui_admin_main()
 
@@ -117,11 +135,6 @@ class AdminHomepage:
             self.window.grid_rowconfigure(i, weight=1)
         self.window.grid_columnconfigure(0, weight=1)
 
-    #def create_event(self):
-        # Open the resource allocation GUI
-        #new_plan(self.window, self.back_button_to_admin_main)
-        #new_window = tk.Toplevel()
-        #apcg.create_plan_gui(new_window)
 
     # Main Buttons Homepage Commands
     def create_event(self):
@@ -150,15 +163,12 @@ class AdminHomepage:
         # Repopulate main page
         self.create_gui_admin_main()
 
-
-
     # Menu Commands
-
     def create_volunteer_account(self):
         self.admin_edit_details.create_account_gui()
 
     def view_charts(self):
-        self.view_summaries_with_pie_chart.create_gui_view_summaries(self)
+        self.pie_charts_instance.generate_charts_window()
 
     def edit_view_delete_refugee(self):
         self.admin_display_refugees.create_gui_refugee_display(self)
@@ -178,6 +188,11 @@ class AdminHomepage:
     # Edit Camp Info (edit_camp_details.py)
     def t_edit_camp(self):
         edit_camp_details(self.window, self.back_button_to_admin_main)
+
+    def t_create_refugee(self):
+        self.refugee_entry_widgets = new_refugee(self.window, self.y_camp_info, self.na_refugee_info, self.back_button_to_admin_main, self.refugee_details_storage_handler)
+    def refugee_details_storage_handler(self, camp_ID, name_entry, family_label, medical_conditionsEntry, languages_spokenEntry, second_languageEntry):
+        na_refugee_info_dict(self.na_refugee_info, camp_ID, name_entry, family_label, medical_conditionsEntry, languages_spokenEntry, second_languageEntry)
 
 
     def do_nothing(self):
@@ -201,5 +216,7 @@ class AdminHomepage:
         self.window.geometry("1300x600")
 
     def window_exit_button(self):
-        self.root.destroy()
+        if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
+            self.root.destroy()
+        #self.root.destroy()
 

@@ -23,7 +23,7 @@ class AdminEditVolunteerDetails:
     #     self.camp_ids = list(self.camp_ids_from_csv)
 
     def upload_csv_data(self, tree, filename):
-        data = pd.read_csv(filename)
+        data = pd.read_csv(filename, dtype={'Phone Number': str} )
 
         # The following block will convert floats to integers for the GUI to remove the ".0"
         # columns with float numbers
@@ -67,7 +67,7 @@ class AdminEditVolunteerDetails:
         display_volunteer_frame.grid_columnconfigure(0, weight=1)
         display_volunteer_frame.grid_rowconfigure(1, weight=3)
         display_volunteer_frame.grid_rowconfigure(2, weight=1)
-        self.display_volunteer_tree = ttk.Treeview(display_volunteer_frame, height=20)
+        self.display_volunteer_tree = ttk.Treeview(display_volunteer_frame, height=10)
         self.display_volunteer_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
 
         # Buttons
@@ -101,7 +101,16 @@ class AdminEditVolunteerDetails:
     #     except FileNotFoundError:
     #         messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
         csv_file = 'volunteer_info.csv'
-        self.upload_csv_data(self.display_volunteer_tree, csv_file)
+        try:
+            self.upload_csv_data(self.display_volunteer_tree, csv_file)
+        except:
+            headers = ["Username", "Camp ID", "password", "name", "Email Address", "Phone Number", "Commitment",
+                       "Work Type", "Deactivated", "Deleted"]
+            empty_df = pd.DataFrame(columns=headers)
+            empty_df.to_csv(csv_file, index=False)
+            messagebox.showinfo("File Created", "A new file was created as 'volunteer_info.csv' was not found.")
+            self.upload_csv_data(self.display_volunteer_tree, csv_file)
+
     def read_crisis_events_csv(self):
         self.camp_ids_from_csv = []
         try:
@@ -241,6 +250,8 @@ class AdminEditVolunteerDetails:
             # message_label.grid(row=submit_button_row + 1, column=submit_button_column, columnspan=submit_column_span,
             #                    sticky='W')
             tk.messagebox.showinfo(title='Details Saved', message=f"Details for {username} successfully created.")
+            self.create_account_window.destroy()
+            self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
 
         except FileNotFoundError:
             messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
@@ -360,6 +371,7 @@ class AdminEditVolunteerDetails:
 
             tk.messagebox.showinfo("Update", f"Details for {old_username} updated successfully.")
             edit_details_window.destroy()
+            self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
         except FileNotFoundError:
             messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
 
@@ -371,7 +383,8 @@ class AdminEditVolunteerDetails:
             confirm_reactivate = messagebox.askokcancel('Confirmation', f"Are you sure you want to reactivate account for '{username_to_reactivate}'?")
             if confirm_reactivate:
                 self.update_account_status(username_to_reactivate, deactivated=False)
-                tk.messagebox.showinfo(f"Account for f'{username_to_reactivate}' reactivated successfully")
+                #tk.messagebox.showinfo(f"Account for f'{username_to_reactivate}' reactivated successfully")
+                self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
         else:
             tk.messagebox.showwarning("No Selection", "Please select a volunteer.")
 
@@ -383,7 +396,8 @@ class AdminEditVolunteerDetails:
 
             if confirm_deactivate:
                 self.update_account_status(username_to_deactivate, deactivated=True)
-                tk.messagebox.showinfo("Success" f"The account for '{username_to_deactivate}' has been deactivated successfully")
+                #tk.messagebox.showinfo("Success" f"The account for '{username_to_deactivate}' has been deactivated successfully")
+                self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
         else:
             messagebox.showwarning("No Selection", "Please select a volunteer.")
 
@@ -397,6 +411,7 @@ class AdminEditVolunteerDetails:
                 self.remove_account(username_to_delete)
                 tk.messagebox.showinfo("Success", f"The account '{username_to_delete}' has been deleted successfully.")
             self.remove_account(username_to_delete)
+            self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
         else:
             tk.messagebox.showwarning("No Selection", "Please select a volunteer.")
 
@@ -415,6 +430,7 @@ class AdminEditVolunteerDetails:
                 writer.writeheader()
                 writer.writerows(rows)
 
+            self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
 
         except FileNotFoundError:
             messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
@@ -438,5 +454,6 @@ class AdminEditVolunteerDetails:
 
             action = "Deactivation" if deactivated else "Reactivation"
             messagebox.showinfo(action, f"Account for {username} {action.lower()} successful.")
+            self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
         except FileNotFoundError:
             messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
