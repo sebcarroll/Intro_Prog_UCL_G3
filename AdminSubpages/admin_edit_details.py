@@ -273,7 +273,7 @@ class AdminEditVolunteerDetails:
         if not password_check:
             tk.messagebox.showerror("Error", "Password must be filled in")
             return
-        
+
         if not name_check:
             tk.messagebox.showerror("Error", "Name must be filled in")
             return
@@ -491,8 +491,8 @@ class AdminEditVolunteerDetails:
             if confirm_delete:
                 self.remove_account(username_to_delete)
                 tk.messagebox.showinfo("Success", f"The account '{username_to_delete}' has been deleted successfully.")
-            self.remove_account(username_to_delete)
-            self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
+                self.remove_account(username_to_delete)
+                self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
         else:
             tk.messagebox.showwarning("No Selection", "Please select a volunteer.")
 
