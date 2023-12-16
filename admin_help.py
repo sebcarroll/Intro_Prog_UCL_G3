@@ -53,34 +53,34 @@ class AdminHelp:
         about_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 
         about_text = (
-            "(A) The general application admin can:\n\n" \
-            "a. Create new humanitarian plans. Humanitarian plans recorded in the\n" \
-            "   system require a description, the geographical location affected, the start\n" \
-            "   date of the event.\n" \
-            "b. End an event. To end an event, an end date must be added, and the\n" \
-            "   humanitarian plan must be closed in the system.\n" \
-            "c. Display humanitarian plan from the system. At any time of the\n" \
-            "   humanitarian plan life cycle, the administrator can display summary of\n" \
-            "   all related details; including, number of refugees, their camp\n" \
-            "   identification, and number of humanitarian volunteers working at each\n" \
-            "   camp.\n" \
-            "d. Edit volunteer accounts. The admin can also deactivate/reactivate\n" \
-            "   volunteers accounts or simply delete them completely from the system.\n" \
-            "   Deactivating means, volunteers can no longer use their accounts. If they\n" \
-            "   try to login, they get a message “Your account has been deactivated,\n" \
-            "   contact the administrator”. Once reactivated they can login and use their\n" \
-            "   account again as usual. If the account is rather deleted, the volunteer gets\n" \
-            "   a message “Account doesn’t exist”.\n" \
-            "e. Allocate resources to camps, including food packets, medical supplies,\n" \
-            "   etc, based on current camp populations.\n\n" \
-            "(B) The humanitarian volunteer can:\n\n" \
-            "a. Edit their own personal information. This includes name, phone.\n" \
-            "b. Edit their camp information. This includes the identification of their\n" \
-            "   camp and the capacity for new refugees.\n" \
-            "c. Create refugee profile for each refugee including their family. Each\n" \
-            "   refugee must be logged with: their camp identification, medical\n" \
-            "   condition, etc. Keep it simple, you can assume a family is a singular\n" \
-            "   entity, rather than their constituent members.\n" \
+            "(A) The general application admin can:\n\n" 
+            "a. Create new humanitarian plans. Humanitarian plans recorded in the\n" 
+            "   system require a description, the geographical location affected, the start\n" 
+            "   date of the event.\n" 
+            "b. End an event. To end an event, an end date must be added, and the\n" 
+            "   humanitarian plan must be closed in the system.\n" 
+            "c. Display humanitarian plan from the system. At any time of the\n" 
+            "   humanitarian plan life cycle, the administrator can display summary of\n" 
+            "   all related details; including, number of refugees, their camp\n" 
+            "   identification, and number of humanitarian volunteers working at each\n" 
+            "   camp.\n" 
+            "d. Edit volunteer accounts. The admin can also deactivate/reactivate\n" 
+            "   volunteers accounts or simply delete them completely from the system.\n" 
+            "   Deactivating means, volunteers can no longer use their accounts. If they\n" 
+            "   try to login, they get a message “Your account has been deactivated,\n" 
+            "   contact the administrator”. Once reactivated they can login and use their\n" 
+            "   account again as usual. If the account is rather deleted, the volunteer gets\n" 
+            "   a message “Account doesn’t exist”.\n" 
+            "e. Allocate resources to camps, including food packets, medical supplies,\n" 
+            "   etc, based on current camp populations.\n\n" 
+            "(B) The humanitarian volunteer can:\n\n" 
+            "a. Edit their own personal information. This includes name, phone.\n" 
+            "b. Edit their camp information. This includes the identification of their\n" 
+            "   camp and the capacity for new refugees.\n" 
+            "c. Create refugee profile for each refugee including their family. Each\n" 
+            "   refugee must be logged with: their camp identification, medical\n" 
+            "   condition, etc. Keep it simple, you can assume a family is a singular\n" 
+            "   entity, rather than their constituent members.\n" 
             "d. Display resources (food packets, etc) currently available to the camp"
         )
 
@@ -93,7 +93,7 @@ class AdminHelp:
     def support_pop_up(self):
         self.support_window = tk.Toplevel(self.window)
         self.support_window.title("IT Support")
-        self.support_window.geometry("400x400")
+        self.support_window.geometry("400x500")
 
         self.support_window.grab_set()
 
@@ -104,17 +104,17 @@ class AdminHelp:
         about_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 
         about_text = (
-            "About the Producers:\n\n" \
-            "The software is the result of the collective efforts of a dedicated and skilled team. " \
-            "Each member has brought their unique expertise and creativity to ensure the software meets the highest standards of quality and functionality. " \
-            "Their hard work and commitment have been instrumental in bringing this project to life.\n\n" \
-            "List of Producers:\n\n" \
-            "Ayman Asaria\n" \
-            "Costas Hadjineophytou\n" \
-            "Kayza Warsame\n" \
-            "Nikhita Bhatt\n" \
-            "Sebastian Carroll\n" \
-            "Thomas Wolstenholme-Hogg\n" \
+            "About the Producers:\n\n" 
+            "The software is the result of the collective efforts of a dedicated and skilled team. " 
+            "Each member has brought their unique expertise and creativity to ensure the software meets the highest standards of quality and functionality. " 
+            "Their hard work and commitment have been instrumental in bringing this project to life.\n\n" 
+            "List of Producers:\n\n" 
+            "Ayman Asaria\n" 
+            "Costas Hadjineophytou\n" 
+            "Kayza Warsame\n" 
+            "Nikhita Bhatt\n" 
+            "Sebastian Carroll\n" 
+            "Thomas Wolstenholme-Hogg\n" 
             "Yingzhe Feng"
 
         )
