@@ -28,9 +28,10 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
 
 
 
-    crisis_df = pd.read_csv('crisis_events.csv')
-    active_camps= crisis_df[crisis_df['Status'] == 'Active']
-    camp_IDs = list(active_camps['Camp ID'])
+    # crisis_df = pd.read_csv('crisis_events.csv')
+    # active_camps = crisis_df[crisis_df['Status'] == 'Active']
+    # camp_IDs = list(active_camps['Camp ID'])
+
 
     camp_ids_from_csv = []
     try:
@@ -47,14 +48,11 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
     camp_IDs_filtered = []
     for camp_ids in camp_IDs_unfiltered:
         from volunteer_login_page import volunteer_camp_id_for_new_refugee
-        print(volunteer_camp_id_for_new_refugee)
+        #print(volunteer_camp_id_for_new_refugee)
         if volunteer_camp_id_for_new_refugee and int(float(camp_ids)) == int(float(volunteer_camp_id_for_new_refugee)):
             camp_IDs_filtered.append(camp_ids)
 
     camp_IDs = camp_IDs_filtered
-
-
-
 
     # Title for the page
     refugee_title = tk.Label(refugeeframe, text='Create Refugee Profile', font=('TKDefault', 25), fg='white')
@@ -180,7 +178,7 @@ def update_number_of_refugees(camp_ID):
         for row in csv_reader:
             if camp_ID == int(float(row[1])):
                 number_of_refugees_actual += 1
-    print(f"Total refugees counted: {number_of_refugees_actual}")
+    #print(f"Total refugees counted: {number_of_refugees_actual}")
 
     header = []
     data = []

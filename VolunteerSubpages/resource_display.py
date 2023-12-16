@@ -19,58 +19,27 @@ def resource_display(window, camp_id, back_button_to_volunteer_main):
     for i in range(8):
         resources_frame.grid_rowconfigure(i, weight=1)
 
-    crisis_df = pd.read_csv('crisis_events.csv')
-
-    # Filter resources for the camp that the volunteer belongs to
-    resources_df = crisis_df[crisis_df['Camp ID'] == camp_id].loc[:, ['Camp ID', 'Meals(T)', 'Medicine(T)', 'Duration', 'Capacity',
-                                                                                        'Meals/w', 'Medicine/w']]
-
-    # resources_df = crisis_df.loc[:, ['Camp ID', 'Meals(T)', 'Medicine(T)', 'Duration', 'Capacity',
-    #                                  'Meals/w', 'Medicine/w']]
-
-    resources_df = resources_df.fillna(0)
-
-    # Convert float columns to integers
-    float_columns = ['Meals(T)', 'Medicine(T)', 'Duration', 'Capacity', 'Meals/w', 'Medicine/w']
-    for col in float_columns:
-        resources_df[col] = resources_df[col].astype(int)
-
-    columns = ['Camp ID', 'Capacity', 'Meals(T)', 'Medicine(T)', 'Meals/w', 'Medicine/w', 'Delivery Time(d)']
-
-    total_meals = 100000000
-    total_medicine = 100000000
-    meals_used = resources_df['Meals(T)'].sum()
-    medicine_used = resources_df['Medicine(T)'].sum()
-    leftover_meals = total_meals - meals_used
-    leftover_medicine = total_medicine - medicine_used
+    '''try:
+        crisis_df = pd.read_csv('crisis_events.csv')
+    except:
+        # Create an empty DataFrame with the expected columns
+        # columns = ['Camp ID', 'Meals(T)', 'Medicine(T)', 'Duration', 'Capacity', 'Meals/w', 'Medicine/w']
+        # crisis_df = pd.DataFrame(columns=columns)
+        messagebox.showwarning("No data found",
+                               "There is a problem accessing the database\n\nThe file may be missing or corrupted")'''
 
     # Title
     resources_title = tk.Label(resources_frame, text='Allocated Resources', font=('TKDefault', 25), fg='white')
     resources_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
     resources_title.configure(background="grey")
 
-
     # GIVES THE LEFT FRAME
     availability_frame = tk.Frame(resources_frame)
     availability_frame.grid(row=2, column=0, padx=10, pady=5, columnspan=9)
 
-    available_meals = tk.Label(availability_frame, text='Meals Left:', font=('Helvetica', 12))
-    available_meals.grid(row=0, column=0)
-
-    available_meals_number = tk.Label(availability_frame, text=f"{leftover_meals}", font=('Helvetica', 12))
-    available_meals_number.grid(row=0, column=20)
-
-    available_meds = tk.Label(availability_frame, text=f"Medicine Left", font=('Helvetica', 12))
-    available_meds.grid(row=5, column=0)
-
-    available_meds_number = tk.Label(availability_frame, text=f"{leftover_medicine}", font=('Helvetica', 12))
-    available_meds_number.grid(row=5, column=20)
-
-    '''# GIVES THE RIGHT FRAME
-    resources_df_frame = tk.Frame(resources_frame)
-    resources_df_frame.grid(row=2, column=1, padx=10, pady=5)'''
-
+    columns = ['Camp ID', 'Capacity', 'Meals(T)', 'Medicine(T)', 'Meals/w', 'Medicine/w', 'Delivery Time(d)']
     tree = ttk.Treeview(resources_frame, columns=columns, show='headings', height=5)
+    tree.grid(row=1, column=0, columnspan=9, sticky="ew", padx=10, pady=5)
 
     tree.heading('Camp ID', text='Camp ID')
     tree.heading('Capacity', text='Capacity')
@@ -88,14 +57,6 @@ def resource_display(window, camp_id, back_button_to_volunteer_main):
     tree.column('Medicine/w', anchor="center", width=175)
     tree.column('Delivery Time(d)', anchor="center", width=125)
 
-    for _, row in resources_df.iterrows():
-        tree.insert('', tk.END, values=row.tolist())
-
-    '''scrollbar = ttk.Scrollbar(resources_frame, orient=tk.VERTICAL, command=tree.yview)
-    tree.configure(yscrollcommand=scrollbar.set)
-    scrollbar.grid(row=0, column=2, sticky='ns')'''
-
-    tree.grid(row=1, column=0, columnspan=9, sticky="ew", padx=10, pady=5)
 
     view_button = tk.Button(resources_frame, text='View', command=lambda: view_csv_data_entry(tree))
     view_button.grid(row=4, column=0, padx=5, pady=10, columnspan=9)
@@ -103,6 +64,76 @@ def resource_display(window, camp_id, back_button_to_volunteer_main):
     t_back_button = tk.Button(resources_frame, text='Back to Home', command=back_button_to_volunteer_main)
     t_back_button.grid(row=5, column=0, padx=5, pady=10, columnspan=9)
 
+    try:
+        crisis_df = pd.read_csv('crisis_events.csv')
+        # Filter resources for the camp that the volunteer belongs to
+        resources_df = crisis_df[crisis_df['Camp ID'] == camp_id].loc[:, ['Camp ID', 'Meals(T)', 'Medicine(T)', 'Duration', 'Capacity',
+                                                                                            'Meals/w', 'Medicine/w']]
+
+        # resources_df = crisis_df.loc[:, ['Camp ID', 'Meals(T)', 'Medicine(T)', 'Duration', 'Capacity',
+        #                                  'Meals/w', 'Medicine/w']]
+
+        resources_df = resources_df.fillna(0)
+
+        # Convert float columns to integers
+        float_columns = ['Meals(T)', 'Medicine(T)', 'Duration', 'Capacity', 'Meals/w', 'Medicine/w']
+        for col in float_columns:
+            resources_df[col] = resources_df[col].astype(int)
+
+        columns = ['Camp ID', 'Capacity', 'Meals(T)', 'Medicine(T)', 'Meals/w', 'Medicine/w', 'Delivery Time(d)']
+
+        total_meals = 100000000
+        total_medicine = 100000000
+        meals_used = resources_df['Meals(T)'].sum()
+        medicine_used = resources_df['Medicine(T)'].sum()
+        leftover_meals = total_meals - meals_used
+        leftover_medicine = total_medicine - medicine_used
+
+        available_meals = tk.Label(availability_frame, text='Meals Left:', font=('Helvetica', 12))
+        available_meals.grid(row=0, column=0)
+
+        available_meals_number = tk.Label(availability_frame, text=f"{leftover_meals}", font=('Helvetica', 12))
+        available_meals_number.grid(row=0, column=20)
+
+        available_meds = tk.Label(availability_frame, text=f"Medicine Left", font=('Helvetica', 12))
+        available_meds.grid(row=5, column=0)
+
+        available_meds_number = tk.Label(availability_frame, text=f"{leftover_medicine}", font=('Helvetica', 12))
+        available_meds_number.grid(row=5, column=20)
+
+        '''# GIVES THE RIGHT FRAME
+        resources_df_frame = tk.Frame(resources_frame)
+        resources_df_frame.grid(row=2, column=1, padx=10, pady=5)'''
+
+        '''tree.heading('Camp ID', text='Camp ID')
+        tree.heading('Capacity', text='Capacity')
+        tree.heading('Meals(T)', text='Meals')
+        tree.heading('Medicine(T)', text='Medicine')
+        tree.heading('Meals/w', text='Weekly meals per refugee')
+        tree.heading('Medicine/w', text='Weekly medication per refugee')
+        tree.heading('Delivery Time(d)', text='Delivery Time(d)')
+
+        tree.column('Camp ID', anchor="center", width=80)
+        tree.column('Capacity', anchor="center", width=105)
+        tree.column('Meals(T)', anchor="center", width=100)
+        tree.column('Medicine(T)', anchor="center", width=125)
+        tree.column('Meals/w', anchor="center", width=150)
+        tree.column('Medicine/w', anchor="center", width=175)
+        tree.column('Delivery Time(d)', anchor="center", width=125)'''
+
+        for _, row in resources_df.iterrows():
+            tree.insert('', tk.END, values=row.tolist())
+
+        '''scrollbar = ttk.Scrollbar(resources_frame, orient=tk.VERTICAL, command=tree.yview)
+        tree.configure(yscrollcommand=scrollbar.set)
+        scrollbar.grid(row=0, column=2, sticky='ns')'''
+
+    except:
+        # Create an empty DataFrame with the expected columns
+        columns = ['Camp ID', 'Meals(T)', 'Medicine(T)', 'Duration', 'Capacity', 'Meals/w', 'Medicine/w']
+        crisis_df = pd.DataFrame(columns=columns)
+        messagebox.showwarning("No data found",
+                               "There is a problem accessing the database\n\nThe file may be missing or corrupted")
 
 def view_csv_data_entry(tree):
     selected_item = tree.focus()
