@@ -193,7 +193,7 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
 
 
 
-def store_personal_details(username, y_personal_info, t_personal_nameEntry, t_personal_emailEntry, t_phonenumberEntry, t_commitmentEntry, t_worktypeEntry):
+def store_personal_details(username, y_personal_info, t_personal_nameEntry, t_personal_emailEntry, t_phonenumberEntry, t_commitmentEntry, t_worktypeEntry, t_personal_information_base):
     try:
         # Update self.y_personal_info dictionary
         if t_personal_nameEntry.get() == '':
@@ -240,7 +240,7 @@ def store_personal_details(username, y_personal_info, t_personal_nameEntry, t_pe
 
         tk.messagebox.showinfo(title='Saved', message='Details have been saved\n '
                                                       'Please click "Back to Volunteer Details" to view updated details')
-
+        t_personal_information_base()
 
 
     except(invalid_email):

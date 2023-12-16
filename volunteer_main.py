@@ -218,7 +218,7 @@ class VolunteerHomepage():
     def t_personal_info_edit(self):
         self.personal_entry_widgets = edit_personal_info(self.window, self.username, self.y_personal_info, self.t_personal_information_base, self.back_button_to_volunteer_main, self.personal_details_storage_handler)
     def personal_details_storage_handler(self, nameEntry, emailEntry, phoneEntry, commitmentEntry, worktypeEntry):
-        store_personal_details(self.username, self.y_personal_info, nameEntry, emailEntry, phoneEntry, commitmentEntry, worktypeEntry)
+        store_personal_details(self.username, self.y_personal_info, nameEntry, emailEntry, phoneEntry, commitmentEntry, worktypeEntry, self.t_personal_information_base)
 
     # Edit Camp Info (edit_camp_details.py)
     def t_edit_camp(self):
