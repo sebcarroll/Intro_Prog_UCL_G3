@@ -75,7 +75,7 @@ class AdminVolunteerDisplay:
         # Convert floats to integers for display in treeview
         for col in float_columns:
             data[col] = data[col].fillna(0).astype(int)
-        columns_to_display = [col for col in data.columns if col != "Deleted"]
+        columns_to_display = [col for col in data.columns if (col != "Deleted" and col != "Phone Number")]
         tree.delete(*tree.get_children())
         tree['columns'] = columns_to_display
         tree.column("#0", width=0, stretch=tk.NO)
@@ -86,7 +86,7 @@ class AdminVolunteerDisplay:
             tree.heading(col, text=col, anchor=tk.CENTER)
 
         for index, row in data.iterrows():
-            tree.insert("", tk.END, values=list(row), iid=str(index))
+            tree.insert("", tk.END, values=[row[col] for col in columns_to_display], iid=str(index))
 
 
     def delete_csv_data_entry(self, tree, filename):

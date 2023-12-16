@@ -58,7 +58,7 @@ class RefugeeDisplay:
         edit_btn.grid(row=0, column=1, padx=20, pady=(50,10))
 
         # Delete button
-        delete_btn = tk.Button(btn_frame, text="Delete Refugee Profile", state=tk.DISABLED, command=lambda: self.delete_csv_data_entry(self.display_refugee_tree, csv_file))
+        delete_btn = tk.Button(btn_frame, text="Delete Refugee Profile", command=lambda: self.delete_csv_data_entry(self.display_refugee_tree, csv_file))
         delete_btn.grid(row=0, column=2, padx=20, pady=(50,10))
 
         # Back button
