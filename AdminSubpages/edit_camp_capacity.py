@@ -102,6 +102,7 @@ def edit_camp_id(df, selected_camp_id, listbox):
                 raise taken_ID("ID is already taken by another camp.")
 
             # Update the camp ID in the DataFrame
+            df['Camp ID'] = df['Camp ID'].astype(str)
             df.loc[df['Camp ID'] == selected_camp_id, 'Camp ID'] = new_id
             df.to_csv('crisis_events.csv', index=False)
 
