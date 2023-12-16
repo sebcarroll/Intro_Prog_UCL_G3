@@ -19,15 +19,15 @@ class CountryMap:
 
         self.map_window.grab_set()
 
-        # Call the method to create the pie chart in the new window
+        # Call the method to create the map in the new window
         self.show_map(self.map_window)
 
 
     def show_map(self, window):
 
         # Create a canvas for the map
-        map_canvas = tk.Canvas(window, width=1000, height=800)  # Adjust the canvas size as needed
-        map_canvas.place(x=0, y=0)  # Adjust the x and y coordinates as needed
+        map_canvas = tk.Canvas(window, width=1000, height=800)
+        map_canvas.place(x=0, y=0)
 
         # Load the image using PhotoImage
         if self.map_image is None:
@@ -38,36 +38,35 @@ class CountryMap:
 
         # Define coordinates for each country
         country_coordinates = {
-            'Nigeria': [450, 350],
-            'Sudan': [500, 300],
-            'South Sudan': [550, 300],
-            'Somalia': [600, 350],
-            'Yemen': [500, 400],
-            'Afghanistan': [600, 250],
-            'England': [450, 200],
-            'Syria': [500, 150],
-            'Democratic Republic of the Congo': [450, 300],
-            'Venezuela': [700, 150],
-            'Iraq': [600, 150],
-            'Ethiopia': [550, 350],
-            'Myanmar': [600, 500],
-            'Haiti': [750, 150],
-            'Central African Republic': [550, 300],
-            'Libya': [500, 150],
-            'Chad': [500, 250],
-            'Mali': [550, 300],
-            'Niger': [600, 300],
-            'Cameroon': [550, 350],
-            'Ukraine': [750, 50],
-            'Pakistan': [800, 100],
-            'Bangladesh': [850, 150],
-            'Lebanon': [700, 150],
-            'Zimbabwe': [550, 400],
-            'Eritrea': [600, 400],
-            'North Korea': [850, 200],
-            'Eswatini': [550, 450],
-            'Zambia': [600, 400],
-            'Malawi': [700, 350],
+            'Nigeria': [500, 300],
+            'Sudan': [550, 270],
+            'South Sudan': [550, 290],
+            'Somalia': [585, 300],
+            'Yemen': [600, 270],
+            'Afghanistan': [650, 250],
+            'England': [460, 175],
+            'Syria': [560, 220],
+            'Democratic Republic of the Congo': [520, 325],
+            'Venezuela': [300, 300],
+            'Iraq': [580, 230],
+            'Ethiopia': [580, 300],
+            'Myanmar': [710, 260],
+            'Haiti': [290, 265],
+            'Central African Republic': [550, 315],
+            'Libya': [500, 250],
+            'Chad': [500, 275],
+            'Mali': [450, 280],
+            'Cameroon': [520, 320],
+            'Ukraine': [570, 190],
+            'Pakistan': [630, 230],
+            'Bangladesh': [690, 265],
+            'Lebanon': [585, 210],
+            'Zimbabwe': [540, 360],
+            'Eritrea': [660, 300],
+            'North Korea': [780, 220],
+            'Eswatini': [550, 380],
+            'Zambia': [540, 310],
+            'Malawi': [560, 345],
         }
 
         # Read locations from CSV file
@@ -86,7 +85,7 @@ class CountryMap:
                 country_counts[country] += 1
 
                 # Adjust the oval size based on the count
-                oval_size = 5 + country_counts[country]
+                oval_size = 3 + country_counts[country]
 
                 # Draw the oval with adjusted size
                 map_canvas.create_oval(
@@ -97,7 +96,11 @@ class CountryMap:
                     fill='red'
                 )
 
-                map_canvas.create_text(coordinates[0], coordinates[1] - 10, text=country, anchor=tk.CENTER, fill='white')
+                # Adjust font size based on the count (scaled down)
+                font_size = int(10 - country_counts[country] * 0.2)
+
+                map_canvas.create_text(coordinates[0], coordinates[1] - 10, text=country, anchor=tk.CENTER,
+                                       fill='white', font=("Helvetica", font_size))
 
 
     def read_location_data_from_csv(self, crisis_events):
@@ -111,4 +114,4 @@ class CountryMap:
                 locations.append({'country': country, 'crisis_type': crisis_type})
         return locations
 
-scale_factor = 1
+scale_factor = 0.5

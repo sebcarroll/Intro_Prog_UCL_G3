@@ -97,6 +97,10 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         self.password_entry.bind("<KeyPress>", self.caps_lock_on)
         self.password_entry.bind("<KeyRelease>", self.caps_lock_off)
 
+        self.image3 = PhotoImage(file="Images/volunteer_icon.png").subsample(6, 6)
+        image_label = tk.Label(volunteer_log_in_frame, image=self.image3, relief=tk.RAISED, borderwidth=5)
+        image_label.grid(row=5, column=0, pady=10, padx=(150, 0))
+
         # # Username entry box
         # self.t_name_label = tk.Label(self, text='Username')
         # self.t_name_label.grid(row=1, column=0)
@@ -126,8 +130,7 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         back_button = tk.Button(volunteer_log_in_frame, text="Back", command=self.exit_and_go_back)
         back_button.grid(row=10, column=0, pady=10)
 
-        #image_label = tk.Label(volunteer_log_in_frame, image=PhotoImage(file="Images/new_camp_image.png").subsample(4, 4))
-        #image_label.grid(row=11, column=0)
+
 
 
         # Shows caps lock on/off (OLD BINDING NOT WORKING)

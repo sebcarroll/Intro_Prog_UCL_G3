@@ -13,26 +13,38 @@ class RefugeeDisplay:
 
     def create_gui_refugee_display(self, window):
         # Main frame for this whole page
+        # for i in self.window.winfo_children():
+        #     i.grid_forget()
+        # self.window.grid_columnconfigure(0, weight=1)
+        # self.window.grid_rowconfigure(0, weight=1)
+        # display_refugee_frame = tk.Frame(self.window)
+        # display_refugee_frame.grid(sticky="nsew", padx=5, pady=5)
+        # display_refugee_frame.grid_columnconfigure(0, weight=1)
+        # display_refugee_frame.grid_rowconfigure(1, weight=3)
+        # display_refugee_frame.grid_rowconfigure(2, weight=1)
+
         for i in self.window.winfo_children():
             i.grid_forget()
-        self.window.grid_columnconfigure(0, weight=1)
-        self.window.grid_rowconfigure(0, weight=1)
+        for i in range(9):
+            self.window.grid_columnconfigure(i, weight=1)
         display_refugee_frame = tk.Frame(self.window)
-        display_refugee_frame.grid(sticky="nsew", padx=5, pady=5)
-        display_refugee_frame.grid_columnconfigure(0, weight=1)
-        display_refugee_frame.grid_rowconfigure(1, weight=3)
-        display_refugee_frame.grid_rowconfigure(2, weight=1)
+        display_refugee_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9, rowspan=9)
+        for i in range(9):
+            display_refugee_frame.grid_columnconfigure(i, weight=1)
+        for i in range(9):
+            display_refugee_frame.grid_rowconfigure(i, weight=1)
 
         # Labels
-        display_refugee_title = tk.Label(display_refugee_frame, text="Display Refugees", font=('Helvetica', 16))
-        display_refugee_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5)
+        display_refugee_title = tk.Label(display_refugee_frame, text="Display Refugees", font=('TKDefault', 25), fg='white')
+        display_refugee_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
+        display_refugee_title.configure(background="grey")
 
         self.display_refugee_tree = ttk.Treeview(display_refugee_frame, height=20)
-        self.display_refugee_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
+        self.display_refugee_tree.grid(row=1, column=0, columnspan=9, sticky="ew", padx=10, pady=5)
 
         # Button Frame:
         btn_frame = tk.Frame(display_refugee_frame)
-        btn_frame.grid(row=2, column=0, pady=10)
+        btn_frame.grid(row=2, column=4, pady=10)
         btn_frame.grid_columnconfigure(0, weight=1)
         btn_frame.grid_columnconfigure(2, weight=1)
 
@@ -120,7 +132,7 @@ class RefugeeDisplay:
         # Open pop up edit window
         refugee_profile_window = tk.Toplevel(self.window)
         refugee_profile_window.title("View Refugee Details")
-
+        refugee_profile_window.grab_set()
         # Create a label and entry for each plan attribute using column attributes
         for i in range(treeview_width):
             att = column_attributes[i]
@@ -152,7 +164,7 @@ class RefugeeDisplay:
         # Open pop up edit window
         refugee_profile_window = tk.Toplevel(self.window)
         refugee_profile_window.title("Edit Refugee Details")
-
+        refugee_profile_window.grab_set()
         # Create empty dictionary to store new edited info with key as attribute, value as new edited entry
         self.edited_entry_dictionary = {}
 

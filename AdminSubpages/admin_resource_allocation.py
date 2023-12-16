@@ -30,16 +30,27 @@ class AdminResourceAllocation:
     def create_gui_resource_allocation(self, window):
         self.read_crisis_events_csv()
         # Main frame for this whole page
+        '''for i in self.window.winfo_children():
+            i.grid_forget()'''
         for i in self.window.winfo_children():
             i.grid_forget()
+        for i in range(9):
+            self.window.grid_columnconfigure(i, weight=1)
+        resource_frame = tk.Frame(self.window)
+        resource_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9, rowspan=9)
+        for i in range(9):
+            resource_frame.grid_columnconfigure(i, weight=1)
+        for i in range(9):
+            resource_frame.grid_rowconfigure(i, weight=1)
 
         # Title
-        title = tk.Label(self.window, text='Resource Allocation', font=('TkDefault', 35))
-        title.grid(row=0, column=0, pady=30)
+        title = tk.Label(self.window, text='Resource Allocation', font=('TKDefault', 25), fg='white')
+        title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
+        title.configure(background="grey")
 
         # Resource Frame
         resource_frame = tk.Frame(self.window)
-        resource_frame.grid(row=1, column=0, padx=5, pady=5)
+        resource_frame.grid(row=1, column=4, padx=5, pady=5)
 
         # Creating list of CAMP IDs
         camp_ID_label = tk.Label(resource_frame, text='Camp ID: ')
@@ -115,7 +126,8 @@ class AdminResourceAllocation:
         estimated_delivery_label.grid(row=11, column=0, padx=5, pady=5)
         self.estimated_delivery_box = tk.Spinbox(resource_frame, from_=0, to=14)
         self.estimated_delivery_box.grid(row=11, column=1, padx=5, pady=5)
-        submit_button = ttk.Button(resource_frame, text="Submit",
+
+        submit_button = tk.Button(resource_frame, text="Submit",
                                    command=lambda: self.resource_allocation(self.camp_ID_box, no_refugees_entry,
                                                                             self.no_weeks_aid_entry,
                                                                             total_food_supplied_entry,
@@ -125,13 +137,15 @@ class AdminResourceAllocation:
                                                                             self.estimated_delivery_box,
                                                                             self.camp_ids))
 
-        submit_button.grid(row=12, column=0, columnspan=2, padx=10, pady=10)
+        submit_button.grid(row=13, column=1, columnspan=2, padx=10, pady=(50,10))
 
         # Back button
-        back_button = tk.Button(self.window, text='Back to Home', command=self.back_button_to_admin_main)
-        back_button.grid(row=13, column=0, padx=5, pady=10)
+        back_button = tk.Button(resource_frame, text='Back to Home', command=self.back_button_to_admin_main)
+        back_button.grid(row=13, column=0, padx=5, pady=(50,10))
         self.setup_callback()
-        # Event handler function to update number of refugees
+
+
+    # Event handler function to update number of refugees
     def update_number_of_refugees(self, event):
         selected_camp_id = self.camp_ID_box.get()
         print(selected_camp_id)

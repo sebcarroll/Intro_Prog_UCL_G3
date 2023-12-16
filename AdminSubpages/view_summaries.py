@@ -19,29 +19,39 @@ class AdminViewSummaries:
         # Main frame for this whole page
         for i in self.window.winfo_children():
             i.grid_forget()
-        self.window.grid_columnconfigure(0, weight=1)
+        for i in range(9):
+            self.window.grid_columnconfigure(i, weight=1)
+        end_plan_frame = tk.Frame(self.window)
+        end_plan_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9, rowspan=9)
+        for i in range(9):
+            end_plan_frame.grid_columnconfigure(i, weight=1)
+        for i in range(9):
+            end_plan_frame.grid_rowconfigure(i, weight=1)
+
+        '''self.window.grid_columnconfigure(0, weight=1)
         self.window.grid_rowconfigure(0, weight=1)
         end_plan_frame = tk.Frame(self.window)
         end_plan_frame.grid(sticky="nsew", padx=5, pady=5)
         end_plan_frame.grid_columnconfigure(0, weight=1)
         end_plan_frame.grid_rowconfigure(1, weight=3)
-        end_plan_frame.grid_rowconfigure(2, weight=1)
+        end_plan_frame.grid_rowconfigure(2, weight=1)'''
 
         # Labels
-        end_plan_title = tk.Label(end_plan_frame, text="View Plan Summaries", font=('Helvetica', 16))
-        end_plan_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5)
+        end_plan_title = tk.Label(end_plan_frame, text="View Plan Summaries", font=('TKDefault', 25), fg='white')
+        end_plan_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
+        end_plan_title.configure(background="grey")
 
         self.end_plan_tree = ttk.Treeview(end_plan_frame, height=15)
-        self.end_plan_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
+        self.end_plan_tree.grid(row=1, column=0, columnspan=9, sticky="nsew", padx=10, pady=5, rowspan=4)
 
         # Horizontal scrollbar
-        xscrollbar = ttk.Scrollbar(end_plan_frame, orient='horizontal', command=self.end_plan_tree.xview)
-        xscrollbar.grid(row=2, column=0, sticky='ew', columnspan=2)
-        self.end_plan_tree.configure(xscrollcommand=xscrollbar.set)
+        x_scrollbar = ttk.Scrollbar(end_plan_frame, orient='horizontal', command=self.end_plan_tree.xview)
+        x_scrollbar.grid(row=5, column=0, sticky='ew', columnspan=9)
+        self.end_plan_tree.configure(xscrollcommand=x_scrollbar.set)
 
         # Button Frame:
         btn_frame = tk.Frame(end_plan_frame)
-        btn_frame.grid(row=3, column=0, pady=10)
+        btn_frame.grid(row=6, column=4, pady=10, sticky="sew", rowspan=4)
         btn_frame.grid_columnconfigure(0, weight=1)
         btn_frame.grid_columnconfigure(2, weight=1)
 
@@ -158,6 +168,7 @@ class AdminViewSummaries:
         # Open pop up edit window
         view_plan_window = tk.Toplevel(self.window)
         view_plan_window.title("View Plan")
+        view_plan_window.grab_set()
 
         # Create a label and entry for each plan attribute using column attributes
         for i in range(treeview_width):
@@ -196,6 +207,7 @@ class AdminViewSummaries:
                 # Open pop up edit window
                 edit_plan_window = tk.Toplevel(self.window)
                 edit_plan_window.title("Edit Plan")
+                edit_plan_window.grab_set()
 
                 # Create empty dictionary to store new edited info with key as attribute, value as new edited entry
                 self.edited_entry_dictionary = {}

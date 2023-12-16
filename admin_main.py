@@ -1,6 +1,6 @@
 import tkinter as tk
 import pandas as pd
-from tkinter import messagebox
+from tkinter import messagebox, PhotoImage
 # Imports for the main button commands
 from AdminSubpages.create_plan import AdminCreatePlan
 from AdminSubpages.admin_end_event import AdminEndEvent
@@ -22,7 +22,7 @@ class AdminHomepage:
         self.go_to_landing_page = go_to_landing_page
         self.window = tk.Toplevel(self.root)
         self.window.title('Admin Homepage')
-        self.window.geometry('1300x600')
+        self.window.geometry('1400x700')
 
         # Default theme
         #self.default_bg = self.window.cget('bg')
@@ -58,7 +58,7 @@ class AdminHomepage:
         file_menu.add_separator()
         file_menu.add_command(label="New Plan", command=self.create_event)
         file_menu.add_command(label="New Refugee", command=self.t_create_refugee)
-        file_menu.add_command(label="Settings", command=self.do_nothing)
+        #file_menu.add_command(label="Settings", command=self.do_nothing)
         file_menu.add_command(label="Log Out", command=self.exit_and_go_back)
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.exit_software)
@@ -80,8 +80,8 @@ class AdminHomepage:
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Settings", menu=file_menu)
         file_menu.add_command(label="Display", command=self.open_theme_window)
-        file_menu.add_separator()
-        file_menu.add_command(label="Audio", command=self.do_nothing)
+        #file_menu.add_separator()
+        #file_menu.add_command(label="Audio", command=self.do_nothing)
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Help", menu=file_menu)
         file_menu.add_command(label="Information", command=self.help_info)
@@ -112,34 +112,56 @@ class AdminHomepage:
     def create_gui_admin_main(self):
         # WELCOME TITLE
         self.admin_welcome_title = tk.Label(self.window, text='Welcome to the Admin Portal', font=('Arial', 40), bg='grey', fg='white', relief=tk.RAISED, borderwidth=5)
-        self.admin_welcome_title.grid(row=0, column=0, columnspan=2, sticky="nsew", padx=10, pady=20)
+        self.admin_welcome_title.grid(row=0, column=0, columnspan=9, sticky="nsew", padx=10, pady=20)
         self.admin_welcome_title.configure(background="grey")
 
         # MAIN BUTTONS
         # Create new event button
         self.btn_create_event = tk.Button(self.window, text="Create New Event", command=self.create_event)
-        self.btn_create_event.grid(row=1, column=0, pady=(50,10), ipadx=93, ipady=25)
+        self.btn_create_event.grid(row=1, column=4, pady=(50,10), ipadx=93, ipady=25)
+
+        self.image1 = PhotoImage(file="Images/new_camp_image.png").subsample(4, 4)
+        image_label = tk.Label(self.window, image=self.image1)
+        image_label.grid(row=1, column=3, pady=(50, 10))
 
         # End an event button
         self.btn_end_event = tk.Button(self.window, text="End an Event", command=self.end_event)
-        self.btn_end_event.grid(row=2, column=0, pady=10, ipadx=105, ipady=25)
+        self.btn_end_event.grid(row=2, column=4, pady=10, ipadx=105, ipady=25)
+
+        self.image2 = PhotoImage(file="Images/end_camp.png").subsample(4, 4)
+        image_label = tk.Label(self.window, image=self.image2)
+        image_label.grid(row=2, column=3, pady=10)
 
         # View summaries button
         self.btn_view_summaries = tk.Button(self.window, text="View Summaries", command=self.view_summaries)
-        self.btn_view_summaries.grid(row=3, column=0, pady=10, ipadx=98, ipady=25)
+        self.btn_view_summaries.grid(row=3, column=4, pady=10, ipadx=98, ipady=25)
+
+        self.image3 = PhotoImage(file="Images/summary.png").subsample(4, 4)
+        image_label = tk.Label(self.window, image=self.image3)
+        image_label.grid(row=3, column=3, pady=10)
 
         # Edit volunteer accounts button
         self.btn_edit_accounts = tk.Button(self.window, text="Edit Volunteer Accounts", command=self.edit_accounts)
-        self.btn_edit_accounts.grid(row=4, column=0, pady=10, ipadx=80, ipady=25)
+        self.btn_edit_accounts.grid(row=4, column=4, pady=10, ipadx=80, ipady=25)
+
+        self.image4 = PhotoImage(file="Images/volunteer_accounts.png").subsample(4, 4)
+        image_label = tk.Label(self.window, image=self.image4)
+        image_label.grid(row=4, column=3, pady=10)
 
         # Allocate resources button
         self.btn_allocate_resources = tk.Button(self.window, text="Allocate Resources", command=self.allocate_resources)
-        self.btn_allocate_resources.grid(row=5, column=0, pady=(10,50), ipadx=93, ipady=25)
+        self.btn_allocate_resources.grid(row=5, column=4, pady=(10,50), ipadx=93, ipady=25)
+
+        self.image5 = PhotoImage(file="Images/resource_allocation.png").subsample(4, 4)
+        image_label = tk.Label(self.window, image=self.image5)
+        image_label.grid(row=5, column=3, pady=(10,50))
 
 
         for i in range(6):
             self.window.grid_rowconfigure(i, weight=1)
-        self.window.grid_columnconfigure(0, weight=1)
+        for i in range(9):
+            self.window.grid_columnconfigure(i, weight=1)
+
 
 
     # Main Buttons Homepage Commands
@@ -245,10 +267,10 @@ class AdminHomepage:
 
     def apply_theme(self, theme):
         if theme == 'dark':
-            self.window.configure(bg='black')
+            self.window.configure(bg='red3')
             # Set other widget and text colors for dark theme
         elif theme == 'light':
-            self.window.configure(bg='white')
+            self.window.configure(bg='pink')
             # Set other widget and text colors for light theme
         else:
             self.window.configure(bg='SystemButtonFace')

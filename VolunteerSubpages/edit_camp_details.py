@@ -8,37 +8,57 @@ class none_selected(Exception):
     pass
 def edit_camp_details(window, y_camp_info, camp_id, back_button_to_volunteer_main):
     try:
-        print(camp_id)
-        for i in window.winfo_children():
+        #print(camp_id)
+        '''for i in window.winfo_children():
             i.grid_forget()
 
         t_edit_campframe = tk.Frame(window)
-        t_edit_campframe.grid()
+        t_edit_campframe.grid()'''
+
+        for i in window.winfo_children():
+            i.grid_forget()
+        for i in range(9):
+            window.grid_columnconfigure(i, weight=1)
+        t_edit_campframe = tk.Frame(window)
+        t_edit_campframe.grid(sticky="nsew", padx=5, pady=5, columnspan=9, rowspan=9)
+        for i in range(9):
+            t_edit_campframe.grid_columnconfigure(i, weight=1)
+        for i in range(9):
+            t_edit_campframe.grid_rowconfigure(i, weight=1)
 
         # Access the Camp_ID's
         crisis_df = pd.read_csv("crisis_events.csv", header=0)
         crisis_df = crisis_df.fillna(0)
         camp_ID_choices = crisis_df['Camp ID'].tolist()
 
-        t_select_camp_title = tk.Label(t_edit_campframe, text='Select camp ID', font=('Arial Bold', 30), pady=30)
-        t_select_camp_title.grid(row=0, column=1)
+        t_select_camp_title = tk.Label(t_edit_campframe, text='Select camp ID', font=('TKDefault', 25), fg='white')
+        #t_select_camp_title.grid(row=0, column=1)
+        t_select_camp_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
+        t_select_camp_title.configure(background="grey")
 
         camp_ID_listbox = tk.Listbox(t_edit_campframe, selectmode=tk.SINGLE)
         if camp_id in camp_ID_choices:
             camp_ID_listbox.insert(tk.END, camp_id)
         else:
             camp_ID_listbox.insert(tk.END, "No camp assigned")
-        camp_ID_listbox.grid(row=1, column=1, padx=5, pady=5)
+        #camp_ID_listbox.grid(row=1, column=1, padx=5, pady=5)
+        camp_ID_listbox.grid(row=1, column=4, padx=5, pady=5)
+
+        # Button Frame:
+        btn_frame = tk.Frame(t_edit_campframe)
+        btn_frame.grid(row=2, column=4, pady=10)
+        btn_frame.grid_columnconfigure(0, weight=1)
+        btn_frame.grid_columnconfigure(2, weight=1)
 
         # BUTTONS:
-        t_save_changes = tk.Button(t_edit_campframe, text='Add/Remove Refugees', command=lambda: edit_refugee_no(crisis_df, camp_ID_listbox.get(tk.ACTIVE)))
-        t_save_changes.grid(row=7, column=1, padx=5, pady=10)
+        t_save_changes = tk.Button(btn_frame, text='Add/Remove Refugees', command=lambda: edit_refugee_no(crisis_df, camp_ID_listbox.get(tk.ACTIVE)))
+        t_save_changes.grid(row=0, column=2, padx=5, pady=10)
 
-        t_back_button = tk.Button(t_edit_campframe, text='Back to Home', command=back_button_to_volunteer_main)
-        t_back_button.grid(row=7, column=0, padx=5, pady=10)
+        t_back_button = tk.Button(btn_frame, text='Back to Home', command=back_button_to_volunteer_main)
+        t_back_button.grid(row=0, column=1, padx=5, pady=10)
 
-        change_camp_ID_button = tk.Button(t_edit_campframe, text='Change camp ID', command=lambda: edit_camp_id(crisis_df, camp_ID_listbox.get(tk.ACTIVE), camp_ID_listbox))
-        change_camp_ID_button.grid(row=7, column=2, padx=5, pady=10)
+        change_camp_ID_button = tk.Button(btn_frame, text='Change camp ID', command=lambda: edit_camp_id(crisis_df, camp_ID_listbox.get(tk.ACTIVE), camp_ID_listbox))
+        change_camp_ID_button.grid(row=0, column=3, padx=5, pady=10)
 
     except (ValueError, TypeError):
         tk.messagebox.showwarning(message="Please enter an integer value")

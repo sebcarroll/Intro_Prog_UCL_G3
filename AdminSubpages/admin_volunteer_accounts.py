@@ -10,27 +10,29 @@ class AdminVolunteerDisplay:
         self.back_button_to_admin_main = back_button_to_admin_main
 
     def create_gui_volunteer_display(self, window):
-        # Main frame for this whole page
         for i in self.window.winfo_children():
             i.grid_forget()
-        self.window.grid_columnconfigure(0, weight=1)
-        self.window.grid_rowconfigure(0, weight=1)
+        for i in range(9):
+            self.window.grid_columnconfigure(i, weight=1)
         display_volunteer_frame = tk.Frame(self.window)
-        display_volunteer_frame.grid(sticky="nsew", padx=5, pady=5)
-        display_volunteer_frame.grid_columnconfigure(0, weight=1)
-        display_volunteer_frame.grid_rowconfigure(1, weight=3)
-        display_volunteer_frame.grid_rowconfigure(2, weight=1)
+        display_volunteer_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9, rowspan=9)
+        for i in range(9):
+            display_volunteer_frame.grid_columnconfigure(i, weight=1)
+        for i in range(9):
+            display_volunteer_frame.grid_rowconfigure(i, weight=1)
+
 
         # Labels
-        display_volunteer_title = tk.Label(display_volunteer_frame, text="Display Volunteer Accounts", font=('Helvetica', 16))
-        display_volunteer_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5)
+        display_volunteer_title = tk.Label(display_volunteer_frame, text="Display Volunteer Accounts", font=('TKDefault', 25), fg='white')
+        display_volunteer_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
+        display_volunteer_title.configure(background="grey")
 
-        self.display_volunteer_tree = ttk.Treeview(display_volunteer_frame, height=20)
-        self.display_volunteer_tree.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
+        self.display_volunteer_tree = ttk.Treeview(display_volunteer_frame, height=10)
+        self.display_volunteer_tree.grid(row=1, column=0, columnspan=9, sticky="nsew", padx=10, pady=5, rowspan=4)
 
         # Button Frame:
         btn_frame = tk.Frame(display_volunteer_frame)
-        btn_frame.grid(row=2, column=0, pady=10)
+        btn_frame.grid(row=6, column=4, pady=10, sticky="sew", rowspan=4)
         btn_frame.grid_columnconfigure(0, weight=1)
         btn_frame.grid_columnconfigure(2, weight=1)
 
@@ -65,21 +67,21 @@ class AdminVolunteerDisplay:
 
 
     def upload_csv_data(self, tree, filename):
-        data = pd.read_csv(filename)
-
+        data = pd.read_csv(filename, dtype={'Phone Number': str})
+        data['Phone Number'] = data['Phone Number'].astype(str)
         # The following block will convert floats to integers for the GUI to remove the ".0"
         # columns with float numbers
         float_columns = data.select_dtypes(include=['float']).columns
         # Convert floats to integers for display in treeview
         for col in float_columns:
             data[col] = data[col].fillna(0).astype(int)
-
+        columns_to_display = [col for col in data.columns if col != "Deleted"]
         tree.delete(*tree.get_children())
-        tree['columns'] = list(data.columns)
+        tree['columns'] = columns_to_display
         tree.column("#0", width=0, stretch=tk.NO)
         tree.heading("#0", text="", anchor=tk.W)
 
-        for col in data.columns:
+        for col in columns_to_display:
             tree.column(col, anchor=tk.CENTER, width=80)
             tree.heading(col, text=col, anchor=tk.CENTER)
 
@@ -121,6 +123,7 @@ class AdminVolunteerDisplay:
         # Open pop up edit window
         refugee_profile_window = tk.Toplevel(self.window)
         refugee_profile_window.title("View Volunteer Details")
+        refugee_profile_window.grab_set()
 
         # Create a label and entry for each plan attribute using column attributes
         for i in range(treeview_width):
@@ -153,6 +156,7 @@ class AdminVolunteerDisplay:
         # Open pop up edit window
         refugee_profile_window = tk.Toplevel(self.window)
         refugee_profile_window.title("Edit Volunteer Details")
+        refugee_profile_window.grab_set()
 
         # Create empty dictionary to store new edited info with key as attribute, value as new edited entry
         self.edited_entry_dictionary = {}
