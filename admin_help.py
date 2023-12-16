@@ -42,7 +42,7 @@ class AdminHelp:
     def info_pop_up(self):
         self.info_window = tk.Toplevel(self.window)
         self.info_window.title("Information")
-        self.info_window.geometry("470x630")
+        self.info_window.geometry("470x650")
 
         self.info_window.grab_set()
 
