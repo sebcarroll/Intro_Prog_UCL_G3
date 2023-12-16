@@ -112,7 +112,7 @@ class AdminCreatePlan:
         self.save_plan_button.grid(row=19, column=3, pady=40)
 
         back_button = tk.Button(new_plan_frame, text='Back to Home', command=self.back_button_to_admin_main)
-        back_button.grid(row=19, column=1, padx=5, pady=40)
+        back_button.grid(row=19, column=2, padx=5, pady=40)
 
     def character_lim(self):
         if len(self.description_label_Entry.get("1.0", tk.END)) > 100:

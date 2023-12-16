@@ -256,10 +256,10 @@ class AdminHomepage:
 
     def apply_theme(self, theme):
         if theme == 'dark':
-            self.window.configure(bg='black')
+            self.window.configure(bg='red3')
             # Set other widget and text colors for dark theme
         elif theme == 'light':
-            self.window.configure(bg='white')
+            self.window.configure(bg='pink')
             # Set other widget and text colors for light theme
         else:
             self.window.configure(bg='SystemButtonFace')
