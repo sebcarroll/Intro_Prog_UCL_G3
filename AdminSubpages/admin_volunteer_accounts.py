@@ -69,13 +69,15 @@ class AdminVolunteerDisplay:
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename, dtype={'Phone Number': str})
         data['Phone Number'] = data['Phone Number'].astype(str)
+
+        data['Deleted'] = 'Not Deleted'
         # The following block will convert floats to integers for the GUI to remove the ".0"
         # columns with float numbers
         float_columns = data.select_dtypes(include=['float']).columns
         # Convert floats to integers for display in treeview
         for col in float_columns:
             data[col] = data[col].fillna(0).astype(int)
-        columns_to_display = [col for col in data.columns if (col != "Deleted" and col != "Phone Number")]
+        columns_to_display = [col for col in data.columns]
         tree.delete(*tree.get_children())
         tree['columns'] = columns_to_display
         tree.column("#0", width=0, stretch=tk.NO)
@@ -189,7 +191,7 @@ class AdminVolunteerDisplay:
             # list comprehension for new edited values
             updated_values = [entry.get() for entry in self.edited_entry_dictionary.values()]
 
-            data = pd.read_csv("volunteer_info.csv")
+            data = pd.read_csv("volunteer_info.csv", dtype={'Phone Number': str})
 
             selected_id = self.display_volunteer_tree.item(selected_item, 'values')[0]
 
@@ -200,11 +202,15 @@ class AdminVolunteerDisplay:
                 for i, col_name in enumerate(data.columns):
                     col_type = data[col_name].dtype
 
-                    # Convert the value to the column's type
-                    if pd.api.types.is_numeric_dtype(col_type):
-                        if updated_values[i] != '':
+                    if col_name == 'Phone Number':
+                        updated_values[i] = str(updated_values[i]) if updated_values[i] != '' else pd.NA
+                    elif pd.api.types.is_numeric_dtype(col_type) and updated_values[i] != '':
+                        try:
                             updated_values[i] = col_type.type(updated_values[i])
-                        else:
+                        except ValueError:
+                            updated_values[i] = pd.NA
+                    else:
+                        if updated_values[i] == '':
                             updated_values[i] = pd.NA
 
                 data.loc[row_index] = updated_values
