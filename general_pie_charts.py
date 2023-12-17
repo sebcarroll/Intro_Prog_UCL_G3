@@ -1,5 +1,6 @@
 import tkinter as tk
 import csv
+from tkinter import messagebox
 import os
 import pandas as pd
 
@@ -23,7 +24,8 @@ class SummaryCharts:
             self.create_pie_chart_status(self.charts_window)
             self.create_bar_chart_crisis_type(self.charts_window)
         except NoDataError as e:
-            print(f"Error: {e}")
+            messagebox.showerror("Error", f"Error: {e}")
+            #print(f"Error: {e}")
     def create_pie_chart_status(self, window):
         active_count = 0
         inactive_count = 0
