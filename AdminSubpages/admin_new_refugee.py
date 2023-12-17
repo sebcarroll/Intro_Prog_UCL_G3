@@ -48,7 +48,7 @@ def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main
     family_label = tk.Label(refugee_labelframe, text='Total number of family members',
                             font=('TkinterDefault', 15))
     family_label.grid(row=4, column=0, padx=20, pady=10)
-    family_labelbox = ttk.Spinbox(refugee_labelframe, from_=0, to=20, style='info.TSpinbox')
+    family_labelbox = ttk.Spinbox(refugee_labelframe, from_=1, to=20, style='info.TSpinbox')
     family_labelbox.grid(row=4, column=2, padx=5, pady=10)
 
     # Medical conditions, we need to add dictionaries and everything for this
