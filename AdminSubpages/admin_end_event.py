@@ -10,7 +10,6 @@ class AdminEndEvent:
         self.back_button_to_admin_main = back_button_to_admin_main
 
     def create_gui_end_event(self, window):
-        # Main frame for this whole page
         for i in self.window.winfo_children():
             i.grid_forget()
         for i in range(9):
@@ -30,8 +29,6 @@ class AdminEndEvent:
         self.end_plan_tree = ttk.Treeview(end_plan_frame, height=15)
         self.end_plan_tree.grid(row=1, column=0, columnspan=9, sticky="ew", padx=10, pady=5)
 
-
-
         # Button Frame:
         btn_frame = tk.Frame(end_plan_frame)
         btn_frame.grid(row=2, column=4, pady=10)
@@ -45,8 +42,6 @@ class AdminEndEvent:
         # Back button
         back_button = tk.Button(btn_frame, text='Back to Home', command=self.back_button_to_admin_main)
         back_button.grid(row=2, column=0, padx=5, pady=40)
-
-
 
         # CSV data
         csv_file = "crisis_events.csv"

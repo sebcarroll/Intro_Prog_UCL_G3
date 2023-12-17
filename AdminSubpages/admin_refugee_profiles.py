@@ -10,7 +10,6 @@ class AdminRefugeeDisplay:
         self.back_button_to_admin_main = back_button_to_admin_main
 
     def create_gui_refugee_display(self, window):
-        # Main frame for this whole page
         for i in self.window.winfo_children():
             i.grid_forget()
         for i in range(9):
@@ -21,10 +20,6 @@ class AdminRefugeeDisplay:
             display_refugee_frame.grid_columnconfigure(i, weight=1)
         for i in range(9):
             display_refugee_frame.grid_rowconfigure(i, weight=1)
-        '''display_refugee_frame = tk.Frame(self.window)
-        display_refugee_frame.grid(sticky="nsew", padx=5, pady=5, columnspan=9)
-        for i in range(9):
-            display_refugee_frame.grid_columnconfigure(i, weight=1)'''
 
         # Labels
         display_refugee_title = tk.Label(display_refugee_frame, text="Display Refugees", font=('TKDefault', 25), fg='white')
@@ -56,8 +51,6 @@ class AdminRefugeeDisplay:
         # Back button
         back_button = tk.Button(btn_frame, text='Back to Home', command=self.back_button_to_admin_main)
         back_button.grid(row=2, column=1, padx=5, pady=40)
-
-
 
         # CSV data
         csv_file = "refugee_info.csv"
@@ -98,7 +91,7 @@ class AdminRefugeeDisplay:
                 # Get the row index of the selected row
                 index = int(selected_item[0])
 
-                # Load current CSV data, delete the entry, save the deletion to the csv file
+                # Load current csv data, delete the entry, save the deletion to the csv file
                 data = pd.read_csv(filename)
                 data = data.drop(index)
                 data.to_csv(filename, index=False)
@@ -118,7 +111,7 @@ class AdminRefugeeDisplay:
         column_attributes = self.display_refugee_tree['columns']
         treeview_width = len(column_attributes)
 
-        # Open pop up edit window
+        # Open pop up view window
         refugee_profile_window = tk.Toplevel(self.window)
         refugee_profile_window.title("View Refugee Details")
         refugee_profile_window.grab_set()
@@ -127,10 +120,10 @@ class AdminRefugeeDisplay:
         for i in range(treeview_width):
             att = column_attributes[i]
             value = refugee_details[i]
-
+            # Attribute per row
             label = tk.Label(refugee_profile_window, text=f"{att}:")
             label.grid(row=i, column=0)
-
+            # Detail per row
             current_camp_info = tk.Label(refugee_profile_window, textvariable=tk.StringVar(refugee_profile_window, value=value))
             current_camp_info.grid(row=i, column=1)
 
@@ -167,9 +160,11 @@ class AdminRefugeeDisplay:
             att = column_attributes[i]
             value = refugee_details[i]
 
+            # Attribute per row
             label = tk.Label(refugee_profile_window, text=f"{att}:")
             label.grid(row=i, column=0)
 
+            # Entry per row - camp id is drop down of available camp id's
             if att == "Camp ID":
                 # Create a dropdown for Camp ID
                 camp_ID_box = ttk.Combobox(refugee_profile_window, values=self.camp_ids)
@@ -207,7 +202,7 @@ class AdminRefugeeDisplay:
                 for i, col_name in enumerate(data.columns):
                     col_type = data[col_name].dtype
 
-                    # Convert the value to the column's type
+                    # Cast: convert the value to the column's type
                     if pd.api.types.is_numeric_dtype(col_type):
                         if updated_values[i] != '':
                             updated_values[i] = col_type.type(updated_values[i])

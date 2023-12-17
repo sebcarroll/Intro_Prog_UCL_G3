@@ -16,13 +16,6 @@ def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main
     for i in range(9):
         refugeeframe.grid_rowconfigure(i, weight=1)
 
-
-    '''for i in window.winfo_children():
-        i.grid_forget()
-    # Main frame for this whole page
-    refugeeframe = tk.Frame(window)
-    refugeeframe.grid(row=0, column=2)'''
-
     try:
         crisis_df = pd.read_csv('crisis_events.csv')
         active_crisis_df = crisis_df[crisis_df['Status'] != 'Inactive']
@@ -148,6 +141,7 @@ def update_number_of_refugees(camp_ID):
 
     header = []
     data = []
+
     with open('crisis_events.csv', 'r') as file:
         csv_reader = csv.reader(file)
         header = next(csv_reader)

@@ -16,7 +16,6 @@ class AdminViewSummaries:
         self.map = CountryMap(self.window, self.back_button_to_admin_main)
 
     def create_gui_view_summaries(self, window):
-        # Main frame for this whole page
         for i in self.window.winfo_children():
             i.grid_forget()
         for i in range(9):
@@ -27,14 +26,6 @@ class AdminViewSummaries:
             end_plan_frame.grid_columnconfigure(i, weight=1)
         for i in range(9):
             end_plan_frame.grid_rowconfigure(i, weight=1)
-
-        '''self.window.grid_columnconfigure(0, weight=1)
-        self.window.grid_rowconfigure(0, weight=1)
-        end_plan_frame = tk.Frame(self.window)
-        end_plan_frame.grid(sticky="nsew", padx=5, pady=5)
-        end_plan_frame.grid_columnconfigure(0, weight=1)
-        end_plan_frame.grid_rowconfigure(1, weight=3)
-        end_plan_frame.grid_rowconfigure(2, weight=1)'''
 
         # Labels
         end_plan_title = tk.Label(end_plan_frame, text="View Plan Summaries", font=('TKDefault', 25), fg='white')
@@ -83,8 +74,6 @@ class AdminViewSummaries:
 
         # CSV data
         csv_file = "crisis_events.csv"
-        #self.upload_csv_data(self.end_plan_tree, csv_file)
-        # csv_data = self.load_csv_data(csv_file)
         try:
             self.upload_csv_data(self.end_plan_tree, csv_file)
         except:
@@ -99,15 +88,17 @@ class AdminViewSummaries:
 
     def generate_map_window(self):
         self.map.view_country_map_window()
+
+
     def upload_csv_data(self, tree, filename):
         data = pd.read_csv(filename)
 
-        # Convert 'Camp ID' to integer, handling missing or non-integer values
+        # Convert 'Camp ID' to integer with handling missing or non-integer values
         data['Camp ID'] = pd.to_numeric(data['Camp ID'], errors='coerce').fillna(0).astype('int64')
 
+        # Add an extra column to the treeview with attribute Volunteers which is the count of the volunteers per camp
         volunteer_counts = self.volunteer_camp_count()
-
-        # Ensure volunteer_counts is a Series and perform mapping
+        # If volunteer_counts is a series then perform mapping
         if isinstance(volunteer_counts, pd.Series):
             data['Volunteers'] = data['Camp ID'].map(volunteer_counts).fillna(0).astype('int64')
             #print(data['Volunteer Count'])
@@ -145,7 +136,7 @@ class AdminViewSummaries:
                 # Get the row index of the selected row
                 index = int(selected_item[0])
 
-                # Load current CSV data, delete the entry, save the deletion to the csv file
+                # Load current csv data, delete entry, save deletion to the csv
                 data = pd.read_csv(filename)
                 data = data.drop(index)
                 data.to_csv(filename, index=False)
@@ -165,7 +156,7 @@ class AdminViewSummaries:
         column_attributes = self.end_plan_tree['columns']
         treeview_width = len(column_attributes)
 
-        # Open pop up edit window
+        # Open pop up view window
         view_plan_window = tk.Toplevel(self.window)
         view_plan_window.title("View Plan")
         view_plan_window.grab_set()
@@ -175,9 +166,11 @@ class AdminViewSummaries:
             att = column_attributes[i]
             value = plan_details[i]
 
+            # Attributes per row
             label = tk.Label(view_plan_window, text=f"{att}:")
             label.grid(row=i, column=0)
 
+            # Details per row
             current_camp_info = tk.Label(view_plan_window, textvariable=tk.StringVar(view_plan_window, value=value))
             current_camp_info.grid(row=i, column=1)
 
@@ -218,9 +211,10 @@ class AdminViewSummaries:
                     att = column_attributes[i]
                     value = plan_details[i]
 
+                    # Attributes per row
                     label = tk.Label(edit_plan_window, text=f"{att}:    ")
                     label.grid(row=i, column=0)
-
+                    # Entry box per row
                     edit_entry = tk.Entry(edit_plan_window, textvariable=tk.StringVar(edit_plan_window, value=value))
                     edit_entry.grid(row=i, column=1)
                     self.edited_entry_dictionary[att] = edit_entry
@@ -255,7 +249,7 @@ class AdminViewSummaries:
                 for i, col_att in enumerate(data.columns):
                     col_type = data[col_att].dtype
 
-                    # Convert the value to the column's type
+                    # Convert the value to the column's type to save similar data to the csv
                     if pd.api.types.is_numeric_dtype(col_type):
                         if validated_values[i] != '':
                             validated_values[i] = col_type.type(validated_values[i])
@@ -266,13 +260,13 @@ class AdminViewSummaries:
                 data.to_csv("crisis_events.csv", index=False)
                 self.end_plan_tree.item(selected_item, values=validated_values)
 
-                # Check if Camp ID was changed and update in other CSVs
+                # Check if Camp ID was changed and update in other CSVs using the function defined below
                 new_camp_id = validated_values[data.columns.get_loc('Camp ID')]
                 if new_camp_id != original_camp_id:
                     self.update_camp_id_in_other_csvs(original_camp_id, new_camp_id)
 
             edit_plan_window.destroy()
-            # CSV data
+
             csv_file = "crisis_events.csv"
             # csv_data = self.load_csv_data(csv_file)
             self.upload_csv_data(self.end_plan_tree, csv_file)

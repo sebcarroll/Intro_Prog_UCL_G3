@@ -70,7 +70,7 @@ def edit_refugee_no(df, selected_camp_id):
 
 
             if isinstance(new_capacity, int):
-                # Update the DataFrame with the new value
+                # Update the df with the new value
                 df.loc[df["Camp ID"] == selected_camp_id, 'Capacity'] += new_capacity
                 df.to_csv('crisis_events.csv', index=False)
 
@@ -101,7 +101,7 @@ def edit_camp_id(df, selected_camp_id, listbox):
             if new_id in df['Camp ID'].values:
                 raise taken_ID("ID is already taken by another camp.")
 
-            # Update the camp ID in the DataFrame
+            # Update the camp ID in the df
             df['Camp ID'] = df['Camp ID'].astype(str)
             df.loc[df['Camp ID'] == selected_camp_id, 'Camp ID'] = new_id
             df.to_csv('crisis_events.csv', index=False)

@@ -189,7 +189,7 @@ class AdminCreatePlan:
 
                 raise option_no_exist
 
-            print(self.events_dict)
+            #print(self.events_dict)
             tkinter.messagebox.showinfo(title="Plan created", message=f"Plan successfully created - Camp ID is {new_camp_id}")
             self.save_to_csv()
             #self.save_plan_button.config(state=tk.DISABLED)
@@ -210,7 +210,7 @@ class AdminCreatePlan:
     def generate_camp_id(self):
         import random
         value = random.randint(10000, 99999)
-        print(value)
+        #print(value)
         return value
 
     def save_to_csv(self):
@@ -249,6 +249,7 @@ class AdminCreatePlan:
     @staticmethod
     def clear_entry(entry):
         #entry.delete(0, tk.END)
+        # clear different types of widgets entry, combobox and text boxes
         if isinstance(entry, tk.Entry):
             entry.delete(0, tk.END)
         elif isinstance(entry, ttk.Combobox):
