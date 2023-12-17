@@ -55,7 +55,7 @@ class AdminResourceAllocation:
         # Creating list of CAMP IDs
         camp_ID_label = tk.Label(resource_frame, text='Camp ID: ')
         camp_ID_label.grid(row=1, column=0, padx=5, pady=5)
-        self.camp_ID_box = ttk.Combobox(resource_frame, values= self.camp_ids)
+        self.camp_ID_box = ttk.Combobox(resource_frame, values= self.camp_ids, state='readonly')
         self.camp_ID_box.grid(row=1, column=1, padx=5, pady=5)
         self.camp_ID_box.bind('<<ComboboxSelected>>', self.update_number_of_refugees)
 
@@ -105,7 +105,7 @@ class AdminResourceAllocation:
         # Food label and spinbox
         food_label = tk.Label(resource_frame, text='Number of Weekly Meals Provided per Refugee: ')
         food_label.grid(row=9, column=0, padx=5, pady=5)
-        self.food_box = tk.Spinbox(resource_frame, from_=0, to=28, increment=7)
+        self.food_box = tk.Spinbox(resource_frame, from_=0, to=28, increment=7, state='readonly')
         self.food_box.grid(row=9, column=1, padx=5, pady=5)
 
 
@@ -114,7 +114,7 @@ class AdminResourceAllocation:
                                                                                                   #    "Number of Health Supplies Provided per Refugee Weekly: ",                                                                                       #    8,                                                                                         #   medicine_amount_refugee)
         medicine_label = tk.Label(resource_frame, text='Number of Health Supplies per Refugee per Week: ')
         medicine_label.grid(row=10, column=0, padx=5, pady=5)
-        self.medicine_box = tk.Spinbox(resource_frame, from_=0, to=7)
+        self.medicine_box = tk.Spinbox(resource_frame, from_=0, to=7, state='readonly')
         self.medicine_box.grid(row=10, column=1, padx=5, pady=5)
        # estimated_delivery_time_options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
         # estimated_delivery_time_listbox, estimated_delivery_time_scrollbar = create_listbox_with_label(self.window,"Estimated Resource Delivery Time (weeks): ",7, 0, estimated_delivery_time_options)
@@ -124,7 +124,7 @@ class AdminResourceAllocation:
 
         estimated_delivery_label = tk.Label(resource_frame, text='Estimated Resource Delivery Time (days): ')
         estimated_delivery_label.grid(row=11, column=0, padx=5, pady=5)
-        self.estimated_delivery_box = tk.Spinbox(resource_frame, from_=0, to=14)
+        self.estimated_delivery_box = tk.Spinbox(resource_frame, from_=0, to=14, state='readonly')
         self.estimated_delivery_box.grid(row=11, column=1, padx=5, pady=5)
 
         submit_button = tk.Button(resource_frame, text="Submit",

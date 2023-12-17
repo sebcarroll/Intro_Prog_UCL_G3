@@ -105,7 +105,7 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
     work_type_label.grid(row=5, column=1, padx=5, pady=5)
 
     # Work type entry
-    t_worktypeEntry = ttk.Combobox(t_personal_labelframe, values=['Medical Aid', 'Food counselling'])
+    t_worktypeEntry = ttk.Combobox(t_personal_labelframe, values=['Medical Aid', 'Food counselling'], state='readonly')
     t_worktypeEntry.grid(row=5, column=2, padx=5, pady=5, sticky='ew')
 
     # Button Frame:
@@ -152,7 +152,7 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
         # Camp ID
         t_camp_ID_label = tk.Label(refugee_labelframe, text='Camp ID', font=('TkinterDefault', 15))
         t_camp_ID_label.grid(row=3, column=3)
-        t_camp_IDbox = ttk.Combobox(refugee_labelframe, values=camp_IDs)
+        t_camp_IDbox = ttk.Combobox(refugee_labelframe, values=camp_IDs, state='readonly')
         t_camp_IDbox.grid(row=3, column=4, padx=5)
 
         # Refugee name
@@ -181,7 +181,8 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
                                          font=('TkinterDefault', 15))
         languages_spokenlabel.grid(row=11, column=3, padx=5)
         t_languages_spokenEntry = ttk.Combobox(refugee_labelframe,
-                                               values='English Chinese Hindi Spanish French Arabic Bengali Portuguese Russian Urdu Indonesian German Swahili Marathi Tamil Telugu Turkish Vietnamese Korean Italian Thai Gujarati Persian Polish Pashto Kannada Ukrainian Somali Kurdish')
+                                               values='English Chinese Hindi Spanish French Arabic Bengali Portuguese Russian Urdu Indonesian German Swahili Marathi Tamil Telugu Turkish Vietnamese Korean Italian Thai Gujarati Persian Polish Pashto Kannada Ukrainian Somali Kurdish',
+                                               state='readonly')
         t_languages_spokenEntry.grid(row=11, column=4, padx=5)
 
         # secondlanguage entry box
