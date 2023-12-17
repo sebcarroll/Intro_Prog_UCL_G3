@@ -18,6 +18,7 @@ class CountryMap:
         self.map_window = tk.Toplevel(self.window)
         self.map_window.title("View Crisis Map")
         self.map_window.geometry("1000x500")
+        #self.map_window.configure(bg='black')
         # THIS SETS THE WINDOW FIXED SIZE!
         self.map_window.resizable(False, False)
         self.map_window.grab_set()
@@ -121,7 +122,7 @@ class CountryMap:
                                 "The file 'crisis_events.csv' was not found."
                                 )
             #print(f"Error: File '{crisis_events}' not found.")
-
+            self.map_window.destroy()
             return []
         except pd.errors.EmptyDataError:
             # Handle the case where the file is empty
