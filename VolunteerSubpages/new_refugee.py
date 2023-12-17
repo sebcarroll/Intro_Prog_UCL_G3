@@ -33,7 +33,9 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
                 if row[7] == "Active":
                     camp_ids_from_csv.append(row[0])
     except FileNotFoundError:
-        print("Error: 'crisis_events.csv' file not found.")
+        messagebox.showinfo("File not found",
+                            "The file 'crisis_events.csv' was not found.\n\nYou will not be able to change to another camp ID")
+        #print("Error: 'crisis_events.csv' file not found.")
 
     camp_IDs_unfiltered = list(camp_ids_from_csv)
     camp_IDs_filtered = []
