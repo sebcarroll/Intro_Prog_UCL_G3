@@ -148,7 +148,7 @@ class AdminResourceAllocation:
     # Event handler function to update number of refugees
     def update_number_of_refugees(self, event):
         selected_camp_id = self.camp_ID_box.get()
-        print(selected_camp_id)
+        #print(selected_camp_id)
         self.number_of_actual_refugees = 0
         try:
             with open('refugee_info.csv', 'r') as file:
@@ -158,7 +158,7 @@ class AdminResourceAllocation:
                     if int(selected_camp_id) == int(float(row[1])):
                         self.number_of_actual_refugees += 1
         except FileNotFoundError:
-            print("Error: 'refugee_info.csv' file not found.")
+            tk.messagebox.showinfo(title='File Not Found', message="Error: 'refugee_info.csv' file not found.")
         self.refugee_count.config(text=str(self.number_of_actual_refugees))
 
         # Bind the event handler to the listbox
@@ -171,15 +171,15 @@ class AdminResourceAllocation:
         self.give_minimum_recommended_amount_based_on_current_refugees()
 
     def give_minimum_recommended_amount_based_on_current_refugees(self):
-        print("function_running")
+        #print("function_running")
         no_weeks_aid = self.no_weeks_aid_var.get()
         camp_ID = self.camp_ID_box.get()
-        print(f"Number of weeks of aid: {no_weeks_aid}")
+        #print(f"Number of weeks of aid: {no_weeks_aid}")
         if no_weeks_aid.isdigit():
             no_weeks_aid = int(no_weeks_aid)
             self.minimum_amount_of_food = self.number_of_actual_refugees * 7 * no_weeks_aid
             self.minimum_amount_of_medicine = self.number_of_actual_refugees * 1 * no_weeks_aid
-            print(f"Calculated food: {self.minimum_amount_of_food}, medicine: {self.minimum_amount_of_medicine}")
+            #print(f"Calculated food: {self.minimum_amount_of_food}, medicine: {self.minimum_amount_of_medicine}")
             self.recommended_food_count.config(text=str(self.minimum_amount_of_food))
             self.recommended_medicine_count.config(text=str(self.minimum_amount_of_medicine))
         elif no_weeks_aid == "":
@@ -211,36 +211,36 @@ class AdminResourceAllocation:
 
             if self.check_input_valid(camp_id) == False:
                 tk.messagebox.showinfo(title='Invalid Entry', message='Please select a valid Camp ID.')
-                print(f"Not valid {camp_id}")
+                #print(f"Not valid {camp_id}")
 
             if self.check_input_valid(no_refugees) == False or self.check_is_numeric(no_refugees) == False:
                 tk.messagebox.showinfo(title='Invalid Entry', message='Invalid camp carrying capacity estimate given.')
-                print(no_refugees)
+                #print(no_refugees)
 
             if self.check_input_valid(no_weeks_aid) == False or self.check_is_numeric(no_weeks_aid) == False:
                 tk.messagebox.showinfo(title='Invalid Entry', message='Invalid estimated time length for aid given.')
-                print(f"Not valid {no_weeks_aid}")
+                #print(f"Not valid {no_weeks_aid}")
 
 
             if self.check_input_valid(total_food_supplied) == False or self.check_is_numeric(total_food_supplied) == False:
                 tk.messagebox.showinfo(title='Invalid Entry', message='Invalid Food Total Given.')
-                print(f" Not valid {total_food_supplied}")
+                #print(f" Not valid {total_food_supplied}")
 
             if self.check_input_valid(total_medicine_supplied) == False or self.check_is_numeric(total_medicine_supplied) == False:
                 tk.messagebox.showinfo(title='Invalid Entry', message='Invalid Medicine Total Given')
-                print(total_medicine_supplied)
+                #print(total_medicine_supplied)
 
             if self.check_input_valid(week_food_per_refugee) == False or self.check_is_numeric(week_food_per_refugee) == False:
                 tk.messagebox.showinfo(title='Invalid Entry', message='Invalid weekly food allocation given.')
-                print(week_food_per_refugee)
+                #print(week_food_per_refugee)
 
             if self.check_input_valid(week_medicine_per_refugee) == False or self.check_is_numeric(week_medicine_per_refugee) == False:
                 tk.messagebox.showinfo(title='Invalid Entry', message='Invalid weekly medicine allocation given.')
-                print(week_medicine_per_refugee)
+                #print(week_medicine_per_refugee)
 
             if self.check_input_valid(delivery_time_weeks) == False or self.check_is_numeric(delivery_time_weeks) == False:
                 tk.messagebox.showinfo(title='Invalid Entry', message='Invalid estimated delivery time given.')
-                print(delivery_time_weeks)
+                #print(delivery_time_weeks)
             return camp_id, no_refugees, no_weeks_aid, total_food_supplied, total_medicine_supplied, week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks
 
     def check_input_valid(self, variable):
@@ -265,15 +265,15 @@ class AdminResourceAllocation:
         :param list: The list of options from which the option is selected. If no option selected, then the first option is selected as default
         :return:
         '''
-        print(f"Current listbox selection indices: {listbox.curselection()}")
+        #print(f"Current listbox selection indices: {listbox.curselection()}")
         selected_indices = listbox.curselection()
         if selected_indices:
             selected_value = listbox.get(selected_indices[0])
-            print(f"Selected value: {selected_value}")
+            #print(f"Selected value: {selected_value}")
             return selected_value
         else:
             default_value = list[0]
-            print("No selection made. Using the default value.")
+            #print("No selection made. Using the default value.")
             return default_value
 
     def check_is_numeric(self, variable):
@@ -301,8 +301,8 @@ class AdminResourceAllocation:
              week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks)
         update_crisis_events(camp_id, no_refugees, no_weeks_aid, total_food_supplied, total_medicine_supplied,
              week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks)
-        print(self.resource_allocation_variables)
-        print("Values Submitted and Saved")
+        #print(self.resource_allocation_variables)
+        #print("Values Submitted and Saved")
         tk.messagebox.showinfo(title='Details saved', message='Details have been saved')
 
 
@@ -342,29 +342,29 @@ class AdminResourceAllocation:
 
         '''
         try:
-            print("Resource allocation function entered into.")
+            #print("Resource allocation function entered into.")
 
             (camp_id, no_refugees, no_weeks_aid, total_food_supplied, total_medicine_supplied,
              week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks) = self.turn_data_into_valid_form(self.camp_ID_box, no_refugees_entry, self.no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry, self.food_box, self.medicine_box, self.estimated_delivery_box, camp_ids)
-            print("Data Converted.")
+            #print("Data Converted.")
 
             no_refugees_int = int(no_refugees)
-            print(f"Number of refugees: {no_refugees_int}")
+            #print(f"Number of refugees: {no_refugees_int}")
             no_weeks_aid_float = float(no_weeks_aid)
-            print(f"Number of weeks of aid being supplied: {no_weeks_aid_float}")
+            #print(f"Number of weeks of aid being supplied: {no_weeks_aid_float}")
             total_food_supplied_float = float(total_food_supplied)
             print(total_food_supplied_entry)
             print(total_food_supplied)
-            print(f"Total food supplied: {total_food_supplied_float}")
+            #print(f"Total food supplied: {total_food_supplied_float}")
             total_medicine_supplied_float = float(total_medicine_supplied)
-            print(f"Total medicine supplied: {total_medicine_supplied_float}")
+            #print(f"Total medicine supplied: {total_medicine_supplied_float}")
             week_food_per_refugee_float = float(week_food_per_refugee)
-            print(f"Weekly food allocation: {week_food_per_refugee_float}")
+            #print(f"Weekly food allocation: {week_food_per_refugee_float}")
             week_medicine_per_refugee_float = float(week_medicine_per_refugee)
-            print(f"Weekly medicine allocation: {week_medicine_per_refugee_float}")
-            print("Data for if statements now in float/int form.")
+            #print(f"Weekly medicine allocation: {week_medicine_per_refugee_float}")
+            #print("Data for if statements now in float/int form.")
             weeks_of_food_supply = total_food_supplied_float / (no_refugees_int * week_food_per_refugee_float)
-            print(f"Number of weeks of food supply: {weeks_of_food_supply}")
+            #print(f"Number of weeks of food supply: {weeks_of_food_supply}")
             additional_resources_message = ""
 
             if weeks_of_food_supply < no_weeks_aid_float:
@@ -374,14 +374,14 @@ class AdminResourceAllocation:
             weeks_of_medicine_supply = float(total_medicine_supplied_float) / (no_refugees_int * week_medicine_per_refugee_float)
             if weeks_of_medicine_supply < no_weeks_aid_float:
                 additional_medicine_needed = (no_weeks_aid_float - weeks_of_medicine_supply) * (week_medicine_per_refugee_float * no_refugees_int)
-                additional_resources_message += f" Recommended: {additional_medicine_needed} additional units of medicine needed at camp {camp_id} to cover the aid duration period.\n"
+                additional_resources_message += f"Recommended: {additional_medicine_needed} additional units of medicine needed at camp {camp_id} to cover the aid duration period.\n"
 
             if additional_resources_message:
-                print("Running Confirmation before submission")
+                #print("Running Confirmation before submission")
                 self.confirmation_before_submission(additional_resources_message, lambda: self.on_confirm_action(camp_id, no_refugees, no_weeks_aid, total_food_supplied, total_medicine_supplied,
              week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks))
             else:
-                print("Running on_confirm_action, no issues reported in terms of supply given versus aid.")
+                #print("Running on_confirm_action, no issues reported in terms of supply given versus aid.")
                 self.on_confirm_action(camp_id, no_refugees, no_weeks_aid, total_food_supplied, total_medicine_supplied,
              week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks)
 
@@ -390,7 +390,7 @@ class AdminResourceAllocation:
 
 
         except Exception as e:
-            print(f"An error occurred: {e}")
+            tk.messagebox.showinfo(title="Error", message=f"An error occurred: {e}")
 
 
     def create_resource_allocation_list(self, camp_id, no_refugees, no_weeks_aid, total_food_supplied, total_medicine_supplied,
