@@ -116,6 +116,13 @@ def validate_data(edited_data, original_data, row_index_in_treeview):
                 validated_data.append(int(value))
             else:
                 validated_data.append(original_data.at[row_index_in_treeview, att])
+        # No negative numbers!
+        elif att in ['Capacity', 'Duration', 'Meals(T)', 'Medicine(T)', 'Meals/w', 'Medicine/w', 'Delivery Time(d)', 'Refugees']:
+            if value.isdigit() and int(value) > 0:
+                validated_data.append(value)
+            else:
+                validated_data.append(original_data.at[row_index_in_treeview, att])
+        # Cannot change these regardless of user input
         elif att in ['Status', 'End Date']:
             validated_data.append(original_data.at[row_index_in_treeview, att])
         else:
