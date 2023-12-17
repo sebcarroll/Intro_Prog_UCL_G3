@@ -271,53 +271,61 @@ class AdminEditVolunteerDetails(invalid_email, invalid_name, invalid_phone_numbe
         email_check = new_volunteer['Email Address']
         phone_check = new_volunteer['Phone Number']
 
-        if name_check.isalpha() == False:
-            raise invalid_name
-
-        if not (email_check and re.search(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+',
-                                        email_check)):
-            raise invalid_email
-
-        if not re.search(r'^[0-9]+', str(phone_check)):
-            raise invalid_phone_number
-
-
-
-        if self.username_exists(username_check):
-            tk.messagebox.showerror("Error",f"Username '{username_check}' already exists. Please choose a different username.")
-            return
-
-        if not username_check:
-            tk.messagebox.showerror("Error", "Username must be filled in")
-            return
-
-        if not password_check:
-            tk.messagebox.showerror("Error", "Password must be filled in")
-            return
-
-
-
-
         try:
+
+            if not name_check.isalpha():
+                raise invalid_name
+
+            if not (email_check and re.search(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+',
+                                            email_check)):
+                raise invalid_email
+
+            if not re.search(r'^[0-9]+', str(phone_check)):
+                raise invalid_phone_number
+
+            if self.username_exists(username_check):
+                tk.messagebox.showerror("Error",f"Username '{username_check}' already exists. Please choose a different username.")
+                return
+
+            if not username_check:
+                tk.messagebox.showerror("Error", "Username must be filled in")
+                return
+
+            if not password_check:
+                tk.messagebox.showerror("Error", "Password must be filled in")
+                return
+
             with open('volunteer_info.csv', 'a', newline='') as csvfile:
                 fieldnames = ['Username', 'Camp ID', 'password', 'name', 'Email Address', 'Phone Number', 'Commitment',
                               'Work Type', 'Deactivated']
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+                # Check if the file is empty and write headers
+                if csvfile.tell() == 0:
+                    writer.writeheader()
+
                 writer.writerow(new_volunteer)
-            message_label = tk.Label(self.create_account_window, text="")
-            submit_button_row = 10
-            submit_button_column = 0
-            submit_column_span = 2
-            username = new_volunteer['Name']
+            # message_label = tk.Label(self.create_account_window, text="")
+            # submit_button_row = 10
+            # submit_button_column = 0
+            # submit_column_span = 2
+            # username = new_volunteer['Name']
             # message_label.config(text="Values Submitted and Saved. Please return to the home page.")
             # message_label.grid(row=submit_button_row + 1, column=submit_button_column, columnspan=submit_column_span,
             #                    sticky='W')
-            tk.messagebox.showinfo(title='Details Saved', message=f"Details for {username} successfully created.")
-            self.create_account_window.destroy()
+            tk.messagebox.showinfo(title='Details Saved', message=f"Details for {username_check} successfully created.")
             self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
+            self.create_account_window.destroy()
 
         except FileNotFoundError:
             messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
+
+        except invalid_name:
+            tk.messagebox.showinfo(title='Invalid Name', message='Please enter a valid name')
+        except invalid_email:
+            tk.messagebox.showinfo(title='Invalid Email', message='Please enter a valid email address')
+        except invalid_phone_number:
+            tk.messagebox.showinfo(title='Invalid Phone Number', message='Please enter a valid phone number')
 
     def username_exists(self, username):
         try:
