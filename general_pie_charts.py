@@ -37,7 +37,7 @@ class SummaryCharts:
                 elif status.lower() == 'inactive':
                     inactive_count += 1
         if active_count == 0 and inactive_count == 0:
-        raise NoDataError("No data available in the CSV file for pie chart.")
+            raise NoDataError("No data available in the CSV file for pie chart.")
 
 
         # Calculate percentage or ratio between the inactive and active plans
