@@ -31,9 +31,13 @@ class CountryMap:
         # Create a canvas for the map image
         map_canvas = tk.Canvas(window, width=1000, height=800)
         map_canvas.place(x=0, y=0)
-
-        if self.map_image is None:
-            self.map_image = PhotoImage(file="Images/dark_map.png")
+        try:
+            if self.map_image is None:
+                self.map_image = PhotoImage(file="Images/dark_map.png")
+        except:
+            messagebox.showerror("No image found",
+                                   "There is a problem accessing the database\n\nThe file may be missing or corrupted")
+            self.map_image = None
 
         map_canvas.create_image(0, 0, anchor=tk.NW, image=self.map_image)
 
