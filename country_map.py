@@ -4,6 +4,9 @@ import os
 import pandas as pd
 from tkinter import PhotoImage
 
+class EmptyDataError(Exception):
+    pass
+
 class CountryMap:
     def __init__(self, window, back_button_to_admin_main):
         self.window = window
