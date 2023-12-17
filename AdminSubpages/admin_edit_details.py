@@ -148,7 +148,8 @@ class AdminEditVolunteerDetails(invalid_email, invalid_name, invalid_phone_numbe
                     if row[7] == "Active":
                         self.camp_ids_from_csv.append(row[0])
         except FileNotFoundError:
-            print("Error: 'crisis_events.csv' file not found.")
+            messagebox.showinfo("File not found", "The file 'crisis_events.csv' was not found.\n\nYou will not be able to change to another camp ID")
+            #print("Error: 'crisis_events.csv' file not found.")
         self.camp_ids = self.camp_ids_from_csv
 
     # def create_listbox_with_label(self, widget, text_label, row_num, column_num, list_of_options):

@@ -142,7 +142,7 @@ def update_number_of_refugees(camp_ID):
                 number_of_refugees_actual = 1
             elif camp_ID == int(float(row[1])):
                 number_of_refugees_actual += 1
-    print(f"Total refugees counted: {number_of_refugees_actual}")
+    #print(f"Total refugees counted: {number_of_refugees_actual}")
 
     header = []
     data = []

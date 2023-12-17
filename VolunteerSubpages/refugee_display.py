@@ -237,5 +237,7 @@ class RefugeeDisplay:
                     if row[7] == "Active":
                         camp_ids.append(row[0])
         except FileNotFoundError:
-            print("Error: 'crisis_events.csv' file not found.")
+            messagebox.showinfo("File not found",
+                                "The file 'crisis_events.csv' was not found.\n\nYou will not be able to change to another camp ID")
+            #print("Error: 'crisis_events.csv' file not found.")
         return camp_ids

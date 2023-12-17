@@ -153,7 +153,10 @@ class AdminRefugeeDisplay:
         self.edited_entry_dictionary = {}
 
         # get camp id available from crisis events csv
-        self.camp_ids = self.get_camp_ids_from_csv()
+        try:
+            self.camp_ids = self.get_camp_ids_from_csv()
+        except:
+            pass
         # Create a label and entry for each plan attribute using column attributes
         for i in range(treeview_width):
 
@@ -236,5 +239,7 @@ class AdminRefugeeDisplay:
                     if row[7] == "Active":
                         camp_ids.append(row[0])
         except FileNotFoundError:
-            print("Error: 'crisis_events.csv' file not found.")
+            messagebox.showinfo("File not found",
+                                "The file 'crisis_events.csv' was not found.\n\nYou will not be able to change to another camp ID")
+            #print("Error: 'crisis_events.csv' file not found.")
         return camp_ids
