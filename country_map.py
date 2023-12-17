@@ -69,7 +69,7 @@ class CountryMap:
 
         # Locations from csv file
         locations = self.read_location_data_from_csv('crisis_events.csv')
-        print("loading locations", locations)
+        #print("loading locations", locations)
 
         # Track the count for each country
         country_counts = {country: 0 for country in country_coordinates}
