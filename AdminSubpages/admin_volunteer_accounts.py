@@ -102,12 +102,12 @@ class AdminVolunteerDisplay:
                 # Get the row index of the selected row
                 index = int(selected_item[0])
 
-                # Load current CSV data, delete the entry, save the deletion to the csv file
+                # Load current csv data, delete the entry, save the deletion to the csv file
                 data = pd.read_csv(filename)
                 data = data.drop(index)
                 data.to_csv(filename, index=False)
 
-                # Refresh treeview to reflect change
+                # Refresh treeview to reflect changes
                 self.upload_csv_data(tree, filename)
 
     def view_csv_data_entry(self):
@@ -122,7 +122,7 @@ class AdminVolunteerDisplay:
         column_attributes = self.display_volunteer_tree['columns']
         treeview_width = len(column_attributes)
 
-        # Open pop up edit window
+        # Open pop up view window
         refugee_profile_window = tk.Toplevel(self.window)
         refugee_profile_window.title("View Volunteer Details")
         refugee_profile_window.grab_set()
@@ -131,10 +131,10 @@ class AdminVolunteerDisplay:
         for i in range(treeview_width):
             att = column_attributes[i]
             value = refugee_details[i]
-
+            # Attributes per row
             label = tk.Label(refugee_profile_window, text=f"{att}:")
             label.grid(row=i, column=0)
-
+            # Detail per row
             current_camp_info = tk.Label(refugee_profile_window, textvariable=tk.StringVar(refugee_profile_window, value=value))
             current_camp_info.grid(row=i, column=1)
 
@@ -168,10 +168,10 @@ class AdminVolunteerDisplay:
 
             att = column_attributes[i]
             value = refugee_details[i]
-
+            # Attributes per row
             label = tk.Label(refugee_profile_window, text=f"{att}:")
             label.grid(row=i, column=0)
-
+            # Entry boxe per row
             edit_entry = tk.Entry(refugee_profile_window, textvariable=tk.StringVar(refugee_profile_window, value=value))
             edit_entry.grid(row=i, column=1)
             self.edited_entry_dictionary[att] = edit_entry
@@ -202,6 +202,7 @@ class AdminVolunteerDisplay:
                 for i, col_name in enumerate(data.columns):
                     col_type = data[col_name].dtype
 
+                    # Casting to correct data type - phone number fix added condition here for it
                     if col_name == 'Phone Number':
                         updated_values[i] = str(updated_values[i]) if updated_values[i] != '' else pd.NA
                     elif pd.api.types.is_numeric_dtype(col_type) and updated_values[i] != '':
@@ -218,7 +219,7 @@ class AdminVolunteerDisplay:
                 self.display_volunteer_tree.item(selected_item, values=updated_values)
 
             refugee_profile_window.destroy()
-            # CSV data
+
             csv_file = "volunteer_info.csv"
             # csv_data = self.load_csv_data(csv_file)
             self.upload_csv_data(self.display_volunteer_tree, csv_file)
