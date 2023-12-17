@@ -37,15 +37,15 @@ def get_selected_listbox_value(event, listbox, list):
     :param list: The list of options from which the option is selected. If no option selected, then the first option is selected as default
     :return:
     '''
-    print(f"Current listbox selection indices: {listbox.curselection()}")
+    #print(f"Current listbox selection indices: {listbox.curselection()}")
     selected_indices = listbox.curselection()
     if selected_indices:
         selected_value = listbox.get(selected_indices[0])
-        print(f"Selected value: {selected_value}")
+        #print(f"Selected value: {selected_value}")
         return selected_value
     else:
         default_value = list[0]
-        print("No selection made. Using the default value.")
+        #print("No selection made. Using the default value.")
         return default_value
 
 def check_input_valid(variable, window, message_label, submit_button_row_num, submit_button_column_num, column_span):

@@ -32,7 +32,7 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         try:
             self.y_personal_info = pd.read_csv('volunteer_info.csv', index_col='Username')
             self.y_personal_info = self.y_personal_info.to_dict(orient='index')
-            print(self.y_personal_info)
+            #print(self.y_personal_info)
 
         except(FileNotFoundError):
             self.y_personal_info = {
@@ -132,14 +132,14 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
                 if row and str(row[0].strip()) == self.username:
                     # Camp ID is the second value
                     volunteer_camp_id_for_new_refugee = row[1].strip()
-                    print(volunteer_camp_id_for_new_refugee)
+                    #print(volunteer_camp_id_for_new_refugee)
                     break
         return volunteer_camp_id_for_new_refugee
 
     # Login checker
     def t_details_confirmation(self):
         self.username = self.name_entry.get()
-        print(self.name_entry.get())
+        #print(self.name_entry.get())
         password = self.password_entry.get()
         try:
             if self.username not in self.y_personal_info.keys():

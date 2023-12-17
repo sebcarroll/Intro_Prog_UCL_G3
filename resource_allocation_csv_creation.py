@@ -1,4 +1,5 @@
 import csv
+from tkinter import messagebox
 
 def update_crisis_events(camp_id, no_refugees, no_weeks_aid, total_food_supplied, total_medicine_supplied,
              week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks):
@@ -23,4 +24,6 @@ def update_crisis_events(camp_id, no_refugees, no_weeks_aid, total_food_supplied
             writer.writerows(data)
 
     except FileNotFoundError:
+        messagebox.showinfo("File not found",
+                            "The file 'crisis_events.csv' was not found.\n\nYou will not be able to change to another camp ID")
         print("Error: 'crisis_events.csv' file not found.")
