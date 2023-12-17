@@ -1,57 +1,55 @@
 Name,Camp ID,Family Members,Medical Conditions,Languages Spoken,Second Language
-Harry Potter,50055,1,No parents,English,Parseltongue
-Tom,50055,3,none,English,none
-Rodriguez Family,68694,10,Tuberculosis,Chinese,
-Diary,50055,1,Horcrux,English,Parseltongue
-Basilisk,50055,1,Sword through head,English,Parseltongue
-Locket,50055,1,Horcrux,English,Parseltongue
-Diadem,50055,1,Fiendfyre,English,Parseltongue
-Nagini,50055,1,Maledictus,English,Parseltongue
-Dumbledore,50055,1,Killing Curse,English,none
-Severus Snape,50055,1,Snake Bite,English,none
-Sirius Black,50055,3,Crazy Cousins,English,Latin
-Draco Malfoy,50055,3,Eating Death,English,French
-Lucius Malfoy,50055,2,Blonde Hair,English,French
-Vincent Crabbe,50055,3,Exposure to Fiendfyre,English,none
-Ron Weasley,68694,9,7 Children,English,none
-Dudley Dursley,68694,3,Obesity,English,none
-Hermione Granger,68699,2,none,English,French
-Luna Lovegood,68699,1,none,English,none
-Nymphadora Tonks,68693,1,none,English,French
-Ginny Weasley,68693,4,Petrification,English,French
-Fred Weasley,68693,2,Bitten by Acromantula,English,none
-George Weasley,68693,2,Bitten by Acromantula,English,none
-Percy Weasley,68693,1,Obsessed with Rules,English,French
-Bill Weasley,68693,2,Transformed by Lycanthropy,English,French
-Charlie Weasley,68693,2,Burned by Hungarian Horntail,English,French
-Arthur Weasley,68693,1,Electric Shock,English,French
-Molly Weasley,68693,1,Heart Attack,English,French
-Meredith Grey,68695,2,Appendicitis,English,Spanish
-Derek Shepherd,68695,1,Neurological Disorder,English,none
-Cristina Yang,68695,3,Heart Condition,English,none
-Alex Karev,68695,2,Allergies,English,none
-Miranda Bailey,68695,4,Hypertension,English,none
-Richard Webber,68695,1,Arthritis,English,none
-Izzie Stevens,68695,2,Cancer Survivor,English,none
-George O'Malley,68695,1,Anxiety Disorder,English,none
-Callie Torres,68695,3,Orthopedic Injury,English,Spanish
-Arizona Robbins,68695,1,Asthma,English,none
-April Kepner,68695,2,Traumatic Injury Survivor,English,none
-Jackson Avery,68695,1,Burn Survivor,English,none
-Lexie Grey,68695,2,Reproductive Health Issues,English,none
-Mark Sloan,68695,1,Plastic Surgery Recovery,English,none
-Catherine Avery,68695,1,Philanthropy Fatigue,English,none
-Teddy Altman,68695,2,Respiratory Illness,English,none
-Amelia Shepherd,68695,1,Brain Tumor Survivor,English,none
-Rachel Green,68696,2,Coffee Addiction,English,French
-Ross Geller,68696,1,Divorce Stress,English,none
-Monica Geller,68696,3,OCD Tendencies,English,none
-Chandler Bing,68696,2,Sarcasm Overdose,English,none
-Joey Tribbiani,68696,1,Food Coma Survivor,English,none
-Phoebe Buffay,68696,1,Weird Childhood Memories,English,French
-Gunther,68696,1,Unrequited Love,English,German
-Janice Litman,68696,2,Annoying Laugh Syndrome,English,none
-Richard Burke,68696,1,Commitment Issues,English,none
-Emily Waltham,68696,1,Cultural Adjustment,English,French
-Janine Lecroix,68696,1,Ballet-related Injuries,English,French
-Estelle Leonard,68696,1,Agent Representation Woes,English,
+Harry Potter,50055.0,1.0,"No parents, scared",English,Parseltongue
+Tom,50055.0,3.0,none,English,none
+Rodriguez Family,68694.0,10.0,Tuberculosis,Chinese,
+Diary,50055.0,1.0,Horcrux,English,Parseltongue
+Basilisk,50055.0,1.0,Sword through head,English,Parseltongue
+Locket,50055.0,1.0,Horcrux,English,Parseltongue
+Diadem,50055.0,1.0,Fiendfyre,English,Parseltongue
+Nagini,50055.0,1.0,Maledictus,English,Parseltongue
+Dumbledore,50055.0,1.0,Killing Curse,English,none
+Severus Snape,50055.0,1.0,Snake Bite,English,none
+Sirius Black,50055.0,3.0,Crazy Cousins,English,Latin
+Draco Malfoy,50055.0,3.0,Eating Death,English,French
+Ron Weasley,68694.0,9.0,7 Children,English,none
+Dudley Dursley,68694.0,3.0,Obesity,English,none
+Hermione Granger,68699.0,2.0,none,English,French
+Luna Lovegood,68699.0,1.0,none,English,none
+Nymphadora Tonks,68693.0,1.0,none,English,French
+Ginny Weasley,68693.0,4.0,Petrification,English,French
+Fred Weasley,68693.0,2.0,Bitten by Acromantula,English,none
+George Weasley,68693.0,2.0,Bitten by Acromantula,English,none
+Percy Weasley,68693.0,1.0,Obsessed with Rules,English,French
+Bill Weasley,68693.0,2.0,Transformed by Lycanthropy,English,French
+Charlie Weasley,68693.0,2.0,Burned by Hungarian Horntail,English,French
+Arthur Weasley,68693.0,1.0,Electric Shock,English,French
+Molly Weasley,68693.0,1.0,Heart Attack,English,French
+Meredith Grey,68695.0,2.0,Appendicitis,English,Spanish
+Derek Shepherd,68695.0,1.0,Neurological Disorder,English,none
+Cristina Yang,68695.0,3.0,Heart Condition,English,none
+Alex Karev,68695.0,2.0,Allergies,English,none
+Miranda Bailey,68695.0,4.0,Hypertension,English,none
+Richard Webber,68695.0,1.0,Arthritis,English,none
+Izzie Stevens,68695.0,2.0,Cancer Survivor,English,none
+George O'Malley,68695.0,1.0,Anxiety Disorder,English,none
+Callie Torres,68695.0,3.0,Orthopedic Injury,English,Spanish
+Arizona Robbins,68695.0,1.0,Asthma,English,none
+April Kepner,68695.0,2.0,Traumatic Injury Survivor,English,none
+Jackson Avery,68695.0,1.0,Burn Survivor,English,none
+Lexie Grey,68695.0,2.0,Reproductive Health Issues,English,none
+Mark Sloan,68695.0,1.0,Plastic Surgery Recovery,English,none
+Catherine Avery,68695.0,1.0,Philanthropy Fatigue,English,none
+Teddy Altman,68695.0,2.0,Respiratory Illness,English,none
+Amelia Shepherd,68695.0,1.0,Brain Tumor Survivor,English,none
+Rachel Green,68696.0,2.0,Coffee Addiction,English,French
+Ross Geller,68696.0,1.0,Divorce Stress,English,none
+Monica Geller,68696.0,3.0,OCD Tendencies,English,none
+Chandler Bing,68696.0,2.0,Sarcasm Overdose,English,none
+Joey Tribbiani,68696.0,1.0,Food Coma Survivor,English,none
+Phoebe Buffay,68696.0,1.0,Weird Childhood Memories,English,French
+Gunther,68696.0,1.0,Unrequited Love,English,German
+Janice Litman,68696.0,2.0,Annoying Laugh Syndrome,English,none
+Richard Burke,68696.0,1.0,Commitment Issues,English,none
+Emily Waltham,68696.0,1.0,Cultural Adjustment,English,French
+Janine Lecroix,68696.0,1.0,Ballet-related Injuries,English,French
+Estelle Leonard,68696.0,1.0,Agent Representation Woes,English,
