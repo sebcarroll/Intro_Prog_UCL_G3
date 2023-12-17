@@ -149,17 +149,17 @@ class AdminResourceAllocation:
     def update_number_of_refugees(self, event):
         selected_camp_id = self.camp_ID_box.get()
         print(selected_camp_id)
+        self.number_of_actual_refugees = 0
         try:
             with open('refugee_info.csv', 'r') as file:
-                    csv_reader = csv.reader(file)
-                    next(csv_reader)
-                    for row in csv_reader:
-                        if int(selected_camp_id) == int(float(row[1])):
-                            self.number_of_actual_refugees = self.number_of_actual_refugees + 1
+                csv_reader = csv.reader(file)
+                next(csv_reader)
+                for row in csv_reader:
+                    if int(selected_camp_id) == int(float(row[1])):
+                        self.number_of_actual_refugees += 1
         except FileNotFoundError:
             print("Error: 'refugee_info.csv' file not found.")
         self.refugee_count.config(text=str(self.number_of_actual_refugees))
-        return self.number_of_actual_refugees
 
         # Bind the event handler to the listbox
         # self.camp_id_listbox.bind('<<ListboxSelect>>', update_number_of_refugees)
@@ -191,7 +191,6 @@ class AdminResourceAllocation:
             self.error_message = print("None")
             self.recommended_food_count.config(text=str(self.error_message))
             self.recommended_medicine_count.config(text=str(self.error_message))
-
 
     def turn_data_into_valid_form(self, camp_ID_box, no_refugees_entry, no_weeks_aid_entry, total_food_supplied_entry, total_medicine_supplied_entry,  food_box, medicine_box, estimated_delivery_box, camp_ids):
             '''
