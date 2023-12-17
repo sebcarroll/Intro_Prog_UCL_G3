@@ -24,7 +24,8 @@ class AdminResourceAllocation:
                     if row[7] == "Active":
                         self.camp_ids_from_csv.append(row[0])
         except FileNotFoundError:
-            print("Error: 'crisis_events.csv' file not found.")
+            pass
+            #print("Error: 'crisis_events.csv' file not found.")
         self.camp_ids = list(self.camp_ids_from_csv)
 
     def create_gui_resource_allocation(self, window):
@@ -188,7 +189,7 @@ class AdminResourceAllocation:
             self.recommended_food_count.config(text=str(self.minimum_amount_of_food))
             self.recommended_medicine_count.config(text=str(self.minimum_amount_of_medicine))
         else:
-            self.error_message = print("None")
+            self.error_message = print("")
             self.recommended_food_count.config(text=str(self.error_message))
             self.recommended_medicine_count.config(text=str(self.error_message))
 
@@ -353,8 +354,8 @@ class AdminResourceAllocation:
             no_weeks_aid_float = float(no_weeks_aid)
             #print(f"Number of weeks of aid being supplied: {no_weeks_aid_float}")
             total_food_supplied_float = float(total_food_supplied)
-            print(total_food_supplied_entry)
-            print(total_food_supplied)
+            #print(total_food_supplied_entry)
+            #print(total_food_supplied)
             #print(f"Total food supplied: {total_food_supplied_float}")
             total_medicine_supplied_float = float(total_medicine_supplied)
             #print(f"Total medicine supplied: {total_medicine_supplied_float}")
