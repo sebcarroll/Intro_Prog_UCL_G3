@@ -15,15 +15,6 @@ def resource_display(window, camp_id, back_button_to_volunteer_main):
     for i in range(8):
         resources_frame.grid_rowconfigure(i, weight=1)
 
-    '''try:
-        crisis_df = pd.read_csv('crisis_events.csv')
-    except:
-        # Create an empty DataFrame with the expected columns
-        # columns = ['Camp ID', 'Meals(T)', 'Medicine(T)', 'Duration', 'Capacity', 'Meals/w', 'Medicine/w']
-        # crisis_df = pd.DataFrame(columns=columns)
-        messagebox.showwarning("No data found",
-                               "There is a problem accessing the database\n\nThe file may be missing or corrupted")'''
-
     # Title
     resources_title = tk.Label(resources_frame, text='Allocated Resources', font=('TKDefault', 25), fg='white')
     resources_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
@@ -63,16 +54,14 @@ def resource_display(window, camp_id, back_button_to_volunteer_main):
     try:
         crisis_df = pd.read_csv('crisis_events.csv')
         # Filter resources for the camp that the volunteer belongs to
-        resources_df = crisis_df[crisis_df['Camp ID'] == camp_id].loc[:, ['Camp ID', 'Meals(T)', 'Medicine(T)', 'Duration', 'Capacity',
-                                                                                            'Meals/w', 'Medicine/w']]
+        resources_df = crisis_df[crisis_df['Camp ID'] == camp_id].loc[:, ['Camp ID', 'Capacity', 'Meals(T)', 'Medicine(T)', 'Meals/w', 'Medicine/w', 'Delivery Time(d)']]
 
-        # resources_df = crisis_df.loc[:, ['Camp ID', 'Meals(T)', 'Medicine(T)', 'Duration', 'Capacity',
-        #                                  'Meals/w', 'Medicine/w']]
+        # resources_df = crisis_df.loc[:, ['Camp ID', 'Capacity', 'Meals(T)', 'Medicine(T)', 'Meals/w', 'Medicine/w', 'Delivery Time(d)']
 
         resources_df = resources_df.fillna(0)
 
         # Convert float columns to integers
-        float_columns = ['Meals(T)', 'Medicine(T)', 'Duration', 'Capacity', 'Meals/w', 'Medicine/w']
+        float_columns = ['Camp ID', 'Capacity', 'Meals(T)', 'Medicine(T)', 'Meals/w', 'Medicine/w', 'Delivery Time(d)']
         for col in float_columns:
             resources_df[col] = resources_df[col].astype(int)
 
@@ -97,36 +86,12 @@ def resource_display(window, camp_id, back_button_to_volunteer_main):
         available_meds_number = tk.Label(availability_frame, text=f"{leftover_medicine}", font=('Helvetica', 12))
         available_meds_number.grid(row=5, column=20)
 
-        '''# GIVES THE RIGHT FRAME
-        resources_df_frame = tk.Frame(resources_frame)
-        resources_df_frame.grid(row=2, column=1, padx=10, pady=5)'''
-
-        '''tree.heading('Camp ID', text='Camp ID')
-        tree.heading('Capacity', text='Capacity')
-        tree.heading('Meals(T)', text='Meals')
-        tree.heading('Medicine(T)', text='Medicine')
-        tree.heading('Meals/w', text='Weekly meals per refugee')
-        tree.heading('Medicine/w', text='Weekly medication per refugee')
-        tree.heading('Delivery Time(d)', text='Delivery Time(d)')
-
-        tree.column('Camp ID', anchor="center", width=80)
-        tree.column('Capacity', anchor="center", width=105)
-        tree.column('Meals(T)', anchor="center", width=100)
-        tree.column('Medicine(T)', anchor="center", width=125)
-        tree.column('Meals/w', anchor="center", width=150)
-        tree.column('Medicine/w', anchor="center", width=175)
-        tree.column('Delivery Time(d)', anchor="center", width=125)'''
-
         for _, row in resources_df.iterrows():
             tree.insert('', tk.END, values=row.tolist())
 
-        '''scrollbar = ttk.Scrollbar(resources_frame, orient=tk.VERTICAL, command=tree.yview)
-        tree.configure(yscrollcommand=scrollbar.set)
-        scrollbar.grid(row=0, column=2, sticky='ns')'''
-
     except:
         # Create an empty DataFrame with the expected columns
-        columns = ['Camp ID', 'Meals(T)', 'Medicine(T)', 'Duration', 'Capacity', 'Meals/w', 'Medicine/w']
+        columns = ['Camp ID', 'Capacity', 'Meals(T)', 'Medicine(T)', 'Meals/w', 'Medicine/w', 'Delivery Time(d)']
         crisis_df = pd.DataFrame(columns=columns)
         messagebox.showwarning("No data found",
                                "There is a problem accessing the database\n\nThe file may be missing or corrupted")
