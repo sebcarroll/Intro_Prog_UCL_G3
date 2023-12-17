@@ -100,7 +100,8 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
 
         camp_ID = int(t_camp_IDbox.get())
         name = name_entry.get()
-        family_members = family_labelbox.get()
+        #family_members = family_labelbox.get()
+        family_members = int(family_labelbox.get())
         medical_conditions = t_medical_conditionsEntry.get()
         languages_spoken = t_languages_spokenEntry.get()
         second_language = t_second_languageEntry.get()
