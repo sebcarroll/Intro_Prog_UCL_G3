@@ -70,7 +70,7 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
     family_label = tk.Label(refugee_labelframe, text='Enter total number of family members',
                             font=('TkinterDefault', 15))
     family_label.grid(row=4, column=0, padx=5, pady=5)
-    family_labelbox = ttk.Spinbox(refugee_labelframe, from_=0, to=20, style='info.TSpinbox', format="%d")
+    family_labelbox = ttk.Spinbox(refugee_labelframe, from_=1, to=20, style='info.TSpinbox')
     family_labelbox.grid(row=4, column=1, padx=5, pady=5)
 
     # Medical conditions, we need to add dictionaries and everything for this
@@ -86,8 +86,7 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
                                      font=('TkinterDefault', 15))
     languages_spokenlabel.grid(row=6, column=0, padx=5, pady=5)
     t_languages_spokenEntry = ttk.Combobox(refugee_labelframe,
-                                           values='English Chinese Hindi Spanish French Arabic Bengali Portuguese Russian Urdu Indonesian German Swahili Marathi Tamil Telugu Turkish Vietnamese Korean Italian Thai Gujarati Persian Polish Pashto Kannada Ukrainian Somali Kurdish',
-                                           state='readonly')
+                                           values='English Chinese Hindi Spanish French Arabic Bengali Portuguese Russian Urdu Indonesian German Swahili Marathi Tamil Telugu Turkish Vietnamese Korean Italian Thai Gujarati Persian Polish Pashto Kannada Ukrainian Somali Kurdish')
     t_languages_spokenEntry.grid(row=6, column=1, padx=5, pady=5)
 
     # secondlanguage entry box
@@ -119,11 +118,12 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
         camp_ID_str = t_camp_IDbox.get().strip()
         if not camp_ID_str:
             raise ValueError("Camp ID is required. Please speak to the administrator for camp assignment.")
-        camp_ID = int(camp_ID_str)
 
+        camp_ID = int(camp_ID_str)
         #camp_ID = int(t_camp_IDbox.get())
         name = name_entry.get()
         family_members = int(family_labelbox.get())
+        #family_members = family_labelbox.get()
         medical_conditions = t_medical_conditionsEntry.get("1.0", "end-1c")
         languages_spoken = t_languages_spokenEntry.get()
         second_language = t_second_languageEntry.get()
@@ -141,6 +141,12 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
         refugee_info.to_csv('refugee_info.csv')
         update_number_of_refugees(camp_ID)
         tk.messagebox.showinfo(title='Details saved', message='Details have been saved successfully')
+
+        clear_entry(name_entry)
+        clear_entry(family_labelbox)
+        clear_entry(t_medical_conditionsEntry)
+        clear_entry(t_languages_spokenEntry)
+        clear_entry(t_second_languageEntry)
 
     # if no camp ID assigned or selected
     except ValueError as e:
@@ -185,3 +191,13 @@ def update_number_of_refugees(camp_ID):
         writer = csv.writer(file)
         writer.writerow(header)
         writer.writerows(data)
+
+def clear_entry(entry):
+    #entry.delete(0, tk.END)
+    # clear different types of widgets entry, combobox and text boxes
+    if isinstance(entry, tk.Entry):
+        entry.delete(0, tk.END)
+    elif isinstance(entry, ttk.Combobox):
+        entry.set('')
+    elif isinstance(entry, tk.Text):
+        entry.delete("1.0", tk.END)
