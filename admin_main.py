@@ -130,7 +130,7 @@ class AdminHomepage:
 
         try:
             self.image1 = PhotoImage(file="Images/new_camp_image.png").subsample(4, 4)
-            image_label = tk.Label(self.window, image=self.image1)
+            image_label = tk.Label(self.window, image=self.image1, relief=tk.RAISED, borderwidth=5)
             image_label.grid(row=1, column=3, pady=(50, 10))
         except:
             pass
@@ -141,7 +141,7 @@ class AdminHomepage:
 
         try:
             self.image2 = PhotoImage(file="Images/end_camp.png").subsample(4, 4)
-            image_label = tk.Label(self.window, image=self.image2)
+            image_label = tk.Label(self.window, image=self.image2, relief=tk.RAISED, borderwidth=5)
             image_label.grid(row=2, column=3, pady=10)
         except:
             pass
@@ -152,7 +152,7 @@ class AdminHomepage:
 
         try:
             self.image3 = PhotoImage(file="Images/summary.png").subsample(4, 4)
-            image_label = tk.Label(self.window, image=self.image3)
+            image_label = tk.Label(self.window, image=self.image3, relief=tk.RAISED, borderwidth=5)
             image_label.grid(row=3, column=3, pady=10)
         except:
             pass
@@ -163,7 +163,7 @@ class AdminHomepage:
 
         try:
             self.image4 = PhotoImage(file="Images/volunteer_accounts.png").subsample(4, 4)
-            image_label = tk.Label(self.window, image=self.image4)
+            image_label = tk.Label(self.window, image=self.image4, relief=tk.RAISED, borderwidth=5)
             image_label.grid(row=4, column=3, pady=10)
         except:
             pass
@@ -174,7 +174,7 @@ class AdminHomepage:
 
         try:
             self.image5 = PhotoImage(file="Images/resource_allocation.png").subsample(4, 4)
-            image_label = tk.Label(self.window, image=self.image5)
+            image_label = tk.Label(self.window, image=self.image5, relief=tk.RAISED, borderwidth=5)
             image_label.grid(row=5, column=3, pady=(10,50))
         except:
             pass
