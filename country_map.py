@@ -4,6 +4,9 @@ import os
 import pandas as pd
 from tkinter import PhotoImage
 
+class EmptyDataError(Exception):
+    pass
+
 class CountryMap:
     def __init__(self, window, back_button_to_admin_main):
         self.window = window
@@ -102,14 +105,27 @@ class CountryMap:
 
 
     def read_location_data_from_csv(self, crisis_events):
-        data = pd.read_csv(crisis_events)
-        locations = []
-        for index, row in data.iterrows():
-            # x and y are columns in the csv
-            country = row['Country']
-            crisis_type = row['Crisis Type']
-            if pd.notna(country) and pd.notna(crisis_type):
-                locations.append({'country': country, 'crisis_type': crisis_type})
-        return locations
+        try:
+            data = pd.read_csv(crisis_events)
+            locations = []
+            for index, row in data.iterrows():
+                # x and y are columns in the csv
+                country = row['Country']
+                crisis_type = row['Crisis Type']
+                if pd.notna(country) and pd.notna(crisis_type):
+                    locations.append({'country': country, 'crisis_type': crisis_type})
+            return locations
+        except FileNotFoundError:
+            # Handle the case where the file is not found
+            print(f"Error: File '{crisis_events}' not found.")
+            return []
+        except pd.errors.EmptyDataError:
+            # Handle the case where the file is empty
+            print(f"Error: File '{crisis_events}' is empty.")
+            return []
+        except Exception as e:
+            # Handle other exceptions
+            print(f"Error: An unexpected error occurred - {e}")
+            return []
 
 scale_factor = 0.5

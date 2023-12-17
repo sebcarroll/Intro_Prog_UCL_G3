@@ -3,6 +3,8 @@ import csv
 import os
 import pandas as pd
 
+class NoDataError(Exception):
+    pass
 class SummaryCharts:
     def __init__(self, window, back_button_to_admin_main):
         self.window = window
@@ -17,9 +19,11 @@ class SummaryCharts:
         self.charts_window.grab_set()
 
         # Call create gui functions to create the pie charts in the new window
-        self.create_pie_chart_status(self.charts_window)
-        self.create_bar_chart_crisis_type(self.charts_window)
-
+        try:
+            self.create_pie_chart_status(self.charts_window)
+            self.create_bar_chart_crisis_type(self.charts_window)
+        except NoDataError as e:
+            print(f"Error: {e}")
     def create_pie_chart_status(self, window):
         active_count = 0
         inactive_count = 0
@@ -32,6 +36,9 @@ class SummaryCharts:
                     active_count += 1
                 elif status.lower() == 'inactive':
                     inactive_count += 1
+        if active_count == 0 and inactive_count == 0:
+        raise NoDataError("No data available in the CSV file for pie chart.")
+
 
         # Calculate percentage or ratio between the inactive and active plans
         total = active_count + inactive_count
@@ -87,6 +94,10 @@ class SummaryCharts:
                     supply_shortage_count += 1
                 elif status.lower() == 'other':
                     other_count += 1
+
+        if war_count == 0 and environmental_count == 0 and supply_shortage_count == 0 \
+                and political_unrest_count == 0 and displacement_count == 0 and other_count == 0:
+            raise NoDataError("No data available in the CSV file for bar chart.")
 
         # Calculate total count
         total = war_count + environmental_count + supply_shortage_count + political_unrest_count + displacement_count + other_count
