@@ -89,13 +89,19 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         self.password_entry.bind("<KeyPress>", self.caps_lock_on)
         self.password_entry.bind("<KeyRelease>", self.caps_lock_off)
 
-        self.image3 = PhotoImage(file="Images/volunteer_icon.png").subsample(6, 6)
-        image_label = tk.Label(volunteer_log_in_frame, image=self.image3, relief=tk.RAISED, borderwidth=5)
-        image_label.grid(row=5, column=1, pady=10, padx=(0, 0))
+        try:
+            self.image3 = PhotoImage(file="Images/volunteer_icon.png").subsample(6, 6)
+            image_label = tk.Label(volunteer_log_in_frame, image=self.image3, relief=tk.RAISED, borderwidth=5)
+            image_label.grid(row=5, column=1, pady=10, padx=(0, 0))
+        except:
+            pass
 
-        self.logo = PhotoImage(file="Images/logo.png").subsample(4, 4)
-        image_label = tk.Label(volunteer_log_in_frame, image=self.logo, relief=tk.RAISED)
-        image_label.grid(row=5, column=0, pady=10, padx=(0, 0))
+        try:
+            self.logo = PhotoImage(file="Images/logo.png").subsample(4, 4)
+            image_label = tk.Label(volunteer_log_in_frame, image=self.logo, relief=tk.RAISED)
+            image_label.grid(row=5, column=0, pady=10, padx=(0, 0))
+        except:
+            pass
 
         login_btn = tk.Button(volunteer_log_in_frame, text="Login", command=self.t_details_confirmation)
         login_btn.grid(row=10, column=1, pady=10)

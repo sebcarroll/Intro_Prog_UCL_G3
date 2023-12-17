@@ -48,9 +48,12 @@ class LandingPage:
         welcome_label.pack(padx=25, pady=25)
         welcome_label.configure(background="orange")
 
-        self.logo = PhotoImage(file="Images/logo.png").subsample(4, 4)
-        image_label = tk.Label(self.window, image=self.logo, relief=tk.RAISED)
-        image_label.pack(pady=0, padx=(0, 0))
+        try:
+            self.logo = PhotoImage(file="Images/logo.png").subsample(4, 4)
+            image_label = tk.Label(self.window, image=self.logo, relief=tk.RAISED)
+            image_label.pack(pady=0, padx=(0, 0))
+        except:
+            pass
 
         instruction_label = tk.Label(
             self.window,

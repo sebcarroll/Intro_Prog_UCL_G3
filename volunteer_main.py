@@ -151,35 +151,50 @@ class VolunteerHomepage():
         self.t_summary_editdetails = tk.Button(self.window, text='Personal Information',
                                                command=self.t_personal_information_base)
         self.t_summary_editdetails.grid(row=3, column=4, pady=(30, 10), ipadx=98, ipady=25)
-        self.image1 = PhotoImage(file="Images/personal_info.png").subsample(4, 4)
-        image_label = tk.Label(self.window, image=self.image1)
-        image_label.grid(row=3, column=3, pady=(30, 10))
+        try:
+            self.image1 = PhotoImage(file="Images/personal_info.png").subsample(4, 4)
+            image_label = tk.Label(self.window, image=self.image1)
+            image_label.grid(row=3, column=3, pady=(30, 10))
+        except:
+            pass
 
         self.t_summary_editcamp = tk.Button(self.window, text='Edit Camp Information', command=self.t_edit_camp)
         self.t_summary_editcamp.grid(row=4, column=4, pady=10, ipadx=93, ipady=25)
-        self.image2 = PhotoImage(file="Images/camps.png").subsample(4, 4)
-        image_label = tk.Label(self.window, image=self.image2)
-        image_label.grid(row=4, column=3, pady=10)
+        try:
+            self.image2 = PhotoImage(file="Images/camps.png").subsample(4, 4)
+            image_label = tk.Label(self.window, image=self.image2)
+            image_label.grid(row=4, column=3, pady=10)
+        except:
+            pass
 
         self.t_summary_refugee = tk.Button(self.window, text='Create a Refugee Profile', command=self.t_create_refugee)
         self.t_summary_refugee.grid(row=5, column=4, pady=10, ipadx=90, ipady=25)
-        self.image3 = PhotoImage(file="Images/add_refugee.png").subsample(4, 4)
-        image_label = tk.Label(self.window, image=self.image3)
-        image_label.grid(row=5, column=3, pady=10)
+        try:
+            self.image3 = PhotoImage(file="Images/add_refugee.png").subsample(4, 4)
+            image_label = tk.Label(self.window, image=self.image3)
+            image_label.grid(row=5, column=3, pady=10)
+        except:
+            pass
 
         self.t_summary_resources = tk.Button(self.window, text='Display Resources Available',
                                              command=self.t_display_resources)
         self.t_summary_resources.grid(row=6, column=4, pady=10, ipadx=80, ipady=25)
-        self.image4 = PhotoImage(file="Images/resource_allocation.png").subsample(4, 4)
-        image_label = tk.Label(self.window, image=self.image4)
-        image_label.grid(row=6, column=3, pady=10)
+        try:
+            self.image4 = PhotoImage(file="Images/resource_allocation.png").subsample(4, 4)
+            image_label = tk.Label(self.window, image=self.image4)
+            image_label.grid(row=6, column=3, pady=10)
+        except:
+            pass
 
         self.summary_refugees = tk.Button(self.window, text='Display Refugees Created',
                                              command=self.display_refugees)
         self.summary_refugees.grid(row=7, column=4, pady=(10, 30), ipadx=85, ipady=25)
-        self.image5 = PhotoImage(file="Images/new_refugees.png").subsample(4, 4)
-        image_label = tk.Label(self.window, image=self.image5)
-        image_label.grid(row=7, column=3, pady=(10, 30))
+        try:
+            self.image5 = PhotoImage(file="Images/new_refugees.png").subsample(4, 4)
+            image_label = tk.Label(self.window, image=self.image5)
+            image_label.grid(row=7, column=3, pady=(10, 30))
+        except:
+            pass
 
         for i in range(8):
             self.window.grid_rowconfigure(i, weight=1)
