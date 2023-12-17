@@ -49,7 +49,7 @@ class AdminLoginPage(tk.Frame):
         self.password_entry.bind("<KeyRelease>", self.caps_lock_off)
 
         # Login button
-        login_btn = tk.Button(admin_log_in_frame, text="Login", command=self.on_login)
+        login_btn = tk.Button(admin_log_in_frame, text="Login", command=self.details_confirmation)
         login_btn.grid(row=10, column=1, pady=10)
         # Swap button from command=self.details_confirmation to command=self.on_login to bypass
 
