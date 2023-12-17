@@ -1,19 +1,19 @@
 Camp ID,Crisis Type,Description,Country,Day,Month,Year,Status,End Date,Capacity,Duration,Meals(T),Medicine(T),Meals/w,Medicine/w,Delivery Time(d),Refugees
 17064,Environmental,Flood,Haiti,17,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-68693,War,Aftershocks,Haiti,10,January,2023,Active,0000-00-00 00:00:00,,,,,,,,
-68694,Political unrest,Category 4,Haiti,20,February,2023,Active,0000-00-00 00:00:00,,,,,,,,
-68695,Other,Cholera Outbreak,Haiti,1,March,2023,Active,0000-00-00 00:00:00,,,,,,,,
-68696,Displacement,Food Shortage,Haiti,5,April,2023,Active,0000-00-00 00:00:00,,,,,,,,
+68693,War,Aftershocks,Haiti,10,January,2023,Active,0000-00-00 00:00:00,,,,,,,,9
+68694,Political unrest,Category 4,Haiti,20,February,2023,Active,0000-00-00 00:00:00,,,,,,,,3
+68695,Other,Cholera Outbreak,Haiti,1,March,2023,Active,0000-00-00 00:00:00,,,,,,,,17
+68696,Displacement,Food Shortage,Haiti,5,April,2023,Active,0000-00-00 00:00:00,,,,,,,,12
 68697,Environmental,Flash Flooding,Haiti,10,May,2023,Inactive,2023-05-20 18:30:00,,,,,,,,
 68698,Political unrest,Refugee Crisis,Haiti,15,June,2023,Active,0000-00-00 00:00:00,,,,,,,,
 68699,War,Landslide,Haiti,20,July,2023,Active,0000-00-00 00:00:00,,,,,,,,
 68700,Political Unrest,Protests and Demonstrations,Haiti,25,August,2023,Inactive,2023-09-05 12:00:00,,,,,,,,
 68701,War,Unknown Virus Outbreak,Haiti,1,September,2023,Active,0000-00-00 00:00:00,,,,,,,,
 68702,War,Internal Conflict,Haiti,5,October,2023,Active,0000-00-00 00:00:00,,,,,,,,
-50055,War,Voldemort has found Harry Potter,Nigeria,6,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
-56645,Political unrest,Dark Lord Harry Potter,Sudan,9,December,2023,Inactive,2023-12-10 15:00:33,,,,,,,,
+50055,War,Voldemort has found Harry Potter,Nigeria,6,December,2023,Active,0000-00-00 00:00:00,,,,,,,,13
+56645,Political unrest,Dark Lord Harry Potter,Sudan,9,December,2023,Inactive,2023-12-10 15:00:33,,,,,,,,1
 46753,Supply Shortage,Death,Afghanistan,10,December,2023,Inactive,2023-12-13 13:57:57,,,,,,,,
-14646,War,Supply food for aid workers,Democratic Republic of the Congo,30,July,2023,Inactive,2023-12-16 17:08:12,,,,,,,,
+14646,War,Supply food for aid workers,Democratic Republic of the Congo,30,July,2023,Inactive,2023-12-16 17:08:12,,,,,,,,1
 68692,Environmental,Tectonic Shift,Haiti,5,January,2023,Active,0000-00-00 00:00:00,,,,,,,,
 78546,Other,Heavy Rainfall,Venezuela,15,February,2023,Active,0000-00-00 00:00:00,,,,,,,,
 89999,Other,Unknown Virus,North Korea,20,March,2023,Inactive,2023-12-01 08:30:45,,,,,,,,
