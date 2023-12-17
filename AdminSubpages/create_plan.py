@@ -65,13 +65,14 @@ class AdminCreatePlan:
             "Afghanistan", "Syria", "Yemen", "South Sudan", "Somalia", "Sudan", "Democratic Republic of the Congo",
             "Venezuela", "Iraq", "Nigeria", "Ethiopia", "Myanmar", "Haiti", "Central African Republic", "Libya",
             "Chad", "Mali", "Niger", "Cameroon", "Ukraine", "Pakistan", "Bangladesh", "Lebanon", "Zimbabwe", "Eritrea",
-            "North Korea", "Eswatini", "Zambia", "Malawi"])
+            "North Korea", "Eswatini", "Zambia", "Malawi"],
+                                          state='readonly')
         self.country_Entry.grid(row=2, column=3, padx=5)
 
         crisis_type_label = tk.Label(new_plan_frame, text='Crisis Type', font=('TkinterDefault', 15))
         crisis_type_label.grid(row=3, column=2, padx=5)
         crisis_type = ["War", "Environmental", "Supply Shortage", "Political unrest", "Displacement", "Other"]
-        self.crisis_type_combobox = ttk.Combobox(new_plan_frame, values=crisis_type)
+        self.crisis_type_combobox = ttk.Combobox(new_plan_frame, values=crisis_type, state='readonly')
         self.crisis_type_combobox.grid(row=3, column=3, padx=5)
 
         description_label = tk.Label(new_plan_frame, text='Description (max 100 characters)',
@@ -89,20 +90,20 @@ class AdminCreatePlan:
 
         day_label = ttk.Label(new_plan_frame, text="Day:")
         day_label.grid(row=7, column=2, sticky='s')
-        self.day_combobox = ttk.Combobox(new_plan_frame, values=self.days)
+        self.day_combobox = ttk.Combobox(new_plan_frame, values=self.days, state='readonly')
         self.day_combobox.grid(row=7, column=3, sticky='s')
         self.day_combobox.set(current_day)
 
         month_label = ttk.Label(new_plan_frame, text="Month:")
         month_label.grid(row=8, column=2)
         self.month_combobox = ttk.Combobox(new_plan_frame,
-                                           values=self.months)
+                                           values=self.months, state='readonly')
         self.month_combobox.grid(row=8, column=3)
         self.month_combobox.set(current_month)
 
         year_label = ttk.Label(new_plan_frame, text="Year:")
         year_label.grid(row=9, column=2, sticky='n')
-        self.year_combobox = ttk.Combobox(new_plan_frame, values=list(range(self.current_year, self.current_year - 2, -1)))
+        self.year_combobox = ttk.Combobox(new_plan_frame, values=list(range(self.current_year, self.current_year - 2, -1)), state='readonly')
         self.year_combobox.grid(row=9, column=3, sticky='n', pady=(0,20))
         self.year_combobox.set(self.current_year)
 

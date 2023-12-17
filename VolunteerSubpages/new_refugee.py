@@ -66,7 +66,7 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
     # Camp ID
     t_camp_ID_label = tk.Label(refugee_labelframe, text='Camp ID', font=('TkinterDefault', 15))
     t_camp_ID_label.grid(row=2, column=0)
-    t_camp_IDbox = ttk.Combobox(refugee_labelframe, values=camp_id)
+    t_camp_IDbox = ttk.Combobox(refugee_labelframe, values=camp_id, state='readonly')
     t_camp_IDbox.grid(row=2, column=1, padx=5, pady=5)
 
     # Refugee name
@@ -79,7 +79,7 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
     family_label = tk.Label(refugee_labelframe, text='Enter total number of family members',
                             font=('TkinterDefault', 15))
     family_label.grid(row=4, column=0, padx=5, pady=5)
-    family_labelbox = ttk.Spinbox(refugee_labelframe, from_=0, to=20, style='info.TSpinbox', format="%d")
+    family_labelbox = ttk.Spinbox(refugee_labelframe, from_=0, to=20, style='info.TSpinbox', format="%d", state='readonly')
     family_labelbox.grid(row=4, column=1, padx=5, pady=5)
 
     # Medical conditions, we need to add dictionaries and everything for this
@@ -95,7 +95,8 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
                                      font=('TkinterDefault', 15))
     languages_spokenlabel.grid(row=6, column=0, padx=5, pady=5)
     t_languages_spokenEntry = ttk.Combobox(refugee_labelframe,
-                                           values='English Chinese Hindi Spanish French Arabic Bengali Portuguese Russian Urdu Indonesian German Swahili Marathi Tamil Telugu Turkish Vietnamese Korean Italian Thai Gujarati Persian Polish Pashto Kannada Ukrainian Somali Kurdish')
+                                           values='English Chinese Hindi Spanish French Arabic Bengali Portuguese Russian Urdu Indonesian German Swahili Marathi Tamil Telugu Turkish Vietnamese Korean Italian Thai Gujarati Persian Polish Pashto Kannada Ukrainian Somali Kurdish',
+                                           state='readonly')
     t_languages_spokenEntry.grid(row=6, column=1, padx=5, pady=5)
 
     # secondlanguage entry box

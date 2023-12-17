@@ -182,7 +182,7 @@ class RefugeeDisplay:
 
             if att == "Camp ID":
                 # Create a dropdown for Camp ID
-                camp_ID_box = ttk.Combobox(refugee_profile_window, values=self.camp_ids)
+                camp_ID_box = ttk.Combobox(refugee_profile_window, values=self.camp_ids, state='readonly')
                 camp_ID_box.set(value)  # Set the current value
                 camp_ID_box.grid(row=i, column=1)
                 self.edited_entry_dictionary[att] = camp_ID_box
