@@ -2,7 +2,7 @@ import tkinter as tk
 import csv
 import os
 import pandas as pd
-from tkinter import PhotoImage
+from tkinter import PhotoImage, messagebox
 
 class EmptyDataError(Exception):
     pass
@@ -117,15 +117,24 @@ class CountryMap:
             return locations
         except FileNotFoundError:
             # Handle the case where the file is not found
-            print(f"Error: File '{crisis_events}' not found.")
+            messagebox.showerror("File not found",
+                                "The file 'crisis_events.csv' was not found."
+                                )
+            #print(f"Error: File '{crisis_events}' not found.")
+
             return []
         except pd.errors.EmptyDataError:
             # Handle the case where the file is empty
+            messagebox.showinfo("No Data",
+                                "The file 'crisis_events.csv' contains no data."
+                                "\n\nPlease create a plan first.")
             print(f"Error: File '{crisis_events}' is empty.")
             return []
         except Exception as e:
             # Handle other exceptions
-            print(f"Error: An unexpected error occurred - {e}")
+            messagebox.showerror("Error",
+                                "Something went wrong.")
+            #print(f"Error: An unexpected error occurred - {e}")
             return []
 
 scale_factor = 0.5
