@@ -28,7 +28,7 @@ class RefugeeDisplay:
         display_refugee_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
         display_refugee_title.configure(background="grey")
 
-        self.display_refugee_tree = ttk.Treeview(display_refugee_frame, height=20)
+        self.display_refugee_tree = ttk.Treeview(display_refugee_frame, height=15)
         self.display_refugee_tree.grid(row=1, column=0, columnspan=9, sticky="ew", padx=10, pady=5)
 
         # Button Frame:
