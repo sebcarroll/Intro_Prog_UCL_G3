@@ -266,6 +266,20 @@ class AdminEditVolunteerDetails(invalid_email, invalid_name, invalid_phone_numbe
 
         username_check = new_volunteer['Username']
         password_check = new_volunteer['password']
+        name_check = new_volunteer['name']
+        email_check = new_volunteer['Email Address']
+        phone_check = new_volunteer['Phone Number']
+
+        if name_check.isalpha() == False:
+            raise invalid_name
+
+        if not (email_check and re.search(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+',
+                                        email_check)):
+            raise invalid_email
+
+        if not re.search(r'^[0-9]+', str(phone_check)):
+            raise invalid_phone_number
+
 
 
         if self.username_exists(username_check):
