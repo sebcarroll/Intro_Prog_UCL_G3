@@ -314,7 +314,10 @@ class AdminEditVolunteerDetails(invalid_email, invalid_name, invalid_phone_numbe
             # message_label.grid(row=submit_button_row + 1, column=submit_button_column, columnspan=submit_column_span,
             #                    sticky='W')
             tk.messagebox.showinfo(title='Details Saved', message=f"Details for {username_check} successfully created.")
-            self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
+            try:
+                self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
+            except:
+                pass
             self.create_account_window.destroy()
 
         except FileNotFoundError:
