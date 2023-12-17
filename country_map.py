@@ -34,7 +34,6 @@ class CountryMap:
 
         if self.map_image is None:
             self.map_image = PhotoImage(file="Images/dark_map.png")
-        # ORIGINAL MAP DIRECTORY: file="world_map_tkinter.png"
 
         map_canvas.create_image(0, 0, anchor=tk.NW, image=self.map_image)
 
