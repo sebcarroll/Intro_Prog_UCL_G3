@@ -89,7 +89,6 @@ class AdminLoginPage(tk.Frame):
 
     # use on_login to bypass login to admin_main:
     def on_login(self):
-        # Add login logic here
         self.go_to_admin_main()
 
     def exit_and_go_back(self):

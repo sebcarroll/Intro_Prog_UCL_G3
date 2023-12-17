@@ -12,7 +12,6 @@ class CountryMap:
 
 
     def view_country_map_window(self):
-        # Create a new window for the map
         self.map_window = tk.Toplevel(self.window)
         self.map_window.title("View Crisis Map")
         self.map_window.geometry("1000x500")
@@ -20,25 +19,22 @@ class CountryMap:
         self.map_window.resizable(False, False)
         self.map_window.grab_set()
 
-        # Call the method to create the map in the new window
+        # Call create gui function to create the map in the new level window
         self.show_map(self.map_window)
 
 
     def show_map(self, window):
-
-        # Create a canvas for the map
+        # Create a canvas for the map image
         map_canvas = tk.Canvas(window, width=1000, height=800)
         map_canvas.place(x=0, y=0)
 
-        # Load the image using PhotoImage
         if self.map_image is None:
             self.map_image = PhotoImage(file="Images/dark_map.png")
         # ORIGINAL MAP DIRECTORY: file="world_map_tkinter.png"
 
-        # Display the image on the canvas
         map_canvas.create_image(0, 0, anchor=tk.NW, image=self.map_image)
 
-        # Define coordinates for each country
+        # Coordinates for each country
         country_coordinates = {
             'Nigeria': [500, 300],
             'Sudan': [550, 270],
@@ -71,7 +67,7 @@ class CountryMap:
             'Malawi': [560, 345],
         }
 
-        # Read locations from CSV file
+        # Locations from csv file
         locations = self.read_location_data_from_csv('crisis_events.csv')
         print("loading locations", locations)
 
@@ -86,7 +82,7 @@ class CountryMap:
                 # Increase the count for the country
                 country_counts[country] += 1
 
-                # Adjust the oval size based on the count
+                # Adjust oval size based on count
                 oval_size = 3 + country_counts[country]
 
                 # Draw the oval with adjusted size

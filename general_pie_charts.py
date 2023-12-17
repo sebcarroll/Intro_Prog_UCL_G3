@@ -10,19 +10,17 @@ class SummaryCharts:
 
 
     def generate_charts_window(self):
-        # Create a new window for the pie chart
         self.charts_window = tk.Toplevel(self.window)
         self.charts_window.title("View Charts")
         self.charts_window.geometry("800x400")
 
         self.charts_window.grab_set()
 
-        # Call the method to create the pie chart in the new window
+        # Call create gui functions to create the pie charts in the new window
         self.create_pie_chart_status(self.charts_window)
         self.create_bar_chart_crisis_type(self.charts_window)
 
     def create_pie_chart_status(self, window):
-        # Read data from CSV file
         active_count = 0
         inactive_count = 0
 
@@ -35,27 +33,27 @@ class SummaryCharts:
                 elif status.lower() == 'inactive':
                     inactive_count += 1
 
-        # Calculate percentage
+        # Calculate percentage or ratio between the inactive and active plans
         total = active_count + inactive_count
         active_percentage = (active_count / total) * 360
         inactive_percentage = (inactive_count / total) * 360
 
-        # Create a pie chart using canvas
+        # Create pie chart using canvas
         canvas = tk.Canvas(window, width=200, height=200)
         # canvas.grid(row=17, column=0, padx=10, pady=5)
         canvas.pack()
 
-        # Create a canvas for the pie chart labels
+        # Create canvas for pie chart labels
         canvas_legend_pie = tk.Canvas(window, width=200, height=200)
         canvas_legend_pie.place(x=50 ,y=75)
 
-        # Draw active slice
+        # Active slice
         canvas.create_arc(50, 50, 150, 150, start=0, extent=active_percentage, fill='green', outline='white')
-        # Draw inactive slice
+        # Inactive slice
         canvas.create_arc(50, 50, 150, 150, start=active_percentage, extent=inactive_percentage, fill='red',
                           outline='white')
 
-        # Add legend (key)
+        # Add colour legend
         legend_labels_crisis_status = ['Active Crisis', 'Inactive Crisis']
         legend_colors_crisis_status = ['green', 'red']
 
@@ -66,7 +64,6 @@ class SummaryCharts:
             canvas_legend_pie.create_text(40, 20 + i * 20, text=label, anchor=tk.W, fill='black')
 
     def create_bar_chart_crisis_type(self, window):
-        # Read data from CSV file
         war_count = 0
         environmental_count = 0
         supply_shortage_count = 0
@@ -125,7 +122,7 @@ class SummaryCharts:
         x_other = x_displacement + bar_width + gap
 
         # Calculate the heights of each bar
-        height_factor = 100  # You can adjust this factor to control the height of the bars
+        height_factor = 100
         height_war = war_count * height_factor / total
         height_environmental = environmental_count * height_factor / total
         height_supply_shortage = supply_shortage_count * height_factor / total
@@ -133,7 +130,7 @@ class SummaryCharts:
         height_displacement = displacement_count * height_factor / total
         height_other = other_count * height_factor / total
 
-        # Draw rectangles for each bar
+        # Draw rectangle shape for each bar
         canvas.create_rectangle(x_war, 150 - height_war, x_war + bar_width, 150, fill='red', outline='white')
         canvas.create_rectangle(x_environmental, 150 - height_environmental, x_environmental + bar_width, 150, fill='blue', outline='white')
         canvas.create_rectangle(x_supply_shortage, 150 - height_supply_shortage, x_supply_shortage + bar_width, 150, fill='green', outline='white')

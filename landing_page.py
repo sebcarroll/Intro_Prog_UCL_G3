@@ -3,6 +3,7 @@ from admin_login_page import AdminLoginPage
 from volunteer_login_page import VolunteerLoginPage
 from tkinter import messagebox, PhotoImage
 import pandas as pd
+
 class LandingPage:
     def __init__(self, root, go_to_admin_main, go_to_volunteer_main):
         self.root = root
@@ -88,7 +89,6 @@ class LandingPage:
         self.admin_login_frame.pack(fill='both', expand=True)
 
     def open_volunteer_login(self):
-        # Clear current widgets and open volunteer login frame
         for widget in self.window.winfo_children():
             if widget.winfo_class() != 'Menu':
                 widget.destroy()

@@ -323,9 +323,7 @@ class VolunteerHomepage():
     def apply_theme(self, theme):
         if theme == 'dark':
             self.window.configure(bg='blue')
-            # Set other widget and text colors for dark theme
         elif theme == 'light':
             self.window.configure(bg='light blue')
-            # Set other widget and text colors for light theme
         else:
             self.window.configure(bg='SystemButtonFace')

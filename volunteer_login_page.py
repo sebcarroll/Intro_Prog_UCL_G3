@@ -71,15 +71,9 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         volunteer_entries_frame = tk.Frame(self, relief=tk.RAISED, borderwidth=5)
         volunteer_entries_frame.grid()
 
-
-
         # Label frame for this page that then stores all of the labels and entries
         volunteer_log_in_frame = tk.LabelFrame(volunteer_entries_frame, borderwidth=5)
         volunteer_log_in_frame.grid(row=3, column=1, pady=30, padx=30)
-
-        # Volunteer title
-        #self.t_volunteer_title = tk.Label(self, text='Volunteer login', font=('Arial bold', 50))
-        #self.t_volunteer_title.grid(row=0, column=0, pady=30)
 
         # Username entry box
         self.name_label = tk.Label(volunteer_log_in_frame, text='Username', font=('TkDefault', 17))
@@ -103,37 +97,12 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
         image_label = tk.Label(volunteer_log_in_frame, image=self.logo, relief=tk.RAISED)
         image_label.grid(row=5, column=0, pady=10, padx=(0, 0))
 
-        # # Username entry box
-        # self.t_name_label = tk.Label(self, text='Username')
-        # self.t_name_label.grid(row=1, column=0)
-        # self.t_name_entry = tk.Entry(self)
-        # self.t_name_entry.grid(row=2, column=0)
-        #
-        # # Password entry box
-        # self.t_password_label2 = tk.Label(self, text='Password')
-        # self.t_password_label2.grid(row=3, column=0, pady=5)
-        # self.t_password_entry = tk.Entry(self, show='*')
-        # self.t_password_entry.grid(row=4, column=0)
-
-        # Login box
-        # self.entry_button = tk.Button(self, text='Login', command=self.t_details_confirmation, height=1, width=20)
-        # self.entry_button.grid(row=5, column=0, pady=20)
-        #
-        # # Back to landing page
-        # login_btn = tk.Button(self.window, text="Back", command=self.exit_and_go_back)
-        # login_btn.grid(row=10, column=0, pady=10)
-
-
         login_btn = tk.Button(volunteer_log_in_frame, text="Login", command=self.t_details_confirmation)
         login_btn.grid(row=10, column=1, pady=10)
-        # Swap button from command=self.t_details_confirmation to command=self.on_login to bypass
 
         # Back to landing page
         back_button = tk.Button(volunteer_log_in_frame, text="Back", command=self.exit_and_go_back)
         back_button.grid(row=10, column=0, pady=10)
-
-
-
 
         # Shows caps lock on/off (OLD BINDING NOT WORKING)
         self.label_caps = tk.Label(volunteer_log_in_frame, text='')
@@ -158,7 +127,6 @@ class VolunteerLoginPage(tk.Frame, t_deactivated_account, t_deleted_account, t_c
 
         with open("volunteer_info.csv", 'r') as file:
             csv_reader = csv.reader(file)
-
             # Name is in the first column
             for row in csv_reader:
                 if row and str(row[0].strip()) == self.username:

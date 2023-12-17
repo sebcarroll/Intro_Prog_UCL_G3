@@ -101,171 +101,24 @@ def validate_data(edited_data, original_data, row_index_in_treeview):
                 validated_data.append(value)
             else:
                 validated_data.append(original_data.at[row_index_in_treeview, att])
-
         elif att == 'Month':
             if value in months:
                 validated_data.append(value)
             else:
                 validated_data.append(original_data.at[row_index_in_treeview, att])
-
         elif att == 'Day':
             if value.isdigit() and 1 <= int(value) <= 31:
                 validated_data.append(int(value))
             else:
                 validated_data.append(original_data.at[row_index_in_treeview, att])
-
         elif att == 'Year':
             if value.isdigit() and 2023 <= int(value) <= 2030:
                 validated_data.append(int(value))
             else:
                 validated_data.append(original_data.at[row_index_in_treeview, att])
-
         elif att in ['Status', 'End Date']:
             validated_data.append(original_data.at[row_index_in_treeview, att])
-
-        # elif att == 'extra attribute here!':
-        #     if value.isdigit() and len(value) == 5:
-        #         validated_data.append(value)
-        #     else:
-        #         validated_data.append(original_data.at[row_index_in_treeview, att])
-
         else:
             validated_data.append(value)
 
     return validated_data
-
-
-
-
-
-
-# GUI Functions:
-
-import tkinter as tk
-import pandas as pd
-import csv
-
-# Function to create a pie chart for the status of crises
-def create_pie_chart(window, x_position, y_position):
-    # Read data from CSV file
-    active_count = 0
-    inactive_count = 0
-
-    with open('crisis_events.csv', 'r') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            status = row['Status']
-            if status.lower() == 'active':
-                active_count += 1
-            elif status.lower() == 'inactive':
-                inactive_count += 1
-
-    # Calculate percentage
-    total = active_count + inactive_count
-    active_percentage = (active_count / total) * 360
-    inactive_percentage = (inactive_count / total) * 360
-
-    # Create a pie chart using canvas
-    canvas = tk.Canvas(window, width=200, height=200)
-    canvas.place(x=x_position, y=y_position)
-
-    # Draw active and inactive slices
-    canvas.create_arc(50, 50, 150, 150, start=0, extent=active_percentage, fill='green', outline='white')
-    canvas.create_arc(50, 50, 150, 150, start=active_percentage, extent=inactive_percentage, fill='red', outline='white')
-
-    # Add legend
-    legend_labels_crisis_status = ['Active Crisis', 'Inactive Crisis']
-    legend_colors_crisis_status = ['green', 'red']
-    for i, label in enumerate(legend_labels_crisis_status):
-        canvas.create_rectangle(10, 10 + i * 20, 30, 30 + i * 20, fill=legend_colors_crisis_status[i], outline='white')
-        canvas.create_text(40, 20 + i * 20, text=label, anchor=tk.W, fill='white')
-
-# Function to create a pie chart for crisis types
-def create_pie_chart_crisis_type(window, x_position, y_position):
-    # Read data from CSV file
-    crisis_type_counts = {'war': 0, 'environmental': 0, 'supply shortage': 0,
-                          'political unrest': 0, 'displacement': 0, 'other': 0}
-
-    with open('crisis_events.csv', 'r') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            crisis_type = row['Crisis Type'].lower()
-            if crisis_type in crisis_type_counts:
-                crisis_type_counts[crisis_type] += 1
-
-    # Calculate percentage
-    total = sum(crisis_type_counts.values())
-    start_angle = 0
-
-    # Create a pie chart using canvas
-    canvas = tk.Canvas(window, width=200, height=200)
-    canvas.place(x=x_position, y=y_position)
-
-    # Draw slices of pie chart
-    colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange']
-    for i, (crisis_type, count) in enumerate(crisis_type_counts.items()):
-        extent = (count / total) * 360
-        canvas.create_arc(50, 50, 150, 150, start=start_angle, extent=extent, fill=colors[i], outline='white')
-        start_angle += extent
-
-    # Add legend
-    canvas_legend = tk.Canvas(window, width=200, height=200)
-    canvas_legend.place(x=x_position + 200, y=y_position)  # Adjust legend position as needed
-    for i, (crisis_type, color) in enumerate(zip(crisis_type_counts.keys(), colors)):
-        canvas_legend.create_rectangle(10, 10 + i * 20, 30, 30 + i * 20, fill=color, outline='white')
-        canvas_legend.create_text(40, 20 + i * 20, text=crisis_type.title(), anchor=tk.W, fill='white')
-
-
-
-# Function to create a map and mark locations based on CSV data
-def create_map(window, x_position, y_position):
-    print("Creating map...")
-
-    # Read data from CSV file for crisis event locations
-    locations = read_location_data_from_csv('crisis_events.csv')
-    print("Loaded locations:", locations)
-
-    # Sample coordinates for countries (adjust as needed)
-    country_coordinates = {
-        'Nigeria': (50, 100),
-        'Sudan': (100, 150),
-        'South Sudan': (150, 200),
-        'Somalia': (50, 250),
-        'Yemen': (100, 50),
-        'Afghanistan': (150, 100),
-        'England': (200, 150),
-    }
-
-    # Load the world map image
-    try:
-        world_map_image = tk.PhotoImage(file='path/to/world_map.png')
-        world_map_canvas = tk.Canvas(window, width=400, height=200)
-        world_map_canvas.place(x=x_position, y=y_position)
-
-        # Display the world map image on the canvas
-        world_map_canvas.create_image(0, 0, anchor=tk.NW, image=world_map_image)
-
-        # Mark the locations on the map
-        for location in locations:
-            country = location['country']
-            if country in country_coordinates:
-                x, y = country_coordinates[country]
-                world_map_canvas.create_oval(x - 5, y - 5, x + 5, y + 5, fill='red')
-                world_map_canvas.create_text(x, y - 10, text=country, anchor=tk.CENTER)
-    except Exception as e:
-        print("Error loading map image:", e)
-
-def read_location_data_from_csv(filename):
-    data = pd.read_csv(filename)
-    locations = []
-    for index, row in data.iterrows():
-        country = row['Country']
-        if pd.notna(country):
-            locations.append({'country': country})
-    return locations
-
-
-# Call the functions with position parameters and import the functions from gf
-"""create_pie_chart(root, 100, 400)  # Specify the position
-create_pie_chart_crisis_type(root, 400, 400)  # Specify the position
-create_map(root, 700, 400)"""

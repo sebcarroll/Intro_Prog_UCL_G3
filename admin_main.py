@@ -49,6 +49,8 @@ class AdminHomepage:
 
         self.window.bind('<F11>', self.toggle_fullscreen)
         self.window.bind('<Escape>', self.end_fullscreen)
+
+        # Set the X button to close program or stop root
         self.window.protocol("WM_DELETE_WINDOW", self.window_exit_button)
 
         # MENU BAR:
@@ -266,7 +268,6 @@ class AdminHomepage:
 
         theme_window.grab_set()
 
-        # Radio buttons for theme selection
         tk.Radiobutton(theme_window, text="Light Theme", variable=self.current_theme,
                        value='light', command=lambda: self.apply_theme('light')).pack(anchor=tk.W)
         tk.Radiobutton(theme_window, text="Dark Theme", variable=self.current_theme,
@@ -277,9 +278,7 @@ class AdminHomepage:
     def apply_theme(self, theme):
         if theme == 'dark':
             self.window.configure(bg='red3')
-            # Set other widget and text colors for dark theme
         elif theme == 'light':
             self.window.configure(bg='pink')
-            # Set other widget and text colors for light theme
         else:
             self.window.configure(bg='SystemButtonFace')
