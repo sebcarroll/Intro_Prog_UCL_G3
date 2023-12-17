@@ -3,8 +3,14 @@ from tkinter import ttk, Listbox
 from tkinter import messagebox
 import csv
 import pandas as pd
-
-class AdminEditVolunteerDetails:
+import re
+class invalid_email(Exception):
+    pass
+class invalid_phone_number(Exception):
+    pass
+class invalid_name(Exception):
+    pass
+class AdminEditVolunteerDetails(invalid_email, invalid_name, invalid_phone_number):
     def __init__(self, window, back_button_to_admin_main):
         self.window = window
         self.back_button_to_admin_main = back_button_to_admin_main
@@ -411,23 +417,36 @@ class AdminEditVolunteerDetails:
 
         new_username = updated_details['Username']
         new_password = updated_details['password']
-
-
-        if new_username != old_username and self.username_exists(new_username):
-            tk.messagebox.showerror("Error", f"Username '{new_username}' already exists. Please choose a different username.")
-            return
-
-        if not new_username:
-            tk.messagebox.showerror("Error", "Username must be filled in")
-            return
-
-        if not new_password:
-            tk.messagebox.showerror("Error", "Password must be filled in")
-            return
-
-
+        new_name = updated_details['name']
+        new_email = updated_details['Email Address']
+        new_phone = updated_details['Phone Number']
 
         try:
+
+            if new_name.isalpha() == False:
+                raise invalid_name
+
+            if not (new_email and re.search(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', new_email)):
+                raise invalid_email
+
+
+            if not re.search(r'^[0-9]+', str(new_phone)):
+                raise invalid_phone_number
+
+
+
+            if new_username != old_username and self.username_exists(new_username):
+                tk.messagebox.showerror("Error", f"Username '{new_username}' already exists. Please choose a different username.")
+                return
+
+            if not new_username:
+                tk.messagebox.showerror("Error", "Username must be filled in")
+                return
+
+            if not new_password:
+                tk.messagebox.showerror("Error", "Password must be filled in")
+                return
+
             with open('volunteer_info.csv', 'r', newline='') as csvfile:
                 reader = csv.DictReader(csvfile)
                 rows = list(reader)
@@ -447,8 +466,20 @@ class AdminEditVolunteerDetails:
             tk.messagebox.showinfo("Update", f"Details for {old_username} updated successfully.")
             edit_details_window.destroy()
             self.upload_csv_data(self.display_volunteer_tree, 'volunteer_info.csv')
+
         except FileNotFoundError:
             messagebox.showwarning("Error", "'volunteer_info.csv' file not found.")
+        except(invalid_name):
+            tk.messagebox.showinfo(title='Invalid Name', message='Please enter a valid name')
+
+        except(invalid_email):
+            tk.messagebox.showinfo(title='Invalid Email', message='Please enter a valid email address')
+        except(invalid_phone_number):
+            tk.messagebox.showinfo(title='Invalid Phone Number', message='Please enter a valid phone number')
+
+
+
+
 
 
     def reactivate_account(self):
