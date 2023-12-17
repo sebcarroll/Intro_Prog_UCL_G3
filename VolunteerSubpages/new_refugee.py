@@ -9,12 +9,6 @@ class no_text_entered(Exception):
     pass
 
 def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volunteer_main, store_details_callback):
-    # for i in window.winfo_children():
-    #     i.grid_forget()
-    # # Main frame for this whole page
-    # refugeeframe = tk.Frame(window)
-    # refugeeframe.grid()
-
     for i in window.winfo_children():
         i.grid_forget()
     for i in range(9):
@@ -26,12 +20,9 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
     for i in range(8):
         refugeeframe.grid_rowconfigure(i, weight=1)
 
-
-
     # crisis_df = pd.read_csv('crisis_events.csv')
     # active_camps = crisis_df[crisis_df['Status'] == 'Active']
     # camp_IDs = list(active_camps['Camp ID'])
-
 
     camp_ids_from_csv = []
     try:
@@ -116,10 +107,6 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
     t_back_button = tk.Button(refugee_labelframe, text='Back to Home', command=back_button_to_volunteer_main)
     t_back_button.grid(row=9, column=0, padx=5, pady=20)
 
-    # for i in range(10):
-    #     refugeeframe.grid_rowconfigure(i, weight=1)
-    # refugeeframe.grid_columnconfigure(0, weight=1)
-
     return t_camp_IDbox, name_entry, t_medical_conditionsEntry, t_languages_spokenEntry, t_second_languageEntry
 
 
@@ -140,12 +127,14 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
         medical_conditions = t_medical_conditionsEntry.get("1.0", "end-1c")
         languages_spoken = t_languages_spokenEntry.get()
         second_language = t_second_languageEntry.get()
+
         refugee_info.loc[name,'Camp ID'] = camp_ID
         camp_ID = int(camp_ID)
         refugee_info.loc[name,'Medical Conditions'] = medical_conditions
         refugee_info.loc[name, 'Languages Spoken'] = languages_spoken
         refugee_info.loc[name, 'Second Language'] = second_language
         refugee_info.loc[name, 'Family Members'] = family_members
+
         if name == '' or family_labelbox.get() == '' or t_medical_conditionsEntry.get("1.0", "end-1c") == '':
             raise no_text_entered
         # new_refugee_info.index.name = 'Name'

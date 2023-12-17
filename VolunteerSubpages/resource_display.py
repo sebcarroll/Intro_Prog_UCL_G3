@@ -4,10 +4,6 @@ import pandas as pd
 
 
 def resource_display(window, camp_id, back_button_to_volunteer_main):
-    # for i in window.winfo_children():
-    #     i.grid_forget()
-    # resources_frame = tk.Frame(window)
-    # resources_frame.grid()
     for i in window.winfo_children():
         i.grid_forget()
     for i in range(9):
@@ -147,7 +143,7 @@ def view_csv_data_entry(tree):
     column_attributes = tree['columns']
     treeview_width = len(column_attributes)
 
-    # Open pop up edit window
+    # Open pop up view window
     view_plan_window = tk.Toplevel()
     view_plan_window.title("View Plan")
     view_plan_window.grab_set()
@@ -157,9 +153,10 @@ def view_csv_data_entry(tree):
         att = column_attributes[i]
         value = plan_details[i]
 
+        # Attributes loop per row span
         label = tk.Label(view_plan_window, text=f"{att}:")
         label.grid(row=i, column=0)
-
+        # Details loop per row span in next column to the left
         current_camp_info = tk.Label(view_plan_window, textvariable=tk.StringVar(view_plan_window, value=value))
         current_camp_info.grid(row=i, column=1)
 

@@ -15,10 +15,6 @@ class invalid_name(Exception):
 
 
 def edit_personal_info(window, username, y_personal_info, t_personal_information_base, back_button_to_volunteer_main, store_details_callback):
-    # for i in window.winfo_children():
-    #     i.grid_forget()
-    # t_personal_frame = tk.Frame(window)
-    # t_personal_frame.grid()
     for i in window.winfo_children():
         i.grid_forget()
     for i in range(9):
@@ -30,16 +26,12 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
     for i in range(8):
         t_personal_frame.grid_rowconfigure(i, weight=1)
 
-    # t_personal_labelframe = tk.LabelFrame(t_personal_frame)
-    # t_personal_labelframe.grid(row=1, column=0, padx=(window.winfo_width() - t_personal_frame.winfo_reqwidth()) // 4)
-
     personal_title = tk.Label(t_personal_frame, text='Edit details', font=('TKDefault', 25), fg='white')
     personal_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
     personal_title.configure(background="grey")
 
     t_personal_labelframe = tk.LabelFrame(t_personal_frame)
     t_personal_labelframe.grid(row=1, column=0, padx=10, pady=30, columnspan=9)
-    #  Currently set name and current title
 
     current_title = tk.Label(t_personal_labelframe, text='Current details', font=('tkDefault', 20))
     current_title.grid(row=0, column=1, padx=5, pady=5)
@@ -48,7 +40,7 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
     edit_title = tk.Label(t_personal_labelframe, text='Edit', font=('tkDefault', 20))
     edit_title.grid(row=0, column=2, padx=5, pady=5)
 
-    # Name entry box
+    # Name
     name_label = tk.Label(t_personal_labelframe, text='Name: ', font=('tkDefault', 15))
     name_label.grid(row=1, column=0, padx=5, pady=5)
     preset_name = tk.Label(t_personal_labelframe, text=y_personal_info[username]['name'],
@@ -58,21 +50,16 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
     t_personal_nameEntry.grid(row=1, column=2, padx=5, pady=5, sticky='ew')
 
     # Email header/label
-    # t_personal_email = tk.Label(t_personal_labelframe, text=' Edit Email address')
-    # Current email
     email_label = tk.Label(t_personal_labelframe, text='Email address: ', font=('tkDefault', 15))
     email_label.grid(row=2, column= 0, padx=5, pady=5)
     personal_email = tk.Label(t_personal_labelframe,
                                    text=y_personal_info[username]['Email Address'],
                                    font=('tkDefault', 15))
     personal_email.grid(row=2, column=1, padx=5, pady=5)
-
-    # Email entry box
     t_personal_emailEntry = tk.Entry(t_personal_labelframe)
     t_personal_emailEntry.grid(row=2, column=2, padx=5, pady=5, sticky='ew')
-    # t_phonenumber = tk.Label(t_personal_labelframe, text='Edit Phone number')
 
-    # Phone number Entry and label
+    # Phone number
     phone_label = tk.Label(t_personal_labelframe, text='Phone number: ', font=('tkDefault', 15))
     phone_label.grid(row=3, column=0, padx=5, pady=5)
     phone_number = tk.Label(t_personal_labelframe,
@@ -82,15 +69,13 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
     t_phonenumberEntry = tk.Entry(t_personal_labelframe)
     t_phonenumberEntry.grid(row=3, column=2, padx=5, pady=5, sticky='ew')
 
-    # Commitment label
+    # Commitment
     commitment_type = tk.Label(t_personal_labelframe, text='Commitment type: ', font=('tkDefault', 15))
     commitment_type.grid(row=4, column=0, padx=5, pady=5)
     commitment_label = tk.Label(t_personal_labelframe,
                                      text=y_personal_info[username]['Commitment'],
                                      font=('tkDefault', 15))
     commitment_label.grid(row=4, column=1, padx=5, pady=5)
-
-    # Commitment type entry
     t_commitmentEntry = ttk.Combobox(t_personal_labelframe,
                                           values=['Full time', 'Part time', 'Occasional'],
                                           state='readonly')
@@ -103,8 +88,6 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
                                     text=y_personal_info[username]['Work Type'],
                                     font=('tkDefault', 15))
     work_type_label.grid(row=5, column=1, padx=5, pady=5)
-
-    # Work type entry
     t_worktypeEntry = ttk.Combobox(t_personal_labelframe, values=['Medical Aid', 'Food counselling'], state='readonly')
     t_worktypeEntry.grid(row=5, column=2, padx=5, pady=5, sticky='ew')
 
@@ -114,28 +97,22 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
     btn_frame.grid_columnconfigure(0, weight=1)
     btn_frame.grid_columnconfigure(2, weight=1)
 
-    # Store details box
+    # Store details btn
     t_store_details = tk.Button(btn_frame, text='Store details', command=lambda: [store_details_callback(t_personal_nameEntry, t_personal_emailEntry, t_phonenumberEntry, t_commitmentEntry, t_worktypeEntry), t_back_to_details],
                                      height=1, width=20)
     t_store_details.grid(row=0, column=1, padx=5, pady=5)
-
-    # Back to details page
+    # Back to details page btn
     t_back_to_details = tk.Button(btn_frame, text='Back to volunteer details', command=t_personal_information_base)
     t_back_to_details.grid(row=0, column=2, padx=5, pady=5)
-
+    # Back to details page
     back_to_summary = tk.Button(btn_frame, text='Back to Home',
                                      command=back_button_to_volunteer_main)
     back_to_summary.grid(row=0, column=0, padx=5, pady=5)
 
-    # for i in range(7):
-    #     t_personal_frame.grid_rowconfigure(i, weight=1)
-    # t_personal_frame.grid_columnconfigure(0, weight=1)
 
-
-    def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main, store_details_callback):
+    '''def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main, store_details_callback):
         for i in window.winfo_children():
             i.grid_forget()
-        # Main frame for this whole page
         refugeeframe = tk.Frame(window)
         refugeeframe.grid()
         crisis_df = pd.read_csv('crisis_events.csv')
@@ -207,7 +184,7 @@ def edit_personal_info(window, username, y_personal_info, t_personal_information
             t_personal_frame.grid_rowconfigure(i, weight=1)
         t_personal_frame.grid_columnconfigure(0, weight=1)
 
-    return t_personal_nameEntry, t_personal_emailEntry,t_phonenumberEntry, t_commitmentEntry, t_worktypeEntry
+    return t_personal_nameEntry, t_personal_emailEntry,t_phonenumberEntry, t_commitmentEntry, t_worktypeEntry'''
 
 
 

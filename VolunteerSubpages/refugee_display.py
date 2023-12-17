@@ -12,17 +12,6 @@ class RefugeeDisplay:
         self.camp_id = None
 
     def create_gui_refugee_display(self, window):
-        # Main frame for this whole page
-        # for i in self.window.winfo_children():
-        #     i.grid_forget()
-        # self.window.grid_columnconfigure(0, weight=1)
-        # self.window.grid_rowconfigure(0, weight=1)
-        # display_refugee_frame = tk.Frame(self.window)
-        # display_refugee_frame.grid(sticky="nsew", padx=5, pady=5)
-        # display_refugee_frame.grid_columnconfigure(0, weight=1)
-        # display_refugee_frame.grid_rowconfigure(1, weight=3)
-        # display_refugee_frame.grid_rowconfigure(2, weight=1)
-
         for i in self.window.winfo_children():
             i.grid_forget()
         for i in range(9):
@@ -65,8 +54,6 @@ class RefugeeDisplay:
         back_button = tk.Button(btn_frame, text='Back to Home', command=self.back_button_to_volunteer_main)
         back_button.grid(row=2, column=1, padx=5, pady=40)
 
-
-
         # CSV data
         csv_file = "refugee_info.csv"
         # csv_data = self.load_csv_data(csv_file)
@@ -78,6 +65,7 @@ class RefugeeDisplay:
 
         data = pd.read_csv(filename)
         data = data[data['Camp ID'] == self.camp_id]
+
         # The following block will convert floats to integers for the GUI to remove the ".0"
         # columns with float numbers
         float_columns = data.select_dtypes(include=['float']).columns
@@ -97,7 +85,6 @@ class RefugeeDisplay:
         for index, row in data.iterrows():
             tree.insert("", tk.END, values=list(row), iid=str(index))
 
-
     def delete_csv_data_entry(self, tree, filename):
         selected_item = self.display_refugee_tree.focus()
         if not selected_item:
@@ -109,7 +96,7 @@ class RefugeeDisplay:
                 # Get the row index of the selected row
                 index = int(selected_item[0])
 
-                # Load current CSV data, delete the entry, save the deletion to the csv file
+                # Load current CSV data, delete the entry, then save the deletion to the csv
                 data = pd.read_csv(filename)
                 data = data.drop(index)
                 data.to_csv(filename, index=False)
@@ -129,25 +116,25 @@ class RefugeeDisplay:
         column_attributes = self.display_refugee_tree['columns']
         treeview_width = len(column_attributes)
 
-        # Open pop up edit window
+        # Open pop up view window
         refugee_profile_window = tk.Toplevel(self.window)
         refugee_profile_window.title("View Refugee Details")
         refugee_profile_window.grab_set()
-        # Create a label and entry for each plan attribute using column attributes
+
+        # Create a label and entry for each plan attribute using column attributes by looping over the count of headers in the csv
         for i in range(treeview_width):
             att = column_attributes[i]
             value = refugee_details[i]
-
+            # Attribute label
             label = tk.Label(refugee_profile_window, text=f"{att}:")
             label.grid(row=i, column=0)
-
+            # Data label
             current_camp_info = tk.Label(refugee_profile_window, textvariable=tk.StringVar(refugee_profile_window, value=value))
             current_camp_info.grid(row=i, column=1)
 
         # Close button
         save_button = tk.Button(refugee_profile_window, text="Close",command=lambda: self.cancel_btn(refugee_profile_window, selected_item))
         save_button.grid(row=len(refugee_details) + 1, column=1)
-
 
     def edit_csv_data_entry(self):
         selected_item = self.display_refugee_tree.focus()
@@ -165,13 +152,13 @@ class RefugeeDisplay:
         refugee_profile_window = tk.Toplevel(self.window)
         refugee_profile_window.title("Edit Refugee Details")
         refugee_profile_window.grab_set()
-        # Create empty dictionary to store new edited info with key as attribute, value as new edited entry
+        # Create a dictionary to store new edited info with key as attribute, value as new edited entry
         self.edited_entry_dictionary = {}
 
         # Get camp IDs available using the function at the end of this file
         self.camp_ids = self.get_camp_ids_from_csv()
 
-        # Create a label and entry for each plan attribute using column attributes
+        # Create a label and entry for each plan attribute using column attributes by looping over the header count in csv
         for i in range(treeview_width):
 
             att = column_attributes[i]
@@ -181,7 +168,7 @@ class RefugeeDisplay:
             label.grid(row=i, column=0)
 
             if att == "Camp ID":
-                # Create a dropdown for Camp ID
+                # Create a dropdown for Camp ID only
                 camp_ID_box = ttk.Combobox(refugee_profile_window, values=self.camp_ids, state='readonly')
                 camp_ID_box.set(value)  # Set the current value
                 camp_ID_box.grid(row=i, column=1)
@@ -201,7 +188,6 @@ class RefugeeDisplay:
 
 
     def save_details(self, refugee_profile_window, selected_item):
-
         try:
             # list comprehension for new edited values
             updated_values = [entry.get() for entry in self.edited_entry_dictionary.values()]
@@ -217,7 +203,7 @@ class RefugeeDisplay:
                 for i, col_name in enumerate(data.columns):
                     col_type = data[col_name].dtype
 
-                    # Convert the value to the column's type
+                    # Convert the value to the column's current type so we save similar data per attribute
                     if pd.api.types.is_numeric_dtype(col_type):
                         if updated_values[i] != '':
                             updated_values[i] = col_type.type(updated_values[i])
@@ -229,7 +215,7 @@ class RefugeeDisplay:
                 self.display_refugee_tree.item(selected_item, values=updated_values)
 
             refugee_profile_window.destroy()
-            # CSV data
+            # csv data
             csv_file = "refugee_info.csv"
             # csv_data = self.load_csv_data(csv_file)
             self.upload_csv_data(self.display_refugee_tree, csv_file)

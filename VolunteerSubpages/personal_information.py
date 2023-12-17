@@ -1,8 +1,6 @@
 import tkinter as tk
 
 def personal_information(window, username, y_personal_info, t_personal_info_edit, back_button_to_volunteer_main):
-    # for i in window.winfo_children():
-    #     i.grid_forget()
     for i in window.winfo_children():
         i.grid_forget()
     for i in range(9):
@@ -14,15 +12,9 @@ def personal_information(window, username, y_personal_info, t_personal_info_edit
     for i in range(8):
         t_personal_frame.grid_rowconfigure(i, weight=1)
 
-    # t_personal_frame = tk.Frame(window)
-    # t_personal_frame.grid(row=0, column=0)
-    # t_personal_frame.grid(padx=(window.winfo_width() - t_personal_frame.winfo_reqwidth()) // 3)
-
-
     t_personal_title = tk.Label(t_personal_frame, text='Your Personal Details', font=('TKDefault', 25), fg='white')
     t_personal_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
     t_personal_title.configure(background="grey")
-
 
     t_personal_labelframe = tk.LabelFrame(t_personal_frame)
     t_personal_labelframe.grid(row=1, column=0, padx=10, pady=30, columnspan=9)
@@ -78,9 +70,6 @@ def personal_information(window, username, y_personal_info, t_personal_info_edit
     back_to_summary = tk.Button(btn_frame, text='Back to Home', command=back_button_to_volunteer_main)
     back_to_summary.grid(row=1, column=0, columnspan=2, pady=10, padx=10)
 
-    # for i in range(9):
-    #     t_personal_frame.grid_rowconfigure(i, weight=1)
-    # t_personal_frame.grid_columnconfigure(0, weight=1)
 
 
 
