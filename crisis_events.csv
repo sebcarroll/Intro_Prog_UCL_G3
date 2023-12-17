@@ -1,35 +1,37 @@
 Camp ID,Crisis Type,Description,Country,Day,Month,Year,Status,End Date,Capacity,Duration,Meals(T),Medicine(T),Meals/w,Medicine/w,Delivery Time(d),Refugees
-68693,Earthquake,Aftershocks,Haiti,10,January,2023,Active,0000-00-00 00:00:00,150,12,80,6,15,3,3,50
-68694,Hurricane,Category 4, Haiti,20,February,2023,Active,0000-00-00 00:00:00,200,15,100,8,18,4,4,75
-68695,Epidemic,Cholera Outbreak,Haiti,1,March,2023,Active,0000-00-00 00:00:00,180,10,70,5,12,2,2,40
-68696,Famine,Food Shortage,Haiti,5,April,2023,Active,0000-00-00 00:00:00,120,5,25,2,8,1,1,30
-68697,Flood,Flash Flooding,Haiti,10,May,2023,Inactive,2023-05-20 18:30:00,80,8,40,3,10,2,2,25
-68698,Humanitarian Emergency,Refugee Crisis,Haiti,15,June,2023,Active,0000-00-00 00:00:00,250,20,120,10,25,5,5,120
-68699,Environmental Disaster,Landslide,Haiti,20,July,2023,Active,0000-00-00 00:00:00,150,12,60,5,15,3,3,80
-68700,Political Unrest,Protests and Demonstrations,Haiti,25,August,2023,Inactive,2023-09-05 12:00:00,100,10,50,4,10,2,2,45
-68701,Pandemic,Unknown Virus Outbreak,Haiti,1,September,2023,Active,0000-00-00 00:00:00,200,15,80,6,20,3,3,150
-68702,War,Internal Conflict,Haiti,5,October,2023,Active,0000-00-00 00:00:00,300,20,120,8,25,4,4,200
-50055,War,Voldemort has found Harry Potter,Nigeria,6,December,2023,Active,0000-00-00 00:00:00,90,1,42,3,14,1,2,14
-56645,Political unrest,Dark Lord Harry Potter,Sudan,9,December,2023,Inactive,2023-12-10 15:00:33,30,15,100000,100000,14,2,1,0
-46753,Supply Shortage,Death,Afghanistan,10,December,2023,Inactive,2023-12-13 13:57:57,6666,0,0,0,0,0,0,0
-14646,War,Supply food for aid workers,Democratic Republic of the Congo,30,July,2023,Inactive,2023-12-16 17:08:12,,,,,,,,,
-68692,Earthquake,Tectonic Shift,Haiti,5,January,2023,Active,0000-00-00 00:00:00,120,10,60,5,12,3,3,25
-78546,Flood,Heavy Rainfall,Venezuela,15,February,2023,Active,0000-00-00 00:00:00,80,7,35,2,10,1,1,18
-89999,Pandemic,Unknown Virus,North Korea,20,March,2023,Inactive,2023-12-01 08:30:45,,,,,,,,,
-90000,Pandemic,Unknown Virus,North Korea,22,March,2023,Active,0000-00-00 00:00:00,150,7,40,3,12,2,2,75
-90001,Pandemic,Unknown Virus,North Korea,25,March,2023,Active,0000-00-00 00:00:00,150,7,40,3,12,2,2,110
-90002,Pandemic,Unknown Virus,North Korea,28,March,2023,Active,0000-00-00 00:00:00,150,7,40,3,12,2,2,145
-90003,Pandemic,Unknown Virus,North Korea,1,April,2023,Inactive,2023-04-15 12:45:20,,,,,,,,,
-90004,Pandemic,Unknown Virus,North Korea,5,April,2023,Active,0000-00-00 00:00:00,150,7,40,3,12,2,2,180
-90005,Pandemic,Unknown Virus,North Korea,8,April,2023,Active,0000-00-00 00:00:00,150,7,40,3,12,2,2,215
-90006,Pandemic,Unknown Virus,North Korea,11,April,2023,Active,0000-00-00 00:00:00,150,7,40,3,12,2,2,250
-90007,Pandemic,Unknown Virus,North Korea,14,April,2023,Inactive,2023-04-30 12:45:20,,,,,,,,,
-90015,Refugee Crisis,Mass Displacement,England,10,December,2023,Active,0000-00-00 00:00:00,150,10,70,5,15,3,3,100
-90016,Humanitarian Emergency,Civilian Evacuation,Syria,15,January,2024,Active,0000-00-00 00:00:00,300,20,150,12,30,6,6,200
-90017,Flood,Flash Flooding,England,20,February,2024,Active,0000-00-00 00:00:00,120,8,45,3,12,2,2,80
-90018,War,Conflict Escalation,Syria,25,March,2024,Active,0000-00-00 00:00:00,250,15,120,8,20,4,4,180
-90019,Earthquake,Aftershocks,England,1,April,2024,Active,0000-00-00 00:00:00,100,5,30,2,8,1,1,70
-90020,Political Unrest,Protests and Demonstrations,Syria,5,May,2024,Inactive,2024-05-15 16:30:00,200,10,80,6,15,3,3,150
-90021,Pandemic,New Virus Strain,Syria,10,June,2024,Active,0000-00-00 00:00:00,180,12,60,5,18,3,3,120
-
-
+17064,Environmental,Flood,Haiti,17,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
+68693,War,Aftershocks,Haiti,10,January,2023,Active,0000-00-00 00:00:00,,,,,,,,
+68694,Political unrest,Category 4,Haiti,20,February,2023,Active,0000-00-00 00:00:00,,,,,,,,
+68695,Other,Cholera Outbreak,Haiti,1,March,2023,Active,0000-00-00 00:00:00,,,,,,,,
+68696,Displacement,Food Shortage,Haiti,5,April,2023,Active,0000-00-00 00:00:00,,,,,,,,
+68697,Environmental,Flash Flooding,Haiti,10,May,2023,Inactive,2023-05-20 18:30:00,,,,,,,,
+68698,Political unrest,Refugee Crisis,Haiti,15,June,2023,Active,0000-00-00 00:00:00,,,,,,,,
+68699,War,Landslide,Haiti,20,July,2023,Active,0000-00-00 00:00:00,,,,,,,,
+68700,Political Unrest,Protests and Demonstrations,Haiti,25,August,2023,Inactive,2023-09-05 12:00:00,,,,,,,,
+68701,War,Unknown Virus Outbreak,Haiti,1,September,2023,Active,0000-00-00 00:00:00,,,,,,,,
+68702,War,Internal Conflict,Haiti,5,October,2023,Active,0000-00-00 00:00:00,,,,,,,,
+50055,War,Voldemort has found Harry Potter,Nigeria,6,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
+56645,Political unrest,Dark Lord Harry Potter,Sudan,9,December,2023,Inactive,2023-12-10 15:00:33,,,,,,,,
+46753,Supply Shortage,Death,Afghanistan,10,December,2023,Inactive,2023-12-13 13:57:57,,,,,,,,
+14646,War,Supply food for aid workers,Democratic Republic of the Congo,30,July,2023,Inactive,2023-12-16 17:08:12,,,,,,,,
+68692,Environmental,Tectonic Shift,Haiti,5,January,2023,Active,0000-00-00 00:00:00,,,,,,,,
+78546,Other,Heavy Rainfall,Venezuela,15,February,2023,Active,0000-00-00 00:00:00,,,,,,,,
+89999,Other,Unknown Virus,North Korea,20,March,2023,Inactive,2023-12-01 08:30:45,,,,,,,,
+90000,Other,Unknown Virus,North Korea,22,March,2023,Active,0000-00-00 00:00:00,,,,,,,,
+90001,Other,Unknown Virus,North Korea,25,March,2023,Active,0000-00-00 00:00:00,,,,,,,,
+90002,Other,Unknown Virus,North Korea,28,March,2023,Active,0000-00-00 00:00:00,,,,,,,,
+90003,Other,Unknown Virus,North Korea,1,April,2023,Inactive,2023-04-15 12:45:20,,,,,,,,
+90015,Displacement,Mass Displacement,England,10,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
+90016,Political unrest,Civilian Evacuation,Syria,15,January,2024,Active,0000-00-00 00:00:00,,,,,,,,
+90017,Environmental,Flash Flooding,England,20,February,2024,Active,0000-00-00 00:00:00,,,,,,,,
+90018,War,Conflict Escalation,Syria,25,March,2024,Active,0000-00-00 00:00:00,,,,,,,,
+90019,Environmental,Aftershocks,England,1,April,2024,Active,0000-00-00 00:00:00,,,,,,,,
+90020,Political unrest,Protests and Demonstrations,Syria,5,May,2024,Inactive,2024-05-15 16:30:00,,,,,,,,
+90021,Other,New Virus Strain,Syria,10,June,2024,Active,0000-00-00 00:00:00,,,,,,,,
+88523,Environmental,No description,South Sudan,17,December,2023,Active,0000-00-00 00:00:00,,,,,,,,
+90022,Environmental,Severe Drought,Haiti,5,July,2024,Active,0000-00-00 00:00:00,,,,,,,,
+90023,Environmental,Hurricane Warning,Haiti,15,August,2024,Inactive,2024-08-20 12:00:00,,,,,,,,
+90024,Environmental,Coastal Erosion,Haiti,10,September,2024,Active,0000-00-00 00:00:00,,,,,,,,
+90025,Environmental,Crop Failure,Haiti,5,October,2024,Active,0000-00-00 00:00:00,,,,,,,,
+90026,Environmental,Wildfire Alert,Haiti,20,November,2024,Inactive,2024-11-25 15:30:00,,,,,,,,
+90027,Environmental,Flash Flooding,Haiti,1,December,2024,Active,0000-00-00 00:00:00,,,,,,,,
