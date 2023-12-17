@@ -30,28 +30,27 @@ class VolunteerHomepage():
         self.personal_entry_widgets = None
         self.refugee_entry_widgets = None
         self.go_to_landing_page = go_to_landing_page
-
         self.window = tk.Toplevel(self.root)
         self.window.title('Volunteer Homepage')
         self.window.geometry('1400x700')
-
         # Default theme
-        # self.default_bg = self.window.cget('bg')
         self.current_theme = tk.StringVar(value='no_theme')
         self.apply_theme('no_theme')
 
-        #self.camp_id_label = self.get_camp_id_for_volunteer()
-
+        # Instances of classes imported from subpages/shared pages
         self.admin_help = AdminHelp(self.window, self.back_button_to_volunteer_main)
         self.charts = SummaryCharts(self.window, self.back_button_to_volunteer_main)
         self.map_instance = CountryMap(self.window, self.back_button_to_volunteer_main)
         self.refugee_display_instance = RefugeeDisplay(self.window, self.back_button_to_volunteer_main, self.get_current_camp_id)
 
+        # Show camp ID the volunteer works for
         self.camp_id_label = self.get_camp_id_for_volunteer()
         self.show_camp_id_label = None
 
+        # Set the X button to end the program i.e. stop root
         self.window.protocol("WM_DELETE_WINDOW", self.window_exit_button)
 
+        # MENU BAR
         menu_bar = tk.Menu(self.window)
         self.window.config(menu=menu_bar)
         file_menu = tk.Menu(menu_bar, tearoff=0)
@@ -64,13 +63,11 @@ class VolunteerHomepage():
         file_menu.add_command(label="Log Out", command=self.exit_and_go_back)
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.exit_software)
-
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Edit", menu=file_menu)
         file_menu.add_command(label="Edit Camp", command=self.t_edit_camp)
         #file_menu.add_separator()
         file_menu.add_command(label="Edit Profile", command=self.t_personal_information_base)
-
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="View", menu=file_menu)
         file_menu.add_command(label="View Refugees", command=self.display_refugees)
@@ -79,11 +76,9 @@ class VolunteerHomepage():
         file_menu.add_separator()
         file_menu.add_command(label="View Charts", command=lambda: self.generate_chart_window())
         file_menu.add_command(label="View Map", command=lambda: self.view_map())
-
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Settings", menu=file_menu)
         file_menu.add_command(label="Display", command=self.open_theme_window)
-
         file_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Help", menu=file_menu)
         file_menu.add_command(label="Information", command=self.help_info)
@@ -136,6 +131,7 @@ class VolunteerHomepage():
                          'Second Language': ''}
         }
 
+        # Set up the GUI for the page and call the create gui function
         self.create_gui_volunteer_main()
 
     def create_gui_volunteer_main(self):
@@ -196,7 +192,7 @@ class VolunteerHomepage():
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if row and row[0].strip() == self.username:
-                    # Camp ID is the second value (index 1)
+                    # Camp ID is the second value in csv table
                     self.camp_id = row[1].strip()
                     # Check if the camp ID is blank
                     if not self.camp_id:
@@ -210,22 +206,16 @@ class VolunteerHomepage():
     def get_camp_id_for_volunteer(self):
         with open("volunteer_info.csv", 'r') as file:
             csv_reader = csv.reader(file)
-
             for row in csv_reader:
-
                 if row and row[0].strip() == self.username:
-                    # Camp ID is the second value (index 1)
+                    # Camp ID is the second value
                     self.camp_id = row[1].strip()
-
                     # Check if the camp ID is blank
                     if not self.camp_id:
                         return "NO CAMP ID ASSIGNED"
-
                     self.camp_id = round(float(self.camp_id))
-
                     self.camp_ID_label = self.camp_id
                     return f"YOUR CAMP ID: {self.camp_id}"
-
             # Return "No camp ID assigned" if the loop completes without finding a matching volunteer
             return "No camp ID assigned"
 
@@ -256,6 +246,7 @@ class VolunteerHomepage():
     def t_display_resources(self):
         resource_display(self.window, self.camp_id, self.back_button_to_volunteer_main)
 
+    # Display Refugees (refugee_display.py) NOTE this is a class
     def display_refugees(self):
         # Open the resource allocation GUI
         self.refugee_display_instance.create_gui_refugee_display(self)
@@ -320,9 +311,7 @@ class VolunteerHomepage():
         theme_window = tk.Toplevel(self.root)
         theme_window.title("Select Theme")
         theme_window.geometry("200x100")
-
         theme_window.grab_set()
-
         # Radio buttons for theme selection
         tk.Radiobutton(theme_window, text="Light Theme", variable=self.current_theme,
                        value='light', command=lambda: self.apply_theme('light')).pack(anchor=tk.W)
