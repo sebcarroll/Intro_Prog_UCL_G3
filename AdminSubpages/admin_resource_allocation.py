@@ -385,6 +385,11 @@ class AdminResourceAllocation:
                 print("Running on_confirm_action, no issues reported in terms of supply given versus aid.")
                 self.on_confirm_action(camp_id, no_refugees, no_weeks_aid, total_food_supplied, total_medicine_supplied,
              week_food_per_refugee, week_medicine_per_refugee, delivery_time_weeks)
+
+            # THIS WILL REFRESH THE PAGE - CLEARS FORM!
+            #self.create_gui_resource_allocation(self)
+
+
         except Exception as e:
             print(f"An error occurred: {e}")
 

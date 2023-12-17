@@ -65,14 +65,13 @@ class AdminCreatePlan:
             "Afghanistan", "Syria", "Yemen", "South Sudan", "Somalia", "Sudan", "Democratic Republic of the Congo",
             "Venezuela", "Iraq", "Nigeria", "Ethiopia", "Myanmar", "Haiti", "Central African Republic", "Libya",
             "Chad", "Mali", "Niger", "Cameroon", "Ukraine", "Pakistan", "Bangladesh", "Lebanon", "Zimbabwe", "Eritrea",
-            "North Korea", "Eswatini", "Zambia", "Malawi"],
-                                          state='readonly')
+            "North Korea", "Eswatini", "Zambia", "Malawi"])
         self.country_Entry.grid(row=2, column=3, padx=5)
 
         crisis_type_label = tk.Label(new_plan_frame, text='Crisis Type', font=('TkinterDefault', 15))
         crisis_type_label.grid(row=3, column=2, padx=5)
         crisis_type = ["War", "Environmental", "Supply Shortage", "Political unrest", "Displacement", "Other"]
-        self.crisis_type_combobox = ttk.Combobox(new_plan_frame, values=crisis_type, state='readonly')
+        self.crisis_type_combobox = ttk.Combobox(new_plan_frame, values=crisis_type)
         self.crisis_type_combobox.grid(row=3, column=3, padx=5)
 
         description_label = tk.Label(new_plan_frame, text='Description (max 100 characters)',

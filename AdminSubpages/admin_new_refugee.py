@@ -48,7 +48,7 @@ def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main
     family_label = tk.Label(refugee_labelframe, text='Total number of family members',
                             font=('TkinterDefault', 15))
     family_label.grid(row=4, column=0, padx=20, pady=10)
-    family_labelbox = ttk.Spinbox(refugee_labelframe, from_=0, to=20, style='info.TSpinbox', state='readonly')
+    family_labelbox = ttk.Spinbox(refugee_labelframe, from_=0, to=20, style='info.TSpinbox')
     family_labelbox.grid(row=4, column=2, padx=5, pady=10)
 
     # Medical conditions, we need to add dictionaries and everything for this
@@ -64,8 +64,7 @@ def new_refugee(window, y_camp_info, refugee_info, back_button_to_volunteer_main
                                      font=('TkinterDefault', 15))
     languages_spokenlabel.grid(row=6, column=0, padx=20, pady=10)
     t_languages_spokenEntry = ttk.Combobox(refugee_labelframe,
-                                           values='English Chinese Hindi Spanish French Arabic Bengali Portuguese Russian Urdu Indonesian German Swahili Marathi Tamil Telugu Turkish Vietnamese Korean Italian Thai Gujarati Persian Polish Pashto Kannada Ukrainian Somali Kurdish',
-                                           state='readonly')
+                                           values='English Chinese Hindi Spanish French Arabic Bengali Portuguese Russian Urdu Indonesian German Swahili Marathi Tamil Telugu Turkish Vietnamese Korean Italian Thai Gujarati Persian Polish Pashto Kannada Ukrainian Somali Kurdish')
     t_languages_spokenEntry.grid(row=6, column=2, padx=5, pady=10)
 
     # secondlanguage entry box
@@ -117,6 +116,12 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
         update_number_of_refugees(camp_ID)
         tk.messagebox.showinfo(title='Details saved', message='Details have been saved')
 
+        clear_entry(name_entry)
+        clear_entry(family_labelbox)
+        clear_entry(t_medical_conditionsEntry)
+        clear_entry(t_languages_spokenEntry)
+        clear_entry(t_second_languageEntry)
+
     except FileNotFoundError:
         data = {'Name': [name], 'Camp ID': [camp_ID],
                 'Medical Conditions': [medical_conditions],
@@ -155,3 +160,13 @@ def update_number_of_refugees(camp_ID):
         writer = csv.writer(file)
         writer.writerow(header)
         writer.writerows(data)
+
+def clear_entry(entry):
+    #entry.delete(0, tk.END)
+    # clear different types of widgets entry, combobox and text boxes
+    if isinstance(entry, tk.Entry):
+        entry.delete(0, tk.END)
+    elif isinstance(entry, ttk.Combobox):
+        entry.set('')
+    elif isinstance(entry, tk.Text):
+        entry.delete("1.0", tk.END)

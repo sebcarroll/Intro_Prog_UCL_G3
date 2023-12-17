@@ -70,7 +70,7 @@ def new_refugee(window, y_camp_info, camp_id, refugee_info, back_button_to_volun
     family_label = tk.Label(refugee_labelframe, text='Enter total number of family members',
                             font=('TkinterDefault', 15))
     family_label.grid(row=4, column=0, padx=5, pady=5)
-    family_labelbox = ttk.Spinbox(refugee_labelframe, from_=0, to=20, style='info.TSpinbox', format="%d", state='readonly')
+    family_labelbox = ttk.Spinbox(refugee_labelframe, from_=0, to=20, style='info.TSpinbox', format="%d")
     family_labelbox.grid(row=4, column=1, padx=5, pady=5)
 
     # Medical conditions, we need to add dictionaries and everything for this
@@ -148,7 +148,7 @@ def na_refugee_info_dict(refugee_info, t_camp_IDbox, family_labelbox, t_medical_
         return  # Exit the function early if there's an error
 
     except (no_text_entered):
-        tk.messagebox.showinfo(title = 'No text entered', message = 'Family name, number of family members and medical conditions must be inputted')
+        tk.messagebox.showinfo(title='No text entered', message='Family name, number of family members and medical conditions must be inputted')
 
     except FileNotFoundError:
         data = {'Name': [name], 'Camp ID': [camp_ID],
