@@ -1,4 +1,4 @@
 Username,Camp ID,password,name,Email Address,Phone Number,Commitment,Work Type,Deactivated,Deleted
-volunteer1,50055.0,111,Costas,volunteer1@uclhr.com,02011111111,Part time,Food counselling,False,False
-volunteer2,68692.0,111,Nikki,volunteer2@uclhr.com,02022222222,Occasional,Medical Aid,False,False
+volunteer1,50055,111,Costas,volunteer1@uclhr.com,02011111111,Part time,Food counselling,False,False
+volunteer2,68693,111,Nikki,volunteer2@uclhr.com,02022222222,Occasional,Medical Aid,False,False
 volunteer3,,111,Ayman,volunteer3@uclhr.com,02033333333,Part time,Food counselling,True,False
