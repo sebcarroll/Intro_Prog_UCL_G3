@@ -21,11 +21,18 @@ class AdminVolunteerDisplay:
         for i in range(9):
             display_volunteer_frame.grid_rowconfigure(i, weight=1)
 
-
         # Labels
         display_volunteer_title = tk.Label(display_volunteer_frame, text="Display Volunteer Accounts", font=('TKDefault', 25), fg='white')
         display_volunteer_title.grid(row=0, column=0, sticky="ew", pady=5, padx=5, columnspan=9)
         display_volunteer_title.configure(background="grey")
+
+        refresh_btn = tk.Button(display_volunteer_frame,
+                                text="\u21BB",
+                                font=('TKDefault', 18, 'bold'),
+                                fg='grey', relief='flat',
+                                command=lambda: self.upload_csv_data(self.display_volunteer_tree, csv_file))
+        refresh_btn.grid(row=0, column=0, sticky="ew", pady=0, padx=(5, 0), columnspan=1)
+
 
         self.display_volunteer_tree = ttk.Treeview(display_volunteer_frame, height=10)
         self.display_volunteer_tree.grid(row=1, column=0, columnspan=9, sticky="nsew", padx=10, pady=5, rowspan=4)

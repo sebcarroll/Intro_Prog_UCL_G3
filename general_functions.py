@@ -129,3 +129,12 @@ def validate_data(edited_data, original_data, row_index_in_treeview):
             validated_data.append(value)
 
     return validated_data
+
+
+#GUI refresh button:
+'''refresh_btn = tk.Button(display_volunteer_frame,
+                                text="\u21BB",
+                                font=('TKDefault', 18, 'bold'),
+                                fg='grey', relief='flat',
+                                command=lambda: self.upload_csv_data(self.display_volunteer_tree, csv_file))
+refresh_btn.grid(row=0, column=0, sticky="ew", pady=0, padx=(5, 0), columnspan=1)'''
